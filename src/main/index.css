@@ -1,0 +1,12 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  user-select: none;
+}
+
+.main-border-bottom {
+    border-bottom: 3px solid transparent; 
+    border-image: linear-gradient(to right, #3E16E2, #EC0245) 1; 
+  }
