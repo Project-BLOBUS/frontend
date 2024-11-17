@@ -7,6 +7,6 @@
 }
 
 .main-border-bottom {
-    border-bottom: 3px solid transparent; 
-    border-image: linear-gradient(to right, #3E16E2, #EC0245) 1; 
-  }
+  border-bottom: 3px solid transparent;
+  border-image: linear-gradient(to right, #3e16e2, #ec0245) 1;
+}
