@@ -18,7 +18,7 @@ const memberRouter = () => {
       ),
     },
     {
-      path: "signup/",
+      path: "signup",
       element: <Navigate replace to="choice" />,
     },
     {

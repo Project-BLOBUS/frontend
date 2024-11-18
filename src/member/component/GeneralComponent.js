@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { AiOutlineGlobal } from "react-icons/ai";
 import { FaBackspace } from "react-icons/fa";
@@ -7,15 +7,16 @@ import { GiSouthKorea } from "react-icons/gi";
 import { IoMdFemale, IoMdMale } from "react-icons/io";
 import { toast } from "react-toastify";
 import { setCookie, removeCookie } from "../util/cookieUtil";
-import { duplicate, register } from "../api/memberAPI";
+import { duplicate, register, sendMail } from "../api/memberAPI";
 
 const initState = {
+  // TODO 삭제
   userId: "bell4916@naver.com",
   authCode: "123456",
-  userPw: "",
-  confirmPw: "",
-  name: "",
-  phoneNum: "",
+  userPw: "qwerQWER1234!@#$",
+  confirmPw: "qwerQWER1234!@#$",
+  name: "양성규",
+  phoneNum: "01049164357",
   address: "",
   birthDate: null,
   gender: "M",
@@ -26,10 +27,11 @@ const initState = {
 const GeneralComponent = () => {
   const [member, setMember] = useState(initState);
 
-  const [isIdValid, setIsIdValid] = useState(false);
+  // TODO 수정
+  const [isIdValid, setIsIdValid] = useState(true);
   const [authCode, setAuthCode] = useState();
-  const [isMailSent, setIsMailSent] = useState(false);
-  const [isAuth, setIsAuth] = useState(false);
+  const [isMailSent, setIsMailSent] = useState(true);
+  const [isAuth, setIsAuth] = useState(true);
 
   const [regionList, setRegionList] = useState([{ code: "", name: "" }]);
   const [region, setRegion] = useState(member.address.split("-")[0]);
@@ -40,6 +42,13 @@ const GeneralComponent = () => {
   const [year, setYear] = useState(1900);
   const [month, setMonth] = useState(1);
   const [date, setDate] = useState();
+
+  const userIdRef = useRef(null);
+  const authCodeRef = useRef(null);
+  const userPwRef = useRef(null);
+  const confirmPwRef = useRef(null);
+  const nameRef = useRef(null);
+  const phoneNumRef = useRef(null);
 
   const navigate = useNavigate();
 
@@ -131,9 +140,46 @@ const GeneralComponent = () => {
   };
 
   const onCLickRegister = () => {
-    if (true) {
-      // TODO : 각 입력값 검증
-    } else {
+    if (member.userId === "") {
+      toast.warn("아이디 입력 필요");
+      userIdRef.current.focus();
+    } else if (!isIdValid) {
+      toast.warn("아아디 중복 확인 필요");
+    } else if (!isMailSent) {
+      toast.warn("인증 메일 전송 필요");
+    } else if (member.authCode === "") {
+      toast.warn("인증코드 입력 필요");
+      authCodeRef.current.focus();
+    } else if (!isAuth) {
+      toast.warn("아이디 인증 확인 필요");
+    } else if (member.userPw === "") {
+      toast.warn("비밀번호 입력 필요");
+      userPwRef.current.focus();
+    } else if (
+      !/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+={}\[\]:;"'<>,.?/\\|~`_-]).{8,16}$/.test(
+        member.userPw
+      )
+    ) {
+      toast.warn(
+        "비밀번호 재입력 필요 (영어 대소문자, 숫자, 특수기호 포함, 8~16글자)"
+      );
+      userPwRef.current.focus();
+    } else if (member.confirmPw === "") {
+      toast.warn("비밀번호 확인 입력 필요");
+      confirmPwRef.current.focus();
+    } else if (member.confirmPw !== member.userPw) {
+      toast.warn("비밀번호 불일치");
+      confirmPwRef.current.focus();
+    } else if (member.name === "") {
+      toast.warn("이름 입력 필요");
+      nameRef.current.focus();
+    } else if (member.phoneNum === "") {
+      toast.warn("연락처 입력 필요");
+      phoneNumRef.current.focus();
+    } else if (!/^\d{10,11}$/.test(member.phoneNum)) {
+      toast.warn('연락처 재입력 필요 ("-" 없이 입력)');
+      phoneNumRef.current.focus();
+    } else if (false) {
       register(member)
         .then(() => {
           toast.success("회원 가입 완료");
@@ -194,12 +240,13 @@ const GeneralComponent = () => {
             "이메일",
             onChange,
             !isAuth,
+            userIdRef,
             !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(member.userId)
               ? "w-full"
               : !isMailSent
               ? "w-5/6"
               : !isAuth
-              ? "w-1/2"
+              ? "w-7/12"
               : "w-full"
           )}
           {!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(member.userId) ? (
@@ -224,29 +271,32 @@ const GeneralComponent = () => {
           ) : !isMailSent ? (
             <>
               {makeBtn("메일 전송", () => {
-                // TODO : 메일 전송
-                if (true) {
-                  setAuthCode(123456);
-                  setIsMailSent(true);
-                  toast.success("인증 메일 발송");
-                } else {
-                  toast.warn("메일 전송 실패");
-                }
+                sendMail(member)
+                  .then((code) => {
+                    setAuthCode(code);
+                    setIsMailSent(true);
+                    toast.success("메일 전송 성공");
+                    // TODO 삭제
+                    setMember({ ...member, authCode: code });
+                  })
+                  .catch(() => {
+                    toast.error("메일 전송 실패");
+                  });
               })}
             </>
           ) : !isAuth ? (
             <>
               {makeInput(
-                "number",
+                "text",
                 "authCode",
                 member.authCode,
                 "인증번호",
                 onChange,
                 !isAuth,
-                "w-1/3"
+                authCodeRef,
+                "w-1/4 text-center"
               )}
               {makeBtn("인증 확인", () => {
-                // TODO : 인증
                 if (authCode === member.authCode * 1) {
                   setIsAuth(true);
                   toast.success("인증 완료");
@@ -270,7 +320,8 @@ const GeneralComponent = () => {
           member.userPw,
           "영어 대소문자, 숫자, 특수기호를 포함한 8~16글자",
           onChange,
-          isAuth
+          isAuth,
+          userPwRef
         )
       )}
 
@@ -283,14 +334,23 @@ const GeneralComponent = () => {
           member.confirmPw,
           "비밀번호 재입력",
           onChange,
-          isAuth
+          isAuth,
+          confirmPwRef
         )
       )}
 
       {/* 이름 */}
       {makeAdd(
         "이름",
-        makeInput("text", "name", member.name, "이름", onChange, isAuth)
+        makeInput(
+          "text",
+          "name",
+          member.name,
+          "이름",
+          onChange,
+          isAuth,
+          nameRef
+        )
       )}
 
       {/* 전화번호 */}
@@ -302,7 +362,8 @@ const GeneralComponent = () => {
           member.phoneNum,
           '"─" 없이 입력',
           onChange,
-          isAuth
+          isAuth,
+          phoneNumRef
         )
       )}
 
@@ -457,7 +518,7 @@ const makeAdd = (label, makeInput) => {
   );
 };
 
-const makeInput = (type, name, value, hint, onChange, isAuth, width) => {
+const makeInput = (type, name, value, hint, onChange, isAuth, ref, width) => {
   return (
     <input
       className={`${
@@ -469,9 +530,18 @@ const makeInput = (type, name, value, hint, onChange, isAuth, width) => {
       name={name}
       value={value ?? ""}
       placeholder={hint}
+      minLength={name === "userPw" || name === "confirmPw" ? 8 : undefined}
+      maxLength={
+        name === "authCode"
+          ? 6
+          : name === "userPw" || name === "confirmPw"
+          ? 16
+          : undefined
+      }
       autoComplete="off"
       onChange={onChange}
       disabled={!isAuth}
+      ref={ref}
     />
   );
 };
