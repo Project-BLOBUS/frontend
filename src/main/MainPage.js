@@ -64,7 +64,7 @@ function MainPage() {
       {/* "메인"으로 설정된 페이지 제목 */}
       <Header pageTitle="메인" titleBg="#EC0245" borderB={true} />
 
-      <div className="h-full w-[70%] ml-[15%] mt-[3%] flex">
+      <div className="h-full w-[70.7%] ml-[15%] mt-[3%] flex ">
         {/* 왼쪽 라인 */}
         <div className="w-[535px]">
           <div className="w-[100%] h-[400px]">
@@ -80,11 +80,12 @@ function MainPage() {
             </Link>
 
             {/* 왼쪽 화살표 */}
-            <div className="w-[9%] mt-[-35%] transform -translate-y-1/2 rounded-full p-2 bg-black/20 text-white transition duration-500 hover:text-black hover:bg-white cursor-pointer hidden sm:block">
+            <div className="w-[9%] mt-[-35%] transform -translate-y-1/2 rounded-full p-2 bg-black/20 text-white transition duration-500 hover:text-black hover:bg-white hover:opacity-50 cursor-pointer hidden sm:block">
               <BsChevronLeft onClick={prevSlide} size={30} />
             </div>
 
-            <div className="w-[9%] mt-[-9%] ml-[91%]  transform -translate-y-1/2 rounded-full p-2 bg-black/20 text-white transition duration-500 hover:text-black hover:bg-white cursor-pointer hidden sm:block">
+            {/* 오른쪽 화살표 */}
+            <div className="w-[9%] mt-[-9%] ml-[91%]  transform -translate-y-1/2 rounded-full p-2 bg-black/20 text-white transition duration-500 hover:text-black hover:bg-white hover:opacity-50 cursor-pointer hidden sm:block">
               <BsChevronRight onClick={prevSlide} size={30} />
             </div>
           </div>

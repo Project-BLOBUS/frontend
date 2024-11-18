@@ -13,7 +13,7 @@ const MainPage = lazy(() => import("./main/MainPage"));
 const YouthPage = lazy(() => import("./youth/YouthPage"));
 const Enterprise = lazy(() => import("./enterprise/Enterprise"));
 const Comunity = lazy(() => import("./community/Community"));
-const Resources = lazy(() => import("./resource/Resource"));
+const Resources = lazy(() => import("./resource/Resources"));
 
 const AppRoutes = () => (
   <Routes>
@@ -28,7 +28,7 @@ const AppRoutes = () => (
     {/* /comunity 커뮤니티 */}
     <Route path="/comunity" element={<Comunity />} />
     {/* /resource 자원 */}
-    <Route path="/resource" element={<Resources />} />
+    <Route path="/resources" element={<Resources />} />
     {/* <Route path="/head" element={<Header />} /> */}
     {/* <Route path="/footer" element={<Footer />} /> */}
   </Routes>
