@@ -6,6 +6,7 @@ const Login = lazy(() => import("../component/LoginComponent"));
 const Choice = lazy(() => import("../component/ChoiceComponent"));
 const Agree = lazy(() => import("../component/AgreeComponent"));
 const General = lazy(() => import("../component/GeneralComponent"));
+const Business = lazy(() => import("../component/BusinessComponent "));
 
 const memberRouter = () => {
   return [
@@ -42,6 +43,14 @@ const memberRouter = () => {
       element: (
         <Suspense fallback={<Loading />}>
           <General />
+        </Suspense>
+      ),
+    },
+    {
+      path: "signup/business",
+      element: (
+        <Suspense fallback={<Loading />}>
+          <Business />
         </Suspense>
       ),
     },

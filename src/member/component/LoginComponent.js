@@ -105,7 +105,7 @@ const LoginComponent = () => {
         onChange={(e) => setUserPw(e.target.value)}
       />
 
-      <div className="w-full text-base font-normal flex justify-center items-center cursor-pointer">
+      <div className="group w-full flex justify-center items-center cursor-pointer">
         <input
           className="w-4 h-4"
           type="checkbox"
@@ -113,7 +113,12 @@ const LoginComponent = () => {
           checked={idSave}
           onChange={() => setIdSave(!idSave)}
         />
-        <div className="ml-2" onClick={() => setIdSave(!idSave)}>
+        <div
+          className={`ml-2 transition duration-500 ${
+            idSave ? "group-hover:text-gray-300" : "group-hover:text-sky-300"
+          }`}
+          onClick={() => setIdSave(!idSave)}
+        >
           아이디 저장
         </div>
       </div>
@@ -168,7 +173,7 @@ const makeTab = (name, role, userRole, setUserRole) => {
 
 const makeLink = (link, name) => {
   return (
-    <Link to={link} className="hover:underline">
+    <Link to={link} className="hover:text-gray-300 transition duration-500">
       {name}
     </Link>
   );

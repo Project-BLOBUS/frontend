@@ -1,36 +1,28 @@
 import axios from "axios";
 import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { AiOutlineGlobal } from "react-icons/ai";
 import { FaBackspace } from "react-icons/fa";
-import { GiSouthKorea } from "react-icons/gi";
-import { IoMdFemale, IoMdMale } from "react-icons/io";
 import { toast } from "react-toastify";
-import { duplicate, sendMail, register } from "../api/memberAPI";
+import { duplicate, register } from "../api/memberAPI";
 import { setCookie, removeCookie } from "../util/cookieUtil";
 import Loading from "../etc/Loading";
 
 const initState = {
   userId: "",
-  authCode: "",
   userPw: "",
   confirmPw: "",
   name: "",
   phoneNum: "",
+  email: "",
   address: "",
-  birthDate: null,
-  gender: "M",
-  foreigner: false,
-  roleName: "GENERAL",
+  roleName: "BUSINESS",
 };
 
-const GeneralComponent = () => {
+const BusinessComponent = () => {
   const [loading, setLoading] = useState(false);
   const [member, setMember] = useState(initState);
 
   const [isIdValid, setIsIdValid] = useState(false);
-  const [authCode, setAuthCode] = useState();
-  const [isMailSent, setIsMailSent] = useState(false);
   const [isAuth, setIsAuth] = useState(false);
 
   const [regionList, setRegionList] = useState([{ code: "", name: "" }]);
@@ -39,21 +31,14 @@ const GeneralComponent = () => {
   const [cityList, setCityList] = useState([{ code: "", name: "" }]);
   const [city, setCity] = useState("");
 
-  const [year, setYear] = useState("");
-  const [month, setMonth] = useState("");
-  const [date, setDate] = useState("");
-
   const userIdRef = useRef(null);
-  const authCodeRef = useRef(null);
   const userPwRef = useRef(null);
   const confirmPwRef = useRef(null);
   const nameRef = useRef(null);
   const phoneNumRef = useRef(null);
+  const emailRef = useRef(null);
   const regionRef = useRef(null);
   const cityRef = useRef(null);
-  const yearRef = useRef(null);
-  const monthRef = useRef(null);
-  const dateRef = useRef(null);
 
   const navigate = useNavigate();
 
@@ -109,8 +94,6 @@ const GeneralComponent = () => {
 
     if (e.target.name === "userId") {
       setIsIdValid(false);
-      setAuthCode(0);
-      setIsMailSent(false);
       setIsAuth(false);
     }
   };
@@ -131,23 +114,6 @@ const GeneralComponent = () => {
     }
   };
 
-  const onChangeBirth = (e) => {
-    const { name, value } = e.target;
-    let birth = new Date(year, month, date);
-
-    if (name === "year") {
-      setYear(value);
-      birth = new Date(value, month, date);
-    } else if (name === "month") {
-      setMonth(value);
-      birth = new Date(year, value, date);
-    } else if (name === "date") {
-      setDate(value);
-      birth = new Date(year, month, value);
-      setMember({ ...member, birthDate: birth });
-    }
-  };
-
   const onCLickRegister = () => {
     setLoading(true);
 
@@ -156,11 +122,6 @@ const GeneralComponent = () => {
       userIdRef.current.focus();
     } else if (!isIdValid) {
       toast.warn("아이디 중복 확인 필요");
-    } else if (!isMailSent) {
-      toast.warn("인증 메일 전송 필요");
-    } else if (member.authCode === "") {
-      toast.warn("인증코드 입력 필요");
-      authCodeRef.current.focus();
     } else if (!isAuth) {
       toast.warn("아이디 인증 확인 필요");
     } else if (member.userPw === "") {
@@ -182,29 +143,26 @@ const GeneralComponent = () => {
       toast.warn("비밀번호 불일치");
       confirmPwRef.current.focus();
     } else if (member.name === "") {
-      toast.warn("이름 입력 필요");
+      toast.warn("기업명 입력 필요");
       nameRef.current.focus();
     } else if (member.phoneNum === "") {
-      toast.warn("연락처 입력 필요");
+      toast.warn("담당자 연락처 입력 필요");
       phoneNumRef.current.focus();
     } else if (!/^\d{10,11}$/.test(member.phoneNum)) {
-      toast.warn('연락처 재입력 필요 ("-" 없이 입력)');
+      toast.warn('담당자 연락처 재입력 필요 ("-" 없이 입력)');
       phoneNumRef.current.focus();
+    } else if (member.email === "") {
+      toast.warn("담당자 이메일 입력 필요");
+      emailRef.current.focus();
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(member.email)) {
+      toast.warn("담당자 이메일 재입력 필요 (example@domain.com)");
+      emailRef.current.focus();
     } else if (region === "") {
       toast.warn("주소 시/도 선택 필요");
       regionRef.current.focus();
     } else if (city === "") {
       toast.warn("주소 시/구/군 선택 필요");
       cityRef.current.focus();
-    } else if (year === "") {
-      toast.warn("생년월일 연도 선택 필요");
-      yearRef.current.focus();
-    } else if (month === "") {
-      toast.warn("생년월일 월 선택 필요");
-      monthRef.current.focus();
-    } else if (date === "") {
-      toast.warn("생년월일 일 선택 필요");
-      dateRef.current.focus();
     } else {
       register(member)
         .then(() => {
@@ -230,7 +188,7 @@ const GeneralComponent = () => {
   return (
     <div className="w-full h-fit max-w-[600px] min-w-min text-xl text-center font-bold flex flex-col justify-center items-center space-y-2">
       <div className="bg-white w-full my-4 text-3xl text-sky-500">
-        일반계정 회원가입
+        기업계정 회원가입
       </div>
 
       {loading && <Loading />}
@@ -239,22 +197,20 @@ const GeneralComponent = () => {
         "아이디",
         <div className="w-full h-full flex justify-center items-center space-x-1 track">
           {makeInput(
-            "email",
+            "text",
             "userId",
             member.userId,
-            "이메일",
+            "사업자 등록 번호",
             onChange,
             !isAuth,
             userIdRef,
-            !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(member.userId)
+            !/^\d{3}-\d{2}-\d{5}$/.test(member.userId)
               ? "w-full"
-              : !isMailSent
-              ? "w-5/6"
               : !isAuth
-              ? "w-7/12"
+              ? "w-5/6"
               : "w-full"
           )}
-          {!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(member.userId) ? (
+          {!/^\d{3}-\d{2}-\d{5}$/.test(member.userId) ? (
             <></>
           ) : !isIdValid ? (
             <>
@@ -276,43 +232,16 @@ const GeneralComponent = () => {
                 setLoading(false);
               })}
             </>
-          ) : !isMailSent ? (
+          ) : !isAuth ? (
             <>
-              {makeBtn("메일 전송", async () => {
+              {makeBtn("인증 확인", async () => {
                 setLoading(true);
 
                 try {
-                  const code = await sendMail(member);
-                  setAuthCode(code);
-                  setIsMailSent(true);
-                  toast.success("메일 전송 성공");
-                } catch (error) {
-                  toast.error("메일 전송 실패");
-                }
-
-                setLoading(false);
-              })}
-            </>
-          ) : !isAuth ? (
-            <>
-              {makeInput(
-                "text",
-                "authCode",
-                member.authCode,
-                "인증번호",
-                onChange,
-                !isAuth,
-                authCodeRef,
-                "w-1/4 text-center"
-              )}
-              {makeBtn("인증 확인", () => {
-                setLoading(true);
-
-                if (authCode === member.authCode * 1) {
                   setIsAuth(true);
-                  toast.success("인증 완료");
-                } else {
-                  toast.warn("인증 실패");
+                  toast.success("인증 성공");
+                } catch (error) {
+                  toast.error("인증 실패");
                 }
 
                 setLoading(false);
@@ -352,23 +281,23 @@ const GeneralComponent = () => {
         )
       )}
 
-      {/* 이름 */}
+      {/* 기업명 */}
       {makeAdd(
-        "이름",
+        "기업명",
         makeInput(
           "text",
           "name",
           member.name,
-          "이름",
+          "기업명",
           onChange,
           isAuth,
           nameRef
         )
       )}
 
-      {/* 연락처 */}
+      {/* 담당자 연락처 */}
       {makeAdd(
-        "연락처",
+        "담당자 연락처",
         makeInput(
           "text",
           "phoneNum",
@@ -380,9 +309,23 @@ const GeneralComponent = () => {
         )
       )}
 
-      {/* 주소 */}
+      {/* 담당자 이메일 */}
       {makeAdd(
-        "주소",
+        "담당자 이메일",
+        makeInput(
+          "email",
+          "email",
+          member.email,
+          "example@domain.com",
+          onChange,
+          isAuth,
+          emailRef
+        )
+      )}
+
+      {/* 기업 주소 */}
+      {makeAdd(
+        "기업 주소",
         <div className="w-full flex justify-center items-center space-x-1">
           {makeSelect(
             "region",
@@ -402,100 +345,6 @@ const GeneralComponent = () => {
             onChangeAddress,
             isAuth,
             cityRef,
-            "w-1/2"
-          )}
-        </div>
-      )}
-
-      {/* 생년월일 */}
-      {makeAdd(
-        "생년월일",
-        <div className="w-full flex justify-center items-center space-x-1">
-          {makeSelect(
-            "year",
-            year,
-            Array.from(
-              { length: new Date().getFullYear() - 1900 + 1 },
-              (_, i) => ({
-                key: 1900 + i,
-                name: 1900 + i,
-              })
-            ).reverse(),
-            "연도 선택",
-            onChangeBirth,
-            isAuth,
-            yearRef,
-            "w-1/3"
-          )}
-          {makeSelect(
-            "month",
-            month,
-            [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
-            "월 선택",
-            onChangeBirth,
-            isAuth,
-            monthRef,
-            "w-1/3"
-          )}
-          {makeSelect(
-            "date",
-            date,
-            Array.from(
-              { length: new Date(year, month, 0).getDate() },
-              (_, i) => i + 1
-            ),
-            "일 선택",
-            onChangeBirth,
-            isAuth,
-            dateRef,
-            "w-1/3"
-          )}
-        </div>
-      )}
-
-      {/* 성별 */}
-      {makeAdd(
-        "성별",
-        <div className="w-full flex justify-center items-center space-x-1">
-          {makeRatio(
-            member.gender === "M",
-            IoMdMale,
-            "남성",
-            () =>
-              member.gender === "M" || setMember({ ...member, gender: "M" }),
-            isAuth,
-            "w-1/2"
-          )}
-          {makeRatio(
-            member.gender === "F",
-            IoMdFemale,
-            "여성",
-            () =>
-              member.gender === "F" || setMember({ ...member, gender: "F" }),
-            isAuth,
-            "w-1/2"
-          )}
-        </div>
-      )}
-
-      {/* 내외국인 */}
-      {makeAdd(
-        "내와국인",
-        <div className="w-full flex justify-center items-center space-x-1">
-          {makeRatio(
-            !member.foreigner,
-            GiSouthKorea,
-            "내국인",
-            () => setMember({ ...member, foreigner: false }),
-            isAuth,
-            "w-1/2"
-          )}
-          {makeRatio(
-            member.foreigner,
-            AiOutlineGlobal,
-            "외국인",
-            () => setMember({ ...member, foreigner: true }),
-            isAuth,
             "w-1/2"
           )}
         </div>
@@ -555,9 +404,7 @@ const makeInput = (type, name, value, hint, onChange, isAuth, ref, width) => {
       placeholder={hint}
       minLength={name === "userPw" || name === "confirmPw" ? 8 : undefined}
       maxLength={
-        name === "authCode"
-          ? 6
-          : name === "userPw" || name === "confirmPw"
+        name === "userPw" || name === "confirmPw"
           ? 16
           : name === "phoneNum"
           ? 11
@@ -602,26 +449,6 @@ const makeSelect = (name, value, list, hint, onChange, isAuth, ref, width) => {
   );
 };
 
-const makeRatio = (value, Icon, text, onClick, isAuth, width) => {
-  return (
-    <div
-      className={`${
-        width ?? "w-full"
-      } p-4 border border-gray-500 rounded shadow-lg flex justify-center items-center space-x-4 ${
-        isAuth
-          ? value
-            ? "text-black"
-            : "text-gray-300 cursor-pointer hover:bg-sky-500 hover:text-white transition duration-500"
-          : "bg-gray-400 border-none text-gray-300"
-      }`}
-      onClick={isAuth ? onClick : undefined}
-    >
-      <Icon className="w-6 h-6" />
-      <div>{text}</div>
-    </div>
-  );
-};
-
 const makeBtn = (name, onClick) => {
   const bgColor = {
     "중복 확인": "bg-red-500 hover:bg-red-300",
@@ -639,4 +466,4 @@ const makeBtn = (name, onClick) => {
   );
 };
 
-export default GeneralComponent;
+export default BusinessComponent;

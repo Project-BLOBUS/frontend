@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
-import Header from "../main/Header";
 import { getCookie } from "./util/cookieUtil";
+import Header from "../main/Header";
 import Loading from "./etc/Loading";
 
 const MemberPage = () => {
