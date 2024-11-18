@@ -1,0 +1,106 @@
+/* Header */
+.header-container {
+  background-color: #db0153;
+}
+
+/* Main Container */
+.main-container {
+  width: 70%;
+  margin: 1% auto;
+  border: 2px solid #db0153;
+  padding: 1%;
+}
+
+/* Control Panel */
+.control-panel {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1%;
+}
+
+.tabs .tab-button,
+.categories .category-button {
+  padding: 0.5rem 1rem;
+  margin-right: 0.5rem;
+  border: none;
+  border-radius: 5px;
+  background-color: #f0f0f0;
+  cursor: pointer;
+}
+
+.tabs .tab-button.active,
+.categories .category-button.active {
+  background-color: #db0153;
+  color: #fff;
+}
+
+.search-bar input {
+  padding: 0.5rem;
+  margin-right: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.search-button {
+  padding: 0.5rem 1rem;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+/* Post List */
+.post-list {
+  border-top: 2px solid #db0153;
+  margin-top: 1%;
+}
+
+.post-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+}
+
+.post-table th,
+.post-table td {
+  padding: 0.5rem;
+  text-align: center;
+  border: 1px solid #ddd;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 1rem;
+}
+
+.pagination button {
+  padding: 0.5rem 1rem;
+  margin: 0 0.5rem;
+  border: none;
+  border-radius: 5px;
+  background-color: #f0f0f0;
+  cursor: pointer;
+}
+
+.pagination span {
+  padding: 0.5rem 1rem;
+}
+
+/* Write Post Button */
+.write-post {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 2rem;
+}
+
+.write-post-button {
+  padding: 0.7rem 1.5rem;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
