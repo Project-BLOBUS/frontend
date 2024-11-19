@@ -9,25 +9,8 @@ const ChoiceComponent = () => {
       <div className="w-full my-4 text-3xl text-sky-500">가입계정 선택</div>
 
       <div className="w-full flex justify-between items-center space-x-4">
-        <div
-          className="bg-sky-400 w-1/2 px-4 py-20 rounded-2xl shadow-xl text-white cursor-pointer hover:bg-sky-200 hover:text-black hover:scale-125 transition duration-500"
-          onClick={() => {
-            setCookie("isGeneral", true);
-            navigate("/member/signup/agree");
-          }}
-        >
-          일반계정
-        </div>
-
-        <div
-          className="bg-sky-400 w-1/2 px-4 py-20 rounded-2xl shadow-xl text-white cursor-pointer hover:bg-sky-200 hover:text-black hover:scale-125 transition duration-500"
-          onClick={() => {
-            setCookie("isGeneral", false);
-            navigate("/member/signup/agree");
-          }}
-        >
-          기업계정
-        </div>
+        {makeChoice("일반계정", true, navigate)}
+        {makeChoice("기업계정", false, navigate)}
       </div>
 
       <button
@@ -42,6 +25,20 @@ const ChoiceComponent = () => {
       >
         취소
       </button>
+    </div>
+  );
+};
+
+const makeChoice = (name, isGeneral, navigate) => {
+  return (
+    <div
+      className="bg-sky-400 w-1/2 px-4 py-20 rounded-2xl shadow-xl text-white cursor-pointer hover:bg-sky-200 hover:text-black hover:scale-125 transition duration-500"
+      onClick={() => {
+        setCookie("isGeneral", isGeneral);
+        navigate("/member/signup/agree");
+      }}
+    >
+      {name}
     </div>
   );
 };

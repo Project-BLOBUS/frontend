@@ -3,31 +3,29 @@ import { useNavigate } from "react-router-dom";
 import { FaCheck, FaBackspace } from "react-icons/fa";
 import { toast } from "react-toastify";
 import { getCookie } from "../util/cookieUtil";
+import TermsList from "../etc/TermsList";
 
 const AgreeComponent = () => {
-  const [agreeAll, setAgreeAll] = useState(false);
-  const [agree1, setAgree1] = useState(false);
-  const [agree2, setAgree2] = useState(false);
-  const [agree3, setAgree3] = useState(false);
-
-  const [modalTitle, setModalTitle] = useState("");
-  const [modalContent, setModalContent] = useState(<></>);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
   const navigate = useNavigate();
 
+  const [termsList, setTermsList] = useState([]);
+  const [agreeAll, setAgreeAll] = useState(false);
+  const [modal, setModal] = useState({ title: "", content: null, open: false });
+
   useEffect(() => {
-    setAgreeAll(agree1 && agree2 && agree3);
-  }, [agreeAll, agree1, agree2, agree3]);
+    const newTermsList = TermsList().map((term) => ({
+      ...term,
+      agree: false,
+    }));
+    setTermsList(newTermsList);
+  }, []);
 
   const openModal = (title, content) => {
-    setIsModalOpen(true);
-    setModalTitle(title);
-    setModalContent(content);
+    setModal({ title: title, content: content, open: true });
   };
 
   const closeModal = () => {
-    setIsModalOpen(false);
+    setModal({ ...modal, open: false });
   };
 
   return (
@@ -36,57 +34,42 @@ const AgreeComponent = () => {
         {getCookie("isGeneral") ? "일반계정" : "기업계정"} 약관동의
       </div>
 
-      <div
-        className="group w-full p-4 border border-gray-500 rounded text-3xl flex justify-center items-center cursor-pointer hover:scale-110 transition duration-500"
-        onClick={() => {
-          if (!agreeAll) {
-            setAgreeAll(!agreeAll);
-            setAgree1(true);
-            setAgree2(true);
-            setAgree3(true);
-          } else {
-            setAgreeAll(false);
-            setAgree1(false);
-            setAgree2(false);
-            setAgree3(false);
-          }
-        }}
-      >
-        <div>전체 동의</div>
-        <FaCheck
-          className={`ml-5 p-2 rounded-3xl text-3xl flex group-hover:text-white transition duration-500 ${
-            !agreeAll
-              ? "bg-white border border-gray-500 group-hover:bg-blue-500 group-hover:border-none"
-              : "bg-blue-500 text-white group-hover:bg-black group-hover:text-red-500"
-          }`}
-        />
+      <div className="w-full border border-gray-500 rounded text-4xl flex justify-center items-cente cursor-pointer">
+        {makeAgree("전체 동의", agreeAll, () => {
+          setAgreeAll(!agreeAll);
+          setTermsList((prev) =>
+            prev.map((term) => ({ ...term, agree: !agreeAll }))
+          );
+        })}
       </div>
 
       <div className="w-full flex flex-col justify-center items-center">
-        {makeAgree(
-          "BLOBUS 이용약관",
-          content1,
-          agree1,
-          setAgree1,
-          true,
-          openModal
-        )}
-        {makeAgree(
-          "개인정보 수집 및 이용 동의",
-          "",
-          agree2,
-          setAgree2,
-          true,
-          openModal
-        )}
-        {makeAgree(
-          "개인정보 수집 및 이용 동의",
-          "",
-          agree3,
-          setAgree3,
-          false,
-          openModal
-        )}
+        {termsList.map((data, index) => (
+          <div
+            key={index}
+            className="w-full border border-gray-500 rounded flex justify-start items-center"
+          >
+            {makeAgree(
+              data.title,
+              data.agree,
+              () => {
+                setTermsList((prev) => {
+                  const newTermsList = prev.map((term) =>
+                    data.title === term.title
+                      ? { ...term, agree: !term.agree }
+                      : term
+                  );
+
+                  setAgreeAll(newTermsList.every((term) => term.agree));
+
+                  return newTermsList;
+                });
+              },
+              data.required
+            )}
+            {makeBtn(data.title, data.content, openModal)}
+          </div>
+        ))}
       </div>
 
       <div className="w-full m-4 text-2xl flex space-x-4">
@@ -106,12 +89,14 @@ const AgreeComponent = () => {
         <button
           className="bg-sky-500 w-5/6 p-4 rounded-xl text-white hover:bg-sky-300 hover:text-black transition duration-500"
           onClick={() => {
-            if (agree1 && agree2) {
+            if (
+              termsList.every((term) => (term.required ? term.agree : true))
+            ) {
               getCookie("isGeneral")
                 ? navigate("/member/signup/general")
                 : navigate("/member/signup/business");
             } else {
-              toast.warn("필수항목에 모두 동의해 주세요.");
+              toast.warn("필수항목에 모두 동의하세요.");
             }
           }}
         >
@@ -119,11 +104,11 @@ const AgreeComponent = () => {
         </button>
       </div>
 
-      {isModalOpen && (
+      {modal.open && (
         <div className="bg-black bg-opacity-50 w-full h-full flex justify-center items-center fixed inset-0">
           <div className="bg-white w-5/6 max-w-[650px] p-4 rounded">
-            <div className="text-2xl">{modalTitle}</div>
-            {modalContent}
+            <div className="text-2xl">{modal.title}</div>
+            {modal.content}
             <div className="flex justify-end items-center">
               <button
                 className="bg-red-500 px-4 py-2 text-base rounded-xl text-white hover:bg-red-300 hover:text-black transition duration-500"
@@ -139,67 +124,50 @@ const AgreeComponent = () => {
   );
 };
 
-const makeAgree = (title, content, agree, setAgree, 필수, openModal) => {
+const makeAgree = (title, agree, setAgree, 필수) => {
   return (
-    <div className="group w-full p-4 border border-gray-500 rounded text-base flex justify-start items-center hover:scale-105 transition duration-500">
+    <div
+      className={`group h-full flex items-center space-x-4 cursor-pointer ${
+        필수 === undefined
+          ? "w-full p-4 justify-center"
+          : "w-[90%] py-4 pl-4 justify-start"
+      }`}
+      onClick={setAgree}
+    >
       <FaCheck
-        className={`w-[5%] mr-5 p-2 rounded-3xl text-3xl cursor-pointer group-hover:text-white transition duration-500 ${
-          !agree
-            ? "bg-white border border-gray-500 group-hover:bg-blue-500 group-hover:border-none"
-            : "bg-blue-500 text-white group-hover:bg-black group-hover:text-red-500"
+        className={`p-2 border rounded-3xl group-hover:scale-125 transition duration-500 ${
+          필수 === undefined ? "w-12 h-12" : "w-8 h-8"
+        }
+        ${
+          agree
+            ? "bg-blue-500 border-blue-500 text-white group-hover:bg-gray-500 group-hover:border-gray-500 group-hover:text"
+            : "border-gray-500 text-gray-500 group-hover:bg-blue-500 group-hover:border-blue-500 group-hover:text-white"
         }`}
-        onClick={() => setAgree(!agree)}
       />
-
-      <div
-        className="w-[85%] text-left cursor-pointer"
-        onClick={() => setAgree(!agree)}
-      >
-        {title}
-        {필수 ? (
-          <span className="ml-2 text-red-500">(필수)</span>
-        ) : (
-          <span className="ml-2 text-blue-500">(선택)</span>
-        )}
-      </div>
-
-      <button
-        className="w-[10%] p-1 border border-gray-500 rounded hover:bg-sky-500 hover:border-none hover:text-white transition duration-500"
-        onClick={() => openModal(title, content)}
-      >
-        보기
-      </button>
+      {필수 === undefined ? (
+        <div>{title}</div>
+      ) : (
+        <div className="w-full text-left cursor-pointer">
+          {title}
+          {필수 ? (
+            <span className="ml-2 text-red-500">(필수)</span>
+          ) : (
+            <span className="ml-2 text-blue-500">(선택)</span>
+          )}
+        </div>
+      )}
     </div>
   );
 };
 
-const content1 = () => {
+const makeBtn = (title, content, openModal) => {
   return (
-    <div className="h-60 my-4 p-4 border border-gray-300 rounded text-xs text-gray-700 leading-4 flex flex-col justify-start items-start space-y-4 overflow-y-scroll">
-      <div>제 1조 (목적)</div>
-      <div className="ml-2 flex flex-col justify-center items-start space-y-2">
-        <span>
-          본 약관은 BLOBUS 서비스(이하 "서비스"라 합니다)의 이용 조건 및 절차,
-        </span>
-        <span>기타 필요한 사항을 규정하는 것을 목적으로 합니다.</span>
-      </div>
-
-      <div>제 2조 (정의)</div>
-      <div className="ml-2 flex flex-col justify-center items-start space-y-2">
-        <span>
-          1. "회원"이란 서비스를 제공받기 위해 가입한 자를 의미합니다.
-        </span>
-        <span>
-          2. "운영자"란 서비스를 관리 및 운영하는 책임자를 의미합니다.
-        </span>
-      </div>
-
-      <div>제 3조 (서비스의 제공)</div>
-      <div className="ml-2 flex flex-col justify-center items-start space-y-2">
-        <span>회사는 본 약관에 따라 회원에게 서비스를 제공합니다.</span>
-        <span>서비스의 구체적인 내용은 회사가 별도로 정합니다.</span>
-      </div>
-    </div>
+    <button
+      className="w-[10%] mr-4 p-1 border border-gray-500 rounded text-base hover:bg-sky-500 hover:border-sky-500 hover:text-white transition duration-500"
+      onClick={() => openModal(title, content)}
+    >
+      보기
+    </button>
   );
 };
 

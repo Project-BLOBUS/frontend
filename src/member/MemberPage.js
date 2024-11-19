@@ -5,8 +5,8 @@ import Header from "../main/Header";
 import Loading from "./etc/Loading";
 
 const MemberPage = () => {
-  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     if (getCookie("jwt")) {
