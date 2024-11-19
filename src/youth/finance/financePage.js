@@ -1,11 +1,35 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { fetchAllPolicies } from "./FinanceApi";
+
 // import Header from "../main/Header"; // Header를 대문자로 수정
 
-function financePage (){
+const FinancePage = () => {
+  // 상태 관리와 데이터 로딩 로직
+  const [policies, setPolicies] = useState([]); // 정책 데이터 상태
+  const [loading, setLoading] = useState(true); // 로딩 상태
+  const [error, setError] = useState(null);     // 에러 상태
+
+  useEffect(() => {
+    const getPolicies = async () => {
+      try {
+        const data = await fetchAllPolicies(); // API 호출
+        setPolicies(data); // 데이터 상태 업데이트
+      } catch (err) {
+        setError("Failed to load policies."); // 에러 처리
+      } finally {
+        setLoading(false);  // 로딩 상태 업데이트
+      }
+    };
+
+    getPolicies();  // 데이터 가져오기 실행
+  }, []);
+
+  // 로딩 중일 때와 에러 발생 시 메시지 표시
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>{error}</p>;
 
   return (
     <div>
-      <div className="w-[70%] h-[600px] ml-[15%]  border-2 border-red-600">
         <div className="border-2 border-blue-400">
         {/* 들어가야하는 첫번째 div */}
           {/* 내용 필터 버튼 */}
@@ -40,19 +64,28 @@ function financePage (){
           </div>
 
         <div className="border-2 border-blue-400 h-[68%] mt-[2%]">
-          TODO : DB에 더미 데이터 만들어서 꺼내올 수 있게 만들어보기.
+          {/* TODO : DB에 더미 데이터 만들어서 꺼내올 수 있게 만들어보기.
           TODO 순서
           1. 백엔드 구축하고 더미 데이터 만들어보기
           2. API 만들기
           3. 백엔드랑 연결해서 데이터 들고 오기
-          들어가야하는 세번째 div
+          들어가야하는 세번째 div */}
+          <ul>
+            {policies.map((policy) => (
+              <li key={policy.policyId} className="mb-4">
+                <h2 className="font-bold text-lg">{policy.title}</h2>
+                <p>{policy.overview}</p>
+                <p>
+                  Application Period: {policy.applicationPeriodStart} to {policy.applicationPeriodEnd}
+                </p>
+              </li>
+            ))}
+          </ul>
         </div>
 
-        <div className="w-[200px] h-[20px] bg-red-300 ml-[40%] mt-[5px]">
-          TODO : 페이징 적용
-          들어가야하는 페이징 5번째
-        </div>
-
+      <div className="w-[200px] h-[20px] bg-red-300 ml-[40%] mt-[5px]">
+        TODO : 페이징 적용
+        들어가야하는 페이징 5번째
       </div>
 
       {/* 사이드바 숨김 */}
@@ -65,4 +98,4 @@ function financePage (){
   );
 };
 
-export default financePage;
+export default FinancePage;

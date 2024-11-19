@@ -2,7 +2,7 @@ import { Suspense, lazy } from "react";
 import { Navigate } from "react-router";
 
 const Loading = <div>Loading....</div>;
-const Finance = lazy(() => import("../finance/financePage"));
+const Finance = lazy(() => import("../finance/FinancePage"));
 
 const youthRouter = () => {
   return [

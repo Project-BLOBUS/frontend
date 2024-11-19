@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { fetchAllPolicies } from "./financeApi";
+import { fetchAllPolicies } from "./FinanceApi";
 
 const PolicyList = () => {
   const [policies, setPolicies] = useState([]);

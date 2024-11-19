@@ -21,3 +21,25 @@ export const fetchPolicyById = async (id) => {
     throw error; // 에러 전달
   }
 };
+
+// 정책 업데이트
+export const updatePolicy = async (id, updatedData) => {
+  try {
+    const response = await axiosInstance.put(`/policies/${id}`, updatedData);
+    return response.data;
+  } catch (error) {
+    console.error(`Failed to update policy ID ${id}:`, error);
+    throw error;
+  }
+};
+
+// 정책 삭제
+export const deletePolicy = async (id) => {
+  try {
+    await axiosInstance.delete(`/policies/${id}`);
+    console.log(`Policy ID ${id} deleted successfully.`);
+  } catch (error) {
+    console.error(`Failed to delete policy ID ${id}:`, error);
+    throw error;
+  }
+};

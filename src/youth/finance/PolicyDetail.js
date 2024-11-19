@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { fetchPolicyById } from "./financeApi";
+import { fetchPolicyById } from "./FinanceApi";
 
 const PolicyDetail = () => {
   const { id } = useParams(); // URL에서 ID 가져오기
