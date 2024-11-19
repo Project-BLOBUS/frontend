@@ -12,8 +12,16 @@ import {
 const MainPage = lazy(() => import("./main/MainPage"));
 const YouthPage = lazy(() => import("./youth/YouthPage"));
 const Enterprise = lazy(() => import("./enterprise/Enterprise"));
-const Community = lazy(() => import("./community/Community"));
+const Community = lazy(() => import("./community/component/Listcomponent"));
 const Resources = lazy(() => import("./resource/Resource"));
+
+// community 부분
+const Listcomponent = lazy(() =>
+  import("../src/community/component/Listcomponent")
+);
+const Addcomponent = lazy(() =>
+  import("../src/community/component/Addcomponent")
+);
 
 const AppRoutes = () => (
   <Routes>
@@ -31,6 +39,11 @@ const AppRoutes = () => (
     <Route path="/resource" element={<Resources />} />
     {/* <Route path="/head" element={<Header />} /> */}
     {/* <Route path="/footer" element={<Footer />} /> */}
+    {/* community 부분 */}
+    <Route path="/list" element={<Listcomponent />} />{" "}
+    {/* /list 경로로 Listcomponent 매핑 */}
+    <Route path="/add" element={<Addcomponent />} />{" "}
+    {/* /add 경로로 Addcomponent 매핑 */}
   </Routes>
 );
 
