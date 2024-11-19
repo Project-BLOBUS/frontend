@@ -11,6 +11,17 @@ export const fetchAllPolicies = async () => {
   }
 };
 
+// 페이징된 정책 가져오기
+export const fetchPagedPolicies = async (page, size) => {
+  try {
+    const response = await axiosInstance.get(`/paged-policies?page=${page}&size=${size}`);
+    return response.data; // 데이터를 반환 (Page 객체)
+  } catch (error) {
+    console.error(`Failed to fetch policies for page ${page}:`, error);
+    throw error; // 에러 전달
+  }
+};
+
 // 특정 ID의 정책 가져오기
 export const fetchPolicyById = async (id) => {
   try {
