@@ -1,32 +1,80 @@
 import React, { useEffect, useState } from "react";
-import { fetchAllPolicies } from "./FinanceApi";
+import { useNavigate, useSearchParams } from "react-router-dom";
+import { fetchPagedPolicies } from "./FinanceApi";
 
 // import Header from "../main/Header"; // Header를 대문자로 수정
 
 const FinancePage = () => {
-  // 상태 관리와 데이터 로딩 로직
-  const [policies, setPolicies] = useState([]); // 정책 데이터 상태
-  const [loading, setLoading] = useState(true); // 로딩 상태
-  const [error, setError] = useState(null);     // 에러 상태
+  const [policies, setPolicies] = useState([]);
+  const [totalPages, setTotalPages] = useState(0); // 전체 페이지 수
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  const [searchParams, setSearchParams] = useSearchParams(); // URL 쿼리 파라미터 관리
+  const navigate = useNavigate(); // URL 변경을 위한 훅
+
+  const pageSize = 5; // 한 페이지당 데이터 개수
+  const pagesPerGroup = 10; // 한 그룹에 표시할 페이지 수
+
+  // URL에서 현재 페이지 읽기 (초기값: 0)
+  const currentPage = parseInt(searchParams.get("page")) || 0;
+  const currentPageGroup = Math.floor(currentPage / pagesPerGroup);
 
   useEffect(() => {
-    const getPolicies = async () => {
+    const getPagedPolicies = async () => {
       try {
-        const data = await fetchAllPolicies(); // API 호출
-        setPolicies(data); // 데이터 상태 업데이트
+        setLoading(true);
+        const data = await fetchPagedPolicies(currentPage, pageSize);
+        setPolicies(data.content);
+        setTotalPages(data.totalPages);
       } catch (err) {
-        setError("Failed to load policies."); // 에러 처리
+        setError("Failed to load policies.");
       } finally {
-        setLoading(false);  // 로딩 상태 업데이트
+        setLoading(false);
       }
     };
 
-    getPolicies();  // 데이터 가져오기 실행
-  }, []);
+    getPagedPolicies();
+  }, [currentPage]);
 
-  // 로딩 중일 때와 에러 발생 시 메시지 표시
+  const handlePageChange = (page) => {
+    // URL에 상태 저장
+    setSearchParams({ page });
+  };
+
+  const handleNextPage = () => {
+    const nextPage = currentPage + 1;
+    if (nextPage < totalPages) {
+      handlePageChange(nextPage);
+    }
+  };
+
+  const handlePreviousPage = () => {
+    const previousPage = currentPage - 1;
+    if (previousPage >= 0) {
+      handlePageChange(previousPage);
+    }
+  };
+
+  const handleNextGroup = () => {
+    const nextGroup = currentPageGroup + 1;
+    const firstPageOfNextGroup = nextGroup * pagesPerGroup;
+    if (firstPageOfNextGroup < totalPages) {
+      handlePageChange(firstPageOfNextGroup);
+    }
+  };
+
+  const handlePreviousGroup = () => {
+    const prevGroup = Math.max(currentPageGroup - 1, 0);
+    const firstPageOfPrevGroup = prevGroup * pagesPerGroup;
+    handlePageChange(firstPageOfPrevGroup);
+  };
+
   if (loading) return <p>Loading...</p>;
   if (error) return <p>{error}</p>;
+
+  const startPage = currentPageGroup * pagesPerGroup;
+  const endPage = Math.min(startPage + pagesPerGroup, totalPages);
 
   return (
     <div>
@@ -76,16 +124,71 @@ const FinancePage = () => {
                 <h2 className="font-bold text-lg">{policy.title}</h2>
                 <p>{policy.overview}</p>
                 <p>
-                  Application Period: {policy.applicationPeriodStart} to {policy.applicationPeriodEnd}
+                  Application Period: {policy.applicationPeriodStart} to{" "}
+                  {policy.applicationPeriodEnd}
                 </p>
               </li>
             ))}
           </ul>
         </div>
 
-      <div className="w-[200px] h-[20px] bg-red-300 ml-[40%] mt-[5px]">
-        TODO : 페이징 적용
-        들어가야하는 페이징 5번째
+      <div className="w-[200px] h-[20px] ml-[40%] mt-[5px]">
+        {/* 페이징 버튼 */}
+        <div className="w-full flex justify-center mt-4">
+          {/* 이전 그룹 버튼 */}
+          {currentPageGroup > 0 && (
+            <button
+              onClick={handlePreviousGroup}
+              className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-l"
+            >
+              {'<'}{'<'}
+            </button>
+          )}
+
+          {/* 이전 페이지 버튼 */}
+          <button
+            onClick={handlePreviousPage}
+            disabled={currentPage === 0}
+            className="px-4 py-2 mx-1 bg-gray-200 rounded disabled:opacity-50"
+          >
+            {'<'}
+          </button>
+
+          {/* 현재 그룹에 해당하는 페이지 버튼 */}
+          {Array.from(
+            { length: endPage - startPage },
+            (_, index) => startPage + index
+          ).map((page) => (
+            <button
+              key={page}
+              onClick={() => handlePageChange(page)}
+              className={`px-4 py-2 mx-1 rounded ${
+                currentPage === page ? "bg-blue-500 text-white" : "bg-gray-200"
+              }`}
+            >
+              {page + 1}
+            </button>
+          ))}
+
+          {/* 다음 페이지 버튼 */}
+          <button
+            onClick={handleNextPage}
+            disabled={currentPage === totalPages - 1}
+            className="px-4 py-2 mx-1 bg-gray-200 rounded disabled:opacity-50"
+          >
+            {'>'}
+          </button>
+
+          {/* 다음 그룹 버튼 */}
+          {endPage < totalPages && (
+            <button
+              onClick={handleNextGroup}
+              className="px-4 py-2 mx-1 bg-gray-200 rounded"
+            >
+              {'>'}{'>'}
+            </button>
+          )}
+        </div>
       </div>
 
       {/* 사이드바 숨김 */}
