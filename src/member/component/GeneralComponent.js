@@ -5,20 +5,19 @@ import { FaBackspace } from "react-icons/fa";
 import { GiSouthKorea } from "react-icons/gi";
 import { IoMdFemale, IoMdMale } from "react-icons/io";
 import { toast } from "react-toastify";
-import { addressData } from "../api/externalAPI ";
+import { getAddressData } from "../api/externalAPI ";
 import { duplicate, sendMail, register } from "../api/memberAPI";
 import { setCookie, removeCookie } from "../util/cookieUtil";
-import useCustomTag from "../hoook/useCustomeTag";
+import useCustomTag from "../hook/useCustomeTag";
 import Loading from "../etc/Loading";
 
 const initState = {
-  // TODO 삭제
-  userId: "bell4916@naver.com",
+  userId: "",
   authCode: "",
-  userPw: "qwerQWER1234!@#$",
-  confirmPw: "qwerQWER1234!@#$",
-  name: "홍길동",
-  phoneNum: "01012345678",
+  userPw: "",
+  confirmPw: "",
+  name: "",
+  phoneNum: "",
   address: "",
   birthDate: null,
   gender: "M",
@@ -66,7 +65,7 @@ const GeneralComponent = () => {
 
   useEffect(() => {
     setLoading(true);
-    addressData(setAddress, address.regionCode);
+    getAddressData(setAddress, address.regionCode);
     setLoading(false);
   }, [address.regionCode]);
 
@@ -117,6 +116,12 @@ const GeneralComponent = () => {
   const validField = () => {
     const validList = [
       [!member.userId, "아이디를 입력하세요.", refList.userId],
+      [
+        !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(member.userId),
+        "올바르지 못한 아이디입니다. (example@domain.com)",
+        refList.userId,
+        "userId",
+      ],
       [!validation.isIdValid, "중복 확인 버튼를 누르세요."],
       [!validation.isMailSent, "메일 전송을 누르세요."],
       [!member.authCode, "인증코드를 입력하세요.", refList.authCode],
@@ -155,7 +160,9 @@ const GeneralComponent = () => {
     for (const [condition, message, ref, err] of validList) {
       if (condition) {
         err ? toast.error(message) : toast.warn(message);
-        if (err === "userPw") {
+        if (err === "userId") {
+          setMember({ ...member, userId: "" });
+        } else if (err === "userPw") {
           setMember({ ...member, userPw: "" });
         } else if (err === "confirmPw") {
           setMember({ ...member, confirmPw: "" });
@@ -177,7 +184,7 @@ const GeneralComponent = () => {
     await register(member)
       .then((data) => {
         if (data.error) {
-          toast.error("회원 가입애 실패했습니다.");
+          toast.error("회원 가입에 실패했습니다.");
         } else {
           toast.success("회원 가입 완료");
           setTimeout(() => {
@@ -239,10 +246,11 @@ const GeneralComponent = () => {
                       setValidation({ ...validation, isIdValid: true });
                       toast.success("가입 가능한 아이디");
                     } else {
-                      toast.warn("중복된 아이디");
+                      toast.warn("중복된 아이디, 다시 입력하세요.");
+                      refList.userId.current.focus();
                     }
                   } catch (error) {
-                    toast.error("서버 연결 실패");
+                    toast.error("서버 연결에 실패했습니다.");
                   }
 
                   setLoading(false);
@@ -254,19 +262,16 @@ const GeneralComponent = () => {
                   setLoading(true);
 
                   try {
-                    // TODO 수정
                     const code = await sendMail(member);
-                    // const code = 123456;
                     setValidation({
                       ...validation,
                       isMailSent: true,
                       authCode: code,
                     });
                     toast.success("메일 전송 성공");
-                    // TODO 삭제
-                    setMember({ ...member, authCode: code });
+                    refList.authCode.current.focus();
                   } catch (error) {
-                    toast.error("메일 전송 실패");
+                    toast.error("메일 전송에 실패했습니다.");
                   }
 
                   setLoading(false);
@@ -291,7 +296,8 @@ const GeneralComponent = () => {
                     setValidation({ ...validation, isAuth: true });
                     toast.success("인증 완료");
                   } else {
-                    toast.warn("인증 실패");
+                    toast.warn("인증 코드를 다시 입력하세요.");
+                    refList.authCode.current.focus();
                   }
 
                   setLoading(false);
@@ -394,7 +400,7 @@ const GeneralComponent = () => {
               "year",
               birthDate.year,
               Array.from(
-                { length: new Date().getFullYear() - 1900 + 1 },
+                { length: new Date().getFullYear() - 1900 + 1 - 14 },
                 (_, i) => ({
                   key: 1900 + i,
                   name: 1900 + i,

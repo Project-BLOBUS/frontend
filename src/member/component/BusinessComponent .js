@@ -2,14 +2,15 @@ import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { FaBackspace } from "react-icons/fa";
 import { toast } from "react-toastify";
-import { addressData } from "../api/externalAPI ";
+import { checkBusinessCode, getAddressData } from "../api/externalAPI ";
 import { duplicate, register } from "../api/memberAPI";
 import { setCookie, removeCookie } from "../util/cookieUtil";
-import useCustomTag from "../hoook/useCustomeTag";
+import useCustomTag from "../hook/useCustomeTag";
 import Loading from "../etc/Loading";
 
 const initState = {
-  userId: "",
+  userId: "520-38-01151",
+  file: "",
   userPw: "",
   confirmPw: "",
   name: "",
@@ -41,6 +42,7 @@ const BusinessComponent = () => {
 
   const refList = {
     userId: useRef(null),
+    file: useRef(null),
     userPw: useRef(null),
     confirmPw: useRef(null),
     name: useRef(null),
@@ -52,7 +54,7 @@ const BusinessComponent = () => {
 
   useEffect(() => {
     setLoading(true);
-    addressData(setAddress, address.regionCode);
+    getAddressData(setAddress, address.regionCode);
     setLoading(false);
   }, [address.regionCode]);
 
@@ -85,8 +87,15 @@ const BusinessComponent = () => {
   const validField = () => {
     const validList = [
       [!member.userId, "아이디를 입력하세요.", refList.userId],
+      [
+        !/^\d{3}-\d{2}-\d{5}$/.test(member.userId),
+        "올바르지 못한 아이디입니다. (사업등록번호 : 000-00-00000)",
+        refList.userId,
+        "userId",
+      ],
       [!validation.isIdValid, "중복 확인 버튼를 누르세요."],
       [!validation.isAuth, "아이디 인증을 완료하세요."],
+      [!member.file, "사업자 등록증을 첨부하세요.", refList.file],
       [!member.userPw, "비밀번호를 입력하세요.", refList.userPw],
       [
         !/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*]).{8,16}$/.test(
@@ -114,7 +123,7 @@ const BusinessComponent = () => {
       [!member.email, "담당자 이메일을 입력하세요.", refList.email],
       [
         !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(member.email),
-        "올바르지 못한 이메일입니다.. (example@domain.com)",
+        "올바르지 못한 이메일입니다. (example@domain.com)",
         refList.email,
         "email",
       ],
@@ -125,7 +134,9 @@ const BusinessComponent = () => {
     for (const [condition, message, ref, err] of validList) {
       if (condition) {
         err ? toast.error(message) : toast.warn(message);
-        if (err === "userPw") {
+        if (err === "userId") {
+          setMember({ ...member, userId: "" });
+        } else if (err === "userPw") {
           setMember({ ...member, userPw: "" });
         } else if (err === "confirmPw") {
           setMember({ ...member, confirmPw: "" });
@@ -209,10 +220,11 @@ const BusinessComponent = () => {
                       setValidation({ ...validation, isIdValid: true });
                       toast.success("가입 가능한 아이디");
                     } else {
-                      toast.warn("중복된 아이디");
+                      toast.warn("중복된 아이디, 다시 입력하세요.");
+                      refList.userId.current.focus();
                     }
                   } catch (error) {
-                    toast.error("서버 연결 실패");
+                    toast.error("서버 연결에 실패했습니다.");
                   }
 
                   setLoading(false);
@@ -223,11 +235,15 @@ const BusinessComponent = () => {
                 {makeBtn("인증 확인", async () => {
                   setLoading(true);
 
-                  try {
+                  const result = await checkBusinessCode(member.userId);
+                  if (result.b_stt_cd) {
                     setValidation({ ...validation, isAuth: true });
                     toast.success("인증 성공");
-                  } catch (error) {
-                    toast.error("인증 실패");
+                  } else {
+                    toast.warn(
+                      "유효하지 않은 사업자등록번호, 다시 입력하세요."
+                    );
+                    refList.userId.current.focus();
                   }
 
                   setLoading(false);
@@ -237,6 +253,21 @@ const BusinessComponent = () => {
               <></>
             )}
           </div>
+        )}
+
+        {console.log(member.file)}
+        {/* 사업자등록증 */}
+        {makeAdd(
+          "첨부파일",
+          makeInput(
+            "file",
+            "file",
+            member.file,
+            "",
+            onChange,
+            validation.isAuth,
+            refList.file
+          )
         )}
 
         {/* 비밀번호 */}

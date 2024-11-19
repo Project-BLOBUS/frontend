@@ -116,7 +116,7 @@ function Header({
 
       <ToastContainer
         style={{ width: "auto" }}
-        className="min-w-[100px] text-xl text-center text-nowrap"
+        className="text-xl text-center text-nowrap"
         position="top-center"
         autoClose={1000}
         pauseOnFocusLoss={false}

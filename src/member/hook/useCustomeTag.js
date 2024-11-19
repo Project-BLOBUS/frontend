@@ -36,7 +36,7 @@ const useCustomTag = () => {
       <input
         className={`${
           width ?? "w-full"
-        } p-4 border border-gray-500 rounded shadow-lg text-left tracking-widest  ${
+        } p-4 border border-gray-500 rounded shadow-lg text-left tracking-wider ${
           isAuth || "bg-gray-400 border-none text-white placeholder-gray-300"
         }`}
         type={type}

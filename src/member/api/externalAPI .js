@@ -1,13 +1,13 @@
 import axios from "axios";
 
-const keySGIS = "fbf556c8d8a044b7a60b";
-const secretSGIS = "484c7af49e1c4a2188d9";
+export const getAddressData = async (setAddress, regionCode) => {
+  const key = "fbf556c8d8a044b7a60b";
+  const secret = "484c7af49e1c4a2188d9";
 
-export const addressData = async (setAddress, regionCode) => {
   try {
     const resForToken = await axios.get(
       "https://sgisapi.kostat.go.kr/OpenAPI3/auth/authentication.json",
-      { params: { consumer_key: keySGIS, consumer_secret: secretSGIS } }
+      { params: { consumer_key: key, consumer_secret: secret } }
     );
 
     const resForRegion = await axios.get(
@@ -46,5 +46,23 @@ export const addressData = async (setAddress, regionCode) => {
     }));
   } catch (error) {
     console.error("데이터를 불러오는 데 실패했습니다:", error);
+  }
+};
+
+export const checkBusinessCode = async (businessCode) => {
+  const serviceKey =
+    "EwmP2oanUlpkJWfofdXEssb2YGDaaogKxgemEsM39xdajSXql1xsIAnE/DMLYFSG9Iv06Siy0gmw5hkAAZgyYw==";
+
+  try {
+    const { data } = await axios.post(
+      `https://api.odcloud.kr/api/nts-businessman/v1/status?serviceKey=${serviceKey}`,
+      {
+        b_no: [businessCode.replace(/-/g, "")],
+      }
+    );
+    return data.data[0];
+  } catch (error) {
+    console.error("사업자등록 인증 오류 : ", error);
+    throw error;
   }
 };
