@@ -9,6 +9,7 @@ const MemberPage = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    // TODO 현재 저장된 쿠키 정보 따라서 페이지 이동 (로그인 상태로는 접속불가)
     if (getCookie("jwt")) {
       setLoading(false);
       navigate(-1);

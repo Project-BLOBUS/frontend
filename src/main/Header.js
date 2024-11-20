@@ -82,7 +82,7 @@ function Header({
               <>
                 <Link
                   className="w-[45%] hover:text-gray-300 transition duration-500"
-                  to="/member/mypage"
+                  to="/mypage"
                 >
                   마이페이지
                 </Link>

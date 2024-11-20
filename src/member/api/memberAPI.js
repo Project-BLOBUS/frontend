@@ -38,16 +38,12 @@ export const register = async (member) => {
   return res.data;
 };
 
-// export const modifyOne = async (employee) => {
-//   const res = await axios.put(`${host}/${employee.enb}`, employee, {
-//     headers: header,
-//   });
-//   return res.data;
-// };
+export const find = async (member) => {
+  const res = await axios.get(
+    `${host}/${member.roleName.toLowerCase()}/find/${member.name}&${
+      member.phoneNum
+    }`
+  );
 
-// export const deleteOne = async (enb) => {
-//   const res = await axios.delete(`${host}/${enb}`, {
-//     headers: header,
-//   });
-//   return res.data;
-// };
+  return res.data;
+};

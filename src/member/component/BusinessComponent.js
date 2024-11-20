@@ -9,20 +9,21 @@ import useCustomTag from "../hook/useCustomeTag";
 import Loading from "../etc/Loading";
 
 const initState = {
+  // TODO 삭제
   userId: "520-38-01151",
   file: "",
-  userPw: "",
-  confirmPw: "",
-  name: "",
-  phoneNum: "",
-  email: "",
-  address: "",
+  userPw: "qwerQWER1234!@#$",
+  confirmPw: "qwerQWER1234!@#$",
+  name: "Project BLOBUS",
+  phoneNum: "01049164357",
+  email: "blobus051@gmail.com",
+  address: "부산광역시-해운대구",
   roleName: "BUSINESS",
 };
 
 const BusinessComponent = () => {
   const navigate = useNavigate();
-  const [makeBtn, makeAdd, makeInput, makeSelect] = useCustomTag();
+  const { makeBtn, makeAdd, makeInput, makeSelect } = useCustomTag();
   const [loading, setLoading] = useState(false);
 
   const [member, setMember] = useState(initState);
@@ -94,7 +95,7 @@ const BusinessComponent = () => {
         "userId",
       ],
       [!validation.isIdValid, "중복 확인 버튼를 누르세요."],
-      [!validation.isAuth, "아이디 인증을 완료하세요."],
+      [!validation.isAuth, "사업자등록 여부를 확인하세요."],
       [!member.file, "사업자 등록증을 첨부하세요.", refList.file],
       [!member.userPw, "비밀번호를 입력하세요.", refList.userPw],
       [
@@ -160,7 +161,7 @@ const BusinessComponent = () => {
     await register(member)
       .then((data) => {
         if (data.error) {
-          toast.error("회원 가입애 실패했습니다.");
+          toast.error("회원 가입에 실패했습니다.");
         } else {
           toast.success("회원 가입 완료");
           setTimeout(() => {
@@ -175,7 +176,7 @@ const BusinessComponent = () => {
         }
       })
       .catch(() => {
-        toast.error("회원 가입애 실패했습니다.");
+        toast.error("회원 가입에 실패했습니다.");
       });
 
     setLoading(false);
@@ -217,8 +218,8 @@ const BusinessComponent = () => {
                   try {
                     const data = await duplicate(member);
                     if (!data) {
-                      setValidation({ ...validation, isIdValid: true });
                       toast.success("가입 가능한 아이디");
+                      setValidation({ ...validation, isIdValid: true });
                     } else {
                       toast.warn("중복된 아이디, 다시 입력하세요.");
                       refList.userId.current.focus();
@@ -232,17 +233,17 @@ const BusinessComponent = () => {
               </>
             ) : !validation.isAuth ? (
               <>
-                {makeBtn("인증 확인", async () => {
+                {makeBtn("등록 확인", async () => {
                   setLoading(true);
 
                   const result = await checkBusinessCode(member.userId);
                   if (result.b_stt_cd) {
+                    toast.success("등록확인 완료");
+                    toast.info(result.b_stt + " / " + result.tax_type);
                     setValidation({ ...validation, isAuth: true });
-                    toast.success("인증 성공");
+                    refList.userPw.current.focus();
                   } else {
-                    toast.warn(
-                      "유효하지 않은 사업자등록번호, 다시 입력하세요."
-                    );
+                    toast.warn("사업자등록번호 조회 실패, 다시 입력하세요.");
                     refList.userId.current.focus();
                   }
 
@@ -367,9 +368,9 @@ const BusinessComponent = () => {
           </div>
         )}
 
-        <div className="w-full text-2xl text-center font-bold flex space-x-4">
+        <div className="w-full py-4 text-2xl text-center font-bold flex space-x-4">
           <button
-            className="bg-gray-500 w-1/4 mt-4 p-4 rounded-xl text-white flex justify-center items-center hover:bg-gray-300 hover:text-black transition duration-500"
+            className="bg-gray-500 w-1/4 p-4 rounded-xl text-white flex justify-center items-center hover:bg-gray-300 hover:text-black transition duration-500"
             onClick={() => {
               if (window.history.length > 2) {
                 navigate(-1);
@@ -382,7 +383,7 @@ const BusinessComponent = () => {
           </button>
 
           <button
-            className="bg-sky-500 w-3/4 mt-4 p-4 rounded-xl text-white hover:bg-sky-300 hover:text-black transition duration-500"
+            className="bg-sky-500 w-3/4 p-4 rounded-xl text-white hover:bg-sky-300 hover:text-black transition duration-500"
             onClick={onCLickRegister}
           >
             완료

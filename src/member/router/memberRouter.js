@@ -3,10 +3,14 @@ import { Navigate } from "react-router";
 import Loading from "../etc/Loading";
 
 const Login = lazy(() => import("../component/LoginComponent"));
+
 const Choice = lazy(() => import("../component/ChoiceComponent"));
 const Agree = lazy(() => import("../component/AgreeComponent"));
 const General = lazy(() => import("../component/GeneralComponent"));
-const Business = lazy(() => import("../component/BusinessComponent "));
+const Business = lazy(() => import("../component/BusinessComponent"));
+
+const FindId = lazy(() => import("../component/FindIdComponent"));
+const FindPw = lazy(() => import("../component/FindPwComponent"));
 
 const memberRouter = () => {
   return [
@@ -51,6 +55,22 @@ const memberRouter = () => {
       element: (
         <Suspense fallback={<Loading />}>
           <Business />
+        </Suspense>
+      ),
+    },
+    {
+      path: "findid",
+      element: (
+        <Suspense fallback={<Loading />}>
+          <FindId />
+        </Suspense>
+      ),
+    },
+    {
+      path: "findpw",
+      element: (
+        <Suspense fallback={<Loading />}>
+          <FindPw />
         </Suspense>
       ),
     },

@@ -13,18 +13,20 @@ const ChoiceComponent = () => {
         {makeChoice("기업계정", false, navigate)}
       </div>
 
-      <button
-        className="bg-gray-500 w-full p-4 rounded-2xl shadow-xl text-white flex justify-center items-center hover:bg-gray-300 hover:text-black transition duration-500"
-        onClick={() => {
-          if (window.history.length > 2) {
-            navigate(-1);
-          } else {
-            navigate("/");
-          }
-        }}
-      >
-        취소
-      </button>
+      <div className="w-full py-4">
+        <button
+          className="bg-gray-500 w-full p-4 rounded-2xl shadow-xl text-white flex justify-center items-center hover:bg-gray-300 hover:text-black transition duration-500"
+          onClick={() => {
+            if (window.history.length > 2) {
+              navigate(-1);
+            } else {
+              navigate("/");
+            }
+          }}
+        >
+          취소
+        </button>
+      </div>
     </div>
   );
 };

@@ -72,7 +72,7 @@ const AgreeComponent = () => {
         ))}
       </div>
 
-      <div className="w-full m-4 text-2xl flex space-x-4">
+      <div className="w-full py-4 text-2xl flex space-x-4">
         <button
           className="bg-gray-500 w-1/6 p-4 rounded-xl text-white flex justify-center items-center hover:bg-gray-300 hover:text-black transition duration-500"
           onClick={() => {

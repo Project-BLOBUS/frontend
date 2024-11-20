@@ -4,6 +4,7 @@ const useCustomTag = () => {
       "중복 확인": "bg-red-500 hover:bg-red-300",
       "메일 전송": "bg-green-500 hover:bg-green-300",
       "인증 확인": "bg-blue-500 hover:bg-blue-300",
+      "등록 확인": "bg-blue-500 hover:bg-blue-300",
     };
 
     return (
@@ -121,7 +122,7 @@ const useCustomTag = () => {
     );
   };
 
-  return [makeBtn, makeAdd, makeInput, makeSelect, makeRatio];
+  return { makeBtn, makeAdd, makeInput, makeSelect, makeRatio };
 };
 
 export default useCustomTag;

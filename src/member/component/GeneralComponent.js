@@ -12,12 +12,13 @@ import useCustomTag from "../hook/useCustomeTag";
 import Loading from "../etc/Loading";
 
 const initState = {
-  userId: "",
+  // TODO 삭제
+  userId: "bell4916@naver.com",
   authCode: "",
-  userPw: "",
-  confirmPw: "",
-  name: "",
-  phoneNum: "",
+  userPw: "Yang544110!@",
+  confirmPw: "Yang544110!@",
+  name: "양성규",
+  phoneNum: "01049164357",
   address: "",
   birthDate: null,
   gender: "M",
@@ -27,7 +28,7 @@ const initState = {
 
 const GeneralComponent = () => {
   const navigate = useNavigate();
-  const [makeBtn, makeAdd, makeInput, makeSelect, makeRatio] = useCustomTag();
+  const { makeBtn, makeAdd, makeInput, makeSelect, makeRatio } = useCustomTag();
   const [loading, setLoading] = useState(false);
 
   const [member, setMember] = useState(initState);
@@ -125,7 +126,7 @@ const GeneralComponent = () => {
       [!validation.isIdValid, "중복 확인 버튼를 누르세요."],
       [!validation.isMailSent, "메일 전송을 누르세요."],
       [!member.authCode, "인증코드를 입력하세요.", refList.authCode],
-      [!validation.isAuth, "아이디 인증을 완료하세요."],
+      [!validation.isAuth, "이메일 인증을 완료하세요."],
       [!member.userPw, "비밀번호를 입력하세요.", refList.userPw],
       [
         !/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*]).{8,16}$/.test(
@@ -185,6 +186,10 @@ const GeneralComponent = () => {
       .then((data) => {
         if (data.error) {
           toast.error("회원 가입에 실패했습니다.");
+        } else if (data === 0) {
+          toast.warn("이미 등록된 번호, 다시 입력하세요.");
+          setMember({ ...member, phoneNum: "" });
+          refList.phoneNum.current.focus();
         } else {
           toast.success("회원 가입 완료");
           setTimeout(() => {
@@ -199,7 +204,7 @@ const GeneralComponent = () => {
         }
       })
       .catch(() => {
-        toast.error("회원 가입애 실패했습니다.");
+        toast.error("회원 가입에 실패했습니다.");
       });
 
     setLoading(false);
@@ -243,8 +248,8 @@ const GeneralComponent = () => {
                   try {
                     const data = await duplicate(member);
                     if (!data) {
-                      setValidation({ ...validation, isIdValid: true });
                       toast.success("가입 가능한 아이디");
+                      setValidation({ ...validation, isIdValid: true });
                     } else {
                       toast.warn("중복된 아이디, 다시 입력하세요.");
                       refList.userId.current.focus();
@@ -263,13 +268,14 @@ const GeneralComponent = () => {
 
                   try {
                     const code = await sendMail(member);
+                    toast.success("메일 전송 성공");
                     setValidation({
                       ...validation,
                       isMailSent: true,
                       authCode: code,
                     });
-                    toast.success("메일 전송 성공");
-                    refList.authCode.current.focus();
+                    // TODO 삭제
+                    setMember({ ...member, authCode: code });
                   } catch (error) {
                     toast.error("메일 전송에 실패했습니다.");
                   }
@@ -293,8 +299,9 @@ const GeneralComponent = () => {
                   setLoading(true);
 
                   if (validation.authCode === member.authCode * 1) {
-                    setValidation({ ...validation, isAuth: true });
                     toast.success("인증 완료");
+                    setValidation({ ...validation, isAuth: true });
+                    refList.userPw.current.focus();
                   } else {
                     toast.warn("인증 코드를 다시 입력하세요.");
                     refList.authCode.current.focus();
@@ -492,9 +499,9 @@ const GeneralComponent = () => {
           </div>
         )}
 
-        <div className="w-full text-2xl text-center font-bold flex space-x-4">
+        <div className="w-full py-4 text-2xl text-center font-bold flex space-x-4">
           <button
-            className="bg-gray-500 w-1/4 mt-4 p-4 rounded-xl text-white flex justify-center items-center hover:bg-gray-300 hover:text-black transition duration-500"
+            className="bg-gray-500 w-1/4 p-4 rounded-xl text-white flex justify-center items-center hover:bg-gray-300 hover:text-black transition duration-500"
             onClick={() => {
               if (window.history.length > 2) {
                 navigate(-1);
@@ -507,7 +514,7 @@ const GeneralComponent = () => {
           </button>
 
           <button
-            className="bg-sky-500 w-3/4 mt-4 p-4 rounded-xl text-white hover:bg-sky-300 hover:text-black transition duration-500"
+            className="bg-sky-500 w-3/4 p-4 rounded-xl text-white hover:bg-sky-300 hover:text-black transition duration-500"
             onClick={onCLickRegister}
           >
             완료

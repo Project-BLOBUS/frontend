@@ -50,9 +50,9 @@ const LoginComponent = () => {
             setCookie("name", data.name);
             setCookie("userId", userId);
             setCookie("userRole", userRole);
-            setCookie("idSave", idSave);
+            userRole !== "ADMIN" && setCookie("idSave", idSave);
 
-            toast.success("로그인 완료 : " + data.name);
+            toast.success("로그인 완료 : " + data.userId);
             setTimeout(() => {
               const moveAfterLogin = () => {
                 if (window.location.pathname.includes("member")) {
@@ -76,14 +76,18 @@ const LoginComponent = () => {
     if (e.key === "Enter") {
       onCLickLogin(e);
     } else if (e.key === "Escape") {
+      // TODO 삭제
       if (userRole === "GENERAL") {
-        // TODO : 삭제 필요
-        setUserId("test@test.com");
+        setUserId("bell4916@naver.com");
+        setUserPw("Yang544110!@");
+        onCLickLogin(e);
+      } else if (userRole === "BUSINESS") {
+        setUserId("520-38-01151");
         setUserPw("qwerQWER1234!@#$");
         onCLickLogin(e);
-      } else {
-        setUserId("123-12-12345");
-        setUserPw("qwerQWER1234!@#$");
+      } else if (userRole === "ADMIN") {
+        setUserId("ADMIN");
+        setUserPw("ADMIN");
         onCLickLogin(e);
       }
     }
@@ -126,25 +130,29 @@ const LoginComponent = () => {
           ref={pwRef}
         />
 
-        <div className="group w-full flex justify-center items-center cursor-pointer">
-          <input
-            className="w-4 h-4"
-            type="checkbox"
-            name="idSave"
-            checked={idSave}
-            onChange={() => setIdSave(!idSave)}
-          />
-          <div
-            className={`ml-2 transition duration-500 ${
-              idSave ? "group-hover:text-gray-300" : "group-hover:text-sky-300"
-            }`}
-            onClick={() => setIdSave(!idSave)}
-          >
-            아이디 저장
+        {userRole === "ADMIN" || (
+          <div className="group w-full flex justify-center items-center cursor-pointer">
+            <input
+              className="w-4 h-4"
+              type="checkbox"
+              name="idSave"
+              checked={idSave}
+              onChange={() => setIdSave(!idSave)}
+            />
+            <div
+              className={`ml-2 transition duration-500 ${
+                idSave
+                  ? "group-hover:text-gray-300"
+                  : "group-hover:text-sky-300"
+              }`}
+              onClick={() => setIdSave(!idSave)}
+            >
+              아이디 저장
+            </div>
           </div>
-        </div>
+        )}
 
-        <div className="w-full text-2xl flex space-x-4">
+        <div className="w-full py-4 text-2xl flex space-x-4">
           <button
             className="bg-gray-500 w-1/6 p-4 rounded-2xl shadow-xl text-white flex justify-center items-center hover:bg-gray-300 hover:text-black transition duration-500"
             onClick={() => {
@@ -167,9 +175,9 @@ const LoginComponent = () => {
         </div>
 
         <div className="w-full px-20 text-base flex justify-between items-start">
-          {makeLink("", "아이디 찾기")}
+          {makeLink("/member/findid", "아이디 찾기")}
           <div>|</div>
-          {makeLink("", "비밀번호 찾기")}
+          {makeLink("/member/findpw", "비밀번호 찾기")}
           <div>|</div>
           {makeLink("/member/signup", "회원가입")}
         </div>
