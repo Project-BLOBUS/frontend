@@ -5,11 +5,11 @@ import { FaBackspace } from "react-icons/fa";
 import { GiSouthKorea } from "react-icons/gi";
 import { IoMdFemale, IoMdMale } from "react-icons/io";
 import { toast } from "react-toastify";
-import { getAddressData } from "../api/externalAPI ";
 import { duplicate, sendMail, register } from "../api/memberAPI";
 import { setCookie, removeCookie } from "../util/cookieUtil";
 import useCustomTag from "../hook/useCustomeTag";
 import Loading from "../etc/Loading";
+import AddressList from "../data/AddressList";
 
 const initState = {
   // TODO 삭제
@@ -41,10 +41,9 @@ const GeneralComponent = () => {
   });
 
   const [address, setAddress] = useState({
-    regionList: [{ code: "", name: "" }],
+    regionList: [],
     region: "",
-    regionCode: 0,
-    cityList: [{ code: "", name: "" }],
+    cityList: [],
     city: "",
   });
 
@@ -66,9 +65,15 @@ const GeneralComponent = () => {
 
   useEffect(() => {
     setLoading(true);
-    getAddressData(setAddress, address.regionCode);
+
+    setAddress({
+      ...address,
+      regionList: AddressList().region,
+      cityList: address.region ? AddressList()[address.region] : [],
+    });
+
     setLoading(false);
-  }, [address.regionCode]);
+  }, [address.region]);
 
   const onChange = ({ target: { name, value } }) => {
     if (name === "userId") {
@@ -88,7 +93,6 @@ const GeneralComponent = () => {
       setAddress({
         ...address,
         region: value,
-        regionCode: address.regionList.find((r) => r.name === value).key || 0,
         city: "",
       });
       setMember({ ...member, address: "" });
@@ -214,7 +218,7 @@ const GeneralComponent = () => {
     <>
       {loading && <Loading />}
       <div className="w-full h-fit max-w-[600px] min-w-min text-xl text-center font-bold flex flex-col justify-center items-center space-y-2">
-        <div className="bg-white w-full my-4 text-3xl text-sky-500">
+        <div className="bg-white w-full my-4 text-5xl text-sky-500">
           일반계정 회원가입
         </div>
 
@@ -408,10 +412,7 @@ const GeneralComponent = () => {
               birthDate.year,
               Array.from(
                 { length: new Date().getFullYear() - 1900 + 1 - 14 },
-                (_, i) => ({
-                  key: 1900 + i,
-                  name: 1900 + i,
-                })
+                (_, i) => 1900 + i
               ).reverse(),
               "연도 선택",
               onChangeBirth,
@@ -499,7 +500,7 @@ const GeneralComponent = () => {
           </div>
         )}
 
-        <div className="w-full py-4 text-2xl text-center font-bold flex space-x-4">
+        <div className="w-full pt-2 text-2xl text-center font-bold flex space-x-4">
           <button
             className="bg-gray-500 w-1/4 p-4 rounded-xl text-white flex justify-center items-center hover:bg-gray-300 hover:text-black transition duration-500"
             onClick={() => {

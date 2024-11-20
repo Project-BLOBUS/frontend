@@ -1,13 +1,12 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { FaBackspace } from "react-icons/fa";
 import { toast } from "react-toastify";
 import { sendMail } from "../api/memberAPI";
+import { getCookie } from "../util/cookieUtil";
 import useCustomTag from "../hook/useCustomeTag";
 import Loading from "../etc/Loading";
 
 const initState = {
-  // TODO 아이디 찾기에서 찾은 이메일 전달
   userId: "",
   authCode: "",
   userPw: "",
@@ -34,6 +33,10 @@ const FindPwComponent = () => {
     userPw: useRef(null),
     confirmPw: useRef(null),
   };
+
+  useEffect(() => {
+    setMember({ ...member, userId: getCookie("userId") });
+  }, []);
 
   const onChange = ({ target: { name, value } }) => {
     if (name === "userId") {
@@ -109,7 +112,7 @@ const FindPwComponent = () => {
     <>
       {loading && <Loading />}
       <div className="w-full h-fit max-w-[600px] min-w-min text-xl text-center font-bold flex flex-col justify-center items-center space-y-2">
-        <div className="bg-white w-full my-4 text-3xl text-sky-500">
+        <div className="bg-white w-full my-4 text-5xl text-sky-500">
           비밀번호 찾기
         </div>
 
@@ -189,29 +192,6 @@ const FindPwComponent = () => {
           </div>
         )}
 
-        {/* TODO 버튼 수정 */}
-        <div className="w-full py-4 text-2xl text-center font-bold flex space-x-4">
-          <button
-            className="bg-gray-500 w-1/4 p-4 rounded-xl text-white flex justify-center items-center hover:bg-gray-300 hover:text-black transition duration-500"
-            onClick={() => {
-              if (window.history.length > 2) {
-                navigate(-1);
-              } else {
-                navigate("/");
-              }
-            }}
-          >
-            <FaBackspace className="text-3xl" />
-          </button>
-
-          <button
-            className="bg-sky-500 w-3/4 p-4 rounded-xl text-white hover:bg-sky-300 hover:text-black transition duration-500"
-            onClick={onClickModify}
-          >
-            완료
-          </button>
-        </div>
-
         {validation.isAuth && (
           <>
             {/* 비밀번호 */}
@@ -243,6 +223,22 @@ const FindPwComponent = () => {
             )}
           </>
         )}
+
+        <div className="w-full pt-2 text-2xl text-center font-bold flex space-x-4">
+          <button
+            className="bg-gray-500 w-1/4 p-4 rounded-xl text-white flex justify-center items-center hover:bg-gray-300 hover:text-black transition duration-500"
+            onClick={() => navigate("/member/login")}
+          >
+            취소
+          </button>
+
+          <button
+            className="bg-sky-500 w-3/4 p-4 rounded-xl text-white hover:bg-sky-300 hover:text-black transition duration-500"
+            onClick={onClickModify}
+          >
+            완료
+          </button>
+        </div>
       </div>
     </>
   );

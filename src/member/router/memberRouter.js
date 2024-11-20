@@ -35,7 +35,7 @@ const memberRouter = () => {
       ),
     },
     {
-      path: "signup/agree",
+      path: "signup/agree/:role",
       element: (
         <Suspense fallback={<Loading />}>
           <Agree />
@@ -43,7 +43,7 @@ const memberRouter = () => {
       ),
     },
     {
-      path: "signup/general",
+      path: "signup/info/general",
       element: (
         <Suspense fallback={<Loading />}>
           <General />
@@ -51,7 +51,7 @@ const memberRouter = () => {
       ),
     },
     {
-      path: "signup/business",
+      path: "signup/info/business",
       element: (
         <Suspense fallback={<Loading />}>
           <Business />

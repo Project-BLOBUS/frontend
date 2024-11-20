@@ -2,11 +2,12 @@ import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { FaBackspace } from "react-icons/fa";
 import { toast } from "react-toastify";
-import { checkBusinessCode, getAddressData } from "../api/externalAPI ";
+import { checkBusinessCode } from "../api/externalAPI ";
 import { duplicate, register } from "../api/memberAPI";
 import { setCookie, removeCookie } from "../util/cookieUtil";
 import useCustomTag from "../hook/useCustomeTag";
 import Loading from "../etc/Loading";
+import AddressList from "../data/AddressList";
 
 const initState = {
   // TODO 삭제
@@ -34,10 +35,9 @@ const BusinessComponent = () => {
   });
 
   const [address, setAddress] = useState({
-    regionList: [{ code: "", name: "" }],
+    regionList: [],
     region: "",
-    regionCode: 0,
-    cityList: [{ code: "", name: "" }],
+    cityList: [],
     city: "",
   });
 
@@ -55,9 +55,15 @@ const BusinessComponent = () => {
 
   useEffect(() => {
     setLoading(true);
-    getAddressData(setAddress, address.regionCode);
+
+    setAddress({
+      ...address,
+      regionList: AddressList().region,
+      cityList: address.region ? AddressList()[address.region] : [],
+    });
+
     setLoading(false);
-  }, [address.regionCode]);
+  }, [address.region]);
 
   const onChange = ({ target: { name, value } }) => {
     if (name === "userId") {
@@ -75,7 +81,6 @@ const BusinessComponent = () => {
       setAddress({
         ...address,
         region: value,
-        regionCode: address.regionList.find((r) => r.name === value).key || 0,
         city: "",
       });
       setMember({ ...member, address: "" });
@@ -186,7 +191,7 @@ const BusinessComponent = () => {
     <>
       {loading && <Loading />}
       <div className="w-full h-fit max-w-[600px] min-w-min text-xl text-center font-bold flex flex-col justify-center items-center space-y-2">
-        <div className="bg-white w-full my-4 text-3xl text-sky-500">
+        <div className="bg-white w-full my-4 text-5xl text-sky-500">
           기업계정 회원가입
         </div>
 
@@ -256,7 +261,6 @@ const BusinessComponent = () => {
           </div>
         )}
 
-        {console.log(member.file)}
         {/* 사업자등록증 */}
         {makeAdd(
           "첨부파일",
@@ -368,7 +372,7 @@ const BusinessComponent = () => {
           </div>
         )}
 
-        <div className="w-full py-4 text-2xl text-center font-bold flex space-x-4">
+        <div className="w-full pt-2 text-2xl text-center font-bold flex space-x-4">
           <button
             className="bg-gray-500 w-1/4 p-4 rounded-xl text-white flex justify-center items-center hover:bg-gray-300 hover:text-black transition duration-500"
             onClick={() => {

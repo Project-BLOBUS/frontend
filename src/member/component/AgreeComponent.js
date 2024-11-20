@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { FaCheck, FaBackspace } from "react-icons/fa";
 import { toast } from "react-toastify";
-import { getCookie } from "../util/cookieUtil";
-import TermsList from "../etc/TermsList";
+import TermsList from "../data/TermsList";
 
 const AgreeComponent = () => {
   const navigate = useNavigate();
+  const { role } = useParams();
 
   const [termsList, setTermsList] = useState([]);
   const [agreeAll, setAgreeAll] = useState(false);
@@ -30,8 +30,8 @@ const AgreeComponent = () => {
 
   return (
     <div className="w-full h-fit max-w-[600px] min-w-min text-xl text-center font-bold flex flex-col justify-center items-center space-y-4">
-      <div className="bg-white w-full my-4 text-3xl text-sky-500">
-        {getCookie("isGeneral") ? "일반계정" : "기업계정"} 약관동의
+      <div className="bg-white w-full my-4 text-5xl text-sky-500">
+        {role === "general" ? "일반계정" : "기업계정"} 약관동의
       </div>
 
       <div className="w-full border border-gray-500 rounded text-4xl flex justify-center items-cente cursor-pointer">
@@ -72,7 +72,7 @@ const AgreeComponent = () => {
         ))}
       </div>
 
-      <div className="w-full py-4 text-2xl flex space-x-4">
+      <div className="w-full pt-2 text-2xl flex space-x-4">
         <button
           className="bg-gray-500 w-1/6 p-4 rounded-xl text-white flex justify-center items-center hover:bg-gray-300 hover:text-black transition duration-500"
           onClick={() => {
@@ -92,9 +92,7 @@ const AgreeComponent = () => {
             if (
               termsList.every((term) => (term.required ? term.agree : true))
             ) {
-              getCookie("isGeneral")
-                ? navigate("/member/signup/general")
-                : navigate("/member/signup/business");
+              navigate(`/member/signup/info/${role}`);
             } else {
               toast.warn("필수항목에 모두 동의하세요.");
             }

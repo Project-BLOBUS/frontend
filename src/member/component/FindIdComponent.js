@@ -1,8 +1,8 @@
 import { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { FaBackspace } from "react-icons/fa";
 import { toast } from "react-toastify";
 import { find } from "../api/memberAPI";
+import { setCookie } from "../util/cookieUtil";
 import useCustomTag from "../hook/useCustomeTag";
 import Loading from "../etc/Loading";
 
@@ -65,6 +65,7 @@ const FindIdComponent = () => {
       .then((userId) => {
         toast.success("아이디 검색 성공");
         setMember({ ...member, userId: userId });
+        setCookie("userId", userId);
       })
       .catch(() => {
         toast.warn("검색 실패, 다시 입력하세요.");
@@ -78,7 +79,7 @@ const FindIdComponent = () => {
     <>
       {loading && <Loading />}
       <div className="w-full h-fit max-w-[600px] min-w-min text-xl text-center font-bold flex flex-col justify-center items-center space-y-2">
-        <div className="bg-white w-full my-4 text-3xl text-sky-500">
+        <div className="bg-white w-full my-4 text-5xl text-sky-500">
           아이디 찾기
         </div>
 
@@ -110,18 +111,12 @@ const FindIdComponent = () => {
           )
         )}
 
-        <div className="w-full py-4 text-2xl text-center font-bold flex space-x-4">
+        <div className="w-full py-2 text-2xl text-center font-bold flex space-x-4">
           <button
             className="bg-gray-500 w-1/4 p-4 rounded-xl text-white flex justify-center items-center hover:bg-gray-300 hover:text-black transition duration-500"
-            onClick={() => {
-              if (window.history.length > 2) {
-                navigate(-1);
-              } else {
-                navigate("/");
-              }
-            }}
+            onClick={() => navigate("/member/login")}
           >
-            <FaBackspace className="text-3xl" />
+            취소
           </button>
 
           <button
@@ -147,11 +142,10 @@ const FindIdComponent = () => {
               )
             )}
             {/* TODO 버튼 디자인 수정 */}
-            <div className="w-full py-4 text-2xl text-center font-bold flex space-x-4">
+            <div className="w-full pt-2 text-2xl text-center font-bold flex space-x-4">
               <button
                 className="bg-pink-500 w-1/2 p-4 rounded-xl text-white hover:bg-pink-300 hover:text-black transition duration-500"
                 onClick={() => {
-                  // TODO 찾은 이메일 전달
                   navigate("/member/findpw");
                 }}
               >
@@ -161,7 +155,6 @@ const FindIdComponent = () => {
               <button
                 className="bg-pink-500 w-1/2 p-4 rounded-xl text-white hover:bg-pink-300 hover:text-black transition duration-500"
                 onClick={() => {
-                  // TODO 찾은 이메일 전달
                   navigate("/member/login");
                 }}
               >

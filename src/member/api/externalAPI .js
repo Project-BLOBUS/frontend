@@ -1,53 +1,53 @@
 import axios from "axios";
 
-export const getAddressData = async (setAddress, regionCode) => {
-  const key = "fbf556c8d8a044b7a60b";
-  const secret = "484c7af49e1c4a2188d9";
+// export const getAddressList = async (setAddress, regionCode) => {
+//   const key = "fbf556c8d8a044b7a60b";
+//   const secret = "484c7af49e1c4a2188d9";
 
-  try {
-    const resForToken = await axios.get(
-      "https://sgisapi.kostat.go.kr/OpenAPI3/auth/authentication.json",
-      { params: { consumer_key: key, consumer_secret: secret } }
-    );
+//   try {
+//     const resForToken = await axios.get(
+//       "https://sgisapi.kostat.go.kr/OpenAPI3/auth/authentication.json",
+//       { params: { consumer_key: key, consumer_secret: secret } }
+//     );
 
-    const resForRegion = await axios.get(
-      "https://sgisapi.kostat.go.kr/OpenAPI3/addr/stage.json",
-      { params: { accessToken: resForToken.data.result.accessToken } }
-    );
+//     const resForRegion = await axios.get(
+//       "https://sgisapi.kostat.go.kr/OpenAPI3/addr/stage.json",
+//       { params: { accessToken: resForToken.data.result.accessToken } }
+//     );
 
-    const regionList = resForRegion.data.result.map((region) => ({
-      key: region.cd * 1,
-      name: region.addr_name,
-    }));
+//     const regionList = resForRegion.data.result.map((region) => ({
+//       key: region.cd * 1,
+//       name: region.addr_name,
+//     }));
 
-    setAddress((prev) => ({
-      ...prev,
-      regionList: regionList,
-    }));
+//     setAddress((prev) => ({
+//       ...prev,
+//       regionList: regionList,
+//     }));
 
-    const resForCity = await axios.get(
-      "https://sgisapi.kostat.go.kr/OpenAPI3/addr/stage.json",
-      {
-        params: {
-          accessToken: resForToken.data.result.accessToken,
-          cd: regionCode,
-        },
-      }
-    );
+//     const resForCity = await axios.get(
+//       "https://sgisapi.kostat.go.kr/OpenAPI3/addr/stage.json",
+//       {
+//         params: {
+//           accessToken: resForToken.data.result.accessToken,
+//           cd: regionCode,
+//         },
+//       }
+//     );
 
-    const cityList = resForCity.data.result.map((city) => ({
-      key: city.cd * 1,
-      name: city.addr_name,
-    }));
+//     const cityList = resForCity.data.result.map((city) => ({
+//       key: city.cd * 1,
+//       name: city.addr_name,
+//     }));
 
-    setAddress((prev) => ({
-      ...prev,
-      cityList: cityList,
-    }));
-  } catch (error) {
-    console.error("데이터를 불러오는 데 실패했습니다:", error);
-  }
-};
+//     setAddress((prev) => ({
+//       ...prev,
+//       cityList: cityList,
+//     }));
+//   } catch (error) {
+//     console.error("데이터를 불러오는 데 실패했습니다:", error);
+//   }
+// };
 
 export const checkBusinessCode = async (businessCode) => {
   const serviceKey =

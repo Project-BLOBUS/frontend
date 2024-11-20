@@ -20,11 +20,11 @@ const useCustomTag = () => {
   const makeAdd = (label, makeInput) => {
     return (
       <div className="w-full flex justify-center items-center">
-        <div className="w-full flex justify-center items-stretch text-base font-bold">
+        <div className="w-full flex justify-center items-stretch text-base font-bold space-x-2">
           <div className="bg-sky-300 w-1/4 p-4 rounded text-nowrap flex justify-center items-center">
             {label}
           </div>
-          <div className="w-3/4 ml-2 flex justify-center items-center">
+          <div className="w-3/4 flex justify-center items-center">
             {makeInput}
           </div>
         </div>
@@ -93,9 +93,9 @@ const useCustomTag = () => {
         >
           {hint}
         </option>
-        {list.map((data) => (
-          <option key={data.key ?? data} value={data.name ?? data}>
-            {data.name ?? data}
+        {list.map((data, index) => (
+          <option key={data} value={data}>
+            {data}
           </option>
         ))}
       </select>
