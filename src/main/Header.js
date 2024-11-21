@@ -67,6 +67,7 @@ function Header({
                 <Link
                   className="w-[45%] hover:text-gray-300 transition duration-500"
                   to="/member/signup"
+                  replace={pageTitle === "계정"}
                 >
                   회원가입
                 </Link>
@@ -74,6 +75,7 @@ function Header({
                 <Link
                   className="w-[45%] hover:text-gray-300 transition duration-500"
                   to="/member/login"
+                  replace={pageTitle === "계정"}
                 >
                   로그인
                 </Link>

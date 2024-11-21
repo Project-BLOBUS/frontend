@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router-dom";
+import { setCookie } from "../../util/cookieUtil";
 
 const ChoiceComponent = () => {
   const navigate = useNavigate();
@@ -15,13 +16,11 @@ const ChoiceComponent = () => {
       <div className="w-full pt-2">
         <button
           className="bg-gray-500 w-full p-4 rounded-2xl shadow-xl text-white flex justify-center items-center hover:bg-gray-300 hover:text-black transition duration-500"
-          onClick={() => {
-            if (window.history.length > 2) {
-              navigate(-1);
-            } else {
-              navigate("/");
-            }
-          }}
+          onClick={() =>
+            navigate(window.history.length > 1 ? -1 : "/", {
+              replace: true,
+            })
+          }
         >
           취소
         </button>
@@ -35,7 +34,8 @@ const makeChoice = (name, role, navigate) => {
     <div
       className="bg-sky-400 w-1/2 px-4 py-20 rounded-2xl shadow-xl text-white cursor-pointer hover:bg-sky-200 hover:text-black hover:scale-125 transition duration-500"
       onClick={() => {
-        navigate(`/member/signup/agree/${role}`);
+        setCookie("isChoice", true);
+        navigate(`/member/signup/agree/${role}`, { replace: true });
       }}
     >
       {name}

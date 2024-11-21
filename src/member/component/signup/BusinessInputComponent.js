@@ -2,12 +2,12 @@ import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { FaBackspace } from "react-icons/fa";
 import { toast } from "react-toastify";
-import { checkBusinessCode } from "../api/externalAPI ";
-import { duplicate, register } from "../api/memberAPI";
-import { setCookie, removeCookie } from "../util/cookieUtil";
-import useCustomTag from "../hook/useCustomeTag";
-import Loading from "../etc/Loading";
-import AddressList from "../data/AddressList";
+import { duplicate, register } from "../../api/memberAPI";
+import { checkBusinessCode } from "../../api/externalAPI ";
+import { getCookie, setCookie, removeCookie } from "../../util/cookieUtil";
+import useCustomTag from "../../hook/useCustomeTag";
+import Loading from "../../etc/Loading";
+import AddressList from "../../data/AddressList";
 
 const initState = {
   // TODO 삭제
@@ -22,7 +22,7 @@ const initState = {
   roleName: "BUSINESS",
 };
 
-const BusinessComponent = () => {
+const BusinessInputComponent = () => {
   const navigate = useNavigate();
   const { makeBtn, makeAdd, makeInput, makeSelect } = useCustomTag();
   const [loading, setLoading] = useState(false);
@@ -55,6 +55,11 @@ const BusinessComponent = () => {
 
   useEffect(() => {
     setLoading(true);
+
+    if (!getCookie("isAgree")) {
+      removeCookie("isAgree");
+      navigate("/member/signup/agree/general", { replace: true });
+    }
 
     setAddress({
       ...address,
@@ -169,19 +174,22 @@ const BusinessComponent = () => {
           toast.error("회원 가입에 실패했습니다.");
         } else {
           toast.success("회원 가입 완료");
+          setCookie("userId", member.userId);
+          setCookie("userRole", member.roleName);
+
+          removeCookie("isAgree");
+
           setTimeout(() => {
-            setCookie("userId", member.userId);
-            setCookie("userRole", member.roleName);
-            removeCookie("isGeneral");
-            navigate(-3, { replace: true });
-            setTimeout(() => {
-              navigate("/member/login");
-            }, 10);
+            navigate("/member/login", { replace: true });
           }, 1000);
         }
       })
-      .catch(() => {
-        toast.error("회원 가입에 실패했습니다.");
+      .catch((error) => {
+        if (error.code === "ERR_NETWORK") {
+          toast.error("서버 연결에 실패했습니다.");
+        } else {
+          toast.error("회원 가입에 실패했습니다.");
+        }
       });
 
     setLoading(false);
@@ -372,15 +380,12 @@ const BusinessComponent = () => {
           </div>
         )}
 
-        <div className="w-full pt-2 text-2xl text-center font-bold flex space-x-4">
+        <div className="w-full pt-2 text-2xl text-center font-bold flex justify-center items-center space-x-4">
           <button
             className="bg-gray-500 w-1/4 p-4 rounded-xl text-white flex justify-center items-center hover:bg-gray-300 hover:text-black transition duration-500"
             onClick={() => {
-              if (window.history.length > 2) {
-                navigate(-1);
-              } else {
-                navigate("/");
-              }
+              removeCookie("isAgree");
+              navigate("/member/signup/agree/general", { replace: true });
             }}
           >
             <FaBackspace className="text-3xl" />
@@ -398,4 +403,4 @@ const BusinessComponent = () => {
   );
 };
 
-export default BusinessComponent;
+export default BusinessInputComponent;

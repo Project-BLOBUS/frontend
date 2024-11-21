@@ -1,16 +1,17 @@
 import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { sendMail } from "../api/memberAPI";
-import { getCookie } from "../util/cookieUtil";
-import useCustomTag from "../hook/useCustomeTag";
-import Loading from "../etc/Loading";
+import { sendMail, modify } from "../../api/memberAPI";
+import { getCookie, setCookie, removeCookie } from "../../util/cookieUtil";
+import useCustomTag from "../../hook/useCustomeTag";
+import Loading from "../../etc/Loading";
 
 const initState = {
-  userId: "",
-  authCode: "",
-  userPw: "",
-  confirmPw: "",
+  // TODO 삭제
+  userId: "test1@test.com",
+  authCode: "qwerQWER1234!@#$",
+  userPw: "qwerQWER1234!@#$",
+  confirmPw: "qwerQWER1234!@#$",
   roleName: "GENERAL",
 };
 
@@ -35,7 +36,10 @@ const FindPwComponent = () => {
   };
 
   useEffect(() => {
-    setMember({ ...member, userId: getCookie("userId") });
+    if (getCookie("foundId")) {
+      setMember({ ...member, userId: getCookie("foundId") });
+      removeCookie("foundId");
+    }
   }, []);
 
   const onChange = ({ target: { name, value } }) => {
@@ -103,8 +107,22 @@ const FindPwComponent = () => {
 
     if (!validField()) return setLoading(false);
 
-    // TODO 이메일 검색 후 비밀번호 변경
-
+    await modify(member)
+      .then(() => {
+        toast.success("비밀번호 변경 완료");
+        removeCookie("foundId");
+        setCookie("userId", member.userId);
+        setCookie("userRole", member.roleName);
+        navigate("/member/login", { replace: true });
+      })
+      .catch((error) => {
+        if (error.code === "ERR_NETWORK") {
+          toast.error("서버 연결에 실패했습니다.");
+        } else {
+          toast.warn("변경 실패, 다시 입력하세요.");
+          // setMember({ ...member, userPw: "", confirmPw: "" });
+        }
+      });
     setLoading(false);
   };
 
@@ -114,6 +132,9 @@ const FindPwComponent = () => {
       <div className="w-full h-fit max-w-[600px] min-w-min text-xl text-center font-bold flex flex-col justify-center items-center space-y-2">
         <div className="bg-white w-full my-4 text-5xl text-sky-500">
           비밀번호 찾기
+          <div className=" w-full mt-4 text-xs text-gray-500">
+            기업계정은 관리자에게 문의바랍니다.
+          </div>
         </div>
 
         {/* 아이디 */}
@@ -223,21 +244,24 @@ const FindPwComponent = () => {
             )}
           </>
         )}
-
-        <div className="w-full pt-2 text-2xl text-center font-bold flex space-x-4">
+        <div className="w-full pt-2 text-2xl text-center font-bold flex justify-center items-center space-x-4">
           <button
-            className="bg-gray-500 w-1/4 p-4 rounded-xl text-white flex justify-center items-center hover:bg-gray-300 hover:text-black transition duration-500"
-            onClick={() => navigate("/member/login")}
+            className={`${
+              !validation.isAuth ? "w-full" : "w-1/4"
+            } bg-gray-500 p-4 rounded-xl text-white flex justify-center items-center hover:bg-gray-300 hover:text-black transition duration-500`}
+            onClick={() => navigate(-1, { replace: true })}
           >
             취소
           </button>
 
-          <button
-            className="bg-sky-500 w-3/4 p-4 rounded-xl text-white hover:bg-sky-300 hover:text-black transition duration-500"
-            onClick={onClickModify}
-          >
-            완료
-          </button>
+          {validation.isAuth && (
+            <button
+              className="bg-sky-500 w-3/4 p-4 rounded-xl text-white hover:bg-sky-300 hover:text-black transition duration-500"
+              onClick={onClickModify}
+            >
+              완료
+            </button>
+          )}
         </div>
       </div>
     </>

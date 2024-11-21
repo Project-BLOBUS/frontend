@@ -50,22 +50,22 @@ const LoginComponent = () => {
             setCookie("name", data.name);
             setCookie("userId", userId);
             setCookie("userRole", userRole);
-            userRole !== "ADMIN" && setCookie("idSave", idSave);
+            setCookie("idSave", userRole === "ADMIN" ? false : idSave);
 
-            toast.success("로그인 완료 : " + data.userId);
+            toast.success("로그인 완료");
+            toast.info((data.name ?? data.userId) + "님 반갑습니다.");
+
             setTimeout(() => {
-              const moveAfterLogin = () => {
-                if (window.location.pathname.includes("member")) {
-                  navigate(-1, { replace: true });
-                  setTimeout(moveAfterLogin, 10);
-                }
-              };
-              moveAfterLogin();
+              navigate(-1, { replace: true });
             }, 1000);
           }
         })
-        .catch(() => {
-          toast.error("로그인에 실패했습니다.");
+        .catch((error) => {
+          if (error.code === "ERR_NETWORK") {
+            toast.error("서버 연결에 실패했습니다.");
+          } else {
+            toast.error("로그인에 실패했습니다.");
+          }
         });
     }
 
@@ -102,7 +102,7 @@ const LoginComponent = () => {
       >
         <div className="w-full my-4 text-5xl text-sky-500">로그인</div>
 
-        <div className="w-full flex justify-between">
+        <div className="w-full flex justify-between items-center">
           {makeTab("일반", "GENERAL", userRole, setUserRole)}
           {makeTab("기업", "BUSINESS", userRole, setUserRole)}
           {makeTab("관리자", "ADMIN", userRole, setUserRole)}
@@ -152,16 +152,12 @@ const LoginComponent = () => {
           </div>
         )}
 
-        <div className="w-full pt-2 text-2xl flex space-x-4">
+        <div className="w-full pt-2 text-2xl flex justify-center items-center space-x-4">
           <button
             className="bg-gray-500 w-1/6 p-4 rounded-2xl shadow-xl text-white flex justify-center items-center hover:bg-gray-300 hover:text-black transition duration-500"
-            onClick={() => {
-              if (window.history.length > 2) {
-                navigate(-1);
-              } else {
-                navigate("/");
-              }
-            }}
+            onClick={() =>
+              navigate(window.history.length > 1 ? -1 : "/", { replace: true })
+            }
           >
             <FaBackspace className="text-3xl" />
           </button>
@@ -174,7 +170,7 @@ const LoginComponent = () => {
           </button>
         </div>
 
-        <div className="w-full px-20 text-base flex justify-between items-start">
+        <div className="w-full pt-2 px-10 flex justify-between items-center">
           {makeLink("/member/findid", "아이디 찾기")}
           <div>|</div>
           {makeLink("/member/findpw", "비밀번호 찾기")}

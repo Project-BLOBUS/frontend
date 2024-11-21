@@ -47,3 +47,12 @@ export const find = async (member) => {
 
   return res.data;
 };
+
+export const modify = async (member) => {
+  const res = await axios.put(
+    `${host}/${member.roleName.toLowerCase()}/find/`,
+    member
+  );
+
+  return res.data;
+};

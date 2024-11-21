@@ -7,16 +7,20 @@ import Loading from "./etc/Loading";
 const MemberPage = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
+  const [jwt, setJwt] = useState(getCookie("jwt"));
 
   useEffect(() => {
-    // TODO 현재 저장된 쿠키 정보 따라서 페이지 이동 (로그인 상태로는 접속불가)
-    if (getCookie("jwt")) {
-      setLoading(false);
-      navigate(-1);
-    } else {
-      setLoading(false);
-    }
-  }, []);
+    const interval = setInterval(() => {
+      const newJwt = getCookie("jwt");
+      if (newJwt !== jwt) {
+        setJwt(newJwt);
+        navigate(-1, { replace: true });
+      }
+    }, 10);
+
+    setLoading(false);
+    return () => clearInterval(interval);
+  }, [jwt]);
 
   return (
     <>

@@ -4,13 +4,17 @@ import Loading from "../etc/Loading";
 
 const Login = lazy(() => import("../component/LoginComponent"));
 
-const Choice = lazy(() => import("../component/ChoiceComponent"));
-const Agree = lazy(() => import("../component/AgreeComponent"));
-const General = lazy(() => import("../component/GeneralComponent"));
-const Business = lazy(() => import("../component/BusinessComponent"));
+const Choice = lazy(() => import("../component/signup/ChoiceComponent"));
+const Agree = lazy(() => import("../component/signup/AgreeComponent"));
+const GeneralInput = lazy(() =>
+  import("../component/signup/GeneralInputComponent")
+);
+const BusinessInput = lazy(() =>
+  import("../component/signup/BusinessInputComponent")
+);
 
-const FindId = lazy(() => import("../component/FindIdComponent"));
-const FindPw = lazy(() => import("../component/FindPwComponent"));
+const FindId = lazy(() => import("../component/find/FindIdComponent"));
+const FindPw = lazy(() => import("../component/find/FindPwComponent"));
 
 const memberRouter = () => {
   return [
@@ -43,18 +47,18 @@ const memberRouter = () => {
       ),
     },
     {
-      path: "signup/info/general",
+      path: "signup/input/general",
       element: (
         <Suspense fallback={<Loading />}>
-          <General />
+          <GeneralInput />
         </Suspense>
       ),
     },
     {
-      path: "signup/info/business",
+      path: "signup/input/business",
       element: (
         <Suspense fallback={<Loading />}>
-          <Business />
+          <BusinessInput />
         </Suspense>
       ),
     },

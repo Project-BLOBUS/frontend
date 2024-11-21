@@ -1,15 +1,15 @@
 import { useEffect, useRef, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router";
 import { AiOutlineGlobal } from "react-icons/ai";
 import { FaBackspace } from "react-icons/fa";
 import { GiSouthKorea } from "react-icons/gi";
 import { IoMdFemale, IoMdMale } from "react-icons/io";
 import { toast } from "react-toastify";
-import { duplicate, sendMail, register } from "../api/memberAPI";
-import { setCookie, removeCookie } from "../util/cookieUtil";
-import useCustomTag from "../hook/useCustomeTag";
-import Loading from "../etc/Loading";
-import AddressList from "../data/AddressList";
+import { duplicate, sendMail, register } from "../../api/memberAPI";
+import { getCookie, setCookie, removeCookie } from "../../util/cookieUtil";
+import useCustomTag from "../../hook/useCustomeTag";
+import Loading from "../../etc/Loading";
+import AddressList from "../../data/AddressList";
 
 const initState = {
   // TODO 삭제
@@ -26,7 +26,7 @@ const initState = {
   roleName: "GENERAL",
 };
 
-const GeneralComponent = () => {
+const GeneralInputComponent = () => {
   const navigate = useNavigate();
   const { makeBtn, makeAdd, makeInput, makeSelect, makeRatio } = useCustomTag();
   const [loading, setLoading] = useState(false);
@@ -65,6 +65,11 @@ const GeneralComponent = () => {
 
   useEffect(() => {
     setLoading(true);
+
+    if (!getCookie("isAgree")) {
+      removeCookie("isAgree");
+      navigate("/member/signup/agree/general", { replace: true });
+    }
 
     setAddress({
       ...address,
@@ -113,7 +118,7 @@ const GeneralComponent = () => {
       setBirthDate({ ...birthDate, date: value });
       setMember({
         ...member,
-        birthDate: new Date(birthDate.year, birthDate.month - 1, value),
+        birthDate: new Date(birthDate.year, birthDate.month - 1, value, 9),
       });
     }
   };
@@ -196,19 +201,22 @@ const GeneralComponent = () => {
           refList.phoneNum.current.focus();
         } else {
           toast.success("회원 가입 완료");
+          setCookie("userId", member.userId);
+          setCookie("userRole", member.roleName);
+
+          removeCookie("isAgree");
+
           setTimeout(() => {
-            setCookie("userId", member.userId);
-            setCookie("userRole", member.roleName);
-            removeCookie("isGeneral");
-            navigate(-3, { replace: true });
-            setTimeout(() => {
-              navigate("/member/login");
-            }, 10);
+            navigate("/member/login", { replace: true });
           }, 1000);
         }
       })
-      .catch(() => {
-        toast.error("회원 가입에 실패했습니다.");
+      .catch((error) => {
+        if (error.code === "ERR_NETWORK") {
+          toast.error("서버 연결에 실패했습니다.");
+        } else {
+          toast.error("회원 가입에 실패했습니다.");
+        }
       });
 
     setLoading(false);
@@ -270,6 +278,7 @@ const GeneralComponent = () => {
                 {makeBtn("메일 전송", async () => {
                   setLoading(true);
 
+                  // TODO 인증메일 디자인
                   try {
                     const code = await sendMail(member);
                     toast.success("메일 전송 성공");
@@ -504,11 +513,8 @@ const GeneralComponent = () => {
           <button
             className="bg-gray-500 w-1/4 p-4 rounded-xl text-white flex justify-center items-center hover:bg-gray-300 hover:text-black transition duration-500"
             onClick={() => {
-              if (window.history.length > 2) {
-                navigate(-1);
-              } else {
-                navigate("/");
-              }
+              removeCookie("isAgree");
+              navigate("/member/signup/agree/general", { replace: true });
             }}
           >
             <FaBackspace className="text-3xl" />
@@ -526,4 +532,4 @@ const GeneralComponent = () => {
   );
 };
 
-export default GeneralComponent;
+export default GeneralInputComponent;
