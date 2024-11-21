@@ -1,9 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { FaYoutube,FaFacebook,FaInstagram   } from "react-icons/fa";
 
 function Footer() {
     return (
-        <footer className="w-full sm:w-[90%] lg:w-[70.7%] sm:ml-[15%] mx-auto mt-2 py-4 bg-[linear-gradient(45deg,_#6E00FF,_#DB0153,#0130BC)] text-white">
+        <footer className="w-full sm:w-[70.5%] sm:ml-[15.1%] mx-auto mt-2 py-4 bg-[linear-gradient(45deg,_#6E00FF,_#DB0153,#0130BC)] text-white">
             <div className="flex flex-col sm:flex-row justify-between items-center sm:space-y-0 space-y-4 sm:space-x-6">
                 <div className="text-center sm:text-left">
                     <h3 className="text-lg font-semibold">회사 이름 : BLOBUS</h3>
@@ -18,9 +19,9 @@ function Footer() {
                 <div className="text-center sm:text-right">
                     <p className="text-sm">Follow us:</p>
                     <div className="flex justify-center sm:justify-end space-x-4 mt-2">
-                        <Link to="/#" className="text-xl hover:text-gray-300 transition duration-500">Facebook</Link>
-                        <Link to="/#" className="text-xl hover:text-gray-300 transition duration-500">Twitter</Link>
-                        <Link to="/#" className="text-xl hover:text-gray-300 transition duration-500">Instagram</Link>
+                        <Link to="/#" className="text-3xl hover:text-gray-300 transition duration-500"><FaYoutube /></Link>
+                        <Link to="/#" className="text-3xl hover:text-gray-300 transition duration-500"><FaFacebook /></Link>
+                        <Link to="/#" className="text-3xl hover:text-gray-300 transition duration-500"><FaInstagram /></Link>
                     </div>
                 </div>
             </div>

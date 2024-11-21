@@ -17,7 +17,7 @@ function Community() {
         <div>
 
       <div className="bg-[#DB0153]">
-      <div className="w-[99%]">
+    
       {/* Header에 isWhite prop을 true로 전달하고, pageTitle을 '청년관'으로 설정 */}
       <Header 
       navs={community} 
@@ -26,7 +26,7 @@ function Community() {
       titleBg="#A1003C"  
       borderB={false} 
       />
-      </div>
+    
       </div>
 
       <div className="w-[70%] h-[600px] ml-[15%] mt-[1%]  border-2 border-red-600">
