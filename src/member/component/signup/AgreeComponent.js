@@ -107,11 +107,12 @@ const AgreeComponent = () => {
             다음
           </button>
         </div>
-      </div>{" "}
+      </div>
+
       {modal.open && (
         <div className="bg-black bg-opacity-50 w-full h-full flex justify-center items-center fixed inset-0">
           <div className="bg-white w-5/6 max-w-[650px] p-4 rounded">
-            <div className="text-2xl">{modal.title}</div>
+            <div className="text-3xl text-center font-bold">{modal.title}</div>
             {modal.content}
             <div className="flex justify-end items-center">
               <button
