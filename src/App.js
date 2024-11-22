@@ -7,12 +7,14 @@ import {
 } from "react-router-dom";
 import Loading from "./member/etc/Loading";
 import memberRouter from "./member/router/memberRouter";
+import mypageRouter from "./member/router/mypageRouter";
 
 // Header 컴포넌트를 lazy로 불러오기
 // const Header = lazy(() => import('./components/Header'));
 // const Footer = lazy(() => import('./components/Footer'));
 const Main = lazy(() => import("./main/MainPage"));
-const Member = lazy(() => import("./member/MemberPage"));
+const Member = lazy(() => import("./member/page/MemberPage"));
+const MyPage = lazy(() => import("./member/page/MyPage"));
 const Youth = lazy(() => import("./youth/YouthPage"));
 const Enterprise = lazy(() => import("./enterprise/Enterprise"));
 const Community = lazy(() => import("./community/Community"));
@@ -25,6 +27,12 @@ const AppRoutes = () => (
     {/* /member 경로로 매핑 */}
     <Route path="/member" element={<Member />}>
       {memberRouter().map((route, index) => (
+        <Route key={index} path={route.path} element={route.element} />
+      ))}
+    </Route>
+    {/* /mypage 경로로 매핑 */}
+    <Route path="/mypage" element={<MyPage />}>
+      {mypageRouter().map((route, index) => (
         <Route key={index} path={route.path} element={route.element} />
       ))}
     </Route>

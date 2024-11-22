@@ -2,19 +2,15 @@ import { lazy, Suspense } from "react";
 import { Navigate } from "react-router";
 import Loading from "../etc/Loading";
 
-const Login = lazy(() => import("../component/LoginComponent"));
+const Login = lazy(() => import("../component/login/Login"));
 
-const Choice = lazy(() => import("../component/signup/ChoiceComponent"));
-const Agree = lazy(() => import("../component/signup/AgreeComponent"));
-const GeneralInput = lazy(() =>
-  import("../component/signup/GeneralInputComponent")
-);
-const BusinessInput = lazy(() =>
-  import("../component/signup/BusinessInputComponent")
-);
+const Choice = lazy(() => import("../component/signup/Choice"));
+const Agree = lazy(() => import("../component/signup/Agree"));
+const GeneralInput = lazy(() => import("../component/signup/GeneralInput"));
+const BusinessInput = lazy(() => import("../component/signup/BusinessInput"));
 
-const FindId = lazy(() => import("../component/find/FindIdComponent"));
-const FindPw = lazy(() => import("../component/find/FindPwComponent"));
+const FindId = lazy(() => import("../component/find/FindId"));
+const FindPw = lazy(() => import("../component/find/FindPw"));
 
 const memberRouter = () => {
   return [

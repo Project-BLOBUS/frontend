@@ -26,7 +26,7 @@ const initState = {
   roleName: "GENERAL",
 };
 
-const GeneralInputComponent = () => {
+const GeneralInput = () => {
   const navigate = useNavigate();
   const { makeBtn, makeAdd, makeInput, makeSelect, makeRatio } = useCustomTag();
   const [loading, setLoading] = useState(false);
@@ -532,4 +532,4 @@ const GeneralInputComponent = () => {
   );
 };
 
-export default GeneralInputComponent;
+export default GeneralInput;

@@ -22,7 +22,7 @@ const initState = {
   roleName: "BUSINESS",
 };
 
-const BusinessInputComponent = () => {
+const BusinessInput = () => {
   const navigate = useNavigate();
   const { makeBtn, makeAdd, makeInput, makeSelect } = useCustomTag();
   const [loading, setLoading] = useState(false);
@@ -403,4 +403,4 @@ const BusinessInputComponent = () => {
   );
 };
 
-export default BusinessInputComponent;
+export default BusinessInput;

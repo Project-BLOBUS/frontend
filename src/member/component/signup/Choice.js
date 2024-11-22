@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { setCookie } from "../../util/cookieUtil";
 
-const ChoiceComponent = () => {
+const Login = () => {
   const navigate = useNavigate();
 
   return (
@@ -43,4 +43,4 @@ const makeChoice = (name, role, navigate) => {
   );
 };
 
-export default ChoiceComponent;
+export default Login;

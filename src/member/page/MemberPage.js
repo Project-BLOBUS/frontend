@@ -1,26 +1,18 @@
 import { useEffect, useState } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
-import { getCookie } from "./util/cookieUtil";
-import Header from "../main/Header";
-import Loading from "./etc/Loading";
+import { getCookie } from "../util/cookieUtil";
+import Header from "../../main/Header";
+import Loading from "../etc/Loading";
 
 const MemberPage = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
-  const [jwt, setJwt] = useState(getCookie("jwt"));
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      const newJwt = getCookie("jwt");
-      if (newJwt !== jwt) {
-        setJwt(newJwt);
-        navigate(-1, { replace: true });
-      }
-    }, 10);
+    getCookie("jwt") && navigate(-1, { replace: true });
 
     setLoading(false);
-    return () => clearInterval(interval);
-  }, [jwt]);
+  }, [getCookie("jwt")]);
 
   return (
     <>

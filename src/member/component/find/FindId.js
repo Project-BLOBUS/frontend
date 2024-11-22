@@ -14,7 +14,7 @@ const initState = {
   roleName: "GENERAL",
 };
 
-const FindIdComponent = () => {
+const FindId = () => {
   const navigate = useNavigate();
   const { makeAdd, makeInput } = useCustomTag();
   const [loading, setLoading] = useState(false);
@@ -172,4 +172,4 @@ const FindIdComponent = () => {
   );
 };
 
-export default FindIdComponent;
+export default FindId;

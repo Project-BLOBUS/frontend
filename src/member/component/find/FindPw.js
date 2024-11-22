@@ -15,7 +15,7 @@ const initState = {
   roleName: "GENERAL",
 };
 
-const FindPwComponent = () => {
+const FindPw = () => {
   const navigate = useNavigate();
   const { makeBtn, makeAdd, makeInput } = useCustomTag();
   const [loading, setLoading] = useState(false);
@@ -120,9 +120,10 @@ const FindPwComponent = () => {
           toast.error("서버 연결에 실패했습니다.");
         } else {
           toast.warn("변경 실패, 다시 입력하세요.");
-          // setMember({ ...member, userPw: "", confirmPw: "" });
+          setMember({ ...member, userPw: "", confirmPw: "" });
         }
       });
+
     setLoading(false);
   };
 
@@ -268,4 +269,4 @@ const FindPwComponent = () => {
   );
 };
 
-export default FindPwComponent;
+export default FindPw;

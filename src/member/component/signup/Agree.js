@@ -5,7 +5,7 @@ import { toast } from "react-toastify";
 import { getCookie, setCookie, removeCookie } from "../../util/cookieUtil";
 import TermsList from "../../data/TermsList";
 
-const AgreeComponent = () => {
+const Agree = () => {
   const navigate = useNavigate();
   const { role } = useParams();
 
@@ -24,7 +24,7 @@ const AgreeComponent = () => {
       agree: false,
     }));
     setTermsList(newTermsList);
-  }, []);
+  }, [TermsList]);
 
   const openModal = (title, content) => {
     setModal({ title: title, content: content, open: true });
@@ -176,4 +176,4 @@ const makeBtn = (title, content, openModal) => {
   );
 };
 
-export default AgreeComponent;
+export default Agree;
