@@ -45,7 +45,9 @@ const FindId = () => {
 
     for (const [condition, message, ref, err] of validList) {
       if (condition) {
-        err ? toast.error(message) : toast.warn(message);
+        err
+          ? toast.error(message, { toastId: "error" })
+          : toast.warn(message, { toastId: "warn" });
         if (err === "phoneNum") {
           setMember({ ...member, phoneNum: "" });
         }
@@ -63,14 +65,14 @@ const FindId = () => {
 
     await find(member)
       .then((userId) => {
-        toast.success("아이디 검색 성공");
+        toast.success("아이디 검색 성공", { toastId: "success" });
         setMember({ ...member, userId: userId });
       })
       .catch((error) => {
         if (error.code === "ERR_NETWORK") {
-          toast.error("서버 연결에 실패했습니다.");
+          toast.error("서버 연결에 실패했습니다.", { toastId: "error" });
         } else {
-          toast.warn("검색 실패, 다시 입력하세요.");
+          toast.warn("검색 실패, 다시 입력하세요.", { toastId: "warn" });
           setMember({ ...member, userId: "" });
         }
       });
@@ -118,19 +120,19 @@ const FindId = () => {
         )}
 
         {member.userId === "" ? (
-          <div className="w-full py-2 text-2xl text-center font-bold flex space-x-4">
-            <button
-              className="bg-gray-500 w-1/4 p-4 rounded-xl text-white flex justify-center items-center hover:bg-gray-300 hover:text-black transition duration-500"
-              onClick={() => navigate(-1, { replace: true })}
-            >
-              취소
-            </button>
-
+          <div className="w-full py-2 text-2xl text-center font-bold flex flex-row-reverse justify-center items-center">
             <button
               className="bg-sky-500 w-3/4 p-4 rounded-xl text-white hover:bg-sky-300 hover:text-black transition duration-500"
               onClick={onCLickFind}
             >
               검색
+            </button>
+
+            <button
+              className="bg-gray-500 w-1/4 mr-4 p-4 rounded-xl text-white flex justify-center items-center hover:bg-gray-300 hover:text-black transition duration-500"
+              onClick={() => navigate(-1, { replace: true })}
+            >
+              취소
             </button>
           </div>
         ) : (

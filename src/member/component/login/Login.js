@@ -23,10 +23,10 @@ const Login = () => {
     e.preventDefault();
 
     if (userId === "") {
-      toast.warn("아이디를 입력하세요.");
+      toast.warn("아이디를 입력하세요.", { toastId: "warn" });
       idRef.current.focus();
     } else if (userPw === "") {
-      toast.warn("비밀번호를 입력하세요.");
+      toast.warn("비밀번호를 입력하세요.", { toastId: "warn" });
       pwRef.current.focus();
     } else {
       const member = new FormData();
@@ -36,14 +36,21 @@ const Login = () => {
       await login(member)
         .then((data) => {
           if (data.error === "LOCK") {
-            toast.error("잠긴 계정입니다. - 복구 문의 : blobus051@gmail.com");
+            toast.error("잠긴 계정입니다. - 복구 문의 : blobus051@gmail.com", {
+              toastId: "error",
+            });
           } else if (data.error) {
-            toast.error("로그인에 실패했습니다. (5회 이상 실패 시 계정 잠금)");
+            toast.error("로그인에 실패했습니다. (5회 이상 실패 시 계정 잠금)", {
+              toastId: "error",
+            });
             setUserPw("");
           } else if (data.delFlag) {
-            toast.error("탈퇴한 계정입니다. - 복구 문의 : blobus051@gmail.com");
+            toast.error(
+              "탈퇴한 계정입니다. - 복구 문의 : blobus051@gmail.com",
+              { toastId: "error" }
+            );
           } else if (userRole !== data.roleName) {
-            toast.warn("계정 종류를 다시 선택하세요.");
+            toast.warn("계정 종류를 다시 선택하세요.", { toastId: "warn" });
           } else {
             setCookie("jwt", data.accessToken);
             setCookie("expirationTime", data.expirationTime);
@@ -52,19 +59,21 @@ const Login = () => {
             setCookie("userRole", userRole);
             setCookie("idSave", userRole === "ADMIN" ? false : idSave);
 
-            toast.success("로그인 완료");
-            toast.info((data.name ?? data.userId) + "님 반갑습니다.");
-
             setTimeout(() => {
-              navigate(-1, { replace: true });
-            }, 1000);
+              toast.success("로그인 완료", { toastId: "success" });
+            }, 100);
+            setTimeout(() => {
+              toast.info((data.name ?? data.userId) + "님 반갑습니다.", {
+                toastId: "info",
+              });
+            }, 200);
           }
         })
         .catch((error) => {
           if (error.code === "ERR_NETWORK") {
-            toast.error("서버 연결에 실패했습니다.");
+            toast.error("서버 연결에 실패했습니다.", { toastId: "error" });
           } else {
-            toast.error("로그인에 실패했습니다.");
+            toast.error("로그인에 실패했습니다.", { toastId: "error" });
           }
         });
     }
@@ -152,21 +161,21 @@ const Login = () => {
           </div>
         )}
 
-        <div className="w-full pt-2 text-2xl flex justify-center items-center space-x-4">
-          <button
-            className="bg-gray-500 w-1/6 p-4 rounded-2xl shadow-xl text-white flex justify-center items-center hover:bg-gray-300 hover:text-black transition duration-500"
-            onClick={() =>
-              navigate(window.history.length > 1 ? -1 : "/", { replace: true })
-            }
-          >
-            <FaBackspace className="text-3xl" />
-          </button>
-
+        <div className="w-full pt-2 text-2xl flex flex-row-reverse justify-center items-center">
           <button
             className="bg-sky-500 w-5/6 p-4 rounded-2xl shadow-xl text-white hover:bg-sky-300 hover:text-black transition duration-500"
             onClick={onCLickLogin}
           >
             LOGIN
+          </button>
+
+          <button
+            className="bg-gray-500 w-1/6 mr-4 p-4 rounded-2xl shadow-xl text-white flex justify-center items-center hover:bg-gray-300 hover:text-black transition duration-500"
+            onClick={() =>
+              navigate(window.history.length > 1 ? -1 : "/", { replace: true })
+            }
+          >
+            <FaBackspace className="text-3xl" />
           </button>
         </div>
 

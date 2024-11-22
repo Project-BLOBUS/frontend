@@ -87,7 +87,9 @@ const FindPw = () => {
 
     for (const [condition, message, ref, err] of validList) {
       if (condition) {
-        err ? toast.error(message) : toast.warn(message);
+        err
+          ? toast.error(message, { toastId: "error" })
+          : toast.warn(message, { toastId: "warn" });
         if (err === "userId") {
           setMember({ ...member, userId: "" });
         } else if (err === "userPw") {
@@ -109,7 +111,7 @@ const FindPw = () => {
 
     await modify(member)
       .then(() => {
-        toast.success("비밀번호 변경 완료");
+        toast.success("비밀번호 변경 완료", { toastId: "success" });
         removeCookie("foundId");
         setCookie("userId", member.userId);
         setCookie("userRole", member.roleName);
@@ -117,9 +119,11 @@ const FindPw = () => {
       })
       .catch((error) => {
         if (error.code === "ERR_NETWORK") {
-          toast.error("서버 연결에 실패했습니다.");
+          toast.error("서버 연결에 실패했습니다.", { toastId: "error" });
         } else {
-          toast.warn("변경 실패, 다시 입력하세요.");
+          toast.warn("비밀번호 변경 실패, 다시 입력하세요.", {
+            toastId: "warn",
+          });
           setMember({ ...member, userPw: "", confirmPw: "" });
         }
       });
@@ -167,7 +171,7 @@ const FindPw = () => {
 
                   try {
                     const code = await sendMail(member);
-                    toast.success("메일 전송 성공");
+                    toast.success("메일 전송 성공", { toastId: "success" });
                     setValidation({
                       ...validation,
                       isMailSent: true,
@@ -176,7 +180,9 @@ const FindPw = () => {
                     // TODO 삭제
                     setMember({ ...member, authCode: code });
                   } catch (error) {
-                    toast.error("메일 전송에 실패했습니다.");
+                    toast.error("메일 전송에 실패했습니다.", {
+                      toastId: "error",
+                    });
                   }
 
                   setLoading(false);
@@ -198,10 +204,10 @@ const FindPw = () => {
                   setLoading(true);
 
                   if (validation.authCode === member.authCode * 1) {
-                    toast.success("인증 완료");
+                    toast.success("인증 완료", { toastId: "success" });
                     setValidation({ ...validation, isAuth: true });
                   } else {
-                    toast.warn("인증 코드를 다시 입력하세요.");
+                    toast.warn("코드를 다시 입력하세요.", { toastId: "warn" });
                     refList.authCode.current.focus();
                   }
 
@@ -245,16 +251,7 @@ const FindPw = () => {
             )}
           </>
         )}
-        <div className="w-full pt-2 text-2xl text-center font-bold flex justify-center items-center space-x-4">
-          <button
-            className={`${
-              !validation.isAuth ? "w-full" : "w-1/4"
-            } bg-gray-500 p-4 rounded-xl text-white flex justify-center items-center hover:bg-gray-300 hover:text-black transition duration-500`}
-            onClick={() => navigate(-1, { replace: true })}
-          >
-            취소
-          </button>
-
+        <div className="w-full py-2 text-2xl text-center font-bold flex flex-row-reverse justify-center items-center">
           {validation.isAuth && (
             <button
               className="bg-sky-500 w-3/4 p-4 rounded-xl text-white hover:bg-sky-300 hover:text-black transition duration-500"
@@ -263,6 +260,14 @@ const FindPw = () => {
               완료
             </button>
           )}
+          <button
+            className={`${
+              !validation.isAuth ? "w-full" : "w-1/4 mr-4"
+            } bg-gray-500 p-4 rounded-xl text-white flex justify-center items-center hover:bg-gray-300 hover:text-black transition duration-500`}
+            onClick={() => navigate(-1, { replace: true })}
+          >
+            취소
+          </button>
         </div>
       </div>
     </>

@@ -3,6 +3,7 @@ import { Navigate } from "react-router";
 import Loading from "../etc/Loading";
 
 const Info = lazy(() => import("../component/mypage/Info"));
+const InfoModify = lazy(() => import("../component/mypage/InfoMofiy"));
 
 const mypageRouter = () => {
   return [
@@ -31,7 +32,7 @@ const mypageRouter = () => {
       path: "info/modify",
       element: (
         <Suspense fallback={<Loading />}>
-          <Info />
+          <InfoModify />
         </Suspense>
       ),
     },

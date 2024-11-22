@@ -169,7 +169,9 @@ const GeneralInput = () => {
 
     for (const [condition, message, ref, err] of validList) {
       if (condition) {
-        err ? toast.error(message) : toast.warn(message);
+        err
+          ? toast.error(message, { toastId: "error" })
+          : toast.warn(message, { toastId: "warn" });
         if (err === "userId") {
           setMember({ ...member, userId: "" });
         } else if (err === "userPw") {
@@ -194,13 +196,13 @@ const GeneralInput = () => {
     await register(member)
       .then((data) => {
         if (data.error) {
-          toast.error("회원 가입에 실패했습니다.");
+          toast.error("회원 가입에 실패했습니다.", { toastId: "error" });
         } else if (data === 0) {
-          toast.warn("이미 등록된 번호, 다시 입력하세요.");
+          toast.warn("이미 등록된 번호, 다시 입력하세요.", { toastId: "warn" });
           setMember({ ...member, phoneNum: "" });
           refList.phoneNum.current.focus();
         } else {
-          toast.success("회원 가입 완료");
+          toast.success("회원 가입 완료", { toastId: "success" });
           setCookie("userId", member.userId);
           setCookie("userRole", member.roleName);
 
@@ -213,9 +215,9 @@ const GeneralInput = () => {
       })
       .catch((error) => {
         if (error.code === "ERR_NETWORK") {
-          toast.error("서버 연결에 실패했습니다.");
+          toast.error("서버 연결에 실패했습니다.", { toastId: "error" });
         } else {
-          toast.error("회원 가입에 실패했습니다.");
+          toast.error("회원 가입에 실패했습니다.", { toastId: "error" });
         }
       });
 
@@ -260,14 +262,20 @@ const GeneralInput = () => {
                   try {
                     const data = await duplicate(member);
                     if (!data) {
-                      toast.success("가입 가능한 아이디");
+                      toast.success("가입 가능한 아이디", {
+                        toastId: "success",
+                      });
                       setValidation({ ...validation, isIdValid: true });
                     } else {
-                      toast.warn("중복된 아이디, 다시 입력하세요.");
+                      toast.warn("중복된 아이디, 다시 입력하세요.", {
+                        toastId: "warn",
+                      });
                       refList.userId.current.focus();
                     }
                   } catch (error) {
-                    toast.error("서버 연결에 실패했습니다.");
+                    toast.error("서버 연결에 실패했습니다.", {
+                      toastId: "error",
+                    });
                   }
 
                   setLoading(false);
@@ -281,7 +289,7 @@ const GeneralInput = () => {
                   // TODO 인증메일 디자인
                   try {
                     const code = await sendMail(member);
-                    toast.success("메일 전송 성공");
+                    toast.success("메일 전송 성공", { toastId: "success" });
                     setValidation({
                       ...validation,
                       isMailSent: true,
@@ -290,7 +298,9 @@ const GeneralInput = () => {
                     // TODO 삭제
                     setMember({ ...member, authCode: code });
                   } catch (error) {
-                    toast.error("메일 전송에 실패했습니다.");
+                    toast.error("메일 전송에 실패했습니다.", {
+                      toastId: "error",
+                    });
                   }
 
                   setLoading(false);
@@ -312,11 +322,13 @@ const GeneralInput = () => {
                   setLoading(true);
 
                   if (validation.authCode === member.authCode * 1) {
-                    toast.success("인증 완료");
+                    toast.success("인증 완료", { toastId: "success" });
                     setValidation({ ...validation, isAuth: true });
                     refList.userPw.current.focus();
                   } else {
-                    toast.warn("인증 코드를 다시 입력하세요.");
+                    toast.warn("인증 코드를 다시 입력하세요.", {
+                      toastId: "warn",
+                    });
                     refList.authCode.current.focus();
                   }
 
@@ -509,22 +521,22 @@ const GeneralInput = () => {
           </div>
         )}
 
-        <div className="w-full pt-2 text-2xl text-center font-bold flex space-x-4">
+        <div className="w-full pt-2 text-2xl text-center font-bold flex flex-row-reverse justify-center items-center">
           <button
-            className="bg-gray-500 w-1/4 p-4 rounded-xl text-white flex justify-center items-center hover:bg-gray-300 hover:text-black transition duration-500"
+            className="bg-sky-500 w-3/4 p-4 rounded-xl text-white hover:bg-sky-300 hover:text-black transition duration-500"
+            onClick={onCLickRegister}
+          >
+            완료
+          </button>
+
+          <button
+            className="bg-gray-500 w-1/4 mr-4 p-4 rounded-xl text-white flex justify-center items-center hover:bg-gray-300 hover:text-black transition duration-500"
             onClick={() => {
               removeCookie("isAgree");
               navigate("/member/signup/agree/general", { replace: true });
             }}
           >
             <FaBackspace className="text-3xl" />
-          </button>
-
-          <button
-            className="bg-sky-500 w-3/4 p-4 rounded-xl text-white hover:bg-sky-300 hover:text-black transition duration-500"
-            onClick={onCLickRegister}
-          >
-            완료
           </button>
         </div>
       </div>

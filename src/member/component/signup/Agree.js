@@ -79,17 +79,7 @@ const Agree = () => {
           ))}
         </div>
 
-        <div className="w-full pt-2 text-2xl flex justify-center items-center space-x-4">
-          <button
-            className="bg-gray-500 w-1/6 p-4 rounded-xl text-white flex justify-center items-center hover:bg-gray-300 hover:text-black transition duration-500"
-            onClick={() => {
-              removeCookie("isChoice");
-              navigate("/member/signup/choice", { replace: true });
-            }}
-          >
-            <FaBackspace className="text-3xl" />
-          </button>
-
+        <div className="w-full pt-2 text-2xl flex flex-row-reverse justify-center items-center">
           <button
             className="bg-sky-500 w-5/6 p-4 rounded-xl text-white hover:bg-sky-300 hover:text-black transition duration-500"
             onClick={() => {
@@ -100,11 +90,21 @@ const Agree = () => {
                 setCookie("isAgree", true);
                 navigate(`/member/signup/input/${role}`, { replace: true });
               } else {
-                toast.warn("필수항목에 모두 동의하세요.");
+                toast.warn("필수항목에 모두 동의하세요.", { toastId: "warn" });
               }
             }}
           >
             다음
+          </button>
+
+          <button
+            className="bg-gray-500 w-1/6 mr-4 p-4 rounded-xl text-white flex justify-center items-center hover:bg-gray-300 hover:text-black transition duration-500"
+            onClick={() => {
+              removeCookie("isChoice");
+              navigate("/member/signup/choice", { replace: true });
+            }}
+          >
+            <FaBackspace className="text-3xl" />
           </button>
         </div>
       </div>

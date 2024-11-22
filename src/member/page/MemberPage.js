@@ -6,13 +6,24 @@ import Loading from "../etc/Loading";
 
 const MemberPage = () => {
   const navigate = useNavigate();
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
+  const [jwt, setJwt] = useState(getCookie("jwt"));
 
   useEffect(() => {
-    getCookie("jwt") && navigate(-1, { replace: true });
+    setLoading(true);
+
+    const interval = setInterval(() => {
+      const newJwt = getCookie("jwt");
+      if (newJwt) {
+        navigate(-1, { replace: true });
+      } else {
+        setJwt(newJwt);
+      }
+    }, 10);
 
     setLoading(false);
-  }, [getCookie("jwt")]);
+    return () => clearInterval(interval);
+  }, [jwt]);
 
   return (
     <>

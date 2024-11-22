@@ -56,7 +56,7 @@ export const find = async (member) => {
 // 회원정보 수정 (+비밀번호 변경)
 export const modify = async (member) => {
   const res = await axios.put(
-    `${host}/${member.roleName.toLowerCase()}/find/`,
+    `${host}/${member.roleName.toLowerCase()}/modify/`,
     member
   );
 
@@ -64,9 +64,9 @@ export const modify = async (member) => {
 };
 
 // 회원정보 조회
-export const get = async (member) => {
+export const get = async (member, userId) => {
   const res = await axios.get(
-    `${host}/${member.roleName.toLowerCase()}/info/${member.userId}`
+    `${host}/${member.roleName.toLowerCase()}/info/${userId}`
   );
 
   return res.data;
