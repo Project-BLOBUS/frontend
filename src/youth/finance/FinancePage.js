@@ -5,68 +5,100 @@ import { fetchPagedPolicies } from "./FinanceApi";
 const FinancePage = () => {
   const [policies, setPolicies] = useState([]);
   const [totalPages, setTotalPages] = useState(0); 
+  
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [isSearch, setIsSearch] = useState(false);
-
+ 
   const [searchParams, setSearchParams] = useSearchParams(); 
   const navigate = useNavigate(); 
 
   // 입력 중인 검색어와 최종 검색어를 분리
-  const keyword = searchParams.get("keyword");
   const [searchKeyword, setSearchKeyword] = useState("");
   const [inputKeyword, setInputKeyword] = useState("");
-  
-  if(isSearch && !searchParams.get("page")) {
-    setIsSearch(false);
-    setInputKeyword("");
-    setSearchKeyword("");
-  }
+  const [selectedCategory, setSelectedCategory] = useState("전체"); // 선택된 카테고리 상태
 
+  // 페이징을 위한 값들
   const pageSize = 5; 
   const pagesPerGroup = 10; 
-
-  // URL에서 현재 페이지 읽기 (초기값: 0)
   const currentPage = (parseInt(searchParams.get("page")) || 1) - 1; 
   const currentPageGroup = Math.floor(currentPage / pagesPerGroup);
+  const startPage = currentPageGroup * pagesPerGroup;
+  const endPage = Math.min(startPage + pagesPerGroup, totalPages);
+
+  const [searchs, setSearchs] = useState(
+    {
+      currentPage: 0,
+      pageSize: pageSize,
+      searchKeyword: "",
+      selectedCategory: "전체"
+    }
+  );
+
+  // // 검색 상태 초기화 및 루프 방지
+  // if(isSearch && !searchParams.get("page")) {
+  //   setIsSearch(false);   // 루프 방지
+  //   setInputKeyword("");  // 검색창 초기화
+  //   setSearchKeyword(""); // 검색어 초기화
+  //   setSelectedCategory("전체"); // 카테고리 초기화
+  // }
+
+  const getPagedPolicies = async () => {
+    try {
+      setLoading(true);
+      // 최종 검색어(searchKeyword)를 사용하여 정책 조회
+      const data = await fetchPagedPolicies(searchs);
+      setPolicies(data.content);
+      setTotalPages(data.totalPages);
+    } catch (err) {
+      setError("Failed to load policies.");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
-    const getPagedPolicies = async () => {
-      try {
-        setLoading(true);
-        // 최종 검색어(searchKeyword)를 사용하여 정책 조회
-        const data = await fetchPagedPolicies(currentPage, pageSize, searchKeyword);
-        setPolicies(data.content);
-        setTotalPages(data.totalPages);
-      } catch (err) {
-        setError("Failed to load policies.");
-      } finally {
-        setLoading(false);
-      }
-    };
-
     getPagedPolicies();
-  }, [currentPage, searchKeyword]); // searchKeyword가 변경될 때만 조회
+  }, [currentPage]);
 
   // 페이지 변경 함수 수정
   const handlePageChange = (page) => {
-    // 검색어도 함께 URL 파라미터에 포함
-    setSearchParams({ 
+    // URL 파라미터 업데이트
+    setSearchParams({
       page: page + 1,
-      ...(searchKeyword && { keyword: searchKeyword }) 
+      ...(searchs.searchKeyword && { keyword: searchs.searchKeyword }),
+      category: searchs.selectedCategory,
     });
+
+    // searchs 상태 업데이트 및 데이터 불러오기
+    const updatedSearchs = {
+      ...searchs,
+      currentPage: page, // 변경된 페이지로 업데이트
+    };
+    setSearchs(updatedSearchs);
+    getPagedPolicies(updatedSearchs); // 업데이트된 검색 조건으로 데이터 불러오기
   };
 
   // 검색 핸들러 추가 - 입력 중인 검색어를 최종 검색어로 설정
   const handleSearch = () => {
-    // 검색 시 첫 페이지로 이동
-    setSearchKeyword(inputKeyword);
     setSearchParams({ 
       page: 1, 
-      ...(searchKeyword && { keyword: inputKeyword }) 
+      ...(searchKeyword && { keyword: inputKeyword }),
+      category: selectedCategory // 선택된 카테고리도 포함
     });
 
+    getPagedPolicies();
     setIsSearch(true);
+  };
+
+  // 카테고리 변경 핸들러
+  const handleCategoryChange = (category) => {
+    setSelectedCategory(category); // 선택된 카테고리 상태 업데이트
+    setSearchParams({
+      page: 1,
+      ...(searchKeyword && { keyword: searchKeyword }),
+      category, // 새로운 카테고리 값 설정
+    });
   };
 
   // 나머지 페이징 관련 함수들은 기존과 동일
@@ -101,17 +133,35 @@ const FinancePage = () => {
   if (loading) return <p>Loading...</p>;
   if (error) return <p>{error}</p>;
 
-  const startPage = currentPageGroup * pagesPerGroup;
-  const endPage = Math.min(startPage + pagesPerGroup, totalPages);
-
   return (
     <div>
       {/* 기존 필터 버튼들 그대로 유지 */}
       <div className="border-2 border-blue-400">
         <div className="flex gap-2">
-          <button className="bg-blue-300 text-white px-4 py-2 rounded">전체</button>
-          <button className="bg-blue-300 text-white px-4 py-2 rounded">제목</button>
-          <button className="bg-blue-300 text-white px-4 py-2 rounded">내용</button>
+          <button
+              onClick={() => handleCategoryChange("전체")}
+              className={`bg-blue-300 text-white px-4 py-2 rounded ${
+                selectedCategory === "전체" ? "bg-blue-500" : ""
+              }`}
+            >
+              전체
+          </button>
+          <button
+            onClick={() => handleCategoryChange("제목")}
+            className={`bg-blue-300 text-white px-4 py-2 rounded ${
+              selectedCategory === "제목" ? "bg-blue-500" : ""
+            }`}
+          >
+            제목
+          </button>
+          <button
+            onClick={() => handleCategoryChange("내용")}
+            className={`bg-blue-300 text-white px-4 py-2 rounded ${
+              selectedCategory === "내용" ? "bg-blue-500" : ""
+            }`}
+          >
+            내용
+          </button>
         </div>
         
         <div className="flex gap-2">
