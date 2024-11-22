@@ -36,7 +36,7 @@ const Agree = () => {
 
   return (
     <>
-      <div className="w-full h-fit max-w-[600px] min-w-min text-xl text-center font-bold flex flex-col justify-center items-center space-y-4">
+      <div className="w-full max-w-[600px] min-w-min text-xl text-center font-bold flex flex-col justify-center items-center space-y-4">
         <div className="bg-white w-full my-4 text-5xl text-sky-500">
           {role === "general" ? "일반계정" : "기업계정"} 약관동의
         </div>
@@ -79,7 +79,7 @@ const Agree = () => {
           ))}
         </div>
 
-        <div className="w-full pt-2 text-2xl flex flex-row-reverse justify-center items-center">
+        <div className="w-full py-2 text-2xl flex flex-row-reverse justify-center items-center">
           <button
             className="bg-sky-500 w-5/6 p-4 rounded-xl text-white hover:bg-sky-300 hover:text-black transition duration-500"
             onClick={() => {

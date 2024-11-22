@@ -2,6 +2,9 @@ import { lazy, Suspense } from "react";
 import { Navigate } from "react-router";
 import Loading from "../etc/Loading";
 
+const Custom = lazy(() => import("../component/mypage/Custom"));
+const Bookmark = lazy(() => import("../component/mypage/Bookmark"));
+const Document = lazy(() => import("../component/mypage/Document"));
 const Info = lazy(() => import("../component/mypage/Info"));
 const InfoModify = lazy(() => import("../component/mypage/InfoMofiy"));
 
@@ -10,15 +13,27 @@ const mypageRouter = () => {
     { path: "", element: <Navigate replace to="custom" /> },
     {
       path: "custom",
-      element: <Suspense fallback={<Loading />}></Suspense>,
+      element: (
+        <Suspense fallback={<Loading />}>
+          <Custom />
+        </Suspense>
+      ),
     },
     {
       path: "bookmark",
-      element: <Suspense fallback={<Loading />}></Suspense>,
+      element: (
+        <Suspense fallback={<Loading />}>
+          <Bookmark />
+        </Suspense>
+      ),
     },
     {
       path: "doc",
-      element: <Suspense fallback={<Loading />}></Suspense>,
+      element: (
+        <Suspense fallback={<Loading />}>
+          <Document />
+        </Suspense>
+      ),
     },
     {
       path: "info",

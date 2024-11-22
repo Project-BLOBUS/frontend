@@ -83,7 +83,7 @@ const FindId = () => {
   return (
     <>
       {loading && <Loading />}
-      <div className="w-full h-fit max-w-[600px] min-w-min text-xl text-center font-bold flex flex-col justify-center items-center space-y-2">
+      <div className="w-full max-w-[600px] min-w-min text-xl text-center font-bold flex flex-col justify-center items-center space-y-4">
         <div className="bg-white w-full my-4 text-5xl text-sky-500">
           아이디 찾기
           <div className=" w-full mt-4 text-xs text-gray-500">
@@ -120,7 +120,7 @@ const FindId = () => {
         )}
 
         {member.userId === "" ? (
-          <div className="w-full py-2 text-2xl text-center font-bold flex flex-row-reverse justify-center items-center">
+          <div className="w-full pt-4 text-2xl text-center font-bold flex flex-row-reverse justify-center items-center">
             <button
               className="bg-sky-500 w-3/4 p-4 rounded-xl text-white hover:bg-sky-300 hover:text-black transition duration-500"
               onClick={onCLickFind}
@@ -144,7 +144,7 @@ const FindId = () => {
               </div>
             )}
 
-            <div className="w-full pt-2 text-xl text-center font-bold flex justify-center items-center space-x-4">
+            <div className="w-full pt-4 text-xl text-center font-bold flex justify-center items-center space-x-4">
               <button
                 className="w-1/2 p-4 hover:text-gray-300 transition duration-500"
                 onClick={() => {

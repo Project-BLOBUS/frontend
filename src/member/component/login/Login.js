@@ -106,7 +106,7 @@ const Login = () => {
     <>
       {loading && <Loading />}
       <div
-        className="w-full h-fit max-w-[600px] min-w-min text-xl text-center font-bold flex flex-col justify-center items-center space-y-4"
+        className="w-full max-w-[600px] min-w-min text-xl text-center font-bold flex flex-col justify-center items-center space-y-3"
         onKeyUp={onKeyUpLogin}
       >
         <div className="w-full my-4 text-5xl text-sky-500">로그인</div>

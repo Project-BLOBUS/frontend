@@ -227,7 +227,7 @@ const GeneralInput = () => {
   return (
     <>
       {loading && <Loading />}
-      <div className="w-full h-fit max-w-[600px] min-w-min text-xl text-center font-bold flex flex-col justify-center items-center space-y-2">
+      <div className="w-full max-w-[600px] min-w-min text-xl text-center font-bold flex flex-col justify-center items-center space-y-1">
         <div className="bg-white w-full my-4 text-5xl text-sky-500">
           일반계정 회원가입
         </div>

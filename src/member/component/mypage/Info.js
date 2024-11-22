@@ -51,7 +51,7 @@ const Info = () => {
           내 정보
         </div>
 
-        <div className="w-full px-40 flex flex-col justify-center items-center">
+        <div className="w-full px-20 flex flex-col justify-center items-center">
           <div className="w-full py-2 border-b-4 border-gray-300 flex justify-end items-center">
             <button
               className="bg-green-500 px-4 py-2 rounded text-base text-white hover:bg-green-300 hover:text-black transition duration-500"
@@ -91,10 +91,10 @@ const Info = () => {
 const makeRead = (name, info) => {
   return (
     <div className="w-full text-base flex justify-center items-center">
-      <div className="bg-gray-200 w-1/5 p-4 border-b-2 border-gray-300 text-nowrap">
+      <div className="bg-gray-200 w-1/4 p-4 border-b-2 border-gray-300 text-nowrap">
         {name}
       </div>
-      <div className="w-4/5 p-4 border-b-2 border-gray-300 text-left text-nowrap">
+      <div className="w-3/4 p-4 border-b-2 border-gray-300 text-left text-nowrap">
         {info}
       </div>
     </div>

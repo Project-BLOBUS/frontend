@@ -88,7 +88,7 @@ const BusinessInput = () => {
         region: value,
         city: "",
       });
-      setMember({ ...member, address: "" });
+      setMember({ ...member, address: `${value}-` });
     } else if (name === "city") {
       setAddress({ ...address, city: value });
       setMember({ ...member, address: `${address.region}-${value}` });
@@ -200,7 +200,7 @@ const BusinessInput = () => {
   return (
     <>
       {loading && <Loading />}
-      <div className="w-full h-fit max-w-[600px] min-w-min text-xl text-center font-bold flex flex-col justify-center items-center space-y-2">
+      <div className="w-full max-w-[600px] min-w-min text-xl text-center font-bold flex flex-col justify-center items-center space-y-1">
         <div className="bg-white w-full my-4 text-5xl text-sky-500">
           기업계정 회원가입
         </div>
@@ -260,7 +260,9 @@ const BusinessInput = () => {
                   const result = await checkBusinessCode(member.userId);
                   if (result.b_stt_cd) {
                     toast.success("등록확인 완료", { toastId: "success" });
-                    toast.info(result.b_stt + " / " + result.tax_type);
+                    toast.info(result.b_stt + " / " + result.tax_type, {
+                      toastId: "info",
+                    });
                     setValidation({ ...validation, isAuth: true });
                     refList.userPw.current.focus();
                   } else {

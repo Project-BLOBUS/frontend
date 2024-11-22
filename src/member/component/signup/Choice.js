@@ -5,7 +5,7 @@ const Login = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="w-full h-fit max-w-[600px] min-w-min text-2xl text-center font-bold flex flex-col justify-center items-center space-y-4">
+    <div className="w-full max-w-[600px] min-w-min text-xl text-center font-bold flex flex-col justify-center items-center space-y-4">
       <div className="w-full my-4 text-5xl text-sky-500">가입계정 선택</div>
 
       <div className="w-full flex justify-between items-center space-x-4">

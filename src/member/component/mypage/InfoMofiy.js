@@ -76,10 +76,12 @@ const InfoMofiy = () => {
   useEffect(() => {
     setLoading(true);
 
+    const code = member.address.split("-")[0];
+
     setAddress({
       regionList: AddressList().region,
       region: member.address.split("-")[0],
-      cityList: address.region ? AddressList()[address.region] : [],
+      cityList: code ? AddressList()[code] : [],
       city: member.address.split("-")[1],
     });
 
@@ -90,7 +92,7 @@ const InfoMofiy = () => {
     });
 
     setLoading(false);
-  }, [member]);
+  }, [member.address, member.birthDate]);
 
   const onChange = ({ target: { name, value } }) => {
     setMember({ ...member, [name]: value });
@@ -103,7 +105,7 @@ const InfoMofiy = () => {
         region: value,
         city: "",
       });
-      setMember({ ...member, address: "" });
+      setMember({ ...member, address: `${value}-` });
     } else if (name === "city") {
       setAddress({ ...address, city: value });
       setMember({ ...member, address: `${address.region}-${value}` });
@@ -113,10 +115,8 @@ const InfoMofiy = () => {
   const onChangeBirth = ({ target: { name, value } }) => {
     if (name === "year") {
       setBirthDate({ ...birthDate, year: value, month: "", date: "" });
-      setMember({ ...member, birthDate: null });
     } else if (name === "month") {
       setBirthDate({ ...birthDate, month: value, date: "" });
-      setMember({ ...member, birthDate: null });
     } else if (name === "date") {
       setBirthDate({ ...birthDate, date: value });
       setMember({
@@ -219,10 +219,10 @@ const InfoMofiy = () => {
       {loading && <Loading />}
       <div className="w-full text-xl text-center font-bold flex flex-col justify-center items-center">
         <div className="w-full py-4 border-b-4 border-gray-500 text-3xl text-left flex justify-between items-center">
-          내 정보 : {member.userId}
+          내 정보 - 수정
         </div>
 
-        <div className="w-full px-40 flex flex-col justify-center items-center">
+        <div className="w-full px-20 flex flex-col justify-center items-center">
           <div className="w-full py-2 border-b-4 border-gray-300 flex justify-end items-center space-x-4">
             <button
               className="bg-gray-500 px-4 py-2 rounded text-base text-white hover:bg-gray-300 hover:text-black transition duration-500"
@@ -241,7 +241,20 @@ const InfoMofiy = () => {
           </div>
 
           <>
-            {/* {makeRead("아이디", member.userId, true)} */}
+            {/* 아이디 */}
+            {makeRead(
+              "아이디",
+              makeInput(
+                "text",
+                "userId",
+                member.userId,
+                "",
+                onChange,
+                false,
+                refList.userId,
+                "w-full border-none rounded-none shadow-none"
+              )
+            )}
 
             {/* 비밀번호 */}
             {makeRead(
@@ -250,10 +263,11 @@ const InfoMofiy = () => {
                 "password",
                 "userPw",
                 member.userPw,
-                "영어 대소문자, 숫자, 특수기호를 포함한 8~16글자",
+                "변경을 원할 경우에 입력",
                 onChange,
                 true,
-                refList.userPw
+                refList.userPw,
+                "w-full border-none shadow-none"
               )
             )}
 
@@ -264,10 +278,11 @@ const InfoMofiy = () => {
                 "password",
                 "confirmPw",
                 member.confirmPw,
-                "비밀번호 재입력",
+                "미입력 시 변경되지 않음",
                 onChange,
                 true,
-                refList.confirmPw
+                refList.confirmPw,
+                "w-full border-none shadow-none"
               )
             )}
 
@@ -281,7 +296,8 @@ const InfoMofiy = () => {
                 "이름",
                 onChange,
                 true,
-                refList.name
+                refList.name,
+                "w-full border-none shadow-none"
               )
             )}
 
@@ -295,7 +311,8 @@ const InfoMofiy = () => {
                 '"─" 없이 입력',
                 onChange,
                 true,
-                refList.phoneNum
+                refList.phoneNum,
+                "w-full border-none shadow-none"
               )
             )}
 
@@ -311,7 +328,7 @@ const InfoMofiy = () => {
                   onChangeAddress,
                   true,
                   refList.region,
-                  "w-1/2"
+                  "w-1/2 border-none shadow-none"
                 )}
                 {makeSelect(
                   "city",
@@ -321,7 +338,7 @@ const InfoMofiy = () => {
                   onChangeAddress,
                   true,
                   refList.city,
-                  "w-1/2"
+                  "w-1/2 border-none shadow-none"
                 )}
               </div>
             )}
@@ -341,7 +358,7 @@ const InfoMofiy = () => {
                   onChangeBirth,
                   true,
                   refList.year,
-                  "w-1/3"
+                  "w-1/3 border-none shadow-none"
                 )}
                 {makeSelect(
                   "month",
@@ -351,7 +368,7 @@ const InfoMofiy = () => {
                   onChangeBirth,
                   true,
                   refList.month,
-                  "w-1/3"
+                  "w-1/3 border-none shadow-none"
                 )}
                 {makeSelect(
                   "date",
@@ -370,7 +387,7 @@ const InfoMofiy = () => {
                   onChangeBirth,
                   true,
                   refList.date,
-                  "w-1/3"
+                  "w-1/3 border-none shadow-none"
                 )}
               </div>
             )}
@@ -387,7 +404,7 @@ const InfoMofiy = () => {
                     member.gender === "M" ||
                     setMember({ ...member, gender: "M" }),
                   true,
-                  "w-1/2"
+                  "w-1/2 border-none shadow-none"
                 )}
                 {makeRatio(
                   member.gender === "F",
@@ -397,7 +414,7 @@ const InfoMofiy = () => {
                     member.gender === "F" ||
                     setMember({ ...member, gender: "F" }),
                   true,
-                  "w-1/2"
+                  "w-1/2 border-none shadow-none"
                 )}
               </div>
             )}
@@ -412,7 +429,7 @@ const InfoMofiy = () => {
                   "내국인",
                   () => setMember({ ...member, foreigner: false }),
                   true,
-                  "w-1/2"
+                  "w-1/2 border-none shadow-none"
                 )}
                 {makeRatio(
                   member.foreigner,
@@ -420,7 +437,7 @@ const InfoMofiy = () => {
                   "외국인",
                   () => setMember({ ...member, foreigner: true }),
                   true,
-                  "w-1/2"
+                  "w-1/2 border-none  shadow-none"
                 )}
               </div>
             )}
@@ -434,13 +451,13 @@ const InfoMofiy = () => {
 const makeRead = (name, input, onlyRead) => {
   return (
     <div className="w-full text-base flex justify-center items-center">
-      <div className="bg-gray-200 w-1/5 p-4 border-b-2 border-gray-300 text-nowrap">
+      <div className="bg-gray-200 w-1/4 p-4 border-b-2 border-gray-300 text-nowrap">
         {name}
       </div>
       <div
         className={`${
           onlyRead && "p-4"
-        } w-4/5 border-b-2 border-gray-300 text-left text-nowrap`}
+        } w-3/4 border-b-2 border-gray-300 text-left text-nowrap`}
       >
         {input}
       </div>
