@@ -4,7 +4,7 @@ import { AiOutlineGlobal } from "react-icons/ai";
 import { GiSouthKorea } from "react-icons/gi";
 import { IoMdFemale, IoMdMale } from "react-icons/io";
 import { toast } from "react-toastify";
-import { get, modify } from "../../api/memberAPI";
+import { getInfo, modify } from "../../api/memberAPI";
 import { getCookie } from "../../util/cookieUtil";
 import useCustomTag from "../../hook/useCustomeTag";
 import Loading from "../../etc/Loading";
@@ -55,18 +55,31 @@ const InfoMofiy = () => {
   useEffect(() => {
     setLoading(true);
 
-    get(member, getCookie("userId"))
+    getInfo(member, getCookie("userId"))
       .then((dto) => {
         const { userPw, ...member } = dto;
         setMember(member);
+
+        const code = member.address.split("-")[0];
+
+        setAddress({
+          regionList: AddressList().region,
+          region: member.address.split("-")[0],
+          cityList: code ? AddressList()[code] : [],
+          city: member.address.split("-")[1],
+        });
+
+        setBirthDate({
+          year: member.birthDate.split("-")[0] * 1,
+          month: member.birthDate.split("-")[1] * 1,
+          date: member.birthDate.split("-")[2] * 1,
+        });
       })
       .catch((error) => {
         if (error.code === "ERR_NETWORK") {
-          toast.error("서버 연결에 실패했습니다.", { toastId: "error" });
+          toast.error("서버 연결에 실패했습니다.");
         } else {
-          toast.error("회원정보를 불러오는데 실패했습니다.", {
-            toastId: "error",
-          });
+          toast.error("회원정보를 불러오는데 실패했습니다.", { toastId: "e" });
         }
       });
 
@@ -76,23 +89,14 @@ const InfoMofiy = () => {
   useEffect(() => {
     setLoading(true);
 
-    const code = member.address.split("-")[0];
-
     setAddress({
+      ...address,
       regionList: AddressList().region,
-      region: member.address.split("-")[0],
-      cityList: code ? AddressList()[code] : [],
-      city: member.address.split("-")[1],
-    });
-
-    setBirthDate({
-      year: member.birthDate.split("-")[0] * 1,
-      month: member.birthDate.split("-")[1] * 1,
-      date: member.birthDate.split("-")[2] * 1,
+      cityList: address.region ? AddressList()[address.region] : [],
     });
 
     setLoading(false);
-  }, [member.address, member.birthDate]);
+  }, [address.region]);
 
   const onChange = ({ target: { name, value } }) => {
     setMember({ ...member, [name]: value });
@@ -165,9 +169,7 @@ const InfoMofiy = () => {
 
     for (const [condition, message, ref, err] of validList) {
       if (condition) {
-        err
-          ? toast.error(message, { toastId: "error" })
-          : toast.warn(message, { toastId: "warn" });
+        err ? toast.error(message) : toast.warn(message);
         if (err === "userPw") {
           setMember({ ...member, userPw: "" });
         } else if (err === "confirmPw") {
@@ -190,24 +192,26 @@ const InfoMofiy = () => {
     await modify(member)
       .then((data) => {
         if (data.error) {
-          toast.error("회원 가입에 실패했습니다.", { toastId: "error" });
+          toast.error("회원 가입에 실패했습니다.");
         } else if (data === 0) {
-          toast.warn("이미 등록된 번호, 다시 입력하세요.", { toastId: "warn" });
+          toast.warn("이미 등록된 번호, 다시 입력하세요.");
           setMember({ ...member, phoneNum: "" });
           refList.phoneNum.current.focus();
         } else {
-          member.userPw && toast.success("비밀변호 변경 완료");
-          setTimeout(() => {
-            toast.success("수정 완료", { toastId: "success" });
-          }, 100);
           navigate(-1, { replace: true });
+          setTimeout(() => {
+            toast.success("회원정보 수정 완료");
+          }, 100);
+          setTimeout(() => {
+            member.userPw && toast.success("비밀변호 변경 완료");
+          }, 200);
         }
       })
       .catch((error) => {
         if (error.code === "ERR_NETWORK") {
-          toast.error("서버 연결에 실패했습니다.", { toastId: "error" });
+          toast.error("서버연결에 실패했습니다.");
         } else {
-          toast.error("정보 수정에 실패했습니다.", { toastId: "error" });
+          toast.error("회원정보 수정에 실패했습니다.");
         }
       });
 
@@ -351,7 +355,7 @@ const InfoMofiy = () => {
                   "year",
                   birthDate.year,
                   Array.from(
-                    { length: new Date().getFullYear() - 1900 + 1 - 14 },
+                    { length: new Date().getFullYear() - 1900 + 1 },
                     (_, i) => 1900 + i
                   ).reverse(),
                   "연도 선택",

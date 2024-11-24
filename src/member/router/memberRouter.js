@@ -59,7 +59,7 @@ const memberRouter = () => {
       ),
     },
     {
-      path: "findid",
+      path: "find/id",
       element: (
         <Suspense fallback={<Loading />}>
           <FindId />
@@ -67,7 +67,7 @@ const memberRouter = () => {
       ),
     },
     {
-      path: "findpw",
+      path: "find/pw",
       element: (
         <Suspense fallback={<Loading />}>
           <FindPw />

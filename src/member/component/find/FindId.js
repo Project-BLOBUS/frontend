@@ -2,15 +2,15 @@ import { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { find } from "../../api/memberAPI";
-import { setCookie, removeCookie } from "../../util/cookieUtil";
+import { setCookie } from "../../util/cookieUtil";
 import useCustomTag from "../../hook/useCustomeTag";
 import Loading from "../../etc/Loading";
 
 const initState = {
   // TODO 삭제
   userId: "",
-  name: "테스트3",
-  phoneNum: "01033333333",
+  name: "양성규",
+  phoneNum: "01049164357",
   roleName: "GENERAL",
 };
 
@@ -45,9 +45,7 @@ const FindId = () => {
 
     for (const [condition, message, ref, err] of validList) {
       if (condition) {
-        err
-          ? toast.error(message, { toastId: "error" })
-          : toast.warn(message, { toastId: "warn" });
+        err ? toast.error(message) : toast.warn(message);
         if (err === "phoneNum") {
           setMember({ ...member, phoneNum: "" });
         }
@@ -65,15 +63,28 @@ const FindId = () => {
 
     await find(member)
       .then((userId) => {
-        toast.success("아이디 검색 성공", { toastId: "success" });
-        setMember({ ...member, userId: userId });
+        if (userId === "DELETE") {
+          toast.error("해당 계정은 탈퇴계정입니다.");
+          setTimeout(() => {
+            toast.info("복구 문의 : blobus051@gmail.com");
+          }, 100);
+        } else if (userId === "LOCK") {
+          toast.error("해당 계정은 잠금계정입니다.");
+          setTimeout(() => {
+            toast.info("복구 문의 : blobus051@gmail.com");
+          }, 100);
+        } else {
+          setCookie("foundId", userId);
+          setMember({ ...member, userId: userId });
+          toast.success("아이디 검색 성공");
+        }
       })
       .catch((error) => {
         if (error.code === "ERR_NETWORK") {
-          toast.error("서버 연결에 실패했습니다.", { toastId: "error" });
+          toast.error("서버연결에 실패했습니다.");
         } else {
-          toast.warn("검색 실패, 다시 입력하세요.", { toastId: "warn" });
           setMember({ ...member, userId: "" });
+          toast.warn("검색 실패, 다시 입력하세요.");
         }
       });
 
@@ -147,10 +158,7 @@ const FindId = () => {
             <div className="w-full pt-4 text-xl text-center font-bold flex justify-center items-center space-x-4">
               <button
                 className="w-1/2 p-4 hover:text-gray-300 transition duration-500"
-                onClick={() => {
-                  setCookie("foundId", member.userId);
-                  navigate("/member/findpw", { replace: true });
-                }}
+                onClick={() => navigate("/member/find/pw", { replace: true })}
               >
                 비밀번호 찾기
               </button>
@@ -158,7 +166,6 @@ const FindId = () => {
               <button
                 className="w-1/2 p-4 hover:text-gray-300 transition duration-500"
                 onClick={() => {
-                  removeCookie("foundId");
                   setCookie("userId", member.userId);
                   setCookie("userRole", member.roleName);
                   navigate("/member/login", { replace: true });

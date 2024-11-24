@@ -2,13 +2,13 @@ import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { sendMail, modify } from "../../api/memberAPI";
-import { getCookie, setCookie, removeCookie } from "../../util/cookieUtil";
+import { getCookie, setCookie } from "../../util/cookieUtil";
 import useCustomTag from "../../hook/useCustomeTag";
 import Loading from "../../etc/Loading";
 
 const initState = {
   // TODO 삭제
-  userId: "test1@test.com",
+  userId: "bell4916@naver.com",
   authCode: "qwerQWER1234!@#$",
   userPw: "qwerQWER1234!@#$",
   confirmPw: "qwerQWER1234!@#$",
@@ -36,10 +36,8 @@ const FindPw = () => {
   };
 
   useEffect(() => {
-    if (getCookie("foundId")) {
+    if (getCookie("foundId"))
       setMember({ ...member, userId: getCookie("foundId") });
-      removeCookie("foundId");
-    }
   }, []);
 
   const onChange = ({ target: { name, value } }) => {
@@ -87,9 +85,7 @@ const FindPw = () => {
 
     for (const [condition, message, ref, err] of validList) {
       if (condition) {
-        err
-          ? toast.error(message, { toastId: "error" })
-          : toast.warn(message, { toastId: "warn" });
+        err ? toast.error(message) : toast.warn(message);
         if (err === "userId") {
           setMember({ ...member, userId: "" });
         } else if (err === "userPw") {
@@ -111,20 +107,20 @@ const FindPw = () => {
 
     await modify(member)
       .then(() => {
-        toast.success("비밀번호 변경 완료", { toastId: "success" });
-        removeCookie("foundId");
         setCookie("userId", member.userId);
         setCookie("userRole", member.roleName);
+
         navigate("/member/login", { replace: true });
+        setTimeout(() => {
+          toast.success("비밀번호 변경 완료");
+        }, 100);
       })
       .catch((error) => {
         if (error.code === "ERR_NETWORK") {
-          toast.error("서버 연결에 실패했습니다.", { toastId: "error" });
+          toast.error("서버연결에 실패했습니다.");
         } else {
-          toast.warn("비밀번호 변경 실패, 다시 입력하세요.", {
-            toastId: "warn",
-          });
           setMember({ ...member, userPw: "", confirmPw: "" });
+          toast.warn("비밀번호 변경 실패, 다시 입력하세요.");
         }
       });
 
@@ -171,18 +167,16 @@ const FindPw = () => {
 
                   try {
                     const code = await sendMail(member);
-                    toast.success("메일 전송 성공", { toastId: "success" });
                     setValidation({
                       ...validation,
                       isMailSent: true,
                       authCode: code,
                     });
+                    toast.success("메일 전송 성공");
                     // TODO 삭제
                     setMember({ ...member, authCode: code });
                   } catch (error) {
-                    toast.error("메일 전송에 실패했습니다.", {
-                      toastId: "error",
-                    });
+                    toast.error("메일 전송에 실패했습니다.");
                   }
 
                   setLoading(false);
@@ -204,10 +198,10 @@ const FindPw = () => {
                   setLoading(true);
 
                   if (validation.authCode === member.authCode * 1) {
-                    toast.success("인증 완료", { toastId: "success" });
                     setValidation({ ...validation, isAuth: true });
+                    toast.success("인증 완료");
                   } else {
-                    toast.warn("코드를 다시 입력하세요.", { toastId: "warn" });
+                    toast.warn("코드를 다시 입력하세요.");
                     refList.authCode.current.focus();
                   }
 
@@ -265,7 +259,11 @@ const FindPw = () => {
             className={`${
               !validation.isAuth ? "w-full" : "w-1/4 mr-4"
             } bg-gray-500 p-4 rounded-xl text-white flex justify-center items-center hover:bg-gray-300 hover:text-black transition duration-500`}
-            onClick={() => navigate(-1, { replace: true })}
+            onClick={() => {
+              setCookie("userId", member.userId);
+              setCookie("userRole", member.roleName);
+              navigate("/member/login", { replace: true });
+            }}
           >
             취소
           </button>

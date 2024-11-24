@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
-import { getCookie } from "../util/cookieUtil";
+import { getCookie, removeCookie } from "../util/cookieUtil";
 import Header from "../../main/Header";
 import Loading from "../etc/Loading";
 
@@ -11,8 +11,16 @@ const MemberPage = () => {
 
   useEffect(() => {
     setLoading(true);
-
     const interval = setInterval(() => {
+      if (!window.location.pathname.includes("signup")) {
+        removeCookie("isChoice");
+        removeCookie("isAgree");
+      }
+
+      if (!window.location.pathname.includes("find")) {
+        removeCookie("foundId");
+      }
+
       const newJwt = getCookie("jwt");
       if (newJwt) {
         navigate(-1, { replace: true });
@@ -39,7 +47,7 @@ const MemberPage = () => {
               borderB={false}
             />
           </div>
-          <div className="flex justify-center items-center">
+          <div className="h-[calc(100vh-90px)] flex justify-center items-start overflow-y-scroll">
             <Outlet />
           </div>
         </>

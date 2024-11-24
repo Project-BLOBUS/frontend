@@ -13,15 +13,15 @@ const MyPage = () => {
     setLoading(true);
 
     if (!getCookie("jwt")) {
-      toast.error("로그인이 필요합니다.", { toastId: "error" });
+      navigate("/member/login");
       setTimeout(() => {
-        navigate("/member/login");
-      }, 1000);
+        toast.error("로그인이 필요합니다.", { toastId: "e" });
+      }, 100);
     } else if (getCookie("userRole") !== "GENERAL") {
-      toast.error("접근 불가능한 페이지입니다.", { toastId: "error" });
+      navigate("/");
       setTimeout(() => {
-        navigate("/");
-      }, 1000);
+        toast.error("접근 불가능한 페이지입니다.", { toastId: "e" });
+      }, 100);
     }
 
     setLoading(false);
@@ -52,8 +52,15 @@ const MyPage = () => {
         </div>
       </div>
 
-      <div className="mx-[15%] flex justify-center items-center">
+      <div className="ml-[15%] pr-[15%] h-[calc(100vh-90px)] flex justify-center items-start overflow-y-scroll">
+        {/* <div className="mx-[15%] flex justify-center items-center"> */}
         <Outlet />
+      </div>
+
+      <div className="w-[15%] min-w-[150px] h-screen pt-4 text-base text-center flex flex-col justify-start items-center fixed z-0">
+        <div className="bg-pink-500 w-5/6 border-2 rounded-xl font-bold">
+          ddsd
+        </div>
       </div>
     </>
   );

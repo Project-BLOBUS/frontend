@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import { toast } from "react-toastify";
-import { get } from "../../api/memberAPI";
-import { getCookie } from "../../util/cookieUtil";
+import { getInfo, deleteId } from "../../api/memberAPI";
+import { getCookie, removeCookie } from "../../util/cookieUtil";
 import Loading from "../../etc/Loading";
 
 const initState = {
@@ -25,23 +25,52 @@ const Info = () => {
   useEffect(() => {
     setLoading(true);
 
-    get(member, getCookie("userId"))
+    getInfo(member, getCookie("userId"))
       .then((dto) => {
         const { userPw, ...member } = dto;
         setMember(member);
       })
       .catch((error) => {
         if (error.code === "ERR_NETWORK") {
-          toast.error("서버 연결에 실패했습니다.", { toastId: "error" });
+          toast.error("서버 연결에 실패했습니다.");
         } else {
-          toast.error("회원정보를 불러오는데 실패했습니다.", {
-            toastId: "error",
-          });
+          toast.error("회원정보를 불러오는데 실패했습니다.", { toastId: "e" });
         }
       });
 
     setLoading(false);
   }, []);
+
+  const onClickDelete = () => {
+    setLoading(true);
+
+    deleteId(member, getCookie("userId"))
+      .then(() => {
+        removeCookie("jwt");
+        removeCookie("expirationTime");
+        removeCookie("name");
+        removeCookie("userId");
+        removeCookie("userRole");
+        removeCookie("idSave");
+
+        navigate("/", { replace: true });
+        setTimeout(() => {
+          toast.success("회원탈퇴 완료");
+        }, 100);
+        setTimeout(() => {
+          toast.info("메인페이지로 이동합니다.");
+        }, 200);
+      })
+      .catch((error) => {
+        if (error.code === "ERR_NETWORK") {
+          toast.error("서버연결에 실패했습니다.");
+        } else {
+          toast.error("회원탈퇴에 실패했습니다.");
+        }
+      });
+
+    setLoading(false);
+  };
 
   return (
     <>
@@ -72,13 +101,15 @@ const Info = () => {
             ${member.birthDate.split("-")[1] * 1}월
             ${member.birthDate.split("-")[2] * 1}일`
             )}
-            {makeRead("성별", member.gender === "M" ? "남성" : "여성")}
-            {makeRead("내외국인", member.foreigner ? "외구인" : "내국인")}
+            {makeRead("성별", member.gender === "F" ? "여성" : "남성")}
+            {makeRead("내외국인", member.foreigner ? "외국인" : "내국인")}
           </>
 
           <div className="w-full py-2 border-t-2 border-gray-300 flex justify-end items-center">
-            <button className="p-2 rounded text-base hover:bg-black hover:text-red-500 transition duration-500">
-              {/* TODO 회원탈퇴 */}
+            <button
+              className="p-2 rounded text-base hover:bg-black hover:text-red-500 transition duration-500"
+              onClick={onClickDelete}
+            >
               회원탈퇴
             </button>
           </div>

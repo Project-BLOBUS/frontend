@@ -35,7 +35,7 @@ export const sendMail = async (member) => {
 // 회원가입
 export const register = async (member) => {
   const res = await axios.post(
-    `${host}/${member.roleName.toLowerCase()}/`,
+    `${host}/${member.roleName.toLowerCase()}/register`,
     member
   );
 
@@ -56,7 +56,7 @@ export const find = async (member) => {
 // 회원정보 수정 (+비밀번호 변경)
 export const modify = async (member) => {
   const res = await axios.put(
-    `${host}/${member.roleName.toLowerCase()}/modify/`,
+    `${host}/${member.roleName.toLowerCase()}/modify`,
     member
   );
 
@@ -64,9 +64,18 @@ export const modify = async (member) => {
 };
 
 // 회원정보 조회
-export const get = async (member, userId) => {
+export const getInfo = async (member, userId) => {
   const res = await axios.get(
     `${host}/${member.roleName.toLowerCase()}/info/${userId}`
+  );
+
+  return res.data;
+};
+
+// 회원탈퇴
+export const deleteId = async (member, userId) => {
+  const res = await axios.delete(
+    `${host}/${member.roleName.toLowerCase()}/del/${userId}`
   );
 
   return res.data;

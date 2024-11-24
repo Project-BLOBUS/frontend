@@ -144,9 +144,7 @@ const BusinessInput = () => {
 
     for (const [condition, message, ref, err] of validList) {
       if (condition) {
-        err
-          ? toast.error(message, { toastId: "err" })
-          : toast.warn(message, { toastId: "warn" });
+        err ? toast.error(message) : toast.warn(message);
         if (err === "userId") {
           setMember({ ...member, userId: "" });
         } else if (err === "userPw") {
@@ -173,24 +171,22 @@ const BusinessInput = () => {
     await register(member)
       .then((data) => {
         if (data.error) {
-          toast.error("회원 가입에 실패했습니다.", { toastId: "error" });
+          toast.error("회원 가입에 실패했습니다.");
         } else {
-          toast.success("회원 가입 완료", { toastId: "success" });
           setCookie("userId", member.userId);
           setCookie("userRole", member.roleName);
 
-          removeCookie("isAgree");
-
+          navigate("/member/login", { replace: true });
           setTimeout(() => {
-            navigate("/member/login", { replace: true });
-          }, 1000);
+            toast.success("회원가입 완료");
+          }, 100);
         }
       })
       .catch((error) => {
         if (error.code === "ERR_NETWORK") {
-          toast.error("서버 연결에 실패했습니다.", { toastId: "error" });
+          toast.error("서버연결에 실패했습니다.");
         } else {
-          toast.error("회원 가입에 실패했습니다.", { toastId: "error" });
+          toast.error("회원가입에 실패했습니다.");
         }
       });
 
@@ -233,20 +229,14 @@ const BusinessInput = () => {
                   try {
                     const data = await duplicate(member);
                     if (!data) {
-                      toast.success("가입 가능한 아이디", {
-                        toastId: "success",
-                      });
                       setValidation({ ...validation, isIdValid: true });
+                      toast.success("가입 가능한 아이디");
                     } else {
-                      toast.warn("중복된 아이디, 다시 입력하세요.", {
-                        toastId: "warn",
-                      });
+                      toast.warn("중복된 아이디, 다시 입력하세요.");
                       refList.userId.current.focus();
                     }
                   } catch (error) {
-                    toast.error("서버 연결에 실패했습니다.", {
-                      toastId: "error",
-                    });
+                    toast.error("서버연결에 실패했습니다.");
                   }
 
                   setLoading(false);
@@ -259,16 +249,16 @@ const BusinessInput = () => {
 
                   const result = await checkBusinessCode(member.userId);
                   if (result.b_stt_cd) {
-                    toast.success("등록확인 완료", { toastId: "success" });
-                    toast.info(result.b_stt + " / " + result.tax_type, {
-                      toastId: "info",
-                    });
                     setValidation({ ...validation, isAuth: true });
+
+                    toast.success("등록확인 완료");
+                    setTimeout(() => {
+                      toast.info(result.b_stt + " / " + result.tax_type);
+                    }, 100);
+
                     refList.userPw.current.focus();
                   } else {
-                    toast.warn("사업자등록번호 조회 실패, 다시 입력하세요.", {
-                      toastId: "warn",
-                    });
+                    toast.warn("사업자등록번호 조회 실패, 다시 입력하세요.");
                     refList.userId.current.focus();
                   }
 

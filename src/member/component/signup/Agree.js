@@ -23,6 +23,7 @@ const Agree = () => {
       ...term,
       agree: false,
     }));
+
     setTermsList(newTermsList);
   }, [TermsList]);
 
@@ -66,9 +67,7 @@ const Agree = () => {
                         ? { ...term, agree: !term.agree }
                         : term
                     );
-
                     setAgreeAll(newTermsList.every((term) => term.agree));
-
                     return newTermsList;
                   });
                 },
@@ -86,11 +85,11 @@ const Agree = () => {
               if (
                 termsList.every((term) => (term.required ? term.agree : true))
               ) {
-                removeCookie("isChoice");
                 setCookie("isAgree", true);
-                navigate(`/member/signup/input/${role}`, { replace: true });
+                removeCookie("isChoice");
+                navigate(`/member/signup/input/${role}`);
               } else {
-                toast.warn("필수항목에 모두 동의하세요.", { toastId: "warn" });
+                toast.warn("필수항목에 모두 동의하세요.");
               }
             }}
           >
