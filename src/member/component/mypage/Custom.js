@@ -6,6 +6,7 @@ const Custom = () => {
 
   useEffect(() => {
     setLoading(true);
+
     setLoading(false);
   }, []);
 

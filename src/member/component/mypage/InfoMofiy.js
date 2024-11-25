@@ -77,7 +77,7 @@ const InfoMofiy = () => {
       })
       .catch((error) => {
         if (error.code === "ERR_NETWORK") {
-          toast.error("서버 연결에 실패했습니다.");
+          toast.error("서버연결에 실패했습니다.");
         } else {
           toast.error("회원정보를 불러오는데 실패했습니다.", { toastId: "e" });
         }
@@ -226,8 +226,8 @@ const InfoMofiy = () => {
           내 정보 - 수정
         </div>
 
-        <div className="w-full px-20 flex flex-col justify-center items-center">
-          <div className="w-full py-2 border-b-4 border-gray-300 flex justify-end items-center space-x-4">
+        <div className="w-full px-20 py-4 flex flex-col justify-center items-center">
+          <div className="w-full pb-2 border-b-4 border-gray-300 flex justify-end items-center space-x-4">
             <button
               className="bg-gray-500 px-4 py-2 rounded text-base text-white hover:bg-gray-300 hover:text-black transition duration-500"
               onClick={() => {

@@ -27,8 +27,9 @@ const mypageRouter = () => {
         </Suspense>
       ),
     },
+    { path: "doc", element: <Navigate replace to="list" /> },
     {
-      path: "doc",
+      path: "doc/list",
       element: (
         <Suspense fallback={<Loading />}>
           <Document />

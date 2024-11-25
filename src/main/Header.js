@@ -22,9 +22,8 @@ function Header({
       const newJwt = getCookie("jwt");
       if (newJwt !== jwt && !window.location.pathname.includes("member")) {
         setJwt(newJwt);
-        window.location.reload();
       }
-    }, 0);
+    }, 100);
     return () => clearInterval(interval);
   }, [jwt]);
 
@@ -92,19 +91,19 @@ function Header({
                 <Link
                   className="w-[45%] hover:text-gray-300 transition duration-500"
                   onClick={() => {
+                    // TODO 로그아웃 모달창
                     if (window.confirm("로그아웃하시겠습니까?")) {
-                      toast.success("로그아웃");
-                      setTimeout(() => {
-                        removeCookie("jwt");
-                        removeCookie("expirationTime");
-                        removeCookie("name");
+                      removeCookie("jwt");
+                      removeCookie("expirationTime");
+                      removeCookie("name");
 
-                        if (getCookie("idSave")) {
-                        } else {
-                          removeCookie("userId");
-                          removeCookie("userRole");
-                        }
-                      }, 1000);
+                      if (getCookie("idSave")) {
+                        removeCookie("userId");
+                        removeCookie("userRole");
+                      }
+                      setTimeout(() => {
+                        toast.success("로그아웃");
+                      }, 100);
                     }
                   }}
                 >

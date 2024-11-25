@@ -1,13 +1,13 @@
-const PageComponent = ({ serverData, movePage }) => {
-  const pageCSS = "h-full p-2 rounded";
-  const prevComent = "PREV";
-  const nextComent = "NEXT";
+const Paging = ({ serverData, movePage }) => {
+  const pageCSS = "h-full p-2 rounded-3xl";
+  const prevComent = "이전";
+  const nextComent = "다음";
 
   return (
-    <div className="text-sm text-center font-bold flex justify-center items-center">
+    <div className="mt-4 text-base text-center font-bold flex justify-center items-center">
       {serverData.prev ? (
         <div
-          className={`${pageCSS} w-16 hover:bg-gray-600 hover:text-white`}
+          className={`${pageCSS} w-16 text-gray-300 cursor-pointer hover:bg-gray-500 hover:text-white transition duration-500`}
           onClick={() =>
             movePage({
               page: serverData.prevPage,
@@ -18,14 +18,18 @@ const PageComponent = ({ serverData, movePage }) => {
           {prevComent}
         </div>
       ) : (
-        <div className={`${pageCSS} w-16 text-gray-400`}>{prevComent}</div>
+        <div className={`${pageCSS} opacity-0 w-16`}>{prevComent}</div>
       )}
 
       {serverData.pageNumList.map((pageNum) => (
         <div
           key={pageNum}
-          className={`${pageCSS} w-10 hover:bg-gray-600 hover:text-white
-          ${serverData.currentPage === pageNum ? "bg-sky-400" : ""}`}
+          className={`${pageCSS} w-10
+          ${
+            serverData.currentPage === pageNum
+              ? "bg-yellow-300 text-black font-bold"
+              : "text-gray-300 cursor-pointer hover:bg-gray-500 hover:text-white transition duration-500"
+          }`}
           onClick={() =>
             movePage({ page: pageNum, size: serverData.pageRequestDTO.size })
           }
@@ -36,7 +40,7 @@ const PageComponent = ({ serverData, movePage }) => {
 
       {serverData.next ? (
         <div
-          className={`${pageCSS} w-16 hover:bg-gray-600 hover:text-white`}
+          className={`${pageCSS} w-16 text-gray-300 cursor-pointer hover:bg-gray-500 hover:text-white transition duration-500`}
           onClick={() =>
             movePage({
               page: serverData.nextPage,
@@ -47,10 +51,10 @@ const PageComponent = ({ serverData, movePage }) => {
           {nextComent}
         </div>
       ) : (
-        <div className={`${pageCSS} w-16 text-gray-400`}>{nextComent}</div>
+        <div className={`${pageCSS} opacity-0 w-16`}>{nextComent}</div>
       )}
     </div>
   );
 };
 
-export default PageComponent;
+export default Paging;

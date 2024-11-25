@@ -39,9 +39,9 @@ const MyPage = () => {
         />
       </div>
 
-      <div className="w-[15%] min-w-[150px] h-screen pt-4 text-base text-center flex flex-col justify-start items-center fixed z-0">
-        <div className="bg-pink-500 w-5/6 border-2 rounded-xl font-bold">
-          <div className="py-4 text-xl text-white">마이페이지</div>
+      <div className="w-[15%] h-screen pt-4 text-base text-center flex flex-col justify-start items-center fixed z-0">
+        <div className="bg-pink-500 w-2/3 border-2 rounded-xl font-bold">
+          <div className="py-6 text-xl text-white">마이페이지</div>
 
           <div className="bg-white p-4 rounded-xl flex flex-col justify-center items-center space-y-2">
             {makeNav("커스텀", "custom")}
@@ -57,7 +57,7 @@ const MyPage = () => {
         <Outlet />
       </div>
 
-      <div className="w-[15%] min-w-[150px] h-screen pt-4 text-base text-center flex flex-col justify-start items-center fixed z-0">
+      <div className="w-[15%] h-screen pt-4 text-base text-center flex flex-col justify-start items-center fixed z-0">
         <div className="bg-pink-500 w-5/6 border-2 rounded-xl font-bold">
           ddsd
         </div>

@@ -32,7 +32,7 @@ const Info = () => {
       })
       .catch((error) => {
         if (error.code === "ERR_NETWORK") {
-          toast.error("서버 연결에 실패했습니다.");
+          toast.error("서버연결에 실패했습니다.");
         } else {
           toast.error("회원정보를 불러오는데 실패했습니다.", { toastId: "e" });
         }
@@ -44,6 +44,8 @@ const Info = () => {
   const onClickDelete = () => {
     setLoading(true);
 
+    // TODO 인증 절차 추가
+    // TODO 회원탈퇴 모달창
     deleteId(member, getCookie("userId"))
       .then(() => {
         removeCookie("jwt");
@@ -58,7 +60,7 @@ const Info = () => {
           toast.success("회원탈퇴 완료");
         }, 100);
         setTimeout(() => {
-          toast.info("메인페이지로 이동합니다.");
+          toast.info("홈으로 이동합니다.");
         }, 200);
       })
       .catch((error) => {
@@ -80,11 +82,18 @@ const Info = () => {
           내 정보
         </div>
 
-        <div className="w-full px-20 flex flex-col justify-center items-center">
-          <div className="w-full py-2 border-b-4 border-gray-300 flex justify-end items-center">
+        <div className="w-full px-20 py-4 flex flex-col justify-center items-center">
+          <div className="w-full pb-2 border-b-4 border-gray-300 flex justify-end items-center">
             <button
               className="bg-green-500 px-4 py-2 rounded text-base text-white hover:bg-green-300 hover:text-black transition duration-500"
-              onClick={() => navigate("modify")}
+              onClick={async () => {
+                setLoading(true);
+
+                // TODO 인증 절차 추가
+                navigate("modify");
+
+                setLoading(false);
+              }}
             >
               수정
             </button>
