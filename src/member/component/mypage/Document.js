@@ -71,7 +71,7 @@ const Document = () => {
     }
   };
 
-  const css = "h-full px-4 border-r-2 border-gray-400";
+  const css = "h-full px-4 border-gray-400";
   return (
     <>
       {loading && <Loading />}
@@ -82,22 +82,22 @@ const Document = () => {
 
         <div className="w-full flex justify-center items-center">
           <div className="w-1/2 border-b-4 border-gray-500 text-sm flex justify-start items-center">
-            {makeTab("전체", "", board, setBoard, true)}
-            {makeTab("자유", "FREE", board, setBoard, true)}
-            {makeTab("건의", "SUGGEST", board, setBoard, true)}
+            {makeTab("전체", "", board, setBoard, true, moveToList)}
+            {makeTab("자유", "FREE", board, setBoard, true, moveToList)}
+            {makeTab("건의", "SUGGEST", board, setBoard, true, moveToList)}
           </div>
           <div className="w-1/2 border-b-4 border-gray-500 text-sm flex justify-end items-center">
-            {makeTab("기업", "ENTERPRISE", board, setBoard, false)}
-            {makeTab("청년", "YOUTH", board, setBoard, false)}
-            {makeTab("전체", "", board, setBoard, false)}
+            {makeTab("기업", "ENTERPRISE", board, setBoard, false, moveToList)}
+            {makeTab("청년", "YOUTH", board, setBoard, false, moveToList)}
+            {makeTab("전체", "", board, setBoard, false, moveToList)}
           </div>
         </div>
 
         <div className="bg-gray-200 w-full h-[50px] py-2 border-b-4 border-gray-500 text-base flex justify-center items-center">
-          <div className={`${css} w-[8%]`}>번호</div>
-          <div className={`${css} w-[72%]`}>제목</div>
-          <div className={`${css} w-[10%]`}>작성일</div>
-          <div className={`${css} w-[10%] border-r-0`}>수정일</div>
+          <div className={`${css} w-[10%] border-r-2`}>번호</div>
+          <div className={`${css} w-[60%] border-r-2`}>제목</div>
+          <div className={`${css} w-[15%] border-r-2`}>작성일</div>
+          <div className={`${css} w-[15%] border-r-0`}>수정일</div>
         </div>
 
         <div className="w-full h-[420px] text-base text-nowrap flex flex-col justify-start items-center">
@@ -114,9 +114,9 @@ const Document = () => {
                   )
                 }
               >
-                <div className={`${css} w-[8%]`}>{doc.id}</div>
+                <div className={`${css} w-[10%] border-r-2`}>{doc.id}</div>
                 <div
-                  className={`${css} w-[72%] flex justify-start items-center space-x-2`}
+                  className={`${css} w-[60%] border-r-2 flex justify-start items-center space-x-2`}
                 >
                   {doc.boardCategory === "YOUTH" ? (
                     <div className="text-blue-500">[청년]</div>
@@ -126,10 +126,10 @@ const Document = () => {
                   <div className="">{doc.title}</div>
                   {doc.visibility === "PRIVATE" ? <FaLock /> : <></>}
                 </div>
-                <div className={`${css} w-[10%]`}>
+                <div className={`${css} w-[15%] border-r-2`}>
                   {printDateTime(doc.createdAt)}
                 </div>
-                <div className={`${css} w-[10%] border-r-0`}>
+                <div className={`${css} w-[15%] border-r-0`}>
                   {printDateTime(doc.updatedAt)}
                 </div>
               </div>
@@ -145,19 +145,20 @@ const Document = () => {
   );
 };
 
-const makeTab = (name, value, board, setBoard, isType) => {
+const makeTab = (name, value, board, setBoard, isType, moveToList) => {
   return (
     <div
-      className={`w-[10%] py-2 rounded-t-xl ${
+      className={`w-[15%] p-2 rounded-t-xl ${
         (isType ? value === board.type : value === board.category)
           ? "bg-gray-500 text-white"
           : "text-gray-300 cursor-pointer hover:bg-gray-300 hover:text-black transition duration-500"
       }`}
-      onClick={() =>
+      onClick={() => {
         isType
           ? setBoard({ ...board, type: value })
-          : setBoard({ ...board, category: value })
-      }
+          : setBoard({ ...board, category: value });
+        moveToList(1);
+      }}
     >
       {name}
     </div>

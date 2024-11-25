@@ -9,7 +9,7 @@ export const getBoardList = async (pageParam, board) => {
   const { page, size } = pageParam;
   const res = await axios.get(`${host}/list`, {
     headers: {
-      Authorization: `Bearer ${getCookie("jwt")}`, // 동적 헤더 설정
+      Authorization: `Bearer ${getCookie("jwt")}`,
     },
     params: {
       page: page,

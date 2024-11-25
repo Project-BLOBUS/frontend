@@ -82,7 +82,7 @@ const Login = () => {
     if (e.key === "Enter") {
       onCLickLogin(e);
     } else if (e.key === "Escape") {
-      // TODO 삭제
+      // ToDEL 삭제
       if (userRole === "GENERAL") {
         setUserId("bell4916@naver.com");
         setUserPw("qwerQWER1234!@#$");

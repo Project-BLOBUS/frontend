@@ -12,7 +12,7 @@ import Loading from "../../etc/Loading";
 import AddressList from "../../data/AddressList";
 
 const initState = {
-  // TODO 삭제
+  // ToDEL 삭제
   userId: "bell4916@naver.com",
   authCode: "",
   userPw: "Yang544110!@",
@@ -285,7 +285,7 @@ const GeneralInput = () => {
                       authCode: code,
                     });
                     toast.success("메일 전송 성공");
-                    // TODO 삭제
+                    // ToDEL 삭제
                     setMember({ ...member, authCode: code });
                   } catch (error) {
                     toast.error("메일 전송에 실패했습니다.");

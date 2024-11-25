@@ -7,7 +7,7 @@ import useCustomTag from "../../hook/useCustomeTag";
 import Loading from "../../etc/Loading";
 
 const initState = {
-  // TODO 삭제
+  // ToDEL 삭제
   userId: "bell4916@naver.com",
   authCode: "qwerQWER1234!@#$",
   userPw: "qwerQWER1234!@#$",
@@ -173,7 +173,7 @@ const FindPw = () => {
                       authCode: code,
                     });
                     toast.success("메일 전송 성공");
-                    // TODO 삭제
+                    // ToDEL 삭제
                     setMember({ ...member, authCode: code });
                   } catch (error) {
                     toast.error("메일 전송에 실패했습니다.");

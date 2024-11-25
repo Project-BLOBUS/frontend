@@ -10,7 +10,7 @@ import Loading from "../../etc/Loading";
 import AddressList from "../../data/AddressList";
 
 const initState = {
-  // TODO 삭제
+  // ToDEL 삭제
   userId: "520-38-01151",
   file: "",
   userPw: "qwerQWER1234!@#$",

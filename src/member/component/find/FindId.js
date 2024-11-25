@@ -7,7 +7,7 @@ import useCustomTag from "../../hook/useCustomeTag";
 import Loading from "../../etc/Loading";
 
 const initState = {
-  // TODO 삭제
+  // ToDEL 삭제
   userId: "",
   name: "양성규",
   phoneNum: "01049164357",
