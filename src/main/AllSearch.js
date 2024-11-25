@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { useLocation } from "react-router-dom"; // useLocation 훅을 사용
-
 import Header from "./Header";
 
 
@@ -22,16 +21,16 @@ const AllSearch = () => {
     { id: 9, name: "9.청년 정책" },
     { id: 10, name: "10.행사 청년" },
     { id: 11, name: "1.청년 거주" },
-    // { id: 12, name: "2.청년 지원" },
-    // { id: 13, name: "3.청년 기업" },
-    // { id: 14, name: "4.정책 청년" },
-    // { id: 15, name: "5.청년 정보" },
-    // { id: 16, name: "6.청년 사업" },
-    // { id: 17, name: "7.청년 교육" },
-    // { id: 18, name: "8.청년 일자리" },
-    // { id: 19, name: "9.청년 정책" },
-    // { id: 20, name: "20.행사 청년" },
-    // { id: 21, name: "1.청년 거주" },
+    { id: 12, name: "2.청년 지원" },
+    { id: 13, name: "3.청년 기업" },
+    { id: 14, name: "4.정책 청년" },
+    { id: 15, name: "5.청년 정보" },
+    { id: 16, name: "6.청년 사업" },
+    { id: 17, name: "7.청년 교육" },
+    { id: 18, name: "8.청년 일자리" },
+    { id: 19, name: "9.청년 정책" },
+    { id: 20, name: "20.행사 청년" },
+    { id: 21, name: "1.청년 거주" },
     // { id: 22, name: "2.청년 지원" },
     // { id: 23, name: "3.청년 기업" },
     // { id: 24, name: "4.정책 청년" },
@@ -93,24 +92,24 @@ const AllSearch = () => {
             />
           </div>
         <div className="min-h-full w-[70.7%] ml-[15%] mt-[4px] flex flex-col items-center justify-center ">
-          <div className="sm:w-[30%] w-[50%] text-center sm:mb-[15%] mb-[15%] sm:mr-[0%] mr-[38%]">
-            <div className="flex flex-col sm:w-[100%] w-[160%] sm:h-[100px] h-[60px] ml-[5%] mt-[5%] sm:text-md text-md font-bold text-gray-700 sm:mb-[60%] mb-[60%] ">
+          <div className="sm:w-[30%] w-[50%] text-center sm:mb-[15%] mb-[15%] sm:mr-[0%] mr-[38%] ">
+            <div className="flex flex-col sm:w-[100%] w-[160%] sm:h-[100px] h-[70px] ml-[5%] mt-[3%] sm:text-md text-md font-bold text-gray-700 sm:mb-[60%] mb-[60%] ">
               검색어 "{searchQuery ? searchQuery : "없음"}"에 대한 검색 결과 총 {filteredResults.length}건
   
               <div className="flex justify-center items-center mt-[2%] ">
                 <input
                   type="text"
-                  placeholder="검색어를 입력해주세요."
-                  className="border-2 text-md mt-2 rounded-tl-[25px] rounded-bl-[25px] sm:w-[100%] h-[40px] p-[2%] focus:outline-none"
+                  placeholder="검색"
+                  className="border-2 text-md sm:mt-2 mt-[3%] rounded-tl-[25px] rounded-bl-[25px] sm:w-[100%] w-[100%] h-[40px] p-[5%] sm:p-[2%] focus:outline-none"
                 />
-                <div className=" w-[85px] sm:h-[40px]   mt-2 bg-[#A488F3] text-md sm:text-lg text-white font-bold rounded-tr-[25px] rounded-br-[25px] flex justify-center items-center cursor-pointer">
+                <div className="w-[85px] sm:h-[40px] h-[40px] sm:mt-2 mt-[3%] bg-[#A488F3] text-md sm:text-lg text-white font-bold rounded-tr-[25px] rounded-br-[25px] flex justify-center items-center cursor-pointer">
                   검색
                 </div>
               </div>
             </div>
           </div>
   
-          <ul className="w-[400px] h-[500px] p-4 mt-[-35%] ml-9 pb-[2%] sm:pb-[2%] flex flex-wrap">
+          <ul className="w-[400px] h-[500px] p-4 sm:mt-[-35%] mt-[-25%] sm:ml-9 ml-3 pb-[2%] sm:pb-[2%] flex flex-wrap">
             {currentItems.map((item) => (
               <li
                 key={item.id}
@@ -124,7 +123,7 @@ const AllSearch = () => {
   
           {/* 페이징 버튼 */}
           {filteredResults.length > 0 && (
-            <div className="flex justify-center ml-7 mt-[-10px]">
+            <div className="flex justify-center sm:ml-7 ml-0 mt-[-1px]">
               <button
                 onClick={() => handlePageChange(currentPage - 1)}
                 disabled={currentPage === 1}

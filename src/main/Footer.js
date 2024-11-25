@@ -4,7 +4,7 @@ import { FaYoutube,FaFacebook,FaInstagram   } from "react-icons/fa";
 
 function Footer() {
     return (
-        <footer className="w-full sm:w-[70.5%] sm:ml-[15.1%] mx-auto mt-2 py-4 bg-[linear-gradient(45deg,_#6E00FF,_#DB0153,#0130BC)] text-white">
+        <footer className="w-full sm:w-[69.7%] sm:ml-[15.1%] mx-auto py-4 mt-3 bg-[linear-gradient(45deg,_#6E00FF,_#DB0153,#0130BC)] text-white">
             <div className="flex flex-col sm:flex-row justify-between items-center sm:space-y-0 space-y-4 sm:space-x-6">
                 <div className="text-center sm:text-left">
                     <h3 className="text-lg font-semibold">회사 이름 : BLOBUS</h3>

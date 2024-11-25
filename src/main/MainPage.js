@@ -46,21 +46,21 @@ function MainPage() {
       link: "/blobusIntro",
       text: "BLoBus 소개",
       style: "w-full h-full bg-center bg-cover rounded-lg",
-      textStyle: "sm:text-4xl text-2xl p-7 pt-[50px] sm:pl-[40px] pl-[20px] font-bold text-gray-700",
+      textStyle: "sm:text-4xl text-2xl p-7 pt-[50px] sm:pl-[40px] pl-[20px] font-bold text-gray-800",
     },
     {
       url: "https://img.freepik.com/premium-vector/man-sits-desk-front-computer-screen-that-says-i-m-software-developer_877730-109.jpg?w=996",
       link: "/blobusWork",
       text: "BLoBus 기능",
       style: "w-full h-full bg-center bg-cover rounded-lg",
-      textStyle: "sm:text-2xl text-xl p-7 pt-[40px] sm:pl-[38%] pl-[32%] font-bold text-gray-700",
+      textStyle: "sm:text-2xl text-xl p-7 pt-[40px] sm:pl-[38%] pl-[32%] font-bold text-gray-800",
     },
     {
       url: "https://img.freepik.com/premium-vector/hand-holding-tablet-with-checklist-online-survey-form_34089-125.jpg?w=740",
       link: "/blobusNews",
       text: "BLoBus 목표",
       style: "w-full h-full bg-center bg-cover rounded-lg",
-      textStyle: "text-gray-50 sm:text-xl text-xs p-7 sm:pt-[18px] pt-[35px] sm:pl-[38%] pl-[39.5%] font-bold text-gray-700",
+      textStyle: "text-white sm:text-xl text-xs p-7 sm:pt-[18px] pt-[35px] sm:pl-[38%] pl-[39.5%] font-bold text-gray-700",
     },
   ];
 
@@ -88,9 +88,9 @@ function MainPage() {
   return (
     <div>
       {/* "메인"으로 설정된 페이지 제목 */}
-      <Header pageTitle="메인" titleBg="#EC0245" borderB={true} />
+      <Header pageTitle="메인" titleBg="#EC0245" borderB={true}/>
 
-      <div className="h-full w-[70.7%] ml-[15%] mt-[1.6%] sm:flex ">
+      <div className="h-full w-[70.7%] ml-[15%] mt-[1.6%] flex flex-col sm:flex-row">
         {/* 왼쪽 라인 */}
         <div className="w-full sm:w-[535px]">
           <div className=" sm:w-[100%] w-[118%] ml-[-10%] sm:ml-[0%] h-[300px] sm:h-[400px]">
@@ -121,26 +121,26 @@ function MainPage() {
           <div className="flex justify-start">
             <input
               type="text"
-              placeholder="검색어를 입력해주세요."
-              className="font-bold text-md sm:text-lg sm:mt-4 mt-2 rounded-tl-[25px] rounded-bl-[25px] border-2 w-[230px] sm:w-[450px] h-[30px] sm:h-[50px] p-4 focus:outline-none"
+              placeholder="검색"
+              className="font-bold text-md sm:text-lg mt-2 rounded-tl-[25px] rounded-bl-[25px] border-2 w-[230px] sm:w-[450px] h-[30px] sm:h-[50px] p-4 focus:outline-none"
               value={searchs} // 상태값을 input에 바인딩
               onChange={handleSearchChange} // 검색어 입력 시 상태 업데이트
             />
 
-            <div className="w-[85px] sm:h-[50px] sm:mt-4 mt-2 bg-[#A488F3] text-md sm:text-lg text-white font-bold rounded-tr-[25px] rounded-br-[25px] flex justify-center items-center cursor-pointer transition duration-500 hover:text-gray-300" onClick={handleSearchClick}>
+            <div className="w-[85px] sm:h-[50px] mt-2 bg-[#A488F3] text-md sm:text-lg text-white font-bold rounded-tr-[25px] rounded-br-[25px] flex  justify-center items-center cursor-pointer transition duration-500 hover:text-gray-300" onClick={handleSearchClick}>
               검색
             </div>
           </div>
         </div>
         {/* 오른쪽 라인 */}
-        <div className="ml-[1.8%] mt-[-1%]">
+        <div className="ml-[1.8%] mt-[-1%] ">
 
-          <div className="sm:text-lg text-xl font-bold sm:ml-[0%] ml-[31.5%] mt-4 sm:mt-0">실시간 정보</div>
+          <div className="sm:text-lg text-xl font-bold sm:ml-[0%] ml-[31.5%] mt-4 sm:mt-[-8px]">실시간 정보</div>
 
-          <div className="flex flex-wrap justify-center items-center text-md font-bold text-center mt-2 sm:mt-0 sm:ml-[0%] ml-[-2%]">
+          <div className="flex flex-wrap justify-center items-center text-md font-bold text-center mt-2 sm:mt-0 sm:ml-[-1%] ml-[-3%]">
             <nav
               onClick={() => handleNavClick("청년관")}
-              className={` p-3 w-[130px] cursor-pointer ${
+              className={` p-3 w-[129px] cursor-pointer ${
                 activeNav === "청년관"
                   ? "border-t-[3px] border-t-[#0130BC] border-b-0"
                   : "border"
@@ -151,7 +151,7 @@ function MainPage() {
 
             <nav
               onClick={() => handleNavClick("기업관")}
-              className={`p-3 w-[130px] cursor-pointer ${
+              className={`p-3 w-[129px] cursor-pointer ${
                 activeNav === "기업관"
                   ? "border-t-[3px] border-t-[#DB0153] border-b-0"
                   : "border"
@@ -162,7 +162,7 @@ function MainPage() {
 
             <nav
               onClick={() => handleNavClick("지역자원")}
-              className={`p-3 w-[130px] cursor-pointer ${
+              className={`p-3 w-[129px] cursor-pointer ${
                 activeNav === "지역자원"
                   ? "border-t-[3px] border-t-[#6E00FF] border-b-0"
                   : "border"
@@ -173,7 +173,7 @@ function MainPage() {
 
             <nav
               onClick={() => handleNavClick("커뮤니티")}
-              className={`p-3 w-[130px] cursor-pointer ${
+              className={`p-3 w-[129px] cursor-pointer ${
                 activeNav === "커뮤니티"
                   ? "border-t-[3px] border-t-[#FB0138] border-b-0"
                   : "border"
@@ -260,7 +260,7 @@ function MainPage() {
             </Link>
 
             <Link to="/enterprise">
-              <div className="sm:w-[241.5px] w-[111px] h-[100px] bg-[linear-gradient(45deg,_#DB0153,_#0130BC)] ml-[10px] flex justify-center items-center hover:text-gray-300 hover:scale-90 transition duration-500">
+              <div className="sm:w-[241.5px] w-[111px] h-[100px] bg-[linear-gradient(45deg,_#DB0153,_#0130BC)] sm:ml-[9px] ml-[7px] flex justify-center items-center hover:text-gray-300 hover:scale-90 transition duration-500">
                 기업관
               </div>
             </Link>
@@ -272,7 +272,7 @@ function MainPage() {
             </Link>
 
             <Link to="/resources">
-              <div className="sm:w-[241.5px] w-[111px] h-[150px] bg-[linear-gradient(45deg,_#DB0153,_#FB0138)] mt-[-50px] sm:ml-[10px] ml-[11px] flex justify-center items-center hover:text-gray-300 hover:scale-90 transition duration-500">
+              <div className="sm:w-[241.5px] w-[111px] h-[150px] bg-[linear-gradient(45deg,_#DB0153,_#FB0138)] mt-[-50px] sm:ml-[9px] ml-[7px] flex justify-center items-center hover:text-gray-300 hover:scale-90 transition duration-500">
                 지역자원
               </div>
             </Link>

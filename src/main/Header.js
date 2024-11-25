@@ -9,9 +9,9 @@ function Header({ navs = [], isWhite = false, pageTitle,titleBg = '#EC0245',text
 
   return (
     <div className={`font-bold ${borderB ? 'border-b-2 main-border-bottom' : ''}`}>
-      <div className="w-[full] sm:w-[70.6%] sm:flex-row ml-[15%] flex justify-between items-center ">
+      <div className="w-[full] sm:w-[70.6%] ml-[15%] flex justify-between items-center ">
         
-      <Link to="/main">
+      <Link to="/main" >
         <p className={` text-3xl ${blobusTextColor}`}>BLOBUS</p>
       </Link>
 
@@ -27,7 +27,7 @@ function Header({ navs = [], isWhite = false, pageTitle,titleBg = '#EC0245',text
           ))}
         </div>
 
-        <div className="sm:mr-[10px] mr-[75px]">
+        <div className="sm:mr-[12px] mr-[75px]">
         <p className={`mt-[-8px] h-[50px] rounded-b-[5px] flex justify-center items-center`} style={{ backgroundColor: titleBg,color:textC }}>
             {pageTitle}  {/* 메인 글자 동적으로 텍스트 표시 */}
           </p>
