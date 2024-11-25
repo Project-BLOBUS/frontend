@@ -5,6 +5,7 @@ import {
   Route,
   Navigate,
 } from "react-router-dom";
+import youthRouter from "./youth/router/youthRouter";
 
 // Header 컴포넌트를 lazy로 불러오기
 // const Header = lazy(() => import('./components/Header'));
@@ -22,7 +23,15 @@ const AppRoutes = () => (
     {/* /main 경로로 매핑 */}
     <Route path="/main" element={<MainPage />} />
     {/* /youth 청년 */}
-    <Route path="/youth" element={<YouthPage />} />
+    <Route path="/youth" element={<YouthPage />}>
+      {youthRouter().map((route, index) => (
+        <Route key={index} path={route.path} element={route.element}>
+          {route.children?.map((child, childIndex) => (
+            <Route key={childIndex} path={child.path} element={child.element} />
+          ))}
+        </Route>
+      ))}
+    </Route>
     <Route path="/enterprise" element={<Enterprise />} />{" "}
     {/* /enterprise 기업 */}
     {/* /comunity 커뮤니티 */}
