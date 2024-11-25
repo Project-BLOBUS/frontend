@@ -52,29 +52,29 @@ const FinancePage = () => {
 
   useEffect(() => {
     const checkUrlAndFetchPolicies = () => {
-      const url = window.location.href;
-      // 초기 검색 조건으로 데이터 불러오기, 나중에 경로가 변경되면 수정 필요
-      if (url === 'http://localhost:3000/youth/finance') {  
-        const defaultSearchParams = {
-          currentPage: 0,
-          pageSize: pageSize,
-          searchKeyword: "",
-          selectedCategory: "전체"
-        };
-        setSearchs(defaultSearchParams);
-        setSelectedCategory("전체");
-        setInputKeyword("");
-        getPagedPolicies(defaultSearchParams);
-      } else {
-        getPagedPolicies(searchs);
-      }
+      const params = new URLSearchParams(window.location.search);
+      const page = parseInt(params.get("page")) - 1 || 0;
+      const keyword = params.get("keyword") || "";
+      const category = params.get("category") || "전체";
+  
+      const updatedSearchParams = {
+        currentPage: page,
+        pageSize: pageSize,
+        searchKeyword: keyword,
+        selectedCategory: category
+      };
+  
+      setSearchs(updatedSearchParams);
+      setSelectedCategory(category);
+      setInputKeyword(keyword);
+      getPagedPolicies(updatedSearchParams);
     };
-
+  
     checkUrlAndFetchPolicies();
-
+  
     // URL 변경을 감지하기 위해 이벤트 리스너 추가
     window.addEventListener('popstate', checkUrlAndFetchPolicies);
-
+  
     return () => {
       window.removeEventListener('popstate', checkUrlAndFetchPolicies);
     };
@@ -150,12 +150,18 @@ const FinancePage = () => {
 
   // 정책 클릭 시 상세 페이지로 이동
   const handlePolicyClick = (policyId) => {
-    navigate(`/youth/finance/${policyId}`);
+    navigate(`/youth/finance/${policyId}`, { state: { searchs } });
   };
 
   // 초기화 핸들러 - 검색어 초기화
   const handleReset = () => {
     navigate('/youth/finance');
+  };
+
+  // 즐겨찾기 클릭 핸들러
+  const handleFavoriteClick = (policyId) => {
+    // 즐겨찾기 기능 구현
+    console.log(`Policy ${policyId} added to favorites`);
   };
 
   //  페이지 이동 함수
@@ -264,15 +270,27 @@ const FinancePage = () => {
           {policies.map((policy) => (
             <li 
               key={policy.policyId} 
-              className="border border-blue-300 m-2 cursor-pointer" 
+              className="border border-blue-300 m-2 cursor-pointer flex justify-between items-center"
               onClick={() => handlePolicyClick(policy.policyId)}
             >
-              <h2 className="font-bold text-lg">{policy.title}</h2>
-              <p>{policy.overview}</p>
-              <p>
-                Application Period: {policy.applicationPeriodStart} to{" "}
-                {policy.applicationPeriodEnd}
-              </p>
+              <div>
+                <h2 className="font-bold text-lg">{policy.title}</h2>
+                <p>{policy.overview}</p>
+                <p>
+                  Application Period: {policy.applicationPeriodStart} to{" "}
+                  {policy.applicationPeriodEnd}
+                </p>
+              </div>
+            <button 
+              className="border-2 border-red-600 m-2"
+              onClick={(e) => {
+                e.stopPropagation();
+                // 즐겨찾기 기능을 여기에 추가
+                handleFavoriteClick(policy.policyId);
+              }}
+            >
+              즐겨찾기
+            </button>
             </li>
           ))}
         </ul>
