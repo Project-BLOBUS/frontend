@@ -1,11 +1,13 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
+import { toast } from "react-toastify";
+import { getBookmark } from "../../api/mypageAPI";
 import useCustomMove from "../../hook/useCustomMove";
 import Loading from "../../etc/Loading";
 import Paging from "../../etc/Paging";
 
 const initState = {
-  dtoList: [1, 2, 3, 4, 5, 6],
+  dtoList: [],
   pageNumList: [],
   pageRequestDTO: null,
   prev: false,
@@ -29,10 +31,45 @@ const Bookmark = () => {
   useEffect(() => {
     setLoading(true);
 
-    // TODO 즐겨찾기 불러오기
+    getBookmark({ page, size }, category)
+      .then((data) => {
+        if (data.error) {
+          setData(initState);
+        } else {
+          setData(data);
+        }
+      })
+      .catch((error) => {
+        if (error.code === "ERR_NETWORK") {
+          toast.error("서버연결에 실패했습니다.");
+        } else {
+          toast.error("데이터를 불러오는데 실패했습니다.", { toastId: "e" });
+        }
+      });
 
     setLoading(false);
   }, [page, size, category]);
+
+  const printDateTime = (dateTime) => {
+    const year = dateTime.split("T")[0].split("-")[0];
+    const month = dateTime.split("T")[0].split("-")[1];
+    const date = dateTime.split("T")[0].split("-")[2];
+
+    const hour = dateTime.split("T")[1].split(":")[0];
+    const min = dateTime.split("T")[1].split(":")[1];
+
+    const diff = new Date() - new Date(dateTime);
+
+    if (diff > 365 * 24 * 60 * 60 * 1000) {
+      return year + "-" + month + "-" + date;
+    } else if (diff > 14 * 24 * 60 * 60 * 1000) {
+      return month + "-" + date;
+    } else if (diff > 24 * 60 * 60 * 1000) {
+      return Math.round(diff / 24 / 60 / 60 / 1000, 0) + "일 전";
+    } else {
+      return hour + ":" + min;
+    }
+  };
 
   return (
     <>
@@ -44,26 +81,77 @@ const Bookmark = () => {
 
         <div className="w-full border-b-4 border-gray-500 text-sm flex justify-start items-center">
           {makeTab("전체", "", category, setCategory, moveToList)}
-          {makeTab("청년", "YOUTH", category, setCategory, moveToList)}
-          {makeTab("기업", "ENTERPRISE", category, setCategory, moveToList)}
-          {makeTab("지역", "RESOURCE", category, setCategory, moveToList)}
+          {makeTab("청년", "청년", category, setCategory, moveToList)}
+          {makeTab("기업", "기업", category, setCategory, moveToList)}
+          {makeTab("지역", "지역", category, setCategory, moveToList)}
         </div>
 
         <div className="bg-gray-200 w-full h-[50px] py-2 border-b-4 border-gray-500 text-base flex justify-center items-center">
           목록
         </div>
 
-        <div className="w-full h-[400px] text-base text-nowrap flex flex-wrap justify-center items-center">
+        <div className="w-full h-[420px] text-base text-nowrap flex flex-wrap justify-center items-center">
           {data.dtoList.length === 0 ? (
             <div className="w-full py-20 text-2xl">작성글 이력이 없습니다.</div>
           ) : (
-            data.dtoList.map((doc, index) => (
+            data.dtoList.map((bookmark) => (
               <div
-                key={index}
-                className={`w-[30%] h-[45%] mx-4 my-2 py-2 border-2 border-gray-400 rounded-xl flex justify-center items-center cursor-pointer hover:bg-gray-300 transition duration-500`}
+                key={bookmark.id}
+                className={`w-[calc(100%/3-1rem)] h-[calc(100%/2-1rem)] mx-2 mt-2 p-4 border-2 border-gray-400 rounded-xl flex flex-col justify-center items-center space-y-4 cursor-pointer hover:bg-gray-300 transition duration-500`}
                 onClick={() => navigate()}
               >
-                카드형태 {doc}
+                <div className="w-full flex justify-between items-center">
+                  <div className="w-full text-2xl text-left">
+                    {bookmark.title}
+                  </div>
+                  <div>{printDateTime(bookmark.atTime)}</div>
+                </div>
+
+                <div className="w-full text-sm text-left">
+                  {bookmark.content}
+                </div>
+
+                <div className="w-full  flex justify-center items-center space-x-2">
+                  <div className="w-1/2">{bookmark.startDate}</div>
+                  <div>~</div>
+                  <div className="w-1/2">{bookmark.endDate}</div>
+                </div>
+
+                <div className="w-full text-sm flex justify-between items-center">
+                  {new Date() - new Date(bookmark.endDate) < 0 ? (
+                    new Date() - new Date(bookmark.startDate) < 0 ? (
+                      <div className="bg-blue-300 w-[30% p-2 rounded-xl">
+                        진행 전
+                      </div>
+                    ) : (
+                      <div className="bg-green-300 w-[30% p-2 rounded-xl">
+                        진행 중
+                      </div>
+                    )
+                  ) : !(bookmark.startDate && bookmark.endDate) ? (
+                    <div className="bg-gray-300 w-[30% p-2 rounded-xl">
+                      기간없음
+                    </div>
+                  ) : (
+                    <div className="bg-red-300 w-[30%] p-2 rounded-xl">
+                      종료
+                    </div>
+                  )}
+
+                  <div
+                    className={`${
+                      bookmark.mainCategory === "청년"
+                        ? "bg-blue-500"
+                        : bookmark.mainCategory === "기업"
+                        ? "bg-red-500"
+                        : bookmark.mainCategory === "지역"
+                        ? "bg-green-500"
+                        : "bg-gray-500"
+                    } p-2 text-white`}
+                  >
+                    {bookmark.mainCategory} / {bookmark.subCategory}
+                  </div>
+                </div>
               </div>
             ))
           )}
@@ -80,7 +168,7 @@ const Bookmark = () => {
 const makeTab = (name, value, category, setCategory, moveToList) => {
   return (
     <div
-      className={`w-20 p-2 rounded-t-xl ${
+      className={`w-16 p-2 rounded-t-xl ${
         value === category
           ? "bg-gray-500 text-white"
           : "text-gray-300 cursor-pointer hover:bg-gray-300 hover:text-black transition duration-500"

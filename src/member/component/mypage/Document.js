@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import { FaLock } from "react-icons/fa";
 import { toast } from "react-toastify";
-import { getBoardList } from "../../api/mypageAPI";
+import { getBoard } from "../../api/mypageAPI";
 import useCustomMove from "../../hook/useCustomMove";
 import Loading from "../../etc/Loading";
 import Paging from "../../etc/Paging";
@@ -35,7 +35,7 @@ const Document = () => {
   useEffect(() => {
     setLoading(true);
 
-    getBoardList({ page, size }, board)
+    getBoard({ page, size }, board)
       .then((data) => {
         if (data.error) {
           setData(initState);
@@ -152,7 +152,7 @@ const Document = () => {
 const makeTab = (name, value, board, setBoard, isType, moveToList) => {
   return (
     <div
-      className={`w-20 p-2 rounded-t-xl ${
+      className={`w-16 p-2 rounded-t-xl ${
         (isType ? value === board.type : value === board.category)
           ? "bg-gray-500 text-white"
           : "text-gray-300 cursor-pointer hover:bg-gray-300 hover:text-black transition duration-500"
