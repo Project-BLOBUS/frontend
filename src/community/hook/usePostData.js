@@ -1,3 +1,5 @@
+// usePostData.js
+
 import { useState, useEffect } from "react";
 import { getPosts } from "../api/communityApi";
 
@@ -14,20 +16,21 @@ const usePostData = ({ page, size, tab, category, searchTerm }) => {
     const fetchData = async () => {
       setLoading(true);
       setError(null);
+
       try {
         const result = await getPosts({
           page,
           size,
-          tab, // tab을 boardType으로 사용
-          category, // category를 userType으로 사용
+          tab, // boardType
+          category, // userType
           searchTerm, // 검색어
         });
 
         // API 응답 결과를 state에 반영
         setData({
-          dtoList: result.dtoList || [], // 응답에서 dtoList
-          totalPage: result.totalPage || 0, // 응답에서 totalPage
-          current: result.current || 1, // 응답에서 current
+          dtoList: result.dtoList || [], // 응답에서 게시글 리스트
+          totalPage: result.totalPage || 0, // 전체 페이지 수
+          current: result.current || page || 1, // 현재 페이지
         });
       } catch (err) {
         setError("데이터 로드 실패: " + err.message);
@@ -35,10 +38,11 @@ const usePostData = ({ page, size, tab, category, searchTerm }) => {
         setLoading(false);
       }
     };
-    fetchData();
-  }, [page, size, tab, category, searchTerm]);
 
-  return { data, loading, error };
+    fetchData();
+  }, [page, size, tab, category, searchTerm]); // 의존성 배열
+
+  return { data, loading, error }; // 데이터 반환
 };
 
 export default usePostData;

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   BrowserRouter as Router,
   Routes,
@@ -6,12 +6,12 @@ import {
   Navigate,
 } from "react-router-dom";
 import { Suspense, lazy } from "react";
+import axios from "axios";
 
 // Lazy Loading 컴포넌트
 const MainPage = lazy(() => import("./main/MainPage"));
 const YouthPage = lazy(() => import("./youth/YouthPage"));
 const Enterprise = lazy(() => import("./enterprise/Enterprise"));
-const Community = lazy(() => import("./community/component/Listcomponent"));
 const Resources = lazy(() => import("./resource/Resource"));
 const ListComponent = lazy(() =>
   import("../src/community/component/Listcomponent")
@@ -25,30 +25,33 @@ const DetailComponent = lazy(() =>
 
 const LoadingFallback = () => <div>Loading...</div>;
 
-// 더미 게시글 데이터
-const initialPosts = [
-  {
-    id: 1,
-    title: "첫 번째 게시글",
-    content: "첫 번째 게시글 내용입니다.",
-    email: "example@gmail.com",
-    createdAt: "2024-11-21",
-  },
-  {
-    id: 2,
-    title: "두 번째 게시글",
-    content: "두 번째 게시글 내용입니다.",
-    email: "user@gmail.com",
-    createdAt: "2024-11-20",
-  },
-];
-
 const App = () => {
-  const [posts, setPosts] = useState(initialPosts); // 게시글 상태 관리
+  const [posts, setPosts] = useState([]); // 게시글 상태 관리
+
+  // 게시글 데이터 불러오기
+  useEffect(() => {
+    const fetchPosts = async () => {
+      try {
+        const response = await axios.get("http://localhost:8080/community"); // 백엔드에서 데이터 가져오기
+        setPosts(response.data);
+      } catch (error) {
+        console.error("게시글 데이터를 불러오는데 실패했습니다.", error);
+      }
+    };
+    fetchPosts();
+  }, []);
 
   // 게시글 추가 함수
-  const addPost = (newPost) => {
-    setPosts([newPost, ...posts]);
+  const addPost = async (newPost) => {
+    try {
+      const response = await axios.post(
+        "http://localhost:8080/community",
+        newPost
+      ); // 새로운 게시글 추가
+      setPosts([response.data, ...posts]); // 새 데이터 추가 후 상태 업데이트
+    } catch (error) {
+      console.error("게시글 추가에 실패했습니다.", error);
+    }
   };
 
   return (
@@ -60,14 +63,16 @@ const App = () => {
           <Route path="/main" element={<MainPage />} />
           <Route path="/youth" element={<YouthPage />} />
           <Route path="/enterprise" element={<Enterprise />} />
-          <Route path="/community" element={<Community />} />
           <Route path="/resource" element={<Resources />} />
 
           {/* 커뮤니티 관련 라우팅 */}
           <Route path="/community" element={<ListComponent posts={posts} />} />
-          <Route path="/add" element={<AddComponent addPost={addPost} />} />
           <Route
-            path="/detail/:id"
+            path="/community/add"
+            element={<AddComponent addPost={addPost} />}
+          />
+          <Route
+            path="/community/detail/:id"
             element={<DetailComponent posts={posts} />}
           />
         </Routes>

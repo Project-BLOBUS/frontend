@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { addPost } from "../api/communityApi";
 import { useNavigate } from "react-router-dom";
 import Header from "../../main/Header";
 import "../css/communityStyles.css";
@@ -223,9 +224,9 @@ const AddComponent = ({ addPost }) => {
 
         {/* 게시판 렌더링 */}
         {boardType === "free" ? (
-          <FreeBoard addPost={addPost} category={category} />
+          <FreeBoard addPost={addPost} category="자유게시판" />
         ) : (
-          <SuggestionBoard addPost={addPost} category={category} />
+          <SuggestionBoard addPost={addPost} category="건의게시판" />
         )}
       </div>
     </div>

@@ -1,3 +1,5 @@
+// ListComponent.js
+
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import usePostData from "../hook/usePostData";
@@ -5,7 +7,7 @@ import Pagination from "./Pagination";
 import Header from "../../main/Header";
 import "../css/communityStyles.css";
 
-const ListComponent = ({ posts = [] }) => {
+const ListComponent = () => {
   const community = [
     { name: "청년", link: "../youth" },
     { name: "기업관", link: "../enterprise" },
@@ -13,14 +15,15 @@ const ListComponent = ({ posts = [] }) => {
     { name: "지역자원", link: "../resource" },
   ];
 
-  const [page, setPage] = useState(1);
+  const [page, setPage] = useState(1); // 페이지 상태
   const [size] = useState(10); // 페이지당 항목 개수
-  const [tab, setTab] = useState("FREE"); // `BoardType` Enum에 맞춰 초기값 설정
-  const [category, setCategory] = useState("YOUTH"); // `UserType` Enum에 맞춰 초기값 설정
-  const [searchTerm, setSearchTerm] = useState("");
-  const [searchHistory, setSearchHistory] = useState([]);
-  const [isSearchFocused, setIsSearchFocused] = useState(false); // 검색 입력 포커스 여부
+  const [tab, setTab] = useState("FREE"); // 게시판 유형 (탭)
+  const [category, setCategory] = useState("YOUTH"); // 카테고리
+  const [searchTerm, setSearchTerm] = useState(""); // 검색어
+  const [searchHistory, setSearchHistory] = useState([]); // 검색 기록
+  const [isSearchFocused, setIsSearchFocused] = useState(false); // 검색바 포커스 상태
 
+  // `usePostData` 훅을 사용하여 게시글 데이터 가져오기
   const { data, loading, error } = usePostData({
     page,
     size,
@@ -29,39 +32,34 @@ const ListComponent = ({ posts = [] }) => {
     searchTerm,
   });
 
-  // 필터링된 게시글 리스트
-  const filteredPosts = posts.filter(
+  const filteredPosts = data.dtoList.filter(
     (post) =>
-      post.userType === category && // `UserType` 기반 필터링
-      post.boardType === tab && // `BoardType` 기반 필터링
+      post.userType === category &&
+      post.boardType === tab &&
       (searchTerm === "" ||
         post.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
         post.content.toLowerCase().includes(searchTerm.toLowerCase()))
   );
 
-  // 로컬 스토리지에서 검색 이력 불러오기
   useEffect(() => {
     const history = JSON.parse(localStorage.getItem("searchHistory") || "[]");
     setSearchHistory(history);
   }, []);
 
-  // 검색어를 저장하고, 최근 5개의 검색어만 보관
   const handleSearch = () => {
     if (searchTerm.trim()) {
       const updatedHistory = [searchTerm, ...searchHistory].slice(0, 5);
       setSearchHistory(updatedHistory);
       localStorage.setItem("searchHistory", JSON.stringify(updatedHistory));
-      setPage(1); // 검색 후 페이지를 1로 리셋
+      setPage(1); // 검색 후 페이지 리셋
     }
   };
 
-  // 최근 검색어 클릭 시 검색어 입력란에 반영
   const handleSelectHistory = (term) => {
     setSearchTerm(term);
-    setIsSearchFocused(true); // 입력란 포커스 유지
+    setIsSearchFocused(true);
   };
 
-  // 검색된 단어 강조 표시
   const highlightText = (text, term) => {
     if (!term) return text;
     const regex = new RegExp(`(${term})`, "gi");
@@ -165,10 +163,10 @@ const ListComponent = ({ posts = [] }) => {
                 {filteredPosts.length > 0 ? (
                   filteredPosts.map((post, index) => (
                     <tr key={index}>
-                      <td>{index + 1}</td>
+                      <td>{(page - 1) * size + index + 1}</td>
                       <td>
                         <Link
-                          to={`/detail/${post.id}`}
+                          to={`/community/detail/${post.id}`}
                           dangerouslySetInnerHTML={{
                             __html: highlightText(post.title, searchTerm),
                           }}
@@ -190,14 +188,14 @@ const ListComponent = ({ posts = [] }) => {
 
         {/* 페이지네이션 */}
         <Pagination
-          currentPage={data?.current || 1}
-          totalPage={data?.totalPage || 1}
-          movePage={setPage}
+          currentPage={data.current}
+          totalPages={data.totalPage}
+          onPageChange={setPage}
         />
 
         {/* 게시글 작성 버튼 */}
         <div className="write-post">
-          <Link to="/add">
+          <Link to="/community/add">
             <button className="write-post-button">게시글 작성</button>
           </Link>
         </div>
