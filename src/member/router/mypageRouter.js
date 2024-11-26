@@ -19,8 +19,9 @@ const mypageRouter = () => {
         </Suspense>
       ),
     },
+    { path: "bookmark", element: <Navigate replace to="list" /> },
     {
-      path: "bookmark",
+      path: "bookmark/list",
       element: (
         <Suspense fallback={<Loading />}>
           <Bookmark />

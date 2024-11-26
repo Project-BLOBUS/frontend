@@ -23,9 +23,9 @@ const initState = {
 const Document = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
-  const { page, size, moveToList, moveToRead } = useCustomMove("mypage/doc");
+  const { page, size, moveToList } = useCustomMove("mypage/doc");
 
-  const [serverData, setServerData] = useState(initState);
+  const [data, setData] = useState(initState);
 
   const [board, setBoard] = useState({
     type: "",
@@ -38,9 +38,9 @@ const Document = () => {
     getBoardList({ page, size }, board)
       .then((data) => {
         if (data.error) {
-          setServerData(initState);
+          setData(initState);
         } else {
-          setServerData(data);
+          setData(data);
         }
       })
       .catch((error) => {
@@ -62,10 +62,14 @@ const Document = () => {
     const hour = dateTime.split("T")[1].split(":")[0];
     const min = dateTime.split("T")[1].split(":")[1];
 
-    if (new Date() - new Date(dateTime) > 365 * 24 * 60 * 60 * 1000) {
+    const diff = new Date() - new Date(dateTime);
+
+    if (diff > 365 * 24 * 60 * 60 * 1000) {
       return year + "-" + month + "-" + date;
-    } else if (new Date() - new Date(dateTime) > 24 * 60 * 60 * 1000) {
+    } else if (diff > 14 * 24 * 60 * 60 * 1000) {
       return month + "-" + date;
+    } else if (diff > 24 * 60 * 60 * 1000) {
+      return Math.round(diff / 24 / 60 / 60 / 1000, 0) + "일 전";
     } else {
       return hour + ":" + min;
     }
@@ -101,10 +105,10 @@ const Document = () => {
         </div>
 
         <div className="w-full h-[420px] text-base text-nowrap flex flex-col justify-start items-center">
-          {serverData.dtoList.length === 0 ? (
+          {data.dtoList.length === 0 ? (
             <div className="w-full py-20 text-2xl">작성글 이력이 없습니다.</div>
           ) : (
-            serverData.dtoList.map((doc, index) => (
+            data.dtoList.map((doc, index) => (
               <div
                 key={index}
                 className={`w-full h-[10%] py-2 border-b-2 border-gray-400 flex justify-center items-center cursor-pointer hover:bg-gray-300 transition duration-500`}
@@ -138,7 +142,7 @@ const Document = () => {
         </div>
 
         <div>
-          <Paging serverData={serverData} movePage={moveToList} />
+          <Paging data={data} movePage={moveToList} />
         </div>
       </div>
     </>
@@ -148,7 +152,7 @@ const Document = () => {
 const makeTab = (name, value, board, setBoard, isType, moveToList) => {
   return (
     <div
-      className={`w-[15%] p-2 rounded-t-xl ${
+      className={`w-20 p-2 rounded-t-xl ${
         (isType ? value === board.type : value === board.category)
           ? "bg-gray-500 text-white"
           : "text-gray-300 cursor-pointer hover:bg-gray-300 hover:text-black transition duration-500"
