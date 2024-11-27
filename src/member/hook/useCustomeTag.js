@@ -93,7 +93,7 @@ const useCustomTag = () => {
         >
           {hint}
         </option>
-        {list.map((data, index) => (
+        {list.map((data) => (
           <option key={data} value={data}>
             {data}
           </option>

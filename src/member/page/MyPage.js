@@ -9,23 +9,31 @@ const MyPage = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
 
+  const [jwt, setJwt] = useState(getCookie("jwt"));
+
   useEffect(() => {
     setLoading(true);
 
-    if (!getCookie("jwt")) {
-      navigate("/member/login");
-      setTimeout(() => {
-        toast.error("로그인이 필요합니다.", { toastId: "e" });
-      }, 100);
-    } else if (getCookie("userRole") !== "GENERAL") {
-      navigate("/");
-      setTimeout(() => {
-        toast.error("접근 불가능한 페이지입니다.", { toastId: "e" });
-      }, 100);
-    }
+    const interval = setInterval(() => {
+      const newJwt = getCookie("jwt");
+
+      if (!newJwt) {
+        navigate("/member/login");
+        setJwt(newJwt);
+        setTimeout(() => {
+          toast.error("로그인이 필요합니다.", { toastId: "e" });
+        }, 200);
+      } else if (getCookie("userRole") !== "GENERAL") {
+        navigate("/");
+        setTimeout(() => {
+          toast.error("접근 불가능한 페이지입니다.", { toastId: "e" });
+        }, 100);
+      }
+    }, 100);
 
     setLoading(false);
-  }, []);
+    return () => clearInterval(interval);
+  }, [jwt]);
 
   return (
     <>

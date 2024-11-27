@@ -96,8 +96,9 @@ function Header({
                       removeCookie("jwt");
                       removeCookie("expirationTime");
                       removeCookie("name");
+                      removeCookie("address");
 
-                      if (getCookie("idSave")) {
+                      if (!getCookie("idSave")) {
                         removeCookie("userId");
                         removeCookie("userRole");
                       }

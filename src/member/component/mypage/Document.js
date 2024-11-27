@@ -45,7 +45,7 @@ const Document = () => {
       })
       .catch((error) => {
         if (error.code === "ERR_NETWORK") {
-          toast.error("서버연결에 실패했습니다.");
+          toast.error("서버연결에 실패했습니다.", { toastId: "e" });
         } else {
           toast.error("데이터를 불러오는데 실패했습니다.", { toastId: "e" });
         }
@@ -67,7 +67,7 @@ const Document = () => {
     if (diff > 365 * 24 * 60 * 60 * 1000) {
       return year + "-" + month + "-" + date;
     } else if (diff > 14 * 24 * 60 * 60 * 1000) {
-      return month + "-" + date;
+      return month + " / " + date;
     } else if (diff > 24 * 60 * 60 * 1000) {
       return Math.round(diff / 24 / 60 / 60 / 1000, 0) + "일 전";
     } else {
@@ -84,13 +84,13 @@ const Document = () => {
           작성글
         </div>
 
-        <div className="w-full flex justify-center items-center">
-          <div className="w-1/2 border-b-4 border-gray-500 text-sm flex justify-start items-center">
+        <div className="w-full text-base flex justify-center items-center">
+          <div className="w-1/2 border-b-4 border-gray-500 flex justify-start items-center">
             {makeTab("전체", "", board, setBoard, true, moveToList)}
             {makeTab("자유", "FREE", board, setBoard, true, moveToList)}
             {makeTab("건의", "SUGGEST", board, setBoard, true, moveToList)}
           </div>
-          <div className="w-1/2 border-b-4 border-gray-500 text-sm flex justify-end items-center">
+          <div className="w-1/2 border-b-4 border-gray-500 flex justify-end items-center">
             {makeTab("기업", "ENTERPRISE", board, setBoard, false, moveToList)}
             {makeTab("청년", "YOUTH", board, setBoard, false, moveToList)}
             {makeTab("전체", "", board, setBoard, false, moveToList)}

@@ -54,6 +54,7 @@ const Login = () => {
             setCookie("jwt", data.accessToken);
             setCookie("expirationTime", data.expirationTime);
             setCookie("name", data.name);
+            setCookie("address", data.address);
             setCookie("userId", userId);
             setCookie("userRole", userRole);
             setCookie("idSave", userRole === "ADMIN" ? false : idSave);

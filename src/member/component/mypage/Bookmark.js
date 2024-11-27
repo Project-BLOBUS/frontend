@@ -41,7 +41,7 @@ const Bookmark = () => {
       })
       .catch((error) => {
         if (error.code === "ERR_NETWORK") {
-          toast.error("서버연결에 실패했습니다.");
+          toast.error("서버연결에 실패했습니다.", { toastId: "e" });
         } else {
           toast.error("데이터를 불러오는데 실패했습니다.", { toastId: "e" });
         }
@@ -79,7 +79,7 @@ const Bookmark = () => {
           즐겨찾기
         </div>
 
-        <div className="w-full border-b-4 border-gray-500 text-sm flex justify-start items-center">
+        <div className="w-full border-b-4 border-gray-500 text-base flex justify-start items-center">
           {makeTab("전체", "", category, setCategory, moveToList)}
           {makeTab("청년", "청년", category, setCategory, moveToList)}
           {makeTab("기업", "기업", category, setCategory, moveToList)}
@@ -90,67 +90,60 @@ const Bookmark = () => {
           목록
         </div>
 
-        <div className="w-full h-[420px] text-base text-nowrap flex flex-wrap justify-center items-center">
+        <div className="w-full h-[420px] text-base text-nowrap flex flex-wrap justify-start items-start">
           {data.dtoList.length === 0 ? (
-            <div className="w-full py-20 text-2xl">작성글 이력이 없습니다.</div>
+            <div className="w-full py-20 text-2xl">
+              즐겨찾기한 게시물이 없습니다.
+            </div>
           ) : (
-            data.dtoList.map((bookmark) => (
+            data.dtoList.map((dto) => (
               <div
-                key={bookmark.id}
+                key={dto.id}
                 className={`w-[calc(100%/3-1rem)] h-[calc(100%/2-1rem)] mx-2 mt-2 p-4 border-2 border-gray-400 rounded-xl flex flex-col justify-center items-center space-y-4 cursor-pointer hover:bg-gray-300 transition duration-500`}
                 onClick={() => navigate()}
               >
                 <div className="w-full flex justify-between items-center">
-                  <div className="w-full text-2xl text-left">
-                    {bookmark.title}
-                  </div>
-                  <div>{printDateTime(bookmark.atTime)}</div>
+                  <div className="w-full text-2xl text-left">{dto.title}</div>
+                  <div>{printDateTime(dto.atTime)}</div>
                 </div>
 
-                <div className="w-full text-sm text-left">
-                  {bookmark.content}
+                <div className="w-full text-sm text-left flex justify-between items-center">
+                  <div>{dto.content}</div>
+                  <div>{dto.address.replace("-", " ")}</div>
                 </div>
 
-                <div className="w-full  flex justify-center items-center space-x-2">
-                  <div className="w-1/2">{bookmark.startDate}</div>
+                <div className="w-full flex justify-center items-center space-x-2">
+                  <div className="w-1/3 ">{dto.startDate}</div>
                   <div>~</div>
-                  <div className="w-1/2">{bookmark.endDate}</div>
+                  <div className="w-1/3 ">{dto.endDate}</div>
                 </div>
 
                 <div className="w-full text-sm flex justify-between items-center">
-                  {new Date() - new Date(bookmark.endDate) < 0 ? (
-                    new Date() - new Date(bookmark.startDate) < 0 ? (
-                      <div className="bg-blue-300 w-[30% p-2 rounded-xl">
-                        진행 전
-                      </div>
-                    ) : (
-                      <div className="bg-green-300 w-[30% p-2 rounded-xl">
-                        진행 중
-                      </div>
-                    )
-                  ) : !(bookmark.startDate && bookmark.endDate) ? (
-                    <div className="bg-gray-300 w-[30% p-2 rounded-xl">
-                      기간없음
-                    </div>
-                  ) : (
-                    <div className="bg-red-300 w-[30%] p-2 rounded-xl">
-                      종료
-                    </div>
-                  )}
-
                   <div
                     className={`${
-                      bookmark.mainCategory === "청년"
+                      dto.mainCategory === "청년"
                         ? "bg-blue-500"
-                        : bookmark.mainCategory === "기업"
+                        : dto.mainCategory === "기업"
                         ? "bg-red-500"
-                        : bookmark.mainCategory === "지역"
+                        : dto.mainCategory === "지역"
                         ? "bg-green-500"
                         : "bg-gray-500"
                     } p-2 text-white`}
                   >
-                    {bookmark.mainCategory} / {bookmark.subCategory}
+                    {dto.mainCategory} / {dto.subCategory}
                   </div>
+
+                  {new Date() - new Date(dto.endDate) < 0 ? (
+                    new Date() - new Date(dto.startDate) < 0 ? (
+                      <div className="bg-blue-300 p-2 rounded-xl">진행 전</div>
+                    ) : (
+                      <div className="bg-green-300 p-2 rounded-xl">진행 중</div>
+                    )
+                  ) : !(dto.startDate && dto.endDate) ? (
+                    <div className="bg-gray-300 p-2 rounded-xl">기간없음</div>
+                  ) : (
+                    <div className="bg-red-300 p-2 rounded-xl">종료</div>
+                  )}
                 </div>
               </div>
             ))
