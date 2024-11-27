@@ -274,6 +274,7 @@ const FinancePage = () => {
               onClick={() => handlePolicyClick(policy.policyId)}
             >
               <div>
+
                 <h2 className="font-bold text-lg">{policy.title}</h2>
                 <p>{policy.overview}</p>
                 <p>
