@@ -33,6 +33,7 @@ function YouthPage (){
       <div className="w-[70%] h-[600px] ml-[15%]  border-2 border-red-600">
         <Outlet />
       </div>
+
     </div>
 
   );
