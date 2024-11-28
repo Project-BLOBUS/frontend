@@ -146,7 +146,16 @@ const Info = () => {
       </div>
 
       {modal && (
-        <div className="bg-black bg-opacity-50 w-full h-full flex justify-center items-center fixed inset-0">
+        <div
+          className="bg-black bg-opacity-50 w-full h-full flex justify-center items-center fixed inset-0"
+          onClick={() => {
+            setValidation({
+              isMailSent: false,
+              authCode: 0,
+            });
+            setModal(false);
+          }}
+        >
           <div className="bg-white w-5/6 max-w-[650px] p-4 rounded flex flex-col justify-center items-center space-y-4">
             <div className="text-3xl text-center font-bold">
               이메일 인증 - {btnType}
@@ -175,6 +184,8 @@ const Info = () => {
                           authCode: code,
                         });
                         toast.success("메일 전송 성공");
+                        // ToDEL 삭제
+                        setMember({ ...member, authCode: code });
                       } catch (error) {
                         toast.error("메일 전송에 실패했습니다.");
                       }
@@ -200,7 +211,6 @@ const Info = () => {
                       if (validation.authCode === member.authCode * 1) {
                         toast.success("인증 완료");
 
-                        console.log(btnType);
                         if (btnType === "수정") navigate("modify");
                         else if (btnType === "탈퇴") onClickDelete();
                       } else {
