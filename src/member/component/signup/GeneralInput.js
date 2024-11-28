@@ -231,7 +231,7 @@ const GeneralInput = () => {
         {/* 아이디 */}
         {makeAdd(
           "아이디",
-          <div className="w-full h-full flex justify-center items-center space-x-1 track">
+          <div className="w-full h-full flex justify-center items-center space-x-1">
             {makeInput(
               "email",
               "userId",

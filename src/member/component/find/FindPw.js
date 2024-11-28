@@ -9,7 +9,7 @@ import Loading from "../../etc/Loading";
 const initState = {
   // ToDEL 삭제
   userId: "bell4916@naver.com",
-  authCode: "qwerQWER1234!@#$",
+  authCode: "",
   userPw: "qwerQWER1234!@#$",
   confirmPw: "qwerQWER1234!@#$",
   roleName: "GENERAL",
@@ -141,7 +141,7 @@ const FindPw = () => {
         {/* 아이디 */}
         {makeAdd(
           "아이디",
-          <div className="w-full h-full flex justify-center items-center space-x-1 track">
+          <div className="w-full h-full flex justify-center items-center space-x-1">
             {makeInput(
               "email",
               "userId",

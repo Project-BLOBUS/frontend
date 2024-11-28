@@ -4,11 +4,49 @@ import { getCookie } from "../util/cookieUtil";
 const API_SERVER_HOST = "http://localhost:8080";
 const host = `${API_SERVER_HOST}/mypage`;
 
+// 커스텀 설정 불러오기
+export const loadSetting = async () => {
+  const res = await axios.get(`${host}/custom/setting`, {
+    headers: {
+      Authorization: `Bearer ${getCookie("jwt")}`,
+    },
+    params: {
+      userId: getCookie("userId"),
+    },
+  });
+
+  return res.data;
+};
+
+// 커스텀 설정 저장
+export const saveSetting = async (yListStr, eListStr, rListStr, kListStr) => {
+  const res = await axios.post(`${host}/custom/setting`, null, {
+    headers: {
+      Authorization: `Bearer ${getCookie("jwt")}`,
+    },
+    params: {
+      userId: getCookie("userId"),
+      yListStr,
+      eListStr,
+      rListStr,
+      kListStr,
+    },
+  });
+
+  return res.data;
+};
+
 // 커스텀 조회
-export const getCustom = async (pageParam, yList, eList, rList, kList) => {
+export const getCustom = async (
+  pageParam,
+  yListStr,
+  eListStr,
+  rListStr,
+  kListStr
+) => {
   const { page } = pageParam;
 
-  const res = await axios.get(`${host}/custom`, {
+  const res = await axios.get(`${host}/custom/list`, {
     headers: {
       Authorization: `Bearer ${getCookie("jwt")}`,
     },
@@ -16,10 +54,10 @@ export const getCustom = async (pageParam, yList, eList, rList, kList) => {
       page: page,
       size: 6,
       address: getCookie("address"),
-      yListStr: yList,
-      eListStr: eList,
-      rListStr: rList,
-      kListStr: kList,
+      yListStr: yListStr,
+      eListStr: eListStr,
+      rListStr: rListStr,
+      kListStr: kListStr,
     },
   });
 

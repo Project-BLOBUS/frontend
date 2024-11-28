@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
+import { FaSave } from "react-icons/fa";
 import { toast } from "react-toastify";
-import { getCustom } from "../../api/mypageAPI";
+import { loadSetting, saveSetting, getCustom } from "../../api/mypageAPI";
 import useCustomMove from "../../hook/useCustomMove";
 import Loading from "../../etc/Loading";
 import Paging from "../../etc/Paging";
@@ -34,26 +35,26 @@ const Custom = () => {
   });
 
   const [yList, setYList] = useState({
-    전체: true,
-    일자리: true,
-    구인: true,
-    주거: true,
-    금융: true,
-    교육: true,
-    창업: true,
+    전체: false,
+    일자리: false,
+    구인: false,
+    주거: false,
+    금융: false,
+    교육: false,
+    창업: false,
   });
 
   const [eList, setEList] = useState({
-    전체: true,
-    기업1: true,
-    기업2: true,
-    기업3: true,
+    전체: false,
+    기업1: false,
+    기업2: false,
+    기업3: false,
   });
 
   const [rList, setRList] = useState({
-    전체: true,
-    문화: true,
-    지원: true,
+    전체: false,
+    문화: false,
+    지원: false,
   });
 
   const [kList, setKList] = useState([]);
@@ -61,25 +62,60 @@ const Custom = () => {
   useEffect(() => {
     setLoading(true);
 
-    const yListStr = Object.entries(yList)
-      .filter(([key, value]) => value === true && key !== "전체")
-      .map(([key]) => key)
-      .join("/");
+    loadSetting()
+      .then((data) => {
+        if (data.error) {
+          toast.error("설정 불러오기에 실패했습니다.", { toastId: "e" });
+        } else if (Object.keys(data).length === 0) {
+          const set = (list, setList) =>
+            setList(
+              Object.keys(list).reduce((acc, key) => {
+                acc[key] = true;
+                return acc;
+              }, {})
+            );
 
-    const eListStr = Object.entries(eList)
-      .filter(([key, value]) => value === true && key !== "전체")
-      .map(([key]) => key)
-      .join("/");
+          set(yList, setYList);
+          set(eList, setEList);
+          set(rList, setRList);
+        } else {
+          const set = (list, setList, data) =>
+            data &&
+            setList(
+              Object.keys(list).reduce((acc, key) => {
+                acc[key] = data.includes(key);
+                return acc;
+              }, {})
+            );
 
-    const rListStr = Object.entries(rList)
-      .filter(([key, value]) => value === true && key !== "전체")
-      .map(([key]) => key)
-      .join("/");
+          set(yList, setYList, data.청년);
+          set(eList, setEList, data.기업);
+          set(rList, setRList, data.지역);
 
-    const kListStr = Object.entries(kList)
-      .filter(([key, value]) => value === true && key !== "전체")
-      .map(([key]) => key)
-      .join("/");
+          data.키워드 &&
+            data.키워드.split("/").forEach((key) => {
+              setKList((prev) => ({ ...prev, [key]: true }));
+            });
+        }
+      })
+      .catch((error) => {
+        if (error.code === "ERR_NETWORK") {
+          toast.error("서버연결에 실패했습니다.", { toastId: "e" });
+        } else {
+          toast.error("설정 불러오기에 실패했습니다.", { toastId: "e" });
+        }
+      });
+
+    setLoading(false);
+  }, []);
+
+  useEffect(() => {
+    setLoading(true);
+
+    const yListStr = listToStr(yList);
+    const eListStr = listToStr(eList);
+    const rListStr = listToStr(rList);
+    const kListStr = listToStr(kList);
 
     getCustom({ page, size }, yListStr, eListStr, rListStr, kListStr)
       .then((data) => {
@@ -99,6 +135,13 @@ const Custom = () => {
 
     setLoading(false);
   }, [page, size, yList, eList, rList, kList]);
+
+  const listToStr = (list) => {
+    return Object.entries(list)
+      .filter(([key, value]) => value === true)
+      .map(([key]) => key)
+      .join("/");
+  };
 
   const printDateTime = (dateTime) => {
     const year = dateTime.split("T")[0].split("-")[0];
@@ -134,19 +177,52 @@ const Custom = () => {
           {makeSelect("기업", open, setOpen, eList, setEList, moveToList)}
           {makeSelect("지역", open, setOpen, rList, setRList, moveToList)}
           {makeSelect("키워드", open, setOpen, kList, setKList, moveToList)}
+
+          <FaSave
+            className="text-3xl flex justify-center items-center cursor-pointer hover:text-gray-300 transition duration-500"
+            onClick={() => {
+              setLoading(true);
+
+              saveSetting(
+                listToStr(yList),
+                listToStr(eList),
+                listToStr(rList),
+                listToStr(kList)
+              )
+                .then((data) => {
+                  if (data.error) {
+                    toast.error("설정 저장에 실패했습니다.", { toastId: "e" });
+                  } else {
+                    toast.success("설정 저장 성공");
+                  }
+                })
+                .catch((error) => {
+                  if (error.code === "ERR_NETWORK") {
+                    toast.error("서버연결에 실패했습니다.", { toastId: "e" });
+                  } else {
+                    toast.error("설정 저장에 실패했습니다.", { toastId: "e" });
+                  }
+                });
+
+              setOpen(
+                Object.fromEntries(Object.keys(open).map((key) => [key, false]))
+              );
+
+              setLoading(false);
+            }}
+          />
         </div>
 
         <div className="bg-gray-200 w-full h-[50px] py-2 border-b-4 border-gray-500 text-base flex justify-center items-center">
           목록
         </div>
-
         <div className="w-full h-[420px] text-base text-nowrap flex flex-wrap justify-start items-start">
           {data.dtoList.length === 0 ? (
             <div className="w-full py-20 text-2xl">해당 게시물이 없습니다.</div>
           ) : (
-            data.dtoList.map((dto) => (
+            data.dtoList.map((dto, index) => (
               <div
-                key={dto.id}
+                key={index}
                 className={`w-[calc(100%/3-1rem)] h-[calc(100%/2-1rem)] mx-2 mt-2 p-4 border-2 border-gray-400 rounded-xl flex flex-col justify-center items-center space-y-4 cursor-pointer hover:bg-gray-300 transition duration-500`}
                 onClick={() => navigate()}
               >
@@ -246,24 +322,24 @@ const makeSelect = (name, open, setOpen, list, setList, moveToList) => {
               }}
             />
           )}
-          {Object.keys(list).map((y) => (
+          {Object.keys(list).map((key) => (
             <div className="w-full flex justify-center items-center">
               <div
-                key={y}
+                key={key}
                 className={`w-full p-2 rounded-xl cursor-pointer transition duration-500 ${
-                  list[y]
+                  list[key]
                     ? `${bgColor[name][1]} text-white hover:bg-black hover:text-red-500`
                     : `${bgColor[name][2]} bg-gray-500 text-gray-300 hover:text-white`
                 }`}
                 onClick={() => {
-                  if (y === "전체") {
+                  if (key === "전체") {
                     setList(
                       Object.fromEntries(
                         Object.keys(list).map((key) => [key, !list["전체"]])
                       )
                     );
                   } else {
-                    const updatedList = { ...list, [y]: !list[y] };
+                    const updatedList = { ...list, [key]: !list[key] };
 
                     if (name !== "키워드") {
                       updatedList["전체"] = Object.keys(updatedList)
@@ -276,14 +352,14 @@ const makeSelect = (name, open, setOpen, list, setList, moveToList) => {
                   moveToList(1);
                 }}
               >
-                {y}
+                {key}
               </div>
               {name === "키워드" && (
                 <div
                   className="w-4 ml-1 rounded-full text-base text-red-500 cursor-pointer"
                   onClick={() => {
                     const updatedList = { ...list };
-                    delete updatedList[y];
+                    delete updatedList[key];
                     setList(updatedList);
                   }}
                 >

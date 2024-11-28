@@ -115,7 +115,7 @@ const Agree = () => {
             {modal.content}
             <div className="flex justify-end items-center">
               <button
-                className="bg-red-500 px-4 py-2 text-base rounded-xl text-white hover:bg-red-300 hover:text-black transition duration-500"
+                className="bg-red-500 px-4 py-2 text-base font-bold rounded-xl text-white hover:bg-red-300 hover:text-black transition duration-500"
                 onClick={closeModal}
               >
                 닫기

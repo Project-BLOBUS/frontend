@@ -46,7 +46,6 @@ const MyPage = () => {
           borderB={false}
         />
       </div>
-
       <div className="w-[15%] h-screen pt-4 text-base text-center flex flex-col justify-start items-center fixed z-0">
         <div className="bg-pink-500 w-2/3 border-2 rounded-xl font-bold">
           <div className="py-6 text-xl text-white">마이페이지</div>
@@ -60,15 +59,9 @@ const MyPage = () => {
         </div>
       </div>
 
-      <div className="ml-[15%] pr-[15%] h-[calc(100vh-90px)] flex justify-center items-start overflow-y-scroll">
-        {/* <div className="mx-[15%] flex justify-center items-center"> */}
+      {/* <div className="ml-[15%] pr-[15%] h-[calc(100vh-90px)] flex justify-center items-start overflow-y-scroll"> */}
+      <div className="mx-[15%] flex justify-center items-center">
         <Outlet />
-      </div>
-
-      <div className="w-[15%] h-screen pt-4 text-base text-center flex flex-col justify-start items-center fixed z-0">
-        <div className="bg-pink-500 w-5/6 border-2 rounded-xl font-bold">
-          ddsd
-        </div>
       </div>
     </>
   );

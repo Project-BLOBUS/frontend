@@ -150,7 +150,7 @@ const FindId = () => {
           <>
             {makeAdd(
               "아이디",
-              <div className="w-full p-4 border border-gray-500 rounded shadow-lg text-left tracking-wider">
+              <div className="w-full p-4 border border-gray-500 rounded shadow-lg text-left">
                 {member.userId}
               </div>
             )}
