@@ -1,16 +1,31 @@
-import React from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import useCustomMove from "../hooks/useCustomMove";
+import { policyDetail } from "../api/houseApi";
+
+const initState = {
+  policyId: 0,
+};
 
 const PolicyReadPage = () => {
   const navigate = useNavigate();
+  const { policyId } = useParams(); // URL에서 policyId 가져오기
+  const [policy, setPolicy] = useState(initState);
+  const { moveToPolicyList } = useCustomMove();
+
+  useEffect(() => {
+    policyDetail(policyId).then((data) => {
+      console.log(data);
+      setPolicy(data);
+    });
+  }, [policyId]);
 
   return (
     <>
       <div className="w-full bg-white p-8 rounded-md shadow-md border">
         {/* 정책 제목 */}
-        <h2 className="text-3xl font-bold mb-6">
-          2024년 부산시 머물자리론(청년전세대출 대출이자지원 사업)
-        </h2>
+        <h2 className="text-3xl font-bold mb-3">{policy.polyBizSjnm}</h2>
+        <p className="text-lg mb-6">{policy.polyItcnCn}</p>
 
         {/* 정책 설명 */}
         <div className="mb-8">
@@ -21,31 +36,29 @@ const PolicyReadPage = () => {
             <tbody>
               <tr className="border-b">
                 <td className="font-semibold w-1/4 py-2">정책 번호</td>
-                <td>R202402260087</td>
+                <td>{policy.bizId}</td>
               </tr>
               <tr className="border-b">
                 <td className="font-semibold py-2">정책 분야</td>
-                <td>주거분야</td>
-              </tr>
-              <tr className="border-b">
-                <td className="font-semibold py-2">지원 내용</td>
                 <td>
-                  □ 연수조건 : 일 78,880원(시급 9,860원), 주 5일(일 8시간,09:00
-                  ~ 18:00)
-                  <br />□ 연수내용 : 행정업무 지원, 자료정리, 민원응대 등
+                  {policy.polyRlmCd === "023010" ? "일자리분야" : "확인불가"}
                 </td>
               </tr>
               <tr className="border-b">
+                <td className="font-semibold py-2">지원 내용</td>
+                <td>{policy.sporCn}</td>
+              </tr>
+              <tr className="border-b">
                 <td className="font-semibold py-2">사업 신청기간</td>
-                <td>2024년 02월 27일 ~ 2024년 03월 06일</td>
+                <td>{policy.rqutPrdCn}</td>
               </tr>
               <tr className="border-b">
                 <td className="font-semibold py-2">지원 규모</td>
-                <td>145명</td>
+                <td>{policy.sporScvl}</td>
               </tr>
-              <tr>
-                <td className="font-semibold py-2">비고</td>
-                <td>24.02.27 10:00 ~ 03.06 18:00</td>
+              <tr className="border-b">
+                <td className="font-semibold py-2">운영기관명</td>
+                <td>{policy.cnsgNmor}</td>
               </tr>
             </tbody>
           </table>
@@ -60,19 +73,23 @@ const PolicyReadPage = () => {
             <tbody>
               <tr className="border-b">
                 <td className="font-semibold w-1/4 py-2">연령</td>
-                <td>만 19세 ~ 29세</td>
+                <td>{policy.ageInfo}</td>
               </tr>
               <tr className="border-b">
                 <td className="font-semibold py-2">거주 및 소득</td>
-                <td>부산광역시에 거주하는 만 29세 이하</td>
+                <td>{policy.prcpCn}</td>
               </tr>
               <tr className="border-b">
                 <td className="font-semibold py-2">학력</td>
-                <td>제한 없음</td>
+                <td>{policy.accrRqisCn}</td>
               </tr>
               <tr className="border-b">
                 <td className="font-semibold py-2">추가 세부 사항</td>
-                <td>시청, 공공기관 등에서 제공</td>
+                <td>{policy.aditRscn}</td>
+              </tr>
+              <tr className="border-b">
+                <td className="font-semibold py-2">참여제한대상</td>
+                <td>{policy.prcpLmttTrgtCn}</td>
               </tr>
             </tbody>
           </table>
@@ -87,24 +104,22 @@ const PolicyReadPage = () => {
             <tbody>
               <tr className="border-b">
                 <td className="font-semibold w-1/4 py-2">신청 절차</td>
-                <td>부산정보복지 신청 승인</td>
+                <td>{policy.rqutProcCn}</td>
               </tr>
               <tr className="border-b">
                 <td className="font-semibold w-1/4 py-2">신청 접수</td>
                 <td>
-                  부산정보복지포털 접수 :{" "}
-                  <a href="#" className="text-blue-500 underline">
-                    busanjob.net
-                  </a>
+                  {policy.rqutUrla}, {policy.rfcSiteUrla1},{" "}
+                  {policy.rfcSiteUrla2}
                 </td>
               </tr>
               <tr className="border-b">
                 <td className="font-semibold py-2">신청 및 발표</td>
-                <td>3.13 발표</td>
+                <td>{policy.jdgnPresCn}</td>
               </tr>
               <tr>
                 <td className="font-semibold py-2">제출 서류</td>
-                <td>신청서, 등본 등</td>
+                <td>{policy.pstnPaprCn}</td>
               </tr>
             </tbody>
           </table>

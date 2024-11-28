@@ -27,6 +27,14 @@ const houseRouter = () => {
         </Suspense>
       ),
     },
+    {
+      path: "policyRead/:policyId",
+      element: (
+        <Suspense fallback={Loading}>
+          <PolicyRead />
+        </Suspense>
+      ),
+    },
   ];
 };
 
