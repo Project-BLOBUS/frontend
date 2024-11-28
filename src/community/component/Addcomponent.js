@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { postAdd } from "../api/communityApi"; // API 호출 추가
 import Header from "../../main/Header";
 import "../css/communityStyles.css";
 import "../css/addStyles.css";
 
-const FreeBoard = ({ addPost, category }) => {
+const FreeBoard = ({ category }) => {
   const navigate = useNavigate();
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
@@ -15,22 +16,29 @@ const FreeBoard = ({ addPost, category }) => {
     }
   };
 
-  const handleRegister = () => {
+  const handleRegister = async () => {
     if (!title.trim() || !content.trim()) {
       alert("제목과 내용을 모두 입력해주세요!");
       return;
     }
-    addPost({
-      title,
-      content,
-      category,
-      boardType: "free",
-      createdAt: new Date().toLocaleString(),
-    });
-    setTitle("");
-    setContent("");
-    alert("게시글이 등록되었습니다.");
-    navigate("/community"); // 게시글 리스트로 이동
+
+    try {
+      const response = await postAdd({
+        title,
+        content,
+        category,
+        boardType: "free".toUpperCase(),
+        createdAt: new Date().toISOString(),
+      });
+      console.log(response); // 서버 응답 확인
+      setTitle("");
+      setContent("");
+      alert("게시글이 등록되었습니다.");
+      navigate("/community"); // 게시글 리스트로 이동
+    } catch (error) {
+      console.error("게시글 등록 실패:", error);
+      alert("게시글 등록에 실패했습니다.");
+    }
   };
 
   return (
@@ -65,7 +73,7 @@ const FreeBoard = ({ addPost, category }) => {
   );
 };
 
-const SuggestionBoard = ({ addPost, category }) => {
+const SuggestionBoard = ({ category }) => {
   const navigate = useNavigate();
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
@@ -78,25 +86,31 @@ const SuggestionBoard = ({ addPost, category }) => {
     }
   };
 
-  const handleRegister = () => {
+  const handleRegister = async () => {
     if (!title.trim() || !content.trim()) {
       alert("제목과 내용을 모두 입력해주세요!");
       return;
     }
-    addPost({
-      title,
-      content,
-      email,
-      visibility,
-      category,
-      boardType: "suggestion",
-      createdAt: new Date().toLocaleString(),
-    });
-    setTitle("");
-    setContent("");
-    setEmail("");
-    alert("게시글이 등록되었습니다.");
-    navigate("/community"); // 게시글 리스트로 이동
+    try {
+      const response = await postAdd({
+        title,
+        content,
+        email,
+        visibility,
+        category,
+        boardType: "suggestion".toUpperCase(),
+        createdAt: new Date().toISOString(),
+      });
+      console.log(response); // 서버 응답 확인
+      setTitle("");
+      setContent("");
+      setEmail("");
+      alert("게시글이 등록되었습니다.");
+      navigate("/community"); // 게시글 리스트로 이동
+    } catch (error) {
+      console.error("게시글 등록 실패:", error);
+      alert("게시글 등록에 실패했습니다.");
+    }
   };
 
   return (
@@ -155,7 +169,7 @@ const SuggestionBoard = ({ addPost, category }) => {
   );
 };
 
-const AddComponent = ({ addPost }) => {
+const AddComponent = () => {
   const [boardType, setBoardType] = useState("free");
   const [category, setCategory] = useState("청년");
 
@@ -163,6 +177,14 @@ const AddComponent = ({ addPost }) => {
     { name: "청년", value: "청년" },
     { name: "기업관", value: "기업관" },
   ];
+
+  const handleCategoryChange = (selectedCategory) => {
+    setCategory(selectedCategory);
+  };
+
+  const handleBoardTypeChange = (selectedBoardType) => {
+    setBoardType(selectedBoardType);
+  };
 
   return (
     <div>
@@ -182,15 +204,14 @@ const AddComponent = ({ addPost }) => {
         />
       </div>
 
-      {/* 게시판 및 카테고리 선택 */}
+      {/* 카테고리 선택 */}
       <div style={{ padding: "20px" }}>
-        <h1>게시판 및 카테고리 선택</h1>
+        <h1>카테고리 선택</h1>
         <div style={{ marginBottom: "20px" }}>
-          <h3>카테고리 선택</h3>
           {community.map((item) => (
             <button
               key={item.value}
-              onClick={() => setCategory(item.value)}
+              onClick={() => handleCategoryChange(item.value)}
               style={{
                 marginRight: "10px",
                 backgroundColor: category === item.value ? "#ddd" : "#fff",
@@ -200,10 +221,12 @@ const AddComponent = ({ addPost }) => {
             </button>
           ))}
         </div>
+
+        {/* 보드타입 선택 */}
+        <h3>게시판 선택</h3>
         <div style={{ marginBottom: "20px" }}>
-          <h3>게시판 선택</h3>
           <button
-            onClick={() => setBoardType("free")}
+            onClick={() => handleBoardTypeChange("free")}
             style={{
               marginRight: "10px",
               backgroundColor: boardType === "free" ? "#ddd" : "#fff",
@@ -212,7 +235,7 @@ const AddComponent = ({ addPost }) => {
             자유 게시판
           </button>
           <button
-            onClick={() => setBoardType("suggestion")}
+            onClick={() => handleBoardTypeChange("suggestion")}
             style={{
               backgroundColor: boardType === "suggestion" ? "#ddd" : "#fff",
             }}
@@ -221,11 +244,11 @@ const AddComponent = ({ addPost }) => {
           </button>
         </div>
 
-        {/* 게시판 렌더링 */}
+        {/* 선택된 보드타입에 맞는 게시판 렌더링 */}
         {boardType === "free" ? (
-          <FreeBoard addPost={addPost} category="자유게시판" />
+          <FreeBoard category={category} />
         ) : (
-          <SuggestionBoard addPost={addPost} category="건의게시판" />
+          <SuggestionBoard category={category} />
         )}
       </div>
     </div>

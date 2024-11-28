@@ -13,9 +13,11 @@ const ListComponent = () => {
     { name: "커뮤니티", link: "../community" },
     { name: "지역자원", link: "../resource" },
   ];
+
   const initState = {
     content: [],
   };
+
   const [page, setPage] = useState(0); // 페이지 상태
   const [size] = useState(10); // 페이지당 항목 개수
   const [tab, setTab] = useState("FREE"); // 게시판 유형 (탭)
@@ -23,7 +25,16 @@ const ListComponent = () => {
   const [searchTerm, setSearchTerm] = useState(""); // 검색어
   const [searchHistory, setSearchHistory] = useState([]); // 검색 기록
   const [isSearchFocused, setIsSearchFocused] = useState(false); // 검색바 포커스 상태
-  const [postData, setPostData] = useState(initState); // 데이터 값 담기
+  const [filteredPosts, setFilteredPosts] = useState([]); // 필터링된 게시글 리스트
+
+  const totalPage = 10;
+
+  // 검색 후 페이지 이동
+  const movePage = (pageNumber) => {
+    if (pageNumber > 0 && pageNumber <= totalPage) {
+      setPage(pageNumber);
+    }
+  };
 
   // `usePostData` 훅을 사용하여 게시글 데이터 가져오기
   const { data, loading, error } = usePostData({
@@ -33,29 +44,36 @@ const ListComponent = () => {
     category,
   });
 
-  const filteredPosts = data.dtoList.filter(
-    (post) =>
-      post.userType === category &&
-      post.boardType === tab &&
-      (searchTerm === "" ||
-        post.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        post.content.toLowerCase().includes(searchTerm.toLowerCase()))
-  );
+  useEffect(() => {
+    // 데이터 변경시 게시글 리스트 필터링
+    if (data.dtoList) {
+      const newFilteredPosts = data.dtoList.filter(
+        (post) =>
+          post.userType === category &&
+          post.boardType === tab &&
+          (searchTerm === "" ||
+            post.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            post.content.toLowerCase().includes(searchTerm.toLowerCase()))
+      );
+      setFilteredPosts(newFilteredPosts);
+    }
+  }, [data.dtoList, category, tab, searchTerm]); // 의존성 배열에 변경될 값 포함
 
   useEffect(() => {
     const history = JSON.parse(localStorage.getItem("searchHistory") || "[]");
     setSearchHistory(history);
     getPosts({ page, size, tab, category }).then((data) => {
-      setPostData(data);
+      // 페이지와 필터 상태 변경시 데이터를 가져와 업데이트
+      setFilteredPosts(data.content);
     });
-  }, []);
+  }, [page, size, tab, category]); // 페이지, 카테고리, 탭 변경시 데이터 로드
 
   const handleSearch = () => {
     if (searchTerm.trim()) {
       const updatedHistory = [searchTerm, ...searchHistory].slice(0, 5);
       setSearchHistory(updatedHistory);
       localStorage.setItem("searchHistory", JSON.stringify(updatedHistory));
-      setPage(1); // 검색 후 페이지 리셋
+      movePage(1); // 검색 후 페이지 리셋
     }
   };
 
@@ -164,10 +182,10 @@ const ListComponent = () => {
                 </tr>
               </thead>
               <tbody>
-                {postData.content.length > 0 ? (
-                  postData.content.map((post, index) => (
+                {filteredPosts.length > 0 ? (
+                  filteredPosts.map((post, index) => (
                     <tr key={index}>
-                      <td>{(page - 1) * size + index + 1}</td>
+                      <td>{page * size + index + 1}</td>
                       <td>
                         <Link
                           to={`/community/detail/${post.id}`}
@@ -192,9 +210,9 @@ const ListComponent = () => {
 
         {/* 페이지네이션 */}
         <Pagination
-          currentPage={data.current}
-          totalPages={data.totalPage}
-          onPageChange={setPage}
+          currentPage={page}
+          totalPage={totalPage}
+          movePage={movePage}
         />
 
         {/* 게시글 작성 버튼 */}

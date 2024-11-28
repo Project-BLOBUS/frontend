@@ -25,6 +25,8 @@ const usePostData = ({ page, size, tab, category }) => {
           category, // userType
         });
 
+        console.log("API 응답 데이터:", result); // 이 부분으로 응답 구조 확인
+
         // API 응답 결과를 state에 반영
         setData({
           dtoList: result.dtoList || [], // 응답에서 게시글 리스트

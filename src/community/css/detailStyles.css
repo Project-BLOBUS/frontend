@@ -1,3 +1,8 @@
+/* Header */
+.header-container {
+  background-color: #db0153;
+}
+
 .post-detail {
   font-family: Arial, sans-serif;
   padding: 20px;
@@ -52,7 +57,7 @@
 }
 
 .comments-section {
-  background-color: #ffe4b5;
+  background-color: #d4d4d4;
   padding: 15px;
   border-radius: 5px;
 }
@@ -68,6 +73,19 @@
   padding: 10px;
   font-size: 14px;
   resize: none;
+}
+
+.comment-list {
+  background-color: #ffffff; /* 댓글 배경색 */
+  border: 1px solid #ddd; /* 테두리 색상 */
+  border-radius: 5px; /* 둥근 모서리를 원할 경우 */
+  padding: 10px; /* 내부 여백 */
+  margin-bottom: 10px; /* 각 댓글 사이의 간격 */
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1); /* 약간의 그림자 효과 */
+}
+
+.comment-list p {
+  margin: 0; /* p 태그의 기본 마진을 제거하여 더 깔끔하게 */
 }
 
 .comment-input button {
