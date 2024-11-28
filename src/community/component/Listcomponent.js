@@ -1,11 +1,10 @@
-// ListComponent.js
-
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import usePostData from "../hook/usePostData";
 import Pagination from "./Pagination";
 import Header from "../../main/Header";
 import "../css/communityStyles.css";
+import { getPosts } from "../api/communityApi";
 
 const ListComponent = () => {
   const community = [
@@ -14,14 +13,17 @@ const ListComponent = () => {
     { name: "커뮤니티", link: "../community" },
     { name: "지역자원", link: "../resource" },
   ];
-
-  const [page, setPage] = useState(1); // 페이지 상태
+  const initState = {
+    content: [],
+  };
+  const [page, setPage] = useState(0); // 페이지 상태
   const [size] = useState(10); // 페이지당 항목 개수
   const [tab, setTab] = useState("FREE"); // 게시판 유형 (탭)
   const [category, setCategory] = useState("YOUTH"); // 카테고리
   const [searchTerm, setSearchTerm] = useState(""); // 검색어
   const [searchHistory, setSearchHistory] = useState([]); // 검색 기록
   const [isSearchFocused, setIsSearchFocused] = useState(false); // 검색바 포커스 상태
+  const [postData, setPostData] = useState(initState); // 데이터 값 담기
 
   // `usePostData` 훅을 사용하여 게시글 데이터 가져오기
   const { data, loading, error } = usePostData({
@@ -29,7 +31,6 @@ const ListComponent = () => {
     size,
     tab,
     category,
-    searchTerm,
   });
 
   const filteredPosts = data.dtoList.filter(
@@ -44,6 +45,9 @@ const ListComponent = () => {
   useEffect(() => {
     const history = JSON.parse(localStorage.getItem("searchHistory") || "[]");
     setSearchHistory(history);
+    getPosts({ page, size, tab, category }).then((data) => {
+      setPostData(data);
+    });
   }, []);
 
   const handleSearch = () => {
@@ -160,8 +164,8 @@ const ListComponent = () => {
                 </tr>
               </thead>
               <tbody>
-                {filteredPosts.length > 0 ? (
-                  filteredPosts.map((post, index) => (
+                {postData.content.length > 0 ? (
+                  postData.content.map((post, index) => (
                     <tr key={index}>
                       <td>{(page - 1) * size + index + 1}</td>
                       <td>

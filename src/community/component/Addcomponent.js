@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { addPost } from "../api/communityApi";
 import { useNavigate } from "react-router-dom";
 import Header from "../../main/Header";
 import "../css/communityStyles.css";

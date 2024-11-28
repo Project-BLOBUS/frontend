@@ -32,7 +32,7 @@ const App = () => {
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        const response = await axios.get("http://localhost:8080/community"); // 백엔드에서 데이터 가져오기
+        const response = await axios.get("http://localhost:8080/api/community"); // 백엔드에서 데이터 가져오기
         setPosts(response.data);
       } catch (error) {
         console.error("게시글 데이터를 불러오는데 실패했습니다.", error);
@@ -45,7 +45,7 @@ const App = () => {
   const addPost = async (newPost) => {
     try {
       const response = await axios.post(
-        "http://localhost:8080/community",
+        "http://localhost:8080/api/community",
         newPost
       ); // 새로운 게시글 추가
       setPosts([response.data, ...posts]); // 새 데이터 추가 후 상태 업데이트

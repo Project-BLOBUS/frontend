@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { getPosts } from "../api/communityApi";
 
-const usePostData = ({ page, size, tab, category, searchTerm }) => {
+const usePostData = ({ page, size, tab, category }) => {
   const [data, setData] = useState({
     dtoList: [], // 게시글 리스트
     totalPage: 0, // 전체 페이지 수
@@ -23,7 +23,6 @@ const usePostData = ({ page, size, tab, category, searchTerm }) => {
           size,
           tab, // boardType
           category, // userType
-          searchTerm, // 검색어
         });
 
         // API 응답 결과를 state에 반영
@@ -40,7 +39,7 @@ const usePostData = ({ page, size, tab, category, searchTerm }) => {
     };
 
     fetchData();
-  }, [page, size, tab, category, searchTerm]); // 의존성 배열
+  }, [page, size, tab, category]); // 의존성 배열
 
   return { data, loading, error }; // 데이터 반환
 };
