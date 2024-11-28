@@ -10,7 +10,7 @@ function YouthPage (){
     { name: "일자리", link: "job" },
     { name: "주거", link: "" },
     { name: "금융", link: "finance" },
-    { name: "교육", link: "" },
+    { name: "교육", link: "education" },
     { name: "창업", link: "" },
     { name: "지도", link: "" },
     { name: "건의", link: "" }

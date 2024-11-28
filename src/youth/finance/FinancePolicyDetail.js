@@ -3,7 +3,7 @@ import { useNavigate, useParams, useLocation } from "react-router-dom";
 import { fetchPolicyById } from "./FinanceApi";
 import ShareModal from "./ShareModal";
 
-const PolicyDetail = () => {
+const FinancePolicyDetail = () => {
   const { id } = useParams(); // URL에서 ID 가져오기
   // const location = useLocation();
   const [policy, setPolicy] = useState(null);
@@ -94,4 +94,4 @@ const PolicyDetail = () => {
   );
 };
 
-export default PolicyDetail;
+export default FinancePolicyDetail;

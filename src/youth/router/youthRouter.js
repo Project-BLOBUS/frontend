@@ -3,7 +3,9 @@ import { Navigate } from "react-router";
 
 const Loading = <div>Loading....</div>;
 const Finance = lazy(() => import("../finance/FinancePage"));
-const PolicyDetail = lazy(() => import("../finance/PolicyDetail"));
+const Education = lazy(() => import("../education/EducationPage"));
+const FinancePolicyDetail = lazy(() => import("../finance/FinancePolicyDetail"));
+const EducationPolicyDetail = lazy(() => import("../education/EducationPolicyDetail"));
 
 const youthRouter = () => {
   return [
@@ -23,7 +25,23 @@ const youthRouter = () => {
       path: "finance/:id",
       element: (
         <Suspense fallback={Loading}>
-          <PolicyDetail />
+          <FinancePolicyDetail />
+        </Suspense>
+      ),
+    },
+    { 
+      path: "education",
+      element: (
+        <Suspense fallback={Loading}>
+          <Education />
+        </Suspense>
+      ),
+    },
+    {
+      path: "education/:id",
+      element: (
+        <Suspense fallback={Loading}>
+          <EducationPolicyDetail />
         </Suspense>
       ),
     },
