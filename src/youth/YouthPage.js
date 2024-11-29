@@ -27,7 +27,7 @@ function YouthPage (){
       />
       </div>
 
-      <div className="w-[70%] h-[600px] ml-[15%]  border-2 border-red-600">
+      <div className="w-[69.8%] h-[600px] ml-[15%]  border-2 border-red-600">
         <div className="border-2 border-blue-400 h-[70px]">
 
            들어가야하는 첫번째 div
