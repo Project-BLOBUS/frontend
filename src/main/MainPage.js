@@ -202,20 +202,6 @@ function MainPage() {
               <span className="border-b-2 p-1">실시간 청년6</span>
             </motion.div>
           )}
-          <motion.div
-            className="flex flex-col h-[168px] overflow-y-auto"
-            initial={{ opacity: 0, y: -20 }} // 초기 상태: 투명하고 위쪽에 위치
-            animate={{ opacity: 1, y: 0 }} // 애니메이션 종료 후: 불투명하고 원래 위치로
-            exit={{ opacity: 0, y: -20 }} // 떠날 때: 다시 투명하고 위로 이동
-            transition={{ duration: 0.5 }} // 애니메이션 지속 시간
-          >
-            <span className="border-b-2 p-1">실시간 청년1</span>
-            <span className="border-b-2 p-1">실시간 청년2</span>
-            <span className="border-b-2 p-1">실시간 청년3</span>
-            <span className="border-b-2 p-1">실시간 청년4</span>
-            <span className="border-b-2 p-1">실시간 청년5</span>
-            <span className="border-b-2 p-1">실시간 청년6</span>
-          </motion.div>
 
           {activeNav === "기업관" && (
             <motion.div
@@ -233,22 +219,7 @@ function MainPage() {
               <span className="border-b-2 p-1">실시간 기업6</span>
             </motion.div>
           )}
-          {activeNav === "기업관" && (
-            <motion.div
-              className="flex flex-col h-[168px] overflow-y-auto"
-              initial={{ opacity: 0, y: -20 }} // 초기 상태
-              animate={{ opacity: 1, y: 0 }} // 애니메이션 종료 후
-              exit={{ opacity: 0, y: -20 }} // 떠날 때
-              transition={{ duration: 0.5 }} // 애니메이션 지속 시간
-            >
-              <span className="border-b-2 p-1">실시간 기업1</span>
-              <span className="border-b-2 p-1">실시간 기업2</span>
-              <span className="border-b-2 p-1">실시간 기업3</span>
-              <span className="border-b-2 p-1">실시간 기업4</span>
-              <span className="border-b-2 p-1">실시간 기업5</span>
-              <span className="border-b-2 p-1">실시간 기업6</span>
-            </motion.div>
-          )}
+
           {activeNav === "지역자원" && (
             <motion.div
               className="flex flex-col h-[168px] overflow-y-auto"
@@ -265,38 +236,7 @@ function MainPage() {
               <span className="border-b-2 p-1">실시간 지역자원6</span>
             </motion.div>
           )}
-          {activeNav === "지역자원" && (
-            <motion.div
-              className="flex flex-col h-[168px] overflow-y-auto"
-              initial={{ opacity: 0, y: -15 }} // 초기 상태
-              animate={{ opacity: 1, y: 0 }} // 애니메이션 종료 후
-              exit={{ opacity: 0, y: -20 }} // 떠날 때
-              transition={{ duration: 0.5 }} // 애니메이션 지속 시간
-            >
-              <span className="border-b-2 p-1">실시간 지역자원1</span>
-              <span className="border-b-2 p-1">실시간 지역자원2</span>
-              <span className="border-b-2 p-1">실시간 지역자원3</span>
-              <span className="border-b-2 p-1">실시간 지역자원4</span>
-              <span className="border-b-2 p-1">실시간 지역자원5</span>
-              <span className="border-b-2 p-1">실시간 지역자원6</span>
-            </motion.div>
-          )}
-          {activeNav === "커뮤니티" && (
-            <motion.div
-              className="flex flex-col h-[168px] overflow-y-auto"
-              initial={{ opacity: 0, y: -15 }} // 초기 상태
-              animate={{ opacity: 1, y: 0 }} // 애니메이션 종료 후
-              exit={{ opacity: 0, y: -20 }} // 떠날 때
-              transition={{ duration: 0.5 }} // 애니메이션 지속 시간
-            >
-              <span className="border-b-2 p-1">실시간 커뮤니티1</span>
-              <span className="border-b-2 p-1">실시간 커뮤니티2</span>
-              <span className="border-b-2 p-1">실시간 커뮤니티3</span>
-              <span className="border-b-2 p-1">실시간 커뮤니티4</span>
-              <span className="border-b-2 p-1">실시간 커뮤니티5</span>
-              <span className="border-b-2 p-1">실시간 커뮤니티6</span>
-            </motion.div>
-          )}
+
           {activeNav === "커뮤니티" && (
             <motion.div
               className="flex flex-col h-[168px] overflow-y-auto"
