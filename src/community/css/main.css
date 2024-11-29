@@ -1,0 +1,70 @@
+/* Tailwind CSS를 사용하고 있기 때문에 별도의 클래스 정의는 필요하지 않습니다.
+ * 아래는 주요 사용된 Tailwind 클래스 정리입니다. 
+ * 직접 CSS로 구현하고자 할 경우 참고하세요.
+ */
+
+/* 전체 배경 스타일 */
+.bg-[#DB0153] {
+  background-color: #db0153;
+}
+
+/* 헤더 섹션 */
+.isWhite {
+  /* 커스텀 Prop으로 전달될 스타일이므로, Tailwind에서 유사한 white text 스타일로 처리됩니다. */
+}
+
+/* 첫 번째 div 스타일 */
+.w-[70%] {
+  width: 70%;
+}
+.h-[600px] {
+  height: 600px;
+}
+.ml-[15%] {
+  margin-left: 15%;
+}
+.mt-[1%] {
+  margin-top: 1%;
+}
+.border-2 {
+  border-width: 2px;
+}
+.border-red-600 {
+  border-color: #dc2626; /* Tailwind의 red-600 색상 */
+}
+
+/* 첫 번째 내부 박스 스타일 */
+.h-[100px] {
+  height: 100px;
+}
+.border-blue-400 {
+  border-color: #60a5fa; /* Tailwind의 blue-400 색상 */
+}
+
+/* 두 번째 내부 박스 스타일 */
+.h-[80%] {
+  height: 80%;
+}
+.mt-[2%] {
+  margin-top: 2%;
+}
+
+/* 세 번째 div 스타일 */
+.w-[170px] {
+  width: 170px;
+}
+.h-[200px] {
+  height: 200px;
+}
+.bg-gray-400 {
+  background-color: #9ca3af; /* Tailwind의 gray-400 색상 */
+}
+.rounded-[5px] {
+  border-radius: 5px;
+}
+.ml-[2%] {
+  margin-left: 2%;
+}
+.mt-[-31%] {
+  margin-top: -31%;
+}
