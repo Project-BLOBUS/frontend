@@ -1,12 +1,12 @@
 import React from "react";
 import Header from "../main/Header"; // Header를 대문자로 수정
-import Footer from "../main/Footer";
-import { Outlet } from "react-router-dom";
+import { Outlet } from "react-router";
+import "./css/youthStyle.css";
 
 function YouthPage() {
   const youths = [
     { name: "일자리", link: "job" },
-    { name: "주거", link: "" },
+    { name: "주거", link: "house" },
     { name: "금융", link: "finance" },
     { name: "교육", link: "education" },
     { name: "창업", link: "" },
@@ -27,7 +27,7 @@ function YouthPage() {
         />
       </div>
 
-      <div className="w-[70%] h-[600px] ml-[15%]  border-2 border-red-600">
+      <div className="w-[70%] h-[600px] ml-[15%]">
         <Outlet />
       </div>
     </div>
