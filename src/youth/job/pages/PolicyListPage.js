@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import PolicySearchBar from "../components/PolicySearchBar";
 import PolicyListComponent from "../components/PolicyListComponent";
-import { fetchPolicyList } from "../api/jobApi";
+import { policyList } from "../api/jobApi";
 
 const PolicyListPage = ({ title }) => {
   const [policies, setPolicies] = useState([]); // 전체 정책 목록
@@ -11,7 +11,7 @@ const PolicyListPage = ({ title }) => {
 
   // 정책 목록 가져오기
   useEffect(() => {
-    fetchPolicyList()
+    policyList()
       .then((data) => {
         setPolicies(data);
         setFilteredPolicies(data); // 초기 필터 목록은 전체 데이터
@@ -27,15 +27,15 @@ const PolicyListPage = ({ title }) => {
   // 필터링 및 검색 버튼 클릭 핸들러
   const handleSearch = () => {
     const filtered = policies.filter((policy) => {
-      const titleMatch = policy.title
+      const titleMatch = policy.polyBizSjnm
         .toLowerCase()
         .includes(searchTerm.toLowerCase());
-      const contentMatch = policy.content
+      const contentMatch = policy.polyItcnCn
         .toLowerCase()
         .includes(searchTerm.toLowerCase());
 
-      if (filterType === "title") return titleMatch;
-      if (filterType === "content") return contentMatch;
+      if (filterType === "polyBizSjnm") return titleMatch;
+      if (filterType === "polyItcnCn") return contentMatch;
       if (filterType === "both") return titleMatch || contentMatch;
 
       return true; // 필터 타입 선택 안 됐을 경우 전체 데이터 반환

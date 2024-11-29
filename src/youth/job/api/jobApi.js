@@ -1,8 +1,8 @@
 import axios from "axios";
 export const API_SERVER_HOST = "http://localhost:8080";
-const prefix = `${API_SERVER_HOST}/api/job`;
+const prefix = `${API_SERVER_HOST}/api/youth/job`;
 
-export const fetchPolicyList = async () => {
+export const policyList = async () => {
   // 예시: 정책 데이터를 가져오는 코드
   return [
     {
