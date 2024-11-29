@@ -14,22 +14,13 @@ function Header({
   const linkTextColor = isWhite ? "text-white" : "text-[#666666]";
 
   return (
-<<<<<<< HEAD
-    <div className={`font-bold ${borderB ? 'border-b-2 main-border-bottom' : ''}`}>
-      <div className="w-[full] sm:w-[70.6%] ml-[15%] flex justify-between items-center ">
-        
-      <Link to="/main" >
-        <p className={` text-3xl ${blobusTextColor}`}>BLOBUS</p>
-      </Link>
-=======
     <div
       className={`font-bold ${borderB ? "border-b-2 main-border-bottom" : ""}`}
     >
-      <div className="w-full sm:w-[70%] sm:flex-row ml-[15%] flex justify-between items-center">
+      <div className="w-[full] sm:w-[70.6%] ml-[15%] flex justify-between items-center ">
         <Link to="/main">
-          <p className={`text-3xl ${blobusTextColor}`}>BLOBUS</p>
+          <p className={` text-3xl ${blobusTextColor}`}>BLOBUS</p>
         </Link>
->>>>>>> a2756e0da6640e82bed9309d982be114d26ff3aa
 
         <div className="mt-[65px]">
           {navs.map((nav) => (
@@ -43,18 +34,12 @@ function Header({
           ))}
         </div>
 
-<<<<<<< HEAD
         <div className="sm:mr-[12px] mr-[75px]">
-        <p className={`mt-[-8px] h-[50px] rounded-b-[5px] flex justify-center items-center`} style={{ backgroundColor: titleBg,color:textC }}>
-            {pageTitle}  {/* 메인 글자 동적으로 텍스트 표시 */}
-=======
-        <div>
           <p
             className={`mt-[-8px] h-[50px] rounded-b-[5px] flex justify-center items-center`}
             style={{ backgroundColor: titleBg, color: textC }}
           >
             {pageTitle} {/* 메인 글자 동적으로 텍스트 표시 */}
->>>>>>> a2756e0da6640e82bed9309d982be114d26ff3aa
           </p>
 
           <div

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Header from "../main/Header";
-import "./communityStyles.css";
+import "./css/communityStyles.css";
 
 function Community() {
   const community = [
@@ -55,19 +55,6 @@ function Community() {
     }
   };
 
-<<<<<<< HEAD
-      <div className="bg-[#DB0153]">
-    
-      {/* Header에 isWhite prop을 true로 전달하고, pageTitle을 '청년관'으로 설정 */}
-      <Header 
-      navs={community} 
-      isWhite={true} 
-      pageTitle="커뮤니티" 
-      titleBg="#A1003C"  
-      borderB={false} 
-      />
-    
-=======
   const handleSearchClick = () => {
     // 검색 창 클릭 시 검색어 기록 표시
     document.querySelector(".recent-searches").style.display = "block";
@@ -94,7 +81,6 @@ function Community() {
           titleBg="#A1003C"
           borderB={false}
         />
->>>>>>> a2756e0da6640e82bed9309d982be114d26ff3aa
       </div>
 
       <div className="main-container">

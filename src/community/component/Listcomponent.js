@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Pagination from "./Pagination";
 import Header from "../../main/Header";
-import Fotter from "../../main/Footer";
 import "../css/communityStyles.css";
 import { getPosts } from "../api/communityApi"; // API 호출 함수 가져오기
 
@@ -236,7 +235,6 @@ const ListComponent = () => {
           </Link>
         </div>
       </div>
-      <Fotter />
     </div>
   );
 };
