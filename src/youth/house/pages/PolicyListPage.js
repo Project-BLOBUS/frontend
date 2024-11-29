@@ -19,22 +19,23 @@ const initState = {
 };
 
 const PolicyListPage = ({ title }) => {
-  const [serverData, setServerData] = useState(initState); // 전체 정책 목록
-  const [filteredServerData, setFilteredServerData] = useState([]); // 필터된 정책 목록
-  const [searchTerm, setSearchTerm] = useState(""); // 검색어 상태
-  const [filterType, setFilterType] = useState("polyBizSjnm"); // 필터 타입 상태
+  const [serverData, setServerData] = useState(initState); // 전체 정책 리스트
+  const [filteredServerData, setFilteredServerData] = useState([]); // 필터된 정책 리스트
+  const [searchTerm, setSearchTerm] = useState(""); // 검색 키워드
+  const [filterType, setFilterType] = useState("polyBizSjnm"); // 검색 필터타입
+  const [searchTrigger, setSearchTrigger] = useState(false); // 검색 트리거 상태
 
   const { page, size, refresh, moveToPolicyList } = useCustomMove(); //refresh
 
-  // 정책 목록 가져오기
   useEffect(() => {
-    policyList({ page, size })
+    policyList({ page, size, searchTerm, filterType })
       .then((data) => {
         setServerData(data);
-        setFilteredServerData(data.dtoList); // 초기 필터 목록은 전체 데이터
+        setFilteredServerData(data.dtoList); // 초기 필터목록은 전체 데이터
       })
-      .catch((error) => console.error("데이터 가져오기 실패:", error));
-  }, [page, size, refresh]);
+      .catch((error) => console.error("데이터 가져오기 실패:", error))
+      .finally(() => setSearchTrigger(false)); // 데이터 요청 완료 후 트리거 상태 초기화
+  }, [page, size, refresh, searchTrigger]);
 
   // 필터 타입 업데이트 함수
   const handleFilterChange = (filter) => {
@@ -59,6 +60,7 @@ const PolicyListPage = ({ title }) => {
     });
 
     setFilteredServerData(filtered);
+    setSearchTrigger(true); // 검색 트리거를 true로 설정하여 useEffect 실행
   };
 
   return (

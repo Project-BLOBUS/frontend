@@ -31,10 +31,14 @@ const useCustomMove = () => {
     if (pageParam) {
       const pageNum = getNum(pageParam.page, 1);
       const sizeNum = getNum(pageParam.size, 12);
+      const searchTerm = pageParam.searchTerm;
+      const filterType = pageParam.filterType;
 
       queryStr = createSearchParams({
         page: pageNum,
         size: sizeNum,
+        searchTerm: searchTerm,
+        filterType: filterType,
       }).toString();
     } else {
       queryStr = queryDefault;

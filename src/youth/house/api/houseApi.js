@@ -2,11 +2,14 @@ import axios from "axios";
 import { API_SERVER_HOST } from "../../job/api/jobApi";
 const prefix = `${API_SERVER_HOST}/api/youth/house`;
 
-// 정책현황 - 정책리스트 가져오기
-export const policyList = async (pageParam) => {
-  const { page, size } = pageParam;
+export const policyList = async ({ page, size, searchTerm, filterType }) => {
   const res = await axios.get(`${prefix}/policyList`, {
-    params: { page: page, size: size },
+    params: {
+      page: page,
+      size: size,
+      searchTerm: searchTerm,
+      filterType: filterType,
+    },
   });
   return res.data;
 };
