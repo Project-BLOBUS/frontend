@@ -1,0 +1,24 @@
+.guide-line {
+  height: 68%;
+  margin: 5% 0;
+}
+
+/* 청년 일자리 정보 선택키워드 박스 고정 크기 설정함 */
+.box-size {
+  max-width: 100%;
+  width: 500px; /* 기본 박스 크기 */
+}
+
+/* 화면 크기가 768px 이상일 때 크기 변경 */
+@media (max-width: 768px) {
+  .box-size {
+    width: 100%; /* 화면 크기가 작을 때, 100%로 크기 조정 */
+  }
+}
+
+/* 화면 크기가 480px 이하일 때 */
+@media (max-width: 480px) {
+  .box-size {
+    width: 100%;
+  }
+}

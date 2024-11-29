@@ -28,7 +28,11 @@ const AppRoutes = () => (
     {/* /youth 청년 */}
     <Route path="/youth" element={<YouthPage />}>
       {youthRouter().map((route, index) => (
-        <Route key={index} path={route.path} element={route.element} />
+        <Route key={index} path={route.path} element={route.element}>
+          {route.children?.map((child, childIndex) => (
+            <Route key={childIndex} path={child.path} element={child.element} />
+          ))}
+        </Route>
       ))}
     </Route>
     <Route path="/enterprise" element={<Enterprise />} />{" "}
