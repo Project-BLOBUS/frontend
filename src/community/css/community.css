@@ -1,0 +1,72 @@
+/* 전체 레이아웃 스타일 */
+.app {
+  font-family: Arial, sans-serif;
+  color: #333;
+}
+
+/* 헤더 스타일 */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #e6007e;
+  color: white;
+  padding: 10px 20px;
+}
+
+.logo {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.navbar a {
+  margin: 0 10px;
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.navbar .community-link {
+  border-bottom: 2px solid white;
+}
+
+.auth a {
+  color: white;
+  text-decoration: none;
+  margin-left: 10px;
+}
+
+/* 메인 영역 스타일 */
+.main {
+  display: flex;
+}
+
+/* 사이드바 스타일 */
+.sidebar {
+  width: 200px;
+  background-color: #f8f8f8;
+  padding: 20px;
+  border-right: 1px solid #ddd;
+}
+
+.sidebar h2 {
+  font-size: 1.2rem;
+  margin-bottom: 10px;
+}
+
+.sidebar ul {
+  list-style: none;
+  padding: 0;
+}
+
+.sidebar li {
+  margin: 10px 0;
+  cursor: pointer;
+}
+
+/* 콘텐츠 영역 스타일 */
+.content {
+  flex-grow: 1;
+  padding: 20px;
+  text-align: center;
+}
