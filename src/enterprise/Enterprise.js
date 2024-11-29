@@ -13,6 +13,7 @@ function Enterprise() {
         <div>
 
       <div className="bg-[#0055FF] ">
+   
       {/* Header에 isWhite prop을 true로 전달하고, pageTitle을 '청년관'으로 설정 */}
       <Header 
       navs={enterprise} 
@@ -21,6 +22,7 @@ function Enterprise() {
       titleBg="#003BB2"  
       borderB={false} 
       />
+   
       </div>
 
       <div className="w-[70%] h-[600px] ml-[15%] mt-[1%]  border-2 border-red-600">
