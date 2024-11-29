@@ -16,26 +16,22 @@ const Enterprise = lazy(() => import("./enterprise/Enterprise"));
 const Comunity = lazy(() => import("./community/Community"));
 const Resources = lazy(() => import("./resource/Resources"));
 const AllSearch = lazy(() => import("./main/AllSearch"));
-const BLoBusIntro = lazy(() => import('./main/BLoBusIntro'));
-const BLoBusWork = lazy(() => import('./main/BLoBusWork'));
-const BLoBusNews = lazy(() => import('./main/BLoBusNews'));
+const BLoBusIntro = lazy(() => import("./main/BLoBusIntro"));
+const BLoBusWork = lazy(() => import("./main/BLoBusWork"));
+const BLoBusNews = lazy(() => import("./main/BLoBusNews"));
 
 const AppRoutes = () => (
   <Routes>
-     {/* /main 경로로 매핑 */}
+    {/* /main 경로로 매핑 */}
     <Route path="/" element={<Navigate to="/main" />} />
     <Route path="/main" element={<MainPage />} />
     {/* /youth 청년 */}
-<<<<<<< HEAD
-    <Route path="/youth" element={<YouthPage />} />
-=======
     <Route path="/youth" element={<YouthPage />}>
       {youthRouter().map((route, index) => (
         <Route key={index} path={route.path} element={route.element} />
       ))}
     </Route>
     <Route path="/enterprise" element={<Enterprise />} />{" "}
->>>>>>> 6501600ea8ecc90909f67126f18fc30cde8fe0e7
     {/* /enterprise 기업 */}
     <Route path="/enterprise" element={<Enterprise />} />
     {/* /comunity 커뮤니티 */}
@@ -45,12 +41,11 @@ const AppRoutes = () => (
     {/* /allsearch 통합검색 */}
     <Route path="/allsearch" element={<AllSearch />} />
     {/* /blobusIntro 블로버스 소개 */}
-    <Route path="/blobusintro" element={<BLoBusIntro />} />    
+    <Route path="/blobusintro" element={<BLoBusIntro />} />
     {/* /blobusIntro 블로버스 추구하는 일 */}
-    <Route path="/blobuswork" element={<BLoBusWork />} />    
+    <Route path="/blobuswork" element={<BLoBusWork />} />
     {/* /blobusIntro 블로버스 소식 */}
-    <Route path="/blobusnews" element={<BLoBusNews />} />    
-
+    <Route path="/blobusnews" element={<BLoBusNews />} />
     {/* <Route path="/head" element={<Header />} /> */}
     {/* <Route path="/footer" element={<Footer />} /> */}
   </Routes>
