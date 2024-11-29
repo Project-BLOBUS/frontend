@@ -146,16 +146,7 @@ const Info = () => {
       </div>
 
       {modal && (
-        <div
-          className="bg-black bg-opacity-50 w-full h-full flex justify-center items-center fixed inset-0"
-          onClick={() => {
-            setValidation({
-              isMailSent: false,
-              authCode: 0,
-            });
-            setModal(false);
-          }}
-        >
+        <div className="bg-black bg-opacity-50 w-full h-full flex justify-center items-center fixed inset-0">
           <div className="bg-white w-5/6 max-w-[650px] p-4 rounded flex flex-col justify-center items-center space-y-4">
             <div className="text-3xl text-center font-bold">
               이메일 인증 - {btnType}
@@ -193,7 +184,7 @@ const Info = () => {
                       setLoading(false);
                     })}
                   </>
-                ) : !validation.isAuth ? (
+                ) : (
                   <>
                     {makeInput(
                       "text",
@@ -221,8 +212,6 @@ const Info = () => {
                       setLoading(false);
                     })}
                   </>
-                ) : (
-                  <></>
                 )}
               </div>
             )}
