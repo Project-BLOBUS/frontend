@@ -28,19 +28,18 @@ function Header({
   }, [jwt]);
 
   return (
-    <div className={`font-bold ${borderB && "border-b-2 main-border-bottom"}`}>
-      <div className="w-full sm:w-[70%] sm:flex-row ml-[15%] flex justify-between items-center">
-        <Link
-          className={`text-3xl flex justify-center items-center ${blobusTextColor}`}
-          to="/main"
-        >
-          BLOBUS
+    <div
+      className={`font-bold ${borderB ? "border-b-2 main-border-bottom" : ""}`}
+    >
+      <div className="w-full sm:w-[70.6%] mx-[15%] flex justify-between items-center">
+        <Link to="/main">
+          <p className={`text-3xl ${blobusTextColor}`}>BLOBUS</p>
         </Link>
 
         <div className="flex justify-center items-center">
           {navs.map((nav) => (
             <Link
-              className={`mx-4 mt-[50px] hover:text-gray-300 transition duration-500 ${linkTextColor} `}
+              className={`m-4 ${linkTextColor} transition duration-500 hover:text-gray-300`}
               key={nav.name}
               to={nav.link}
             >
@@ -49,14 +48,13 @@ function Header({
           ))}
         </div>
 
-        <div className="w-[180px] flex-col justify-center items-center">
-          <div
-            className={`h-[50px] p-5 rounded-b-[5px] text-xl flex justify-center items-center`}
+        <div className="w-1/6">
+          <p
+            className={`mt-[-8px] h-[50px] rounded-b-[5px] flex justify-center items-center`}
             style={{ backgroundColor: titleBg, color: textC }}
           >
-            {/* 메인 글자 동적으로 텍스트 표시 */}
-            {pageTitle}
-          </div>
+            {pageTitle} {/* 메인 글자 동적으로 텍스트 표시 */}
+          </p>
 
           <div
             className={`text-base text-center flex justify-center items-center ${linkTextColor}`}
