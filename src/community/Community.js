@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Header from "../main/Header";
-import "./communityStyles.css";
+import "./css/communityStyles.css";
 
 function Community() {
   const community = [
