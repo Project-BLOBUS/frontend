@@ -3,8 +3,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { FaBackspace } from "react-icons/fa";
 import { toast } from "react-toastify";
 import { login } from "../../api/memberAPI";
-import { getCookie, setCookie } from "../../util/cookieUtil";
-import Loading from "../../etc/Loading";
+import { getCookie, setCookie } from "../../../etc/util/cookieUtil";
+import Loading from "../../../etc/component/Loading";
 
 const Login = () => {
   const navigate = useNavigate();

@@ -1,11 +1,4 @@
 import { useState, useEffect, useCallback } from "react";
-<<<<<<< HEAD
-import { Link } from "react-router-dom";
-import { BsChevronLeft, BsChevronRight } from "react-icons/bs";
-import { motion } from "framer-motion";
-import Header from "./Header";
-import Footer from "./Footer";
-=======
 import Header from "./Header";
 import Footer from "./Footer";
 import { useNavigate, Link } from "react-router-dom";
@@ -13,7 +6,6 @@ import { BsChevronLeft, BsChevronRight } from "react-icons/bs";
 import { motion } from "framer-motion";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
->>>>>>> cfa110e137c637c8c9b5cc75867c5c8460852d0e
 
 function MainPage() {
   const [activeNav, setActiveNav] = useState(null); // 클릭된 항목을 추적
@@ -63,28 +55,12 @@ function MainPage() {
         "sm:text-2xl text-xl p-7 pt-[40px] sm:pl-[38%] pl-[32%] font-bold text-gray-800",
     },
     {
-<<<<<<< HEAD
-      url: "https://img.freepik.com/free-vector/flat-international-youth-day-horizontal-banner-template_23-2149459177.jpg?t=st=1730685111~exp=1730688711~hmac=4f5d9e4264f317a238fb3dc222024ad2110341898766d47366cd42ed49d12cb1&w=996",
-      link: "/community",
-      text: "커뮤니티~~",
-    },
-    {
-      url: "https://img.freepik.com/free-vector/flat-international-youth-day-social-media-post-template_23-2149511851.jpg?t=st=1730685156~exp=1730688756~hmac=a1bd4db5cf2bcc0f4dbe1e01289e5f99711436ada2ea28036c96561e564ff3b8&w=1060",
-      link: "/resource",
-      text: "지역자원~~",
-    },
-    {
-      url: "https://img.freepik.com/premium-vector/flat-design-international-youth-day-banner-template_23-2149487441.jpg?w=996",
-      link: "/",
-      text: "아무거나~~",
-=======
       url: "https://img.freepik.com/premium-vector/hand-holding-tablet-with-checklist-online-survey-form_34089-125.jpg?w=740",
       link: "/blobusNews",
       text: "BLoBus 목표",
       style: "w-full h-full bg-center bg-cover rounded-lg",
       textStyle:
         "text-white sm:text-xl text-xs p-7 sm:pt-[18px] pt-[35px] sm:pl-[38%] pl-[39.5%] font-bold text-gray-700",
->>>>>>> cfa110e137c637c8c9b5cc75867c5c8460852d0e
     },
   ];
 
@@ -160,18 +136,11 @@ function MainPage() {
           </div>
         </div>
         {/* 오른쪽 라인 */}
-<<<<<<< HEAD
-        <div className="ml-[1.5%]">
-          <div className="text-lg font-bold">실시간 정보</div>
-
-          <div className="flex justify-center items-center text-md font-bold text-center ">
-=======
         <div className="ml-[1.8%] mt-[-1%] ">
           <div className="sm:text-lg text-xl font-bold sm:ml-[0%] ml-[31.5%] mt-4 sm:mt-[-8px]">
             실시간 정보
           </div>
           <div className="flex flex-wrap justify-center items-center text-md font-bold text-center mt-2 sm:mt-0 sm:ml-[-1%] ml-[-3%]">
->>>>>>> cfa110e137c637c8c9b5cc75867c5c8460852d0e
             <nav
               onClick={() => handleNavClick("청년관")}
               className={` p-3 w-[129px] cursor-pointer ${
@@ -284,12 +253,7 @@ function MainPage() {
               <span className="border-b-2 p-1">실시간 커뮤니티6</span>
             </motion.div>
           )}
-<<<<<<< HEAD
-
-          <div className="mt-2 w-[521px] h-[270px] flex flex-wrap gap-4 text-white font-bold">
-=======
           <div className="mt-2 sm:w-[521px] w-[260.5px] h-[270px] sm:ml-[0px] ml-[10px] flex flex-wrap gap-4 text-white font-bold ">
->>>>>>> cfa110e137c637c8c9b5cc75867c5c8460852d0e
             <Link to="/youth">
               <div className="text-2xl sm:w-[250px] w-[120px] h-[150px] bg-[linear-gradient(45deg,_#0130BC,_#6E00FF)]  flex justify-center items-center hover:text-gray-300 hover:scale-90 transition duration-500">
                 청년관
@@ -303,11 +267,7 @@ function MainPage() {
             </Link>
 
             <Link to="/community">
-<<<<<<< HEAD
-              <div className="w-[250px] h-[100px] bg-[linear-gradient(45deg,_#6E00FF,_#DB0153)] flex justify-center items-center hover:text-gray-300 hover:scale-90 transition duration-500">
-=======
               <div className="sm:w-[250px] w-[119px] h-[100px] bg-[linear-gradient(45deg,_#6E00FF,_#DB0153)] flex justify-center items-center hover:text-gray-300 hover:scale-90 transition duration-500">
->>>>>>> cfa110e137c637c8c9b5cc75867c5c8460852d0e
                 커뮤니티
               </div>
             </Link>
@@ -321,7 +281,7 @@ function MainPage() {
         </div>
       </div>
       <Footer />
-      <ToastContainer
+      {/* <ToastContainer
         position="bottom-center"
         autoClose={1000}
         hideProgressBar={false}
@@ -331,7 +291,7 @@ function MainPage() {
         pauseOnFocusLoss
         draggable={false}
         pauseOnHover={false}
-      />
+      /> */}
     </div>
   );
 }

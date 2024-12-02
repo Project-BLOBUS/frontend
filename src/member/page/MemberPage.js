@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
-import { getCookie, removeCookie } from "../util/cookieUtil";
+import { getCookie, removeCookie } from "../../etc/util/cookieUtil";
 import Header from "../../main/Header";
-import Loading from "../etc/Loading";
+import Loading from "../../etc/component/Loading";
 
 const MemberPage = () => {
   const navigate = useNavigate();
@@ -47,7 +47,7 @@ const MemberPage = () => {
               borderB={false}
             />
           </div>
-          <div className="h-[calc(100vh-90px)] flex justify-center items-start overflow-y-scroll">
+          <div className="mx-[15%] flex justify-center items-center">
             <Outlet />
           </div>
         </>

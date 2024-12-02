@@ -4,9 +4,13 @@ import { FaBackspace } from "react-icons/fa";
 import { toast } from "react-toastify";
 import { duplicate, register } from "../../api/memberAPI";
 import { checkBusinessCode } from "../../api/externalAPI ";
-import { getCookie, setCookie, removeCookie } from "../../util/cookieUtil";
+import {
+  getCookie,
+  setCookie,
+  removeCookie,
+} from "../../../etc/util/cookieUtil";
 import useCustomTag from "../../hook/useCustomeTag";
-import Loading from "../../etc/Loading";
+import Loading from "../../../etc/component/Loading";
 import AddressList from "../../data/AddressList";
 
 const initState = {

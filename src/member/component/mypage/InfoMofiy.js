@@ -5,9 +5,9 @@ import { GiSouthKorea } from "react-icons/gi";
 import { IoMdFemale, IoMdMale } from "react-icons/io";
 import { toast } from "react-toastify";
 import { getInfo, modify } from "../../api/memberAPI";
-import { getCookie, setCookie } from "../../util/cookieUtil";
+import { getCookie, setCookie } from "../../../etc/util/cookieUtil";
 import useCustomTag from "../../hook/useCustomeTag";
-import Loading from "../../etc/Loading";
+import Loading from "../../../etc/component/Loading";
 import AddressList from "../../data/AddressList";
 
 const initState = {

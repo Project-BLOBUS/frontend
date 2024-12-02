@@ -3,9 +3,9 @@ import { useNavigate } from "react-router";
 import { FaSave } from "react-icons/fa";
 import { toast } from "react-toastify";
 import { loadSetting, saveSetting, getCustom } from "../../api/mypageAPI";
-import useCustomMove from "../../hook/useCustomMove";
-import Loading from "../../etc/Loading";
-import Paging from "../../etc/Paging";
+import useCustomMove from "../../../etc/hook/useCustomMove";
+import Loading from "../../../etc/component/Loading";
+import Paging from "../../../etc/component/Paging";
 
 const initState = {
   dtoList: [],

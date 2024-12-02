@@ -2,9 +2,9 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import { toast } from "react-toastify";
 import { getBookmark } from "../../api/mypageAPI";
-import useCustomMove from "../../hook/useCustomMove";
-import Loading from "../../etc/Loading";
-import Paging from "../../etc/Paging";
+import useCustomMove from "../../../etc/hook/useCustomMove";
+import Loading from "../../../etc/component/Loading";
+import Paging from "../../../etc/component/Paging";
 
 const initState = {
   dtoList: [],

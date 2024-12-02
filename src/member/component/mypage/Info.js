@@ -2,9 +2,9 @@ import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router";
 import { toast } from "react-toastify";
 import { getInfo, deleteId, sendMail } from "../../api/memberAPI";
-import { getCookie, removeCookie } from "../../util/cookieUtil";
+import { getCookie, removeCookie } from "../../../etc/util/cookieUtil";
 import useCustomTag from "../../hook/useCustomeTag";
-import Loading from "../../etc/Loading";
+import Loading from "../../../etc/component/Loading";
 
 const initState = {
   userId: "",

@@ -3,9 +3,9 @@ import { useNavigate } from "react-router";
 import { FaLock } from "react-icons/fa";
 import { toast } from "react-toastify";
 import { getBoard } from "../../api/mypageAPI";
-import useCustomMove from "../../hook/useCustomMove";
-import Loading from "../../etc/Loading";
-import Paging from "../../etc/Paging";
+import useCustomMove from "../../../etc/hook/useCustomMove";
+import Loading from "../../../etc/component/Loading";
+import Paging from "../../../etc/component/Paging";
 
 const initState = {
   dtoList: [],
@@ -87,12 +87,13 @@ const Document = () => {
         <div className="w-full text-base flex justify-center items-center">
           <div className="w-1/2 border-b-4 border-gray-500 flex justify-start items-center">
             {makeTab("전체", "", board, setBoard, true, moveToList)}
-            {makeTab("자유", "FREE", board, setBoard, true, moveToList)}
-            {makeTab("건의", "SUGGEST", board, setBoard, true, moveToList)}
+            {makeTab("자유", "자유", board, setBoard, true, moveToList)}
+            {makeTab("건의", "건의", board, setBoard, true, moveToList)}
           </div>
           <div className="w-1/2 border-b-4 border-gray-500 flex justify-end items-center">
-            {makeTab("기업", "ENTERPRISE", board, setBoard, false, moveToList)}
-            {makeTab("청년", "YOUTH", board, setBoard, false, moveToList)}
+            {makeTab("지역", "지역", board, setBoard, false, moveToList)}
+            {makeTab("기업", "기업", board, setBoard, false, moveToList)}
+            {makeTab("청년", "청년", board, setBoard, false, moveToList)}
             {makeTab("전체", "", board, setBoard, false, moveToList)}
           </div>
         </div>
@@ -112,23 +113,21 @@ const Document = () => {
               <div
                 key={index}
                 className={`w-full h-[10%] py-2 border-b-2 border-gray-400 flex justify-center items-center cursor-pointer hover:bg-gray-300 transition duration-500`}
-                onClick={() =>
-                  navigate(
-                    `/community/${doc.boardType.toLowerCase()}/detail/${doc.id}`
-                  )
-                }
+                onClick={() => navigate(`/community/read/${doc.id}`)}
               >
                 <div className={`${css} w-[10%] border-r-2`}>{doc.id}</div>
                 <div
                   className={`${css} w-[60%] border-r-2 flex justify-start items-center space-x-2`}
                 >
-                  {doc.boardCategory === "YOUTH" ? (
+                  {doc.category === "청년" ? (
                     <div className="text-blue-500">[청년]</div>
-                  ) : (
+                  ) : doc.category === "기업" ? (
                     <div className="text-red-500">[기업]</div>
+                  ) : (
+                    <div className="text-green-500">[지역]</div>
                   )}
                   <div className="">{doc.title}</div>
-                  {doc.visibility === "PRIVATE" ? <FaLock /> : <></>}
+                  {doc.visibility ? <FaLock /> : <></>}
                 </div>
                 <div className={`${css} w-[15%] border-r-2`}>
                   {printDateTime(doc.createdAt)}

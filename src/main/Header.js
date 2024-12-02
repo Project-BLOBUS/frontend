@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
-import { getCookie, removeCookie } from "../member/util/cookieUtil";
+import { getCookie, removeCookie } from "../etc/util/cookieUtil";
 import "../main/index.css";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -48,7 +48,7 @@ function Header({
           ))}
         </div>
 
-        <div className="w-1/6">
+        <div className="w-1/5">
           <p
             className={`mt-[-8px] h-[50px] rounded-b-[5px] flex justify-center items-center`}
             style={{ backgroundColor: titleBg, color: textC }}

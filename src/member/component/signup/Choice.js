@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { setCookie } from "../../util/cookieUtil";
+import { setCookie } from "../../../etc/util/cookieUtil";
 
 const Login = () => {
   const navigate = useNavigate();
