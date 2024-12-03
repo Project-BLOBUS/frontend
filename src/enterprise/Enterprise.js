@@ -8,6 +8,8 @@ function Enterprise() {
         { name: "기업메뉴2", link: "/" },
         { name: "기업메뉴3", link: "/" },
       ];
+      
+      
 
     return(
         <div>

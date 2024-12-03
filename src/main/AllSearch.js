@@ -123,7 +123,7 @@ const AllSearch = () => {
   
           {/* 페이징 버튼 */}
           {filteredResults.length > 0 && (
-            <div className="flex justify-center sm:ml-7 ml-0 mt-[-1px]">
+            <div className="flex justify-center sm:ml-6 ml-0 mt-[-1px]">
               <button
                 onClick={() => handlePageChange(currentPage - 1)}
                 disabled={currentPage === 1}
