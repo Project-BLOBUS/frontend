@@ -2,8 +2,8 @@ import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router";
 import { FaLock } from "react-icons/fa";
 import { toast } from "react-toastify";
-import { getList } from "../api/communityAPI";
 import { getCookie } from "../../etc/util/cookieUtil";
+import { getList } from "../api/communityAPI";
 import useCustomMove from "../../etc/hook/useCustomMove";
 import useCustomTag from "../hook/useCustomeTag";
 import Loading from "../../etc/component/Loading";
@@ -133,9 +133,10 @@ const List = () => {
         </div>
 
         <div className="w-full mt-4 border-x-[.1px] border-t-[.1px] text-base flex justify-center items-center">
-          <div className={`${tailwind.dtoList} w-[8%]`}>ID</div>
-          <div className={`${tailwind.dtoList} w-[65%]`}>제목</div>
-          <div className={`${tailwind.dtoList} w-[10%]`}>작성자</div>
+          <div className={`${tailwind.dtoList} w-[7%]`}>ID</div>
+          <div className={`${tailwind.dtoList} w-[8%]`}>구분</div>
+          <div className={`${tailwind.dtoList} w-[50%]`}>제목</div>
+          <div className={`${tailwind.dtoList} w-[15%]`}>작성자</div>
           <div className={`${tailwind.dtoList} w-[10%]`}>작성일</div>
           <div className={`${tailwind.dtoList} w-[10%]`}>수정일</div>
         </div>
@@ -160,9 +161,13 @@ const List = () => {
                   } else navigate(`/community/read/${dto.id}`);
                 }}
               >
-                <div className={`${tailwind.dtoList} w-[8%]`}>{dto.id}</div>
+                <div className={`${tailwind.dtoList} w-[7%]`}>{dto.id}</div>
 
-                <div className={`${tailwind.dtoList} w-[65%]`}>
+                <div className={`${tailwind.dtoList} w-[8%]`}>
+                  {dto.boardType}
+                </div>
+
+                <div className={`${tailwind.dtoList} w-[50%]`}>
                   <div className="w-full flex justify-start items-center space-x-2">
                     {dto.category === "청년" ? (
                       <div className="text-blue-500 font-bold">[청년]</div>
@@ -176,8 +181,8 @@ const List = () => {
                   </div>
                 </div>
 
-                <div className={`${tailwind.dtoList} w-[10%]`}>
-                  {dto.author}
+                <div className={`${tailwind.dtoList} w-[15%]`}>
+                  {dto.authorName}
                 </div>
 
                 <div className={`${tailwind.dtoList} w-[10%]`}>
@@ -185,7 +190,9 @@ const List = () => {
                 </div>
 
                 <div className={`${tailwind.dtoList} w-[10%]`}>
-                  {printTime(dto.updatedAt)}
+                  {new Date(dto.updatedAt) - new Date(dto.createdAt) < 1000
+                    ? "-"
+                    : printTime(dto.updatedAt)}
                 </div>
               </div>
             ))
@@ -193,7 +200,8 @@ const List = () => {
         </div>
 
         <div className="w-full py-2 text-sm flex justify-end items-center space-x-10">
-          {makeBtn("등록", "blue", () => navigate("/community/add"))}
+          {getCookie("jwt") &&
+            makeBtn("등록", "blue", () => navigate("/community/add"))}
         </div>
 
         <div className="w-full flex justify-center items-center">
@@ -220,7 +228,7 @@ const makeTab = (name, value, filter, setFilter, isType, moveToList) => {
           : value === filter.category
           ? setFilter({ ...filter, category: "" })
           : setFilter({ ...filter, category: value });
-        moveToList({ page: 1, size: 20 });
+        moveToList({ page: 1, size: 10 });
       }}
     >
       {name}

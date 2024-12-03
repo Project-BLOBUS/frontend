@@ -61,6 +61,7 @@ const Document = () => {
 
     const hour = dateTime.split("T")[1].split(":")[0];
     const min = dateTime.split("T")[1].split(":")[1];
+    const sec = Math.floor(dateTime.split("T")[1].split(":")[2], 0);
 
     const diff = new Date() - new Date(dateTime);
 
@@ -71,7 +72,7 @@ const Document = () => {
     } else if (diff > 24 * 60 * 60 * 1000) {
       return Math.round(diff / 24 / 60 / 60 / 1000, 0) + "일 전";
     } else {
-      return hour + ":" + min;
+      return hour + ":" + min + ":" + sec;
     }
   };
 
@@ -133,7 +134,9 @@ const Document = () => {
                   {printDateTime(doc.createdAt)}
                 </div>
                 <div className={`${css} w-[15%] border-r-0`}>
-                  {printDateTime(doc.updatedAt)}
+                  {new Date(doc.updatedAt) - new Date(doc.createdAt) < 1000
+                    ? "-"
+                    : printDateTime(doc.updatedAt)}
                 </div>
               </div>
             ))

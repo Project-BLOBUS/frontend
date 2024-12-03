@@ -13,7 +13,7 @@ export const getList = async (pageParam, dto) => {
     },
     params: {
       page: page,
-      size: 20,
+      size: 10,
       boardType: dto.type,
       category: dto.category,
       keyward: dto.keyward,
@@ -31,5 +31,35 @@ export const getOne = async (no) => {
     },
   });
 
+  return res.data;
+};
+
+// 작성글 등록
+export const registerOne = async (dto) => {
+  const res = await axios.post(`${host}/`, dto, {
+    headers: {
+      Authorization: `Bearer ${getCookie("jwt")}`,
+    },
+  });
+  return res.data;
+};
+
+// 작성글 삭제
+export const modifyOne = async (dto) => {
+  const res = await axios.put(`${host}/${dto.id}`, dto, {
+    headers: {
+      Authorization: `Bearer ${getCookie("jwt")}`,
+    },
+  });
+  return res.data;
+};
+
+// 작성글 삭제
+export const deleteOne = async (no) => {
+  const res = await axios.delete(`${host}/${no}`, {
+    headers: {
+      Authorization: `Bearer ${getCookie("jwt")}`,
+    },
+  });
   return res.data;
 };

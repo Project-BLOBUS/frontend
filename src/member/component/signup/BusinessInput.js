@@ -2,13 +2,13 @@ import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { FaBackspace } from "react-icons/fa";
 import { toast } from "react-toastify";
-import { duplicate, register } from "../../api/memberAPI";
-import { checkBusinessCode } from "../../api/externalAPI ";
 import {
   getCookie,
   setCookie,
   removeCookie,
 } from "../../../etc/util/cookieUtil";
+import { duplicate, register } from "../../api/memberAPI";
+import { checkBusinessCode } from "../../api/externalAPI ";
 import useCustomTag from "../../hook/useCustomeTag";
 import Loading from "../../../etc/component/Loading";
 import AddressList from "../../data/AddressList";

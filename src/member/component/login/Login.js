@@ -2,8 +2,8 @@ import { useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { FaBackspace } from "react-icons/fa";
 import { toast } from "react-toastify";
-import { login } from "../../api/memberAPI";
 import { getCookie, setCookie } from "../../../etc/util/cookieUtil";
+import { login } from "../../api/memberAPI";
 import Loading from "../../../etc/component/Loading";
 
 const Login = () => {
@@ -53,8 +53,12 @@ const Login = () => {
           } else {
             setCookie("jwt", data.accessToken);
             setCookie("expirationTime", data.expirationTime);
-            setCookie("name", data.name);
+            setCookie("name", data.name ?? "-");
             setCookie("address", data.address);
+            setCookie(
+              "email",
+              userRole === "GENERAL" ? userId : data.email ?? "-"
+            );
             setCookie("userId", userId);
             setCookie("userRole", userRole);
             setCookie("idSave", userRole === "ADMIN" ? false : idSave);

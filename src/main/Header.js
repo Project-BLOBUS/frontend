@@ -95,6 +95,7 @@ function Header({
                       removeCookie("expirationTime");
                       removeCookie("name");
                       removeCookie("address");
+                      removeCookie("email");
 
                       if (!getCookie("idSave")) {
                         removeCookie("userId");
