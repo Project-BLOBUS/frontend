@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Outlet } from "react-router";
 import Header from "../../main/Header";
 import Loading from "../../etc/component/Loading";
+import { FaArrowUp, FaArrowDown } from "react-icons/fa";
 
 const Community = () => {
   const [loading, setLoading] = useState(false);
@@ -29,6 +30,24 @@ const Community = () => {
       <div className="mx-[15%] flex justify-center items-center">
         <Outlet />
       </div>
+
+      <button
+        className="bg-yellow-300 p-4 rounded-full text-base font-bold fixed bottom-20 right-20 hover:bg-yellow-500 hover:text-white transition duration-500"
+        onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+      >
+        <FaArrowUp />
+      </button>
+      <button
+        className="bg-yellow-300 p-4 rounded-full text-base font-bold fixed bottom-5 right-20 hover:bg-yellow-500 hover:text-white transition duration-500"
+        onClick={() =>
+          window.scrollTo({
+            top: document.body.scrollHeight,
+            behavior: "smooth",
+          })
+        }
+      >
+        <FaArrowDown />
+      </button>
     </>
   );
 };

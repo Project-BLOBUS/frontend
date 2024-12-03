@@ -3,20 +3,24 @@ import { useNavigate, useParams } from "react-router";
 import { FaLock, FaLockOpen } from "react-icons/fa";
 import { toast } from "react-toastify";
 import { getCookie } from "../../etc/util/cookieUtil";
-import { getOne, modifyOne, registerOne } from "../api/communityAPI";
+import { getPost, modifyPost } from "../api/postAPI";
 import useCustomTag from "../hook/useCustomeTag";
 import Loading from "../../etc/component/Loading";
 
-const initState = {
-  boardType: "자유",
-  category: "",
-  title: "",
-  content: "",
+const initPost = {
+  id: 0,
   authorId: "",
   authorName: "",
   authorEmail: "",
+  boadrType: "",
+  category: "",
+  title: "",
+  content: "",
   toEmail: false,
   visibility: false,
+  createdAt: "--T::",
+  updatedAt: "--T::",
+  commentList: [],
 };
 
 const Modify = () => {
@@ -26,7 +30,7 @@ const Modify = () => {
   const { makeBtn } = useCustomTag();
 
   const [jwt, setJwt] = useState(getCookie("jwt"));
-  const [dto, setDto] = useState(initState);
+  const [post, setPost] = useState(initPost);
   const [hover, setHover] = useState(false);
 
   const refList = {
@@ -38,8 +42,8 @@ const Modify = () => {
   useEffect(() => {
     setLoading(true);
 
-    setDto({
-      ...dto,
+    setPost({
+      ...post,
       authorId: getCookie("userId"),
       authorName: getCookie("name"),
       authorEmail: getCookie("email"),
@@ -64,9 +68,9 @@ const Modify = () => {
   useEffect(() => {
     setLoading(true);
 
-    getOne(id)
+    getPost(id)
       .then((data) => {
-        setDto(data);
+        setPost(data);
       })
       .catch((error) => {
         console.error("데이터를 불러오지 못했습니다. : ", error);
@@ -77,9 +81,9 @@ const Modify = () => {
 
   const validField = () => {
     const validList = [
-      [!dto.category, "카테고리를 선택하세요.", refList.category],
-      [!dto.title, "제목을 입력하세요.", refList.title],
-      [!dto.content, "내용을 입력하세요.", refList.content],
+      [!post.category, "카테고리를 선택하세요.", refList.category],
+      [!post.title, "제목을 입력하세요.", refList.title],
+      [!post.content, "내용을 입력하세요.", refList.content],
     ];
 
     for (const [condition, message, ref, err] of validList) {
@@ -92,12 +96,12 @@ const Modify = () => {
     return true;
   };
 
-  const onClickModify = async (dto) => {
+  const onClickModify = async (post) => {
     setLoading(true);
 
     if (!validField()) return setLoading(false);
 
-    await modifyOne(dto)
+    await modifyPost(post)
       .then((data) => {
         if (data.error) {
           toast.error("게시글 수정에 실패했습니다.");
@@ -126,16 +130,16 @@ const Modify = () => {
         <div className="w-full flex flex-col justify-center items-center space-y-2">
           <div className="w-full pr-4 text-sm flex justify-between items-center">
             <div className="w-full text-xl flex justify-start items-center space-x-4">
-              <div className="w-1/3 flex justify-start items-center space-x-2">
-                {makeTab("자유게시판", "자유", dto, setDto)}
-                {makeTab("건의게시판", "건의", dto, setDto)}
+              <div className="w-1/2 flex justify-start items-center space-x-2">
+                {makeTab("자유게시판", "자유", post, setPost)}
+                {makeTab("건의게시판", "건의", post, setPost)}
               </div>
 
               <select
                 className="bg-white p-2 border border-black rounded text-center"
                 name="category"
-                value={dto.category}
-                onChange={(e) => setDto({ ...dto, category: e.target.value })}
+                value={post.category}
+                onChange={(e) => setPost({ ...post, category: e.target.value })}
                 ref={refList.category}
               >
                 <option
@@ -154,7 +158,7 @@ const Modify = () => {
 
             <div className="flex justify-center items-center space-x-4">
               {makeBtn("뒤로", "orange", () => navigate(-1, { replace: true }))}
-              {makeBtn("완료", "blue", () => onClickModify(dto))}
+              {makeBtn("완료", "blue", () => onClickModify(post))}
             </div>
           </div>
 
@@ -162,28 +166,30 @@ const Modify = () => {
             <div className="w-full flex justify-center items-center">
               <div
                 className={`p-3 rounded cursor-pointer transition duration-500 ${
-                  dto.visibility
+                  post.visibility
                     ? "text-red-500 hover:bg-gray-500 hover:text-gray-300"
                     : "text-gray-300 hover:bg-gray-500 hover:text-red-500"
                 }`}
                 onMouseEnter={() => setHover(true)}
                 onMouseLeave={() => setHover(false)}
-                onClick={() => setDto({ ...dto, visibility: !dto.visibility })}
-                hidden={dto.boardType === "자유"}
+                onClick={() =>
+                  setPost({ ...post, visibility: !post.visibility })
+                }
+                hidden={post.boardType === "자유"}
               >
-                {dto.visibility === hover ? <FaLockOpen /> : <FaLock />}
+                {post.visibility === hover ? <FaLockOpen /> : <FaLock />}
               </div>
 
               <input
                 className="w-full p-2 border border-black rounded"
                 type="text"
                 name="title"
-                value={dto.title}
+                value={post.title}
                 maxLength={30}
                 placeholder="제목을 입력하세요. (최대 30글자)"
                 autoComplete="off"
                 onChange={(e) =>
-                  setDto({ ...dto, [e.target.name]: e.target.value })
+                  setPost({ ...post, [e.target.name]: e.target.value })
                 }
                 ref={refList.title}
               />
@@ -195,11 +201,11 @@ const Modify = () => {
               className="w-full h-[400px] p-2 border border-black rounded resize-none"
               type="text"
               name="content"
-              value={dto.content}
+              value={post.content}
               placeholder="내용을 입력하세요."
               autoComplete="off"
               onChange={(e) =>
-                setDto({ ...dto, [e.target.name]: e.target.value })
+                setPost({ ...post, [e.target.name]: e.target.value })
               }
               ref={refList.content}
             />
@@ -210,18 +216,18 @@ const Modify = () => {
   );
 };
 
-const makeTab = (name, value, dto, setDto) => {
+const makeTab = (name, value, post, setPost) => {
   return (
     <div
       className={`w-full p-2 rounded  ${
-        value === dto.boardType
+        value === post.boardType
           ? "bg-[#DB0153] text-white"
           : "bg-gray-300 text-gray-100 cursor-pointer hover:bg-[#DB0153] hover:text-white transition duration-500"
       }`}
       onClick={() => {
-        value !== dto.boardType &&
-          setDto({
-            ...dto,
+        value !== post.boardType &&
+          setPost({
+            ...post,
             boardType: value,
             toEmail: false,
             visibility: false,

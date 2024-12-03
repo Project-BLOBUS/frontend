@@ -3,7 +3,7 @@ import { useNavigate } from "react-router";
 import { FaLock } from "react-icons/fa";
 import { toast } from "react-toastify";
 import { getCookie } from "../../etc/util/cookieUtil";
-import { getList } from "../api/communityAPI";
+import { getPostList } from "../api/postAPI";
 import useCustomMove from "../../etc/hook/useCustomMove";
 import useCustomTag from "../hook/useCustomeTag";
 import Loading from "../../etc/component/Loading";
@@ -41,7 +41,7 @@ const List = () => {
   useEffect(() => {
     setLoading(true);
 
-    getList({ page, size }, filter)
+    getPostList({ page, size }, filter)
       .then((data) => {
         if (data.error) {
           setData(initState);
@@ -60,13 +60,10 @@ const List = () => {
     setLoading(false);
   }, [page, size, filter]);
 
-  const printTime = (dateTime) => {
+  const printDate = (dateTime) => {
     const year = dateTime.split("T")[0].split("-")[0];
     const month = dateTime.split("T")[0].split("-")[1];
     const date = dateTime.split("T")[0].split("-")[2];
-
-    const hour = dateTime.split("T")[1].split(":")[0];
-    const min = dateTime.split("T")[1].split(":")[1];
 
     const diff = new Date() - new Date(dateTime);
 
@@ -76,8 +73,12 @@ const List = () => {
       return month + "/" + date;
     } else if (diff > 24 * 60 * 60 * 1000) {
       return Math.round(diff / 24 / 60 / 60 / 1000, 0) + "일 전";
-    } else {
-      return hour + ":" + min;
+    } else if (diff > 60 * 60 * 1000) {
+      return Math.round(diff / 60 / 60 / 1000, 0) + "시간 전";
+    } else if (diff > 60 * 1000) {
+      return Math.round(diff / 60 / 1000, 0) + "분 전";
+    } else if (diff > 1000) {
+      return Math.round(diff / 1000, 0) + "초 전";
     }
   };
 
@@ -178,6 +179,9 @@ const List = () => {
                     )}
                     {dto.visibility ? <FaLock /> : <></>}
                     <div>{dto.title}</div>
+                    <div className="text-xs text-red-500 font-bold">
+                      {dto.commentList.length !== 0 && dto.commentList.length}
+                    </div>
                   </div>
                 </div>
 
@@ -186,13 +190,13 @@ const List = () => {
                 </div>
 
                 <div className={`${tailwind.dtoList} w-[10%]`}>
-                  {printTime(dto.createdAt)}
+                  {printDate(dto.createdAt)}
                 </div>
 
                 <div className={`${tailwind.dtoList} w-[10%]`}>
-                  {new Date(dto.updatedAt) - new Date(dto.createdAt) < 1000
+                  {new Date(dto.updatedAt) - new Date(dto.createdAt) < 60 * 1000
                     ? "-"
-                    : printTime(dto.updatedAt)}
+                    : printDate(dto.updatedAt)}
                 </div>
               </div>
             ))
