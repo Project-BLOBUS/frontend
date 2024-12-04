@@ -103,9 +103,9 @@ const Document = () => {
         </div>
 
         <div className="bg-gray-200 w-full h-[50px] py-2 border-b-4 border-gray-500 text-base flex justify-center items-center">
-          <div className={`${css} w-[7%] border-r-2`}>번호</div>
+          <div className={`${css} w-[8%] border-r-2`}>번호</div>
           <div className={`${css} w-[8%] border-r-2`}>구분</div>
-          <div className={`${css} w-[65%] border-r-2`}>제목</div>
+          <div className={`${css} w-[64%] border-r-2`}>제목</div>
           <div className={`${css} w-[10%] border-r-2`}>작성</div>
           <div className={`${css} w-[10%] border-r-0`}>수정</div>
         </div>
@@ -120,14 +120,14 @@ const Document = () => {
                 className={`w-full h-[10%] py-2 border-b-2 border-gray-400 flex justify-center items-center cursor-pointer hover:bg-gray-300 transition duration-500`}
                 onClick={() => navigate(`/community/read/${doc.id}`)}
               >
-                <div className={`${css} w-[7%] border-r-2`}>{doc.id}</div>
+                <div className={`${css} w-[8%] border-r-2`}>{doc.id}</div>
 
                 <div className={`${css} w-[8%] border-r-2`}>
                   {doc.boardType}
                 </div>
 
                 <div
-                  className={`${css} w-[65%] border-r-2 flex justify-start items-center space-x-2`}
+                  className={`${css} w-[64%] border-r-2 flex justify-start items-center space-x-2`}
                 >
                   {doc.category === "청년" ? (
                     <div className="text-blue-500">[청년]</div>

@@ -253,7 +253,7 @@ const Comment = () => {
             ) : (
               <div
                 key={comment.id}
-                className="bg-white px-4 py-2 text-sm w-full border rounded flex justify-center items-center space-x-2"
+                className="bg-white px-4 py-2 text-base w-full border rounded flex justify-center items-center space-x-2"
               >
                 {getCookie("userRole") !== "ADMIN" &&
                 comment.visibility &&
@@ -264,7 +264,7 @@ const Comment = () => {
                   </div>
                 ) : (
                   <>
-                    <div className="w-full py-2 flex justify-ceneter items-center">
+                    <div className="w-[calc(100%-136px)] py-2 flex justify-ceneter items-center">
                       <div className="w-1/2 flex justify-start items-center space-x-2">
                         {comment.visibility && (
                           <FaLock className="text-red-500" />
@@ -275,12 +275,12 @@ const Comment = () => {
                       </div>
 
                       <div className="w-1/2 flex justify-end items-center space-x-2">
-                        <div className="text-gray-400">
+                        <div className="text-xs text-gray-400">
                           {new Date(comment.updatedAt) -
                             new Date(comment.createdAt) <
                           1000
-                            ? printTime(comment.createdAt)
-                            : ` ${printTime(comment.updatedAt)}에 수정됨`}
+                            ? ` ${printTime(comment.createdAt)} 등록`
+                            : ` ${printTime(comment.updatedAt)} 수정`}
                         </div>
 
                         <div>
@@ -361,7 +361,7 @@ const makeInput = (dto, setDto, hover, setHover, setLoading, onClick, ref) => {
       </div>
 
       <input
-        className="w-[calc(100%-100px)] p-2 border border-black rounded text-sm font-normal"
+        className="w-[calc(100%-184px)] p-2 border border-black rounded text-sm font-normal"
         type="text"
         value={dto.content}
         placeholder="댓글을 입력하세요."

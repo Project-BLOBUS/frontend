@@ -23,7 +23,7 @@ const initState = {
 const Custom = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
-  const { page, size, moveToList } = useCustomMove("mypage/custom");
+  const { page, size, moveToList } = useCustomMove("mypage/custom/list");
 
   const [data, setData] = useState(initState);
 

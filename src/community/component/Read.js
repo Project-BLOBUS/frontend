@@ -97,14 +97,16 @@ const Read = () => {
 
             <div className="flex justify-center items-center space-x-2">
               {dto.prev &&
-                makeBtn("이전", "pink", () =>
+                makeBtn("이전", "none", () =>
                   navigate(`/community/read/${dto.prev}`, { replace: true })
                 )}
+              {makeBtn("목록", "none", () =>
+                navigate("/community/list", { replace: true })
+              )}
               {dto.next &&
-                makeBtn("다음", "pink", () =>
+                makeBtn("다음", "none", () =>
                   navigate(`/community/read/${dto.next}`, { replace: true })
                 )}
-              {makeBtn("뒤로", "orange", () => navigate(-1))}
             </div>
           </div>
 
