@@ -4,6 +4,23 @@ import { getCookie } from "../../etc/util/cookieUtil";
 const API_SERVER_HOST = "http://localhost:8080";
 const host = `${API_SERVER_HOST}/comment`;
 
+// 댓글 목록 조회
+export const getCommentList = async (pageParam, no) => {
+  const { page } = pageParam;
+  const res = await axios.get(`${host}/list`, {
+    headers: {
+      Authorization: `Bearer ${getCookie("jwt")}`,
+    },
+    params: {
+      page: page,
+      size: 5,
+      postId: no,
+    },
+  });
+
+  return res.data;
+};
+
 // 댓글 등록
 export const registerComment = async (dto) => {
   const res = await axios.post(`${host}/`, dto, {

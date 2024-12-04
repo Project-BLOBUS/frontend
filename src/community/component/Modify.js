@@ -9,17 +9,19 @@ import Loading from "../../etc/component/Loading";
 
 const initPost = {
   id: 0,
+  prev: 0,
+  next: 0,
   authorId: "",
   authorName: "",
   authorEmail: "",
-  boadrType: "",
+  boardType: "",
   category: "",
   title: "",
   content: "",
   toEmail: false,
   visibility: false,
-  createdAt: "--T::",
-  updatedAt: "--T::",
+  createdAt: null,
+  updatedAt: null,
   commentList: [],
 };
 
@@ -129,7 +131,7 @@ const Modify = () => {
       <div className="bg-gray-100 w-full m-4 p-4 text-base text-center font-bold flex flex-col justify-center items-center">
         <div className="w-full flex flex-col justify-center items-center space-y-2">
           <div className="w-full pr-4 text-sm flex justify-between items-center">
-            <div className="w-full text-xl flex justify-start items-center space-x-4">
+            <div className="w-full text-xl flex justify-start items-center space-x-2">
               <div className="w-1/2 flex justify-start items-center space-x-2">
                 {makeTab("자유게시판", "자유", post, setPost)}
                 {makeTab("건의게시판", "건의", post, setPost)}
@@ -156,7 +158,7 @@ const Modify = () => {
               </select>
             </div>
 
-            <div className="flex justify-center items-center space-x-4">
+            <div className="flex justify-center items-center space-x-2">
               {makeBtn("뒤로", "orange", () => navigate(-1, { replace: true }))}
               {makeBtn("완료", "blue", () => onClickModify(post))}
             </div>
@@ -222,17 +224,8 @@ const makeTab = (name, value, post, setPost) => {
       className={`w-full p-2 rounded  ${
         value === post.boardType
           ? "bg-[#DB0153] text-white"
-          : "bg-gray-300 text-gray-100 cursor-pointer hover:bg-[#DB0153] hover:text-white transition duration-500"
+          : "bg-gray-300 text-gray-100"
       }`}
-      onClick={() => {
-        value !== post.boardType &&
-          setPost({
-            ...post,
-            boardType: value,
-            toEmail: false,
-            visibility: false,
-          });
-      }}
     >
       {name}
     </div>

@@ -9,17 +9,19 @@ import Loading from "../../etc/component/Loading";
 
 const initPost = {
   id: 0,
+  prev: 0,
+  next: 0,
   authorId: "",
   authorName: "",
   authorEmail: "",
-  boadrType: "자유",
+  boardType: "자유",
   category: "",
   title: "",
   content: "",
   toEmail: false,
   visibility: false,
-  createdAt: "--T::",
-  updatedAt: "--T::",
+  createdAt: null,
+  updatedAt: null,
   commentList: [],
 };
 
@@ -118,7 +120,7 @@ const Add = () => {
       <div className="bg-gray-100 w-full m-4 p-4 text-base text-center font-bold flex flex-col justify-center items-center">
         <div className="w-full flex flex-col justify-center items-center space-y-2">
           <div className="w-full pr-4 text-sm flex justify-between items-center">
-            <div className="w-full text-xl flex justify-start items-center space-x-4">
+            <div className="w-full text-xl flex justify-start items-center space-x-2">
               <div className="w-1/2 flex justify-start items-center space-x-2">
                 {makeTab("자유게시판", "자유", post, setPost)}
                 {makeTab("건의게시판", "건의", post, setPost)}
@@ -146,7 +148,7 @@ const Add = () => {
 
               <div
                 className="group w-1/6 flex justify-center items-center cursor-pointer"
-                hidden={post.boardType === "자유"}
+                hidden={post.boardType !== "건의"}
               >
                 <input
                   className="w-4 h-4"
@@ -154,7 +156,7 @@ const Add = () => {
                   name="idSave"
                   checked={post.toEmail}
                   onChange={() => setPost({ ...post, toEmail: !post.toEmail })}
-                  hidden={post.boardType === "자유"}
+                  hidden={post.boardType !== "건의"}
                 />
                 <div
                   className={`ml-2 transition duration-500 ${
@@ -163,14 +165,14 @@ const Add = () => {
                       : "group-hover:text-[#DB0153]"
                   }`}
                   onClick={() => setPost({ ...post, toEmail: !post.toEmail })}
-                  hidden={post.boardType === "자유"}
+                  hidden={post.boardType !== "건의"}
                 >
                   메일 전송
                 </div>
               </div>
             </div>
 
-            <div className="flex justify-center items-center space-x-4">
+            <div className="flex justify-center items-center space-x-2">
               {makeBtn("뒤로", "orange", () => navigate(-1, { replace: true }))}
               {makeBtn("완료", "blue", () => onClickAddPost(post))}
             </div>
@@ -189,7 +191,7 @@ const Add = () => {
                 onClick={() =>
                   setPost({ ...post, visibility: !post.visibility })
                 }
-                hidden={post.boardType === "자유"}
+                hidden={post.boardType !== "건의"}
               >
                 {post.visibility === hover ? <FaLockOpen /> : <FaLock />}
               </div>

@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router";
-import { FaLock } from "react-icons/fa";
+import { FaLock, FaSearch } from "react-icons/fa";
 import { toast } from "react-toastify";
 import { getCookie } from "../../etc/util/cookieUtil";
 import { getPostList } from "../api/postAPI";
@@ -25,7 +25,7 @@ const initState = {
 const List = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
-  const { page, size, moveToList } = useCustomMove("community");
+  const { page, size, moveToList } = useCustomMove("community/list");
   const { makeBtn } = useCustomTag();
 
   const [data, setData] = useState(initState);
@@ -60,7 +60,7 @@ const List = () => {
     setLoading(false);
   }, [page, size, filter]);
 
-  const printDate = (dateTime) => {
+  const printTime = (dateTime) => {
     const year = dateTime.split("T")[0].split("-")[0];
     const month = dateTime.split("T")[0].split("-")[1];
     const date = dateTime.split("T")[0].split("-")[2];
@@ -79,6 +79,8 @@ const List = () => {
       return Math.round(diff / 60 / 1000, 0) + "분 전";
     } else if (diff > 1000) {
       return Math.round(diff / 1000, 0) + "초 전";
+    } else {
+      return "1초 전";
     }
   };
 
@@ -118,11 +120,12 @@ const List = () => {
                   setFilter({ ...filter, keyward: e.target.value.trim() });
                 } else if (e.key === "Escape") {
                   e.target.value = "";
+                  setFilter({ ...filter, keyward: e.target.value.trim() });
                 }
                 setLoading(false);
               }}
             />
-            {makeBtn("검색", "green", () => {
+            {makeBtn(<FaSearch className="text-xl" />, "green", () => {
               setLoading(true);
               const value = inputRef.current?.value.trim();
               if (value) {
@@ -138,14 +141,27 @@ const List = () => {
           <div className={`${tailwind.dtoList} w-[8%]`}>구분</div>
           <div className={`${tailwind.dtoList} w-[50%]`}>제목</div>
           <div className={`${tailwind.dtoList} w-[15%]`}>작성자</div>
-          <div className={`${tailwind.dtoList} w-[10%]`}>작성일</div>
-          <div className={`${tailwind.dtoList} w-[10%]`}>수정일</div>
+          <div className={`${tailwind.dtoList} w-[10%]`}>작성</div>
+          <div className={`${tailwind.dtoList} w-[10%]`}>수정</div>
         </div>
 
         <div className="w-full border-x-[.1px] border-b-[.1px] text-sm text-nowrap flex flex-col justify-center items-center">
           {data.dtoList.length === 0 ? (
             <div className="w-full border-[.1px] py-20 text-2xl">
-              작성된 글이 없습니다.
+              {filter.keyward !== "" ? (
+                <>
+                  <span className="text-red-500">
+                    '
+                    {filter.keyward.length > 20
+                      ? filter.keyward.slice(0, 20) + "..."
+                      : filter.keyward}
+                    '
+                  </span>
+                  에 대한 검색결과가 존재하지 않습니다.
+                </>
+              ) : (
+                "작성된 글이 없습니다."
+              )}
             </div>
           ) : (
             data.dtoList.map((dto, index) => (
@@ -180,7 +196,7 @@ const List = () => {
                     {dto.visibility ? <FaLock /> : <></>}
                     <div>{dto.title}</div>
                     <div className="text-xs text-red-500 font-bold">
-                      {dto.commentList.length !== 0 && dto.commentList.length}
+                      {dto.commentList.length > 0 && dto.commentList.length}
                     </div>
                   </div>
                 </div>
@@ -190,13 +206,13 @@ const List = () => {
                 </div>
 
                 <div className={`${tailwind.dtoList} w-[10%]`}>
-                  {printDate(dto.createdAt)}
+                  {printTime(dto.createdAt)}
                 </div>
 
                 <div className={`${tailwind.dtoList} w-[10%]`}>
                   {new Date(dto.updatedAt) - new Date(dto.createdAt) < 60 * 1000
                     ? "-"
-                    : printDate(dto.updatedAt)}
+                    : printTime(dto.updatedAt)}
                 </div>
               </div>
             ))

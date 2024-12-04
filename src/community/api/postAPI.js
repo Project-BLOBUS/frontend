@@ -6,14 +6,14 @@ const host = `${API_SERVER_HOST}/post`;
 
 // 작성글 목록 조회
 export const getPostList = async (pageParam, dto) => {
-  const { page } = pageParam;
+  const { page, size } = pageParam;
   const res = await axios.get(`${host}/list`, {
     headers: {
       Authorization: `Bearer ${getCookie("jwt")}`,
     },
     params: {
       page: page,
-      size: 10,
+      size: size,
       boardType: dto.type,
       category: dto.category,
       keyward: dto.keyward,

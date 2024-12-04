@@ -143,7 +143,7 @@ const Custom = () => {
       .join("/");
   };
 
-  const printDateTime = (dateTime) => {
+  const printDate = (dateTime) => {
     const year = dateTime.split("T")[0].split("-")[0];
     const month = dateTime.split("T")[0].split("-")[1];
     const date = dateTime.split("T")[0].split("-")[2];
@@ -228,7 +228,7 @@ const Custom = () => {
               >
                 <div className="w-full flex justify-between items-center">
                   <div className="w-full text-2xl text-left">{dto.title}</div>
-                  <div>{printDateTime(dto.createdAt)}</div>
+                  <div>{printDate(dto.createdAt)}</div>
                 </div>
 
                 <div className="w-full text-sm text-left">{dto.content}</div>

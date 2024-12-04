@@ -23,7 +23,7 @@ const initState = {
 const Document = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
-  const { page, size, moveToList } = useCustomMove("mypage/doc");
+  const { page, size, moveToList } = useCustomMove("mypage/doc/list");
 
   const [data, setData] = useState(initState);
 
@@ -54,25 +54,27 @@ const Document = () => {
     setLoading(false);
   }, [page, size, board]);
 
-  const printDateTime = (dateTime) => {
+  const printTime = (dateTime) => {
     const year = dateTime.split("T")[0].split("-")[0];
     const month = dateTime.split("T")[0].split("-")[1];
     const date = dateTime.split("T")[0].split("-")[2];
 
-    const hour = dateTime.split("T")[1].split(":")[0];
-    const min = dateTime.split("T")[1].split(":")[1];
-    const sec = Math.floor(dateTime.split("T")[1].split(":")[2], 0);
-
     const diff = new Date() - new Date(dateTime);
 
     if (diff > 365 * 24 * 60 * 60 * 1000) {
-      return year + "-" + month + "-" + date;
+      return year + "-" + month;
     } else if (diff > 14 * 24 * 60 * 60 * 1000) {
-      return month + " / " + date;
+      return month + "/" + date;
     } else if (diff > 24 * 60 * 60 * 1000) {
       return Math.round(diff / 24 / 60 / 60 / 1000, 0) + "일 전";
+    } else if (diff > 60 * 60 * 1000) {
+      return Math.round(diff / 60 / 60 / 1000, 0) + "시간 전";
+    } else if (diff > 60 * 1000) {
+      return Math.round(diff / 60 / 1000, 0) + "분 전";
+    } else if (diff > 1000) {
+      return Math.round(diff / 1000, 0) + "초 전";
     } else {
-      return hour + ":" + min + ":" + sec;
+      return "1초 전";
     }
   };
 
@@ -90,6 +92,7 @@ const Document = () => {
             {makeTab("전체", "", board, setBoard, true, moveToList)}
             {makeTab("자유", "자유", board, setBoard, true, moveToList)}
             {makeTab("건의", "건의", board, setBoard, true, moveToList)}
+            {makeTab("댓글", "댓글", board, setBoard, true, moveToList)}
           </div>
           <div className="w-1/2 border-b-4 border-gray-500 flex justify-end items-center">
             {makeTab("지역", "지역", board, setBoard, false, moveToList)}
@@ -100,10 +103,11 @@ const Document = () => {
         </div>
 
         <div className="bg-gray-200 w-full h-[50px] py-2 border-b-4 border-gray-500 text-base flex justify-center items-center">
-          <div className={`${css} w-[10%] border-r-2`}>번호</div>
-          <div className={`${css} w-[60%] border-r-2`}>제목</div>
-          <div className={`${css} w-[15%] border-r-2`}>작성일</div>
-          <div className={`${css} w-[15%] border-r-0`}>수정일</div>
+          <div className={`${css} w-[7%] border-r-2`}>번호</div>
+          <div className={`${css} w-[8%] border-r-2`}>구분</div>
+          <div className={`${css} w-[65%] border-r-2`}>제목</div>
+          <div className={`${css} w-[10%] border-r-2`}>작성</div>
+          <div className={`${css} w-[10%] border-r-0`}>수정</div>
         </div>
 
         <div className="w-full h-[420px] text-base text-nowrap flex flex-col justify-start items-center">
@@ -116,9 +120,14 @@ const Document = () => {
                 className={`w-full h-[10%] py-2 border-b-2 border-gray-400 flex justify-center items-center cursor-pointer hover:bg-gray-300 transition duration-500`}
                 onClick={() => navigate(`/community/read/${doc.id}`)}
               >
-                <div className={`${css} w-[10%] border-r-2`}>{doc.id}</div>
+                <div className={`${css} w-[7%] border-r-2`}>{doc.id}</div>
+
+                <div className={`${css} w-[8%] border-r-2`}>
+                  {doc.boardType}
+                </div>
+
                 <div
-                  className={`${css} w-[60%] border-r-2 flex justify-start items-center space-x-2`}
+                  className={`${css} w-[65%] border-r-2 flex justify-start items-center space-x-2`}
                 >
                   {doc.category === "청년" ? (
                     <div className="text-blue-500">[청년]</div>
@@ -127,16 +136,22 @@ const Document = () => {
                   ) : (
                     <div className="text-green-500">[지역]</div>
                   )}
-                  <div className="">{doc.title}</div>
                   {doc.visibility ? <FaLock /> : <></>}
+                  <div className="">{doc.title}</div>
+
+                  <div className="text-xs text-red-500 font-bold">
+                    {doc.commentCount > 0 && doc.commentCount}
+                  </div>
                 </div>
-                <div className={`${css} w-[15%] border-r-2`}>
-                  {printDateTime(doc.createdAt)}
+
+                <div className={`${css} w-[10%] border-r-2`}>
+                  {printTime(doc.createdAt)}
                 </div>
-                <div className={`${css} w-[15%] border-r-0`}>
+
+                <div className={`${css} w-[10%] border-r-0`}>
                   {new Date(doc.updatedAt) - new Date(doc.createdAt) < 1000
                     ? "-"
-                    : printDateTime(doc.updatedAt)}
+                    : printTime(doc.updatedAt)}
                 </div>
               </div>
             ))
