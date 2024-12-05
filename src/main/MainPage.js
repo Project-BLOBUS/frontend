@@ -296,17 +296,6 @@ function MainPage() {
         </div>
       </div>
       <Footer />
-      {/* <ToastContainer
-        position="bottom-center"
-        autoClose={1000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable={false}
-        pauseOnHover={false}
-      /> */}
     </div>
   );
 }
