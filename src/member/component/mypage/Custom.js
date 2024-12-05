@@ -39,9 +39,8 @@ const Custom = () => {
     일자리: false,
     구인: false,
     주거: false,
-    금융: false,
+    복지: false,
     교육: false,
-    창업: false,
   });
 
   const [eList, setEList] = useState({
@@ -223,15 +222,16 @@ const Custom = () => {
             data.dtoList.map((dto, index) => (
               <div
                 key={index}
-                className={`w-[calc(100%/3-1rem)] h-[calc(100%/2-1rem)] mx-2 mt-2 p-4 border-2 border-gray-400 rounded-xl flex flex-col justify-center items-center space-y-4 cursor-pointer hover:bg-gray-300 transition duration-500`}
+                className={`w-[calc(100%/3-1rem)] h-[calc(100%/2-1rem)] mx-2 mt-2 p-4 border-2 border-gray-400 rounded-xl flex flex-col justify-center items-center space-y-4 cursor-pointer hover:bg-gray-200 transition duration-500`}
                 onClick={() => navigate()}
               >
                 <div className="w-full flex justify-between items-center">
-                  <div className="w-full text-2xl text-left">{dto.title}</div>
-                  <div>{printDate(dto.createdAt)}</div>
+                  <div className="w-full text-xl">
+                    {dto.title.length > 12
+                      ? dto.title.slice(0, 12) + "..."
+                      : dto.title}
+                  </div>
                 </div>
-
-                <div className="w-full text-sm text-left">{dto.content}</div>
 
                 <div className="w-full flex justify-center items-center space-x-2">
                   <div className="w-1/3">{dto.startDate}</div>
@@ -240,6 +240,18 @@ const Custom = () => {
                 </div>
 
                 <div className="w-full text-sm flex justify-between items-center">
+                  {new Date() - new Date(dto.endDate) < 0 ? (
+                    new Date() - new Date(dto.startDate) < 0 ? (
+                      <div className="bg-blue-300 p-2 rounded-xl">진행 전</div>
+                    ) : (
+                      <div className="bg-green-300 p-2 rounded-xl">진행 중</div>
+                    )
+                  ) : !(dto.startDate && dto.endDate) ? (
+                    <div className="bg-gray-300 p-2 rounded-xl">기간없음</div>
+                  ) : (
+                    <div className="bg-red-300 p-2 rounded-xl">종료</div>
+                  )}
+
                   <div
                     className={`${
                       dto.mainCategory === "청년"
@@ -253,18 +265,6 @@ const Custom = () => {
                   >
                     {dto.mainCategory} / {dto.subCategory}
                   </div>
-
-                  {new Date() - new Date(dto.endDate) < 0 ? (
-                    new Date() - new Date(dto.startDate) < 0 ? (
-                      <div className="bg-blue-300 p-2 rounded-xl">진행 전</div>
-                    ) : (
-                      <div className="bg-green-300 p-2 rounded-xl">진행 중</div>
-                    )
-                  ) : !(dto.startDate && dto.endDate) ? (
-                    <div className="bg-gray-300 p-2 rounded-xl">기간없음</div>
-                  ) : (
-                    <div className="bg-red-300 p-2 rounded-xl">종료</div>
-                  )}
                 </div>
               </div>
             ))
