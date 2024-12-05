@@ -14,15 +14,14 @@ import Loading from "../../../etc/component/Loading";
 import AddressList from "../../data/AddressList";
 
 const initState = {
-  // ToDEL 삭제
-  userId: "520-38-01151",
+  userId: "",
   file: "",
-  userPw: "qwerQWER1234!@#$",
-  confirmPw: "qwerQWER1234!@#$",
-  name: "Project BLOBUS",
-  phoneNum: "01049164357",
-  email: "blobus051@gmail.com",
-  address: "부산광역시-해운대구",
+  userPw: "",
+  confirmPw: "",
+  name: "",
+  phoneNum: "",
+  email: "",
+  address: "-",
   roleName: "BUSINESS",
 };
 

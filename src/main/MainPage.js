@@ -4,7 +4,7 @@ import Footer from "./Footer";
 import { useNavigate, Link } from "react-router-dom";
 import { BsChevronLeft, BsChevronRight } from "react-icons/bs";
 import { motion } from "framer-motion";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 function MainPage() {
@@ -296,17 +296,6 @@ function MainPage() {
         </div>
       </div>
       <Footer />
-      {/* <ToastContainer
-        position="bottom-center"
-        autoClose={1000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable={false}
-        pauseOnHover={false}
-      /> */}
     </div>
   );
 }
