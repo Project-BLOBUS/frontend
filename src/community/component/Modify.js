@@ -47,8 +47,8 @@ const Modify = () => {
     setPost({
       ...post,
       authorId: getCookie("userId"),
-      authorName: getCookie("name"),
-      authorEmail: getCookie("email"),
+      authorName: getCookie("userName"),
+      authorEmail: getCookie("userEmail"),
     });
 
     const interval = setInterval(() => {
@@ -128,7 +128,7 @@ const Modify = () => {
   return (
     <>
       {loading && <Loading />}
-      <div className="bg-gray-100 w-full m-4 p-4 text-base text-center font-bold flex flex-col justify-center items-center">
+      <div className="bg-gray-100 w-full my-4 p-4 text-base text-center font-bold flex flex-col justify-center items-center">
         <div className="w-full flex flex-col justify-center items-center space-y-2">
           <div className="w-full pr-4 text-sm flex justify-between items-center">
             <div className="w-full text-xl flex justify-start items-center space-x-2">

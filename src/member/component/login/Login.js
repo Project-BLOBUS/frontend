@@ -53,10 +53,10 @@ const Login = () => {
           } else {
             setCookie("jwt", data.accessToken);
             setCookie("expirationTime", data.expirationTime);
-            setCookie("name", data.name ?? "-");
-            setCookie("address", data.address);
+            setCookie("userName", data.name ?? "-");
+            setCookie("userAddress", data.address);
             setCookie(
-              "email",
+              "userEmail",
               userRole === "GENERAL" ? userId : data.email ?? "-"
             );
             setCookie("userId", userId);

@@ -67,7 +67,7 @@ const Info = () => {
       .then(() => {
         removeCookie("jwt");
         removeCookie("expirationTime");
-        removeCookie("name");
+        removeCookie("userName");
         removeCookie("userId");
         removeCookie("userRole");
         removeCookie("idSave");
@@ -243,7 +243,7 @@ const makeRead = (name, info) => {
       <div className="bg-gray-200 w-1/4 p-4 border-b-2 border-gray-300 text-nowrap">
         {name}
       </div>
-      <div className="w-3/4 p-4 border-b-2 border-gray-300 text-left text-nowrap">
+      <div className="w-3/4 p-4 border-b-2 border-gray-300 text-left text-nowrap select-text">
         {info}
       </div>
     </div>

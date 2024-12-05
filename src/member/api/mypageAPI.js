@@ -53,7 +53,7 @@ export const getCustom = async (
     params: {
       page: page,
       size: 6,
-      address: getCookie("address"),
+      address: getCookie("userAddress"),
       yListStr: yListStr,
       eListStr: eListStr,
       rListStr: rListStr,

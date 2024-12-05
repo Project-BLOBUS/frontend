@@ -31,7 +31,7 @@ function Header({
     <div
       className={`font-bold ${borderB ? "border-b-2 main-border-bottom" : ""}`}
     >
-      <div className="w-full sm:w-[70.6%] mx-[15%] flex justify-between items-center">
+      <div className="w-full sm:w-[70%] mx-[15%] flex justify-between items-center">
         <Link to="/main">
           <p className={`text-3xl ${blobusTextColor}`}>BLOBUS</p>
         </Link>
@@ -93,9 +93,9 @@ function Header({
                     if (window.confirm("로그아웃하시겠습니까?")) {
                       removeCookie("jwt");
                       removeCookie("expirationTime");
-                      removeCookie("name");
-                      removeCookie("address");
-                      removeCookie("email");
+                      removeCookie("userName");
+                      removeCookie("userAddress");
+                      removeCookie("userEmail");
 
                       if (!getCookie("idSave")) {
                         removeCookie("userId");

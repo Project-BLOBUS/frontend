@@ -11,7 +11,7 @@ const useCustomTag = () => {
 
     return (
       <button
-        className={`${bgColor[color]} w-[60px] h-[40px] p-2 rounded text-base text-center flex justify-center items-center hover:text-black transition duration-500`}
+        className={`${bgColor[color]} w-[60px] h-[40px] p-2 rounded text-sm text-center flex justify-center items-center hover:text-black transition duration-500`}
         onClick={onClick}
       >
         {name}

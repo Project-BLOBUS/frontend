@@ -198,7 +198,7 @@ const InfoMofiy = () => {
           setMember({ ...member, phoneNum: "" });
           refList.phoneNum.current.focus();
         } else {
-          setCookie("address", member.address);
+          setCookie("userAddress", member.address);
           navigate(-1, { replace: true });
           setTimeout(() => {
             toast.success("회원정보 수정 완료");

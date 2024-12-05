@@ -34,6 +34,7 @@ const initComment = {
   content: "",
   visibility: false,
   postId: 0,
+  postAuthor: 0,
 };
 
 const Comment = () => {
@@ -58,15 +59,10 @@ const Comment = () => {
     setDtoA({
       ...dtoA,
       authorId: getCookie("userId"),
-      authorName: getCookie("name"),
+      authorName: getCookie("userName"),
+      authorEmail: getCookie("userEmail"),
       postId: id,
     });
-
-    setLoading(false);
-  }, []);
-
-  useEffect(() => {
-    setLoading(true);
 
     getCommentList({ page, size }, id)
       .then((data) => {
@@ -90,13 +86,7 @@ const Comment = () => {
   const onClickAdd = async (comment) => {
     setLoading(true);
 
-    if (!getCookie("jwt")) {
-      navigate("/member/login");
-      setTimeout(() => {
-        toast.warn("로그인이 필요합니다.");
-      }, 100);
-      return setLoading(false);
-    } else if (comment.content === "") {
+    if (comment.content === "") {
       refAdd.current.focus();
       toast.warn("댓글을 입력해주세요.");
       return setLoading(false);
@@ -189,18 +179,27 @@ const Comment = () => {
           댓글 수 {data.dtoList.length}개
         </div>
         <div className="bg-white w-full mb-4 p-4 border rounded-b-xl shadow-lg flex justify-center items-center space-x-2">
-          {makeInput(
-            dtoA,
-            setDtoA,
-            hover,
-            setHover,
-            setLoading,
-            onClickAdd,
-            refAdd
-          )}
-          {makeBtn("등록", "blue", () => onClickAdd(dtoA))}
-          {makeBtn("취소", "orange", () =>
-            setDtoA({ ...dtoA, content: "", visibility: false })
+          {getCookie("jwt") ? (
+            <>
+              {makeInput(
+                dtoA,
+                setDtoA,
+                hover,
+                setHover,
+                setLoading,
+                onClickAdd,
+                refAdd
+              )}
+              {makeBtn("등록", "blue", () => onClickAdd(dtoA))}
+              {makeBtn("취소", "orange", () =>
+                setDtoA({ ...dtoA, content: "", visibility: false })
+              )}
+            </>
+          ) : (
+            <>
+              <div className="mr-2">댓글 작성을 원하시면 로그인 하세요.</div>
+              {makeBtn("로그인", "blue", () => navigate("/member/login"))}
+            </>
           )}
         </div>
 
@@ -257,6 +256,7 @@ const Comment = () => {
               >
                 {getCookie("userRole") !== "ADMIN" &&
                 comment.visibility &&
+                comment.postAuthor !== getCookie("userId") &&
                 comment.authorId !== getCookie("userId") ? (
                   <div className="py-2 flex justify-center items-center space-x-2">
                     <FaLock className="text-red-500" />
@@ -264,12 +264,22 @@ const Comment = () => {
                   </div>
                 ) : (
                   <>
-                    <div className="w-[calc(100%-136px)] py-2 flex justify-ceneter items-center">
+                    <div
+                      className={`${
+                        comment.authorId === getCookie("userId") &&
+                        !data.dtoList.some((item) => item.edit ?? false)
+                          ? "w-[calc(100%-136px)]"
+                          : comment.postAuthor === getCookie("userId") ||
+                            getCookie("userRole") === "ADMIN"
+                          ? "w-[calc(100%-68px)]"
+                          : "w-full"
+                      } py-2 flex justify-ceneter items-center`}
+                    >
                       <div className="w-1/2 flex justify-start items-center space-x-2">
                         {comment.visibility && (
                           <FaLock className="text-red-500" />
                         )}
-                        <div className="text-left font-light">
+                        <div className="text-left font-light select-text">
                           {comment.content}
                         </div>
                       </div>
@@ -283,8 +293,19 @@ const Comment = () => {
                             : ` ${printTime(comment.updatedAt)} 수정`}
                         </div>
 
-                        <div>
-                          {comment.authorName} ({comment.authorId})
+                        <div className="flex justify-center items-center space-x-1">
+                          <div>{comment.authorName}</div>
+                          <div
+                            className="px-1 text-[.7rem] font-normal rounded cursor-pointer hover:bg-gray-300 hover:text-white transition duration-500"
+                            onClick={() => {
+                              navigator.clipboard.writeText(
+                                comment.authorEmail
+                              );
+                              toast.success("메일 복사 완료");
+                            }}
+                          >
+                            {comment.authorEmail}
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -306,7 +327,7 @@ const Comment = () => {
                     setDtoM({
                       id: comment.id,
                       authorId: getCookie("userId"),
-                      authorName: getCookie("name"),
+                      authorName: getCookie("userName"),
                       content: comment.content,
                       visibility: comment.visibility,
                       postId: id,
@@ -315,7 +336,8 @@ const Comment = () => {
                     setLoading(false);
                   })}
 
-                {(comment.authorId === getCookie("userId") ||
+                {(comment.postAuthor === getCookie("userId") ||
+                  comment.authorId === getCookie("userId") ||
                   getCookie("userRole") === "ADMIN") &&
                   makeBtn("삭제", "red", () => {
                     setLoading(true);
@@ -355,7 +377,10 @@ const makeInput = (dto, setDto, hover, setHover, setLoading, onClick, ref) => {
         }`}
         onMouseEnter={() => setHover(true)}
         onMouseLeave={() => setHover(false)}
-        onClick={() => setDto({ ...dto, visibility: !dto.visibility })}
+        onClick={() => {
+          setDto({ ...dto, visibility: !dto.visibility });
+          ref.current.focus();
+        }}
       >
         {dto.visibility === hover ? <FaLockOpen /> : <FaLock />}
       </div>

@@ -219,9 +219,9 @@ const List = () => {
           )}
         </div>
 
-        <div className="w-full py-2 text-sm flex justify-end items-center space-x-10">
+        <div className="w-full py-2 flex justify-end items-center">
           {getCookie("jwt") &&
-            makeBtn("등록", "blue", () => navigate("/community/add"))}
+            makeBtn("글쓰기", "blue", () => navigate("/community/add"))}
         </div>
 
         <div className="w-full flex justify-center items-center">
