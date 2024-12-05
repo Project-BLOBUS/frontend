@@ -1,73 +1,88 @@
-import React, { useState } from "react";
-import { useLocation } from "react-router-dom"; // useLocation 훅을 사용
+import React, { useEffect, useState } from "react";
 import Header from "./Header";
+import { fetchPagedPolicies as financePolicies} from "../youth/finance/FinanceApi";
+import { fetchPagedPolicies as educationPolicies} from "../youth/education/EducationApi";
 
 
 const AllSearch = () => {
-    const location = useLocation(); // 현재 URL 정보를 가져옴
-    const queryParams = new URLSearchParams(location.search); // 쿼리 파라미터를 쉽게 다룰 수 있도록 해줌
-    const searchQuery = queryParams.get("query"); // 'query' 파라미터 값 가져오기
 
-     // 예시 데이터 (검색 결과를 필터링할 데이터)
-  const data = [
-    { id: 1, name: "1.청년 거주" },
-    { id: 2, name: "2.청년 지원" },
-    { id: 3, name: "3.청년 기업" },
-    { id: 4, name: "4.정책 청년" },
-    { id: 5, name: "5.청년 정보" },
-    { id: 6, name: "6.청년 사업" },
-    { id: 7, name: "7.청년 교육" },
-    { id: 8, name: "8.청년 일자리" },
-    { id: 9, name: "9.청년 정책" },
-    { id: 10, name: "10.행사 청년" },
-    { id: 11, name: "1.청년 거주" },
-    { id: 12, name: "2.청년 지원" },
-    { id: 13, name: "3.청년 기업" },
-    { id: 14, name: "4.정책 청년" },
-    { id: 15, name: "5.청년 정보" },
-    { id: 16, name: "6.청년 사업" },
-    { id: 17, name: "7.청년 교육" },
-    { id: 18, name: "8.청년 일자리" },
-    { id: 19, name: "9.청년 정책" },
-    { id: 20, name: "20.행사 청년" },
-    { id: 21, name: "1.청년 거주" },
-    // { id: 22, name: "2.청년 지원" },
-    // { id: 23, name: "3.청년 기업" },
-    // { id: 24, name: "4.정책 청년" },
-    // { id: 25, name: "5.청년 정보" },
-    // { id: 26, name: "6.청년 사업" },
-    // { id: 27, name: "7.청년 교육" },
-    // { id: 28, name: "8.청년 일자리" },
-    // { id: 29, name: "9.청년 정책" },
-    // { id: 30, name: "30.행사 청년" },
-    // { id: 31, name: "31.행사 청년" }, 
-  ];
+    const [, setLoading] = useState(true);
+    const [totalPages, setTotalPages] = useState(0);
+    const [, setTotalElements] = useState(0);
+    const [, setError] = useState(null);
+    const [policies, setPolicies] = useState([]);
+    const [currentPage, setCurrentPage] = useState(1); // 현재 페이지 상태
 
-  // 검색어에 맞는 데이터 필터링 함수
-  const getFilteredResults = (query) => {
-    if (!query) return data; // 검색어가 없으면 모든 데이터를 반환
-    return data.filter((item) => item.name.includes(query)); // 검색어 포함된 항목만 반환
+
+  const getPagedPolicies1 = async (searchParams) => {
+    try {
+      setLoading(true);
+      // 최종 검색어(searchKeyword)를 사용하여 정책 조회
+      const data = await financePolicies(searchParams);
+      setPolicies(data.content);
+      setTotalPages(data.totalPages);
+      setTotalElements(data.totalElements);
+    } catch (err) {
+      setError("Failed to load policies.");
+    } finally {
+      setLoading(false);
+    }
   };
 
-  // 필터링된 결과
-  const filteredResults = getFilteredResults(searchQuery);
+  const getPagedPolicies2 = async (searchParams) => {
+    try {
+      setLoading(true);
+      // 최종 검색어(searchKeyword)를 사용하여 정책 조회
+      const data = await educationPolicies(searchParams);
+      setPolicies(data.content);
+      setTotalPages(data.totalPages);
+      setTotalElements(data.totalElements);
+    } catch (err) {
+      setError("Failed to load policies.");
+    } finally {
+      setLoading(false);
+    }
+  };
 
-  // 페이징 관련 상태
-  const itemsPerPage = 10; // 한 페이지에 보여줄 항목 개수
-  const [currentPage, setCurrentPage] = useState(1); // 현재 페이지 상태
+  const pageSize = 10; 
 
-  // 현재 페이지에 해당하는 항목들
-  const indexOfLastItem = currentPage * itemsPerPage;
-  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = filteredResults.slice(indexOfFirstItem, indexOfLastItem);
+  useEffect(() => {
+    const checkUrlAndFetchPolicies = () => {
+      const params = new URLSearchParams(window.location.search);
+      const page = currentPage - 1 || 0;
+      const keyword = params.get("query") || "";
 
-  // 전체 페이지 수 계산
-  const totalPages = Math.ceil(filteredResults.length / itemsPerPage);
+      const updatedSearchParams = {
+        currentPage: page,
+        pageSize: pageSize,
+        searchKeyword: keyword,
+      };
+      getPagedPolicies1(updatedSearchParams);
+    };
+    checkUrlAndFetchPolicies();
+  }, [currentPage]);
+
+  useEffect(() => {
+    const checkUrlAndFetchPolicies = () => {
+      const params = new URLSearchParams(window.location.search);
+      const page = currentPage - 1 || 0;
+      const keyword = params.get("query") || "";
+
+      const updatedSearchParams = {
+        currentPage: page,
+        pageSize: pageSize,
+        searchKeyword: keyword,
+      };
+      getPagedPolicies2(updatedSearchParams);
+    };
+    checkUrlAndFetchPolicies();
+  }, [currentPage]);
+
 
   // 페이지 변경 함수
   const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
-  };
+  }
 
   // 페이지 번호 범위 설정 (예: 1, 2, 3 페이지는 1에서 시작)
   const pageRange = () => {
@@ -82,48 +97,70 @@ const AllSearch = () => {
   };
 
     return(
-        <div>
-          <div className="bg-[linear-gradient(45deg,_#DB0153,_#6E00FF)]">
-            <Header  
-            pageTitle="통합검색"
-            titleBg="#D5006D"  
-            isWhite={true} 
-            borderB={false} 
-            />
-          </div>
-        <div className="min-h-full w-[70.7%] ml-[15%] mt-[4px] flex flex-col items-center justify-center ">
-          <div className="sm:w-[30%] w-[50%] text-center sm:mb-[15%] mb-[15%] sm:mr-[0%] mr-[38%] ">
-            <div className="flex flex-col sm:w-[100%] w-[160%] sm:h-[100px] h-[70px] ml-[5%] mt-[3%] sm:text-md text-md font-bold text-gray-700 sm:mb-[60%] mb-[60%] ">
-              검색어 "{searchQuery ? searchQuery : "없음"}"에 대한 검색 결과 총 {filteredResults.length}건
-  
-              <div className="flex justify-center items-center mt-[2%] ">
-                <input
-                  type="text"
-                  placeholder="검색"
-                  className="border-2 text-md sm:mt-2 mt-[3%] rounded-tl-[25px] rounded-bl-[25px] sm:w-[100%] w-[100%] h-[40px] p-[5%] sm:p-[2%] focus:outline-none"
-                />
-                <div className="w-[85px] sm:h-[40px] h-[40px] sm:mt-2 mt-[3%] bg-[#A488F3] text-md sm:text-lg text-white font-bold rounded-tr-[25px] rounded-br-[25px] flex justify-center items-center cursor-pointer">
-                  검색
-                </div>
+      <div>
+      <div className="bg-[linear-gradient(45deg,_#DB0153,_#6E00FF)]">
+        <Header
+          pageTitle="통합검색"
+          titleBg="#D5006D"
+          isWhite={true}
+          borderB={false}
+        />
+      </div>
+      <div className="min-h-full w-[70.7%] ml-[15%] mt-[4px] flex flex-col items-center justify-center ">
+        <div className="sm:w-[30%] w-[50%] text-center sm:mb-[15%] mb-[15%] sm:mr-[0%] mr-[38%] ">
+          <div className="flex flex-col sm:w-[100%] w-[160%] sm:h-[100px] h-[70px] ml-[5%] mt-[3%] sm:text-md text-md font-bold text-gray-700 sm:mb-[60%] mb-[60%] ">
+            <div className="flex justify-center items-center mt-[2%] ">
+              <input
+                type="text"
+                placeholder="검색"
+                className="border-2 text-md sm:mt-2 mt-[3%] rounded-tl-[25px] rounded-bl-[25px] sm:w-[100%] w-[100%] h-[40px] p-[5%] sm:p-[4%] focus:outline-none"
+              />
+              <div className="w-[85px] sm:h-[40px] h-[40px] sm:mt-2 mt-[3%] bg-[#A488F3] text-md sm:text-lg text-white font-bold rounded-tr-[25px] rounded-br-[25px] flex justify-center items-center cursor-pointer">
+                검색
               </div>
             </div>
+           
+            {policies.length > 0 && (
+           <div className="ml-[-36%] text-xl flex justify-center w-[550px] ">
+
+              <div className="w-[130px] border-2 border-gray-400 mt-[5%] cursor-pointer">
+                청년관()
+              </div>
+              <div className="w-[130px] border-2 border-gray-400 mt-[5%] cursor-pointer">
+                기업관()
+              </div>
+              <div className="w-[130px] border-2 border-gray-400 mt-[5%] cursor-pointer">
+                커뮤니티()
+              </div>
+              <div className="w-[130px] border-2 border-gray-400 mt-[5%] cursor-pointer">
+                지역자원()
+              </div>
+            </div>
+              )}
           </div>
-  
-          <ul className="w-[400px] h-[500px] p-4 sm:mt-[-35%] mt-[-25%] sm:ml-9 ml-3 pb-[2%] sm:pb-[2%] flex flex-wrap">
-            {currentItems.map((item) => (
-              <li
-                key={item.id}
-                className="bg-white w-[130px] h-[70px] ml-8 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300 ease-in-out cursor-pointer border-2 border-gray-400 flex justify-center items-center"
-              >
-                <p className="text-md font-bold text-gray-800">{item.name}</p>
-                
-              </li>
-            ))}
-          </ul>
+        </div>
+
+        <ul className="w-[600px] p-2 space-y-[30px] sm:mt-[-30%] mt-[-25%] sm:ml-9 ml-3 pb-[2%] sm:pb-[2%] flex flex-wrap">
+          {policies.map((item) => (
+            <li
+              key={item.id}
+              className="bg-white w-[510px] h-[70px] ml-8 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300 ease-in-out cursor-pointer border-2 border-gray-400 overflow-y-auto"
+            >
+              <p className="text-md font-bold text-gray-800 p-1">
+                {item.title}
+              </p>
+              <div className="flex space-x-2 border-t-2">
+                <p className="p-1">시작일:{item.applicationPeriodStart}</p>
+                <p className="p-1 pl-[42%]">종료일:{item.applicationPeriodEnd}</p>
+              </div>
+            </li> 
+          ))}
+        </ul>
+
   
           {/* 페이징 버튼 */}
-          {filteredResults.length > 0 && (
-            <div className="flex justify-center sm:ml-7 ml-0 mt-[-1px]">
+          {policies.length > 0 && (
+            <div className="flex justify-center sm:ml-6 ml-0 mt-[-1px]">
               <button
                 onClick={() => handlePageChange(currentPage - 1)}
                 disabled={currentPage === 1}
