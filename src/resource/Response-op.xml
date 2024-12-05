@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?><response>
+  <header>
+    <resultCode>00</resultCode>
+    <resultMsg>NORMAL_CODE</resultMsg>
+  </header>
+  <body>
+    <items>
+      <item>
+        <op_at>N</op_at>
+        <op_st_dt>2024-05-22</op_st_dt>
+        <op_ed_dt>2024-05-22</op_ed_dt>
+        <pay_at>N</pay_at>
+        <place_nm>부산문화회관</place_nm>
+        <title>미리만나는 2024 부산오페라시즌 - 해설이 있는 오페라 갈라 콘서트</title>
+        <res_no>2024050037</res_no>
+      </item>
+      <item>
+        <op_at>N</op_at>
+        <op_st_dt>2024-06-15</op_st_dt>
+        <op_ed_dt>2024-06-15</op_ed_dt>
+        <pay_at>Y</pay_at>
+        <place_nm>을숙도문화회관</place_nm>
+        <title>오페라야 놀자! 베르디: 아이다</title>
+        <res_no>2024060052</res_no>
+      </item>
+      <item>
+        <op_at>N</op_at>
+        <op_st_dt>2024-07-10</op_st_dt>
+        <op_ed_dt>2024-07-10</op_ed_dt>
+        <pay_at>Y</pay_at>
+        <place_nm>아트센트</place_nm>
+        <title>(원먼스 10일) 영도구 - 제9회 아지트 콘서트 해설이 있는 클래식 기타 듀엣공연&lt;A night at the Opera&gt;</title>
+        <res_no>2024060100</res_no>
+      </item>
+      <item>
+        <op_at>N</op_at>
+        <op_st_dt>2024-06-21</op_st_dt>
+        <op_ed_dt>2024-06-21</op_ed_dt>
+        <pay_at>Y</pay_at>
+        <place_nm>금정문화회관</place_nm>
+        <title>오페라 Lecture Concerto</title>
+        <res_no>2024060152</res_no>
+      </item>
+      <item>
+        <op_at>N</op_at>
+        <op_st_dt>2024-08-23</op_st_dt>
+        <op_ed_dt>2024-08-24</op_ed_dt>
+        <pay_at>Y</pay_at>
+        <place_nm>금정문화회관</place_nm>
+        <title>오페라 하이라이트 페스타 &lt;해와달이 될 뻔한 오누이 / 마술피리 / 로미오와 줄리엣&gt;</title>
+        <res_no>2024080064</res_no>
+      </item>
+      <item>
+        <op_at>N</op_at>
+        <op_st_dt>2024-10-04</op_st_dt>
+        <op_ed_dt>2024-10-04</op_ed_dt>
+        <pay_at>Y</pay_at>
+        <place_nm>해운대문화회관</place_nm>
+        <title>버섯피자와 사랑의 묘약 오페라 쇼케이스</title>
+        <res_no>2024080204</res_no>
+      </item>
+      <item>
+        <op_at>N</op_at>
+        <op_st_dt>2024-09-11</op_st_dt>
+        <op_ed_dt>2024-09-12</op_ed_dt>
+        <pay_at>Y</pay_at>
+        <place_nm>북구문화예술회관</place_nm>
+        <title>모차르트의 &lt;피가로의 결혼&gt;</title>
+        <res_no>2024090006</res_no>
+      </item>
+      <item>
+        <op_at>N</op_at>
+        <op_st_dt>2024-11-08</op_st_dt>
+        <op_ed_dt>2024-11-08</op_ed_dt>
+        <pay_at>Y</pay_at>
+        <place_nm>금정문화회관</place_nm>
+        <title>베르디 오페라 &lt;에르나니&gt;</title>
+        <res_no>2024110004</res_no>
+      </item>
+      <item>
+        <op_at>N</op_at>
+        <op_st_dt>2024-11-09</op_st_dt>
+        <op_ed_dt>2024-11-09</op_ed_dt>
+        <pay_at>Y</pay_at>
+        <place_nm>금정문화회관</place_nm>
+        <title>베르디 오페라 &lt;에르나니&gt;</title>
+        <res_no>2024110006</res_no>
+      </item>
+      <item>
+        <op_at>N</op_at>
+        <op_st_dt>2024-12-06</op_st_dt>
+        <op_ed_dt>2024-12-06</op_ed_dt>
+        <pay_at>Y</pay_at>
+        <place_nm>금정문화회관</place_nm>
+        <title>제2회 부산성악가협회 정기연주회 &lt;오페라 중창의 밤&gt;</title>
+        <res_no>2024110192</res_no>
+      </item>
+    </items>
+    <numOfRows>11</numOfRows>
+    <pageNo>18</pageNo>
+    <totalCount>197</totalCount>
+  </body>
+</response>

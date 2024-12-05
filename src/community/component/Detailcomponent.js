@@ -87,28 +87,27 @@ const DetailComponent = () => {
         <div className="delete-button">
           <button onClick={deletePost}>삭제</button>
         </div>
-      </div>
+        <div className="comments-section">
+          <div className="comment-input">
+            <textarea
+              placeholder="댓글 입력 칸"
+              value={newComment}
+              onChange={(e) => setNewComment(e.target.value)}
+            ></textarea>
+            <button onClick={addComment}>등록</button>
+            <button onClick={() => setNewComment("")}>취소</button>
+          </div>
 
-      <div className="comments-section">
-        <div className="comment-input">
-          <textarea
-            placeholder="댓글 입력 칸"
-            value={newComment}
-            onChange={(e) => setNewComment(e.target.value)}
-          ></textarea>
-          <button onClick={addComment}>등록</button>
-          <button onClick={() => setNewComment("")}>취소</button>
-        </div>
-
-        <div className="comment-list">
-          {comments.map((comment) => (
-            <div key={comment.id} className="comment">
-              <span>{comment.author}</span>
-              <p>{comment.content}</p>
-              <span>{comment.createdAt}</span>
-              <button onClick={() => deleteComment(comment.id)}>삭제</button>
-            </div>
-          ))}
+          <div className="comment-list">
+            {comments.map((comment) => (
+              <div key={comment.id} className="comment">
+                <span>{comment.author}</span>
+                <p>{comment.content}</p>
+                <span>{comment.createdAt}</span>
+                <button onClick={() => deleteComment(comment.id)}>삭제</button>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </div>

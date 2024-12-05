@@ -9,6 +9,7 @@ import Loading from "./member/etc/Loading";
 import memberRouter from "./member/router/memberRouter";
 import mypageRouter from "./member/router/mypageRouter";
 import youthRouter from "./youth/router/youthRouter";
+import resourceRouter from "./resource/router/resourceRouter";
 
 // Header 컴포넌트를 lazy로 불러오기
 const MainPage = lazy(() => import("./main/MainPage"));
@@ -17,7 +18,7 @@ const MyPage = lazy(() => import("./member/page/MyPage"));
 const YouthPage = lazy(() => import("./youth/YouthPage"));
 const Enterprise = lazy(() => import("./enterprise/Enterprise"));
 const Community = lazy(() => import("./community/Community"));
-const Resource = lazy(() => import("./resource/Resource"));
+const Resource = lazy(() => import("./resource/ResourcePage"));
 const ListComponent = lazy(() =>
   import("../src/community/component/Listcomponent")
 );
@@ -69,6 +70,12 @@ const AppRoutes = () => (
         </Route>
       ))}
     </Route>
+    {/* /resource 경로*/}
+    <Route path="/resource" element={<Resource />}>
+      {resourceRouter().map((route, index) => (
+        <Route key={index} path={route.path} element={route.element} />
+      ))}
+    </Route>
 
     {/* /enterprise 기업 */}
     <Route path="/enterprise" element={<Enterprise />} />
@@ -77,9 +84,6 @@ const AppRoutes = () => (
     <Route path="/community" element={<ListComponent />} />
     <Route path="/community/add" element={<AddComponent />} />
     <Route path="/community/detail/:id" element={<DetailComponent />} />
-
-    {/* /resource 자원 */}
-    <Route path="/resource" element={<Resource />} />
   </Routes>
 );
 
