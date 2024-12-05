@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams, useLocation } from "react-router-dom";
-import { fetchPolicyById } from "./EducationApi";
+import { fetchPolicyById } from "./WelfareApi";
 import ShareModal from "./ShareModal";
 
-const EducationPolicyDetail = () => {
+const WelfarePolicyDetail = () => {
   const { id } = useParams(); // URL에서 ID 가져오기
   // const location = useLocation();
   const [policy, setPolicy] = useState(null);
@@ -35,7 +35,7 @@ const EducationPolicyDetail = () => {
   //     ...(searchs.searchKeyword && { keyword: searchs.searchKeyword }),
   //     category: searchs.selectedCategory,
   //   });
-  //   navigate(`/youth/education?${searchParams.toString()}`);    
+  //   navigate(`/youth/welfare?${searchParams.toString()}`);    
   // };
   // ==> 위에꺼는 그냥 버튼에다가 
   // onClick={() => {
@@ -49,22 +49,14 @@ const EducationPolicyDetail = () => {
 
   const currentUrl = window.location.href;
 
-  function replaceNewlinesWithBr(text) {
-    if (!text) return text;
-    return text.split('\n').map((line, index) => (
-      <React.Fragment key={index}>
-        {line}
-        <br />
-      </React.Fragment>
-    ));
-  }
   
+
   return (
     <div>
       <div className="border-2 border-gray-500 rounded-md pt-4 pb-4 pr-4 bg-white">
         <div className="flex items-center space-x-4">
           <p className="text-3xl font-bold">
-            청년 교육 정책
+            청년 복지 정책
           </p>
         </div>
       </div>
@@ -92,15 +84,15 @@ const EducationPolicyDetail = () => {
               <tbody>
                 <tr className="border-b">
                   <td className="font-semibold py-2">정책 소개</td>
-                  <td>{replaceNewlinesWithBr(policy.policyOverview)}</td>
+                  <td>{policy.policyOverview}</td>
                 </tr>
                 <tr className="border-b">
                   <td className="font-semibold w-1/4 py-2">정책 상세 내용</td>
-                  <td>{replaceNewlinesWithBr(policy.policyContent1)}</td>
+                  <td>{policy.policyContent1}</td>
                 </tr>
                 <tr className="border-b">
                   <td className="font-semibold py-2">지원 규모</td>
-                  <td>{replaceNewlinesWithBr(policy.supportScale)}</td>
+                  <td>{policy.supportScale}</td>
                 </tr>
                 <tr className="border-b">
                   <td className="font-semibold py-2">사업 운영 기간</td>
@@ -125,17 +117,17 @@ const EducationPolicyDetail = () => {
               <tbody>
                 <tr className="border-b">
                   <td className="font-semibold w-1/4 py-2">신청 절차 내용</td>
-                  <td>{replaceNewlinesWithBr(policy.applicationProcedure)}</td>
+                  <td>{policy.applicationProcedure}</td>
                 </tr>
                 <tr className="border-b">
                   <td className="font-semibold w-1/4 py-2">심사 및 발표</td>
-                  <td>{replaceNewlinesWithBr(policy.judgingPresentation)}</td>
+                  <td>{policy.judgingPresentation}</td>
                 </tr>
                 <tr className="border-b">
                   <td className="font-semibold w-1/4 py-2">신청 사이트</td>
                   <td>
                     {policy.applicationSite && policy.applicationSite !== 'null' && policy.applicationSite !== '-' ? (
-                      <a href={policy.applicationSite} target="_blank" rel="noopener noreferrer" className="text-blue-500 underline break-all inline-block">
+                      <a href={policy.applicationSite} target="_blank" rel="noopener noreferrer" className="text-blue-500 underline">
                         {policy.applicationSite}
                       </a>
                     ) : (
@@ -147,7 +139,7 @@ const EducationPolicyDetail = () => {
                 </tr>
                 <tr className="border-b">
                   <td className="font-semibold w-1/4 py-2">제출 서류 내용</td>
-                  <td>{replaceNewlinesWithBr(policy.submitionDocument)}</td>
+                  <td>{policy.submitionDocument}</td>
                 </tr>
               </tbody>
             </table>
@@ -160,11 +152,11 @@ const EducationPolicyDetail = () => {
               <tbody>
                 <tr className="border-b">
                   <td className="font-semibold w-1/4 py-2">연령 요건</td>
-                  <td>{replaceNewlinesWithBr(policy.ageRequirement)}</td>
+                  <td>{policy.ageRequirement}</td>
                 </tr>
                 <tr className="border-b">
                   <td className="font-semibold w-1/4 py-2">거주지 및 소득</td>
-                  <td>{replaceNewlinesWithBr(policy.proposerRequirement)}</td>
+                  <td>{policy.proposerRequirement}</td>
                 </tr>
                 <tr className="border-b">
                   <td className="font-semibold w-1/4 py-2">학력</td>
@@ -180,7 +172,7 @@ const EducationPolicyDetail = () => {
                 </tr>
                 <tr className="border-b">
                   <td className="font-semibold py-2">추가 필요 사항</td>
-                  <td>{replaceNewlinesWithBr(policy.additionalRequirement)}</td>
+                  <td>{policy.additionalRequirement}</td>
                 </tr>
               </tbody>
             </table>
@@ -217,9 +209,9 @@ const EducationPolicyDetail = () => {
                 </tr>
                 <tr className="border-b">
                   <td className="font-semibold w-1/4 py-2">참고 사이트1</td>
-                  <td>
+                  <td className=" w-3/4 ">
                    {policy.referenceSite1 && policy.referenceSite1 !== 'null' && policy.referenceSite1 !== '-' ? (
-                      <a href={policy.referenceSite1} target="_blank" rel="noopener noreferrer" className="text-blue-500 underline break-all inline-block">
+                      <a href={policy.referenceSite1} target="_blank" rel="noopener noreferrer" className="text-blue-500 underline">
                         {policy.referenceSite1}
                       </a>
                     ) : (
@@ -233,7 +225,7 @@ const EducationPolicyDetail = () => {
                   <td className="font-semibold py-2">참고 사이트2</td>
                   <td>
                     {policy.referenceSite2 && policy.referenceSite2 !== 'null' && policy.referenceSite2 !== '-' ? (
-                      <a href={policy.referenceSite2} target="_blank" rel="noopener noreferrer" className="text-blue-500 underline break-all inline-block">
+                      <a href={policy.referenceSite2} target="_blank" rel="noopener noreferrer" className="text-blue-500 underline">
                         {policy.referenceSite2}
                       </a>
                     ) : (
@@ -245,7 +237,7 @@ const EducationPolicyDetail = () => {
                 </tr>
                 <tr>
                   <td className="font-semibold py-2">기타</td>
-                  <td>{replaceNewlinesWithBr(policy.etc)}</td>
+                  <td>{policy.etc}</td>
                 </tr>
               </tbody>
             </table>
@@ -274,4 +266,4 @@ const EducationPolicyDetail = () => {
   );
 };
 
-export default EducationPolicyDetail;
+export default WelfarePolicyDetail;
