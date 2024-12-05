@@ -1,6 +1,7 @@
 import { Suspense, lazy } from "react";
 import jobRouter from "./jobRouter";
 import houseRouter from "./houseRouter";
+import { Navigate } from "react-router";
 
 const Loading = <div>Loading....</div>;
 const JobMain = lazy(() => import("../job/pages/MainPage"));
@@ -16,6 +17,7 @@ const EducationPolicyDetail = lazy(() =>
 
 const youthRouter = () => {
   return [
+    { path: "", element: <Navigate replace to="job" /> },
     {
       path: "job",
       element: (

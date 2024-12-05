@@ -269,7 +269,7 @@ function MainPage() {
             </motion.div>
           )}
           <div className="mt-2 sm:w-[521px] w-[260.5px] h-[270px] sm:ml-[0px] ml-[10px] flex flex-wrap gap-4 text-white font-bold ">
-            <Link to="/youth/job">
+            <Link to="/youth">
               <div className="text-2xl sm:w-[250px] w-[120px] h-[150px] bg-[linear-gradient(45deg,_#0130BC,_#6E00FF)]  flex justify-center items-center hover:text-gray-300 hover:scale-90 transition duration-500">
                 청년관
               </div>
@@ -287,7 +287,7 @@ function MainPage() {
               </div>
             </Link>
 
-            <Link to="/resource/culture">
+            <Link to="/resource">
               <div className="sm:w-[241.5px] w-[111px] h-[150px] bg-[linear-gradient(45deg,_#DB0153,_#FB0138)] mt-[-50px] sm:ml-[9px] ml-[7px] flex justify-center items-center hover:text-gray-300 hover:scale-90 transition duration-500">
                 지역자원
               </div>

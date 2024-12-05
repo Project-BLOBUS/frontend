@@ -68,24 +68,24 @@ function Header({
             className={`mt-[-8px] h-[50px] rounded-b-[5px] flex justify-center items-center`}
             style={{ backgroundColor: titleBg, color: textC }}
           >
-            {pageTitle}
+            {pageTitle} {/* 메인 글자 동적으로 텍스트 표시 */}
           </p>
 
           <div
-            className={`text-base text-center flex justify-center items-center ${linkTextColor}`}
+            className={`flex justify-center items-center mt-[10px] ${linkTextColor} mt-[20px] sm:mt-[0px] flex flex-wrap sm:flex-none`}
           >
             {!getCookie("jwt") ? (
               <>
                 <Link
-                  className="w-[45%] hover:text-gray-300 transition duration-500"
+                  className="transition duration-500 hover:text-gray-300"
                   to="/member/signup"
                   replace={pageTitle === "계정"}
                 >
                   회원가입
                 </Link>
-                <p className="w-[5%] p-2">|</p>
+                <p className="p-2 hidden sm:block">|</p>
                 <Link
-                  className="w-[45%] hover:text-gray-300 transition duration-500"
+                  className="transition duration-500 hover:text-gray-300 mt-[34px] sm:mt-[0px]"
                   to="/member/login"
                   replace={pageTitle === "계정"}
                 >
@@ -95,14 +95,14 @@ function Header({
             ) : (
               <>
                 <Link
-                  className="w-[45%] hover:text-gray-300 transition duration-500"
+                  className="transition duration-500 hover:text-gray-300"
                   to="/mypage"
                 >
                   마이페이지
                 </Link>
-                <p className="w-[5%] p-2">|</p>
+                <p className="p-2 hidden sm:block">|</p>
                 <Link
-                  className="w-[45%] hover:text-gray-300 transition duration-500"
+                  className="transition duration-500 hover:text-gray-300 mt-[34px] sm:mt-[0px]"
                   onClick={() => {
                     // TODO 로그아웃 모달창
                     if (window.confirm("로그아웃하시겠습니까?")) {

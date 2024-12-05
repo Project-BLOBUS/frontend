@@ -1,24 +1,21 @@
 import React, { useEffect, useState } from "react";
 import Header from "./Header";
-import { fetchPagedPolicies as financePolicies} from "../youth/finance/FinanceApi";
-import { fetchPagedPolicies as educationPolicies} from "../youth/education/EducationApi";
-
+import { fetchPagedPolicies as welfarePolicies } from "../youth/welfare/WelfareApi";
+import { fetchPagedPolicies as educationPolicies } from "../youth/education/EducationApi";
 
 const AllSearch = () => {
-
-    const [, setLoading] = useState(true);
-    const [totalPages, setTotalPages] = useState(0);
-    const [, setTotalElements] = useState(0);
-    const [, setError] = useState(null);
-    const [policies, setPolicies] = useState([]);
-    const [currentPage, setCurrentPage] = useState(1); // 현재 페이지 상태
-
+  const [, setLoading] = useState(true);
+  const [totalPages, setTotalPages] = useState(0);
+  const [, setTotalElements] = useState(0);
+  const [, setError] = useState(null);
+  const [policies, setPolicies] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1); // 현재 페이지 상태
 
   const getPagedPolicies1 = async (searchParams) => {
     try {
       setLoading(true);
       // 최종 검색어(searchKeyword)를 사용하여 정책 조회
-      const data = await financePolicies(searchParams);
+      const data = await welfarePolicies(searchParams);
       setPolicies(data.content);
       setTotalPages(data.totalPages);
       setTotalElements(data.totalElements);
@@ -44,7 +41,7 @@ const AllSearch = () => {
     }
   };
 
-  const pageSize = 10; 
+  const pageSize = 10;
 
   useEffect(() => {
     const checkUrlAndFetchPolicies = () => {
@@ -78,11 +75,10 @@ const AllSearch = () => {
     checkUrlAndFetchPolicies();
   }, [currentPage]);
 
-
   // 페이지 변경 함수
   const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
-  }
+  };
 
   // 페이지 번호 범위 설정 (예: 1, 2, 3 페이지는 1에서 시작)
   const pageRange = () => {
@@ -96,8 +92,8 @@ const AllSearch = () => {
     return Array.from({ length: end - start + 1 }, (_, index) => start + index);
   };
 
-    return(
-      <div>
+  return (
+    <div>
       <div className="bg-[linear-gradient(45deg,_#DB0153,_#6E00FF)]">
         <Header
           pageTitle="통합검색"
@@ -119,24 +115,23 @@ const AllSearch = () => {
                 검색
               </div>
             </div>
-           
-            {policies.length > 0 && (
-           <div className="ml-[-36%] text-xl flex justify-center w-[550px] ">
 
-              <div className="w-[130px] border-2 border-gray-400 mt-[5%] cursor-pointer">
-                청년관()
+            {policies.length > 0 && (
+              <div className="ml-[-36%] text-xl flex justify-center w-[550px] ">
+                <div className="w-[130px] border-2 border-gray-400 mt-[5%] cursor-pointer">
+                  청년관()
+                </div>
+                <div className="w-[130px] border-2 border-gray-400 mt-[5%] cursor-pointer">
+                  기업관()
+                </div>
+                <div className="w-[130px] border-2 border-gray-400 mt-[5%] cursor-pointer">
+                  커뮤니티()
+                </div>
+                <div className="w-[130px] border-2 border-gray-400 mt-[5%] cursor-pointer">
+                  지역자원()
+                </div>
               </div>
-              <div className="w-[130px] border-2 border-gray-400 mt-[5%] cursor-pointer">
-                기업관()
-              </div>
-              <div className="w-[130px] border-2 border-gray-400 mt-[5%] cursor-pointer">
-                커뮤니티()
-              </div>
-              <div className="w-[130px] border-2 border-gray-400 mt-[5%] cursor-pointer">
-                지역자원()
-              </div>
-            </div>
-              )}
+            )}
           </div>
         </div>
 
@@ -151,50 +146,51 @@ const AllSearch = () => {
               </p>
               <div className="flex space-x-2 border-t-2">
                 <p className="p-1">시작일:{item.applicationPeriodStart}</p>
-                <p className="p-1 pl-[42%]">종료일:{item.applicationPeriodEnd}</p>
+                <p className="p-1 pl-[42%]">
+                  종료일:{item.applicationPeriodEnd}
+                </p>
               </div>
-            </li> 
+            </li>
           ))}
         </ul>
 
-  
-          {/* 페이징 버튼 */}
-          {policies.length > 0 && (
-            <div className="flex justify-center sm:ml-6 ml-0 mt-[-1px]">
+        {/* 페이징 버튼 */}
+        {policies.length > 0 && (
+          <div className="flex justify-center sm:ml-6 ml-0 mt-[-1px]">
+            <button
+              onClick={() => handlePageChange(currentPage - 1)}
+              disabled={currentPage === 1}
+              className="px-2 mx-1 rounded-md bg-gray-200 text-gray-600 font-bold"
+            >
+              이전
+            </button>
+
+            {/* 페이지 번호 */}
+            {pageRange().map((page) => (
               <button
-                onClick={() => handlePageChange(currentPage - 1)}
-                disabled={currentPage === 1}
-                className="px-2 mx-1 rounded-md bg-gray-200 text-gray-600 font-bold"
+                key={page}
+                onClick={() => handlePageChange(page)}
+                className={`px-4 py-2 mx-1 rounded-md ${
+                  currentPage === page
+                    ? "bg-blue-500 text-white"
+                    : "bg-gray-200 text-gray-800"
+                }`}
               >
-                이전
+                {page}
               </button>
-  
-              {/* 페이지 번호 */}
-              {pageRange().map((page) => (
-                <button
-                  key={page}
-                  onClick={() => handlePageChange(page)}
-                  className={`px-4 py-2 mx-1 rounded-md ${
-                    currentPage === page
-                      ? "bg-blue-500 text-white"
-                      : "bg-gray-200 text-gray-800"
-                  }`}
-                >
-                  {page}
-                </button>
-              ))}
-  
-              <button
-                onClick={() => handlePageChange(currentPage + 1)}
-                disabled={currentPage === totalPages}
-                className="px-2 mx-1 rounded-md bg-gray-200 text-gray-600 font-bold"
-              >
-                다음
-              </button>
-            </div>
-          )}
-        </div>
+            ))}
+
+            <button
+              onClick={() => handlePageChange(currentPage + 1)}
+              disabled={currentPage === totalPages}
+              className="px-2 mx-1 rounded-md bg-gray-200 text-gray-600 font-bold"
+            >
+              다음
+            </button>
+          </div>
+        )}
       </div>
-    )
-}
+    </div>
+  );
+};
 export default AllSearch;
