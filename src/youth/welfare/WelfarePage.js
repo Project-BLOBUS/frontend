@@ -17,7 +17,7 @@ const WelfarePage = () => {
   const [selectedCategory, setSelectedCategory] = useState("전체"); // 선택된 카테고리 상태
 
   // 페이징을 위한 값들
-  const pageSize = 5; 
+  const pageSize = 10; 
   const pagesPerGroup = 10; 
   const currentPage = (parseInt(searchParams.get("page")) || 1) - 1; 
   const currentPageGroup = Math.floor(currentPage / pagesPerGroup);

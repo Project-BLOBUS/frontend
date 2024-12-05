@@ -9,9 +9,6 @@ function YouthPage() {
     { name: "주거", link: "house" },
     { name: "복지", link: "welfare" },
     { name: "교육", link: "education" },
-    { name: "창업", link: "" },
-    { name: "지도", link: "" },
-    { name: "건의", link: "" },
   ];
 
   return (

@@ -254,7 +254,7 @@ function MainPage() {
             </motion.div>
           )}
           <div className="mt-2 sm:w-[521px] w-[260.5px] h-[270px] sm:ml-[0px] ml-[10px] flex flex-wrap gap-4 text-white font-bold ">
-            <Link to="/youth">
+            <Link to="/youth/job">
               <div className="text-2xl sm:w-[250px] w-[120px] h-[150px] bg-[linear-gradient(45deg,_#0130BC,_#6E00FF)]  flex justify-center items-center hover:text-gray-300 hover:scale-90 transition duration-500">
                 청년관
               </div>
