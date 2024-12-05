@@ -1,0 +1,127 @@
+/* 컨테이너 스타일 */
+.sightsee-container {
+  display: flex;
+  align-items: center; /* 수직 정렬 */
+  justify-content: space-between; /* 좌우로 간격 유지 */
+  background-color: #ffffff;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 그림자 효과 */
+  width: 900px; /* 전체 컨테이너 폭 */
+  margin: 20px auto; /* 상단 여백 추가 및 가운데 정렬 */
+  gap: 20px; /* 이미지와 텍스트 사이 간격 */
+}
+
+.sightsee-img {
+  max-width: 100%; /* 이미지 크기 조정 */
+  height: auto;
+  border-radius: 10px;
+}
+
+.sightsee-img-box {
+  flex: 1; /* 이미지 박스 비율 */
+  max-width: 50%; /* 최대 폭 설정 */
+  display: flex;
+  align-items: center;
+  justify-content: center; /* 이미지 중앙 정렬 */
+  background-color: #f7f9fc;
+  border-radius: 10px;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+.sightsee-text {
+  flex: 2; /* 텍스트 박스 비율 */
+  margin-left: 20px; /* 이미지와의 간격 */
+}
+
+/* 텍스트 스타일 - 제목 */
+.sightsee-title {
+  font-size: 24px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 5px;
+}
+
+/* 텍스트 스타일 - BUSAN */
+.sightsee-busan-text {
+  font-size: 14px;
+  color: #444;
+  line-height: 1.6;
+  margin-bottom: 15px;
+}
+
+/* 텍스트 스타일 - 설명 */
+.sightsee-description {
+  font-size: 14px;
+  color: #444;
+  line-height: 1.6;
+  margin-bottom: 15px;
+}
+
+.sightsee-button {
+  margin: 10%;
+  text-align: center;
+  width: 200px;
+  font-size: 16px;
+  font-weight: 600;
+  color: #fff;
+  cursor: pointer;
+  margin: 100px;
+  height: 55px;
+  text-align: center;
+  border: none;
+  background-size: 300% 100%;
+  border-radius: 50px;
+  moz-transition: all 0.4s ease-in-out;
+  -o-transition: all 0.4s ease-in-out;
+  -webkit-transition: all 0.4s ease-in-out;
+  transition: all 0.4s ease-in-out;
+}
+
+/* 버튼 스타일 */
+.sightsee-button.color {
+  background-image: linear-gradient(
+    to right,
+    #6253e1,
+    #852d91,
+    #a3a1ff,
+    #f24645
+  );
+  box-shadow: 0 4px 15px 0 rgba(126, 52, 161, 0.75);
+}
+
+.sightsee-button:focus {
+  outline: none;
+}
+
+.sightsee-button:hover {
+  background-position: 100% 0;
+  moz-transition: all 0.4s ease-in-out;
+  -o-transition: all 0.4s ease-in-out;
+  -webkit-transition: all 0.4s ease-in-out;
+  transition: all 0.4s ease-in-out;
+}
+
+/* 해인 */
+.gg-container {
+  clear: both;
+  background-color: #ffffff;
+  border-radius: 10px;
+  padding: 110px 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 그림자 효과 */
+  width: 900px; /* 전체 컨테이너 폭 */
+  height: 500px;
+  margin: 0px auto; /* 상단 여백 추가 및 가운데 정렬 */
+  gap: 20px; /* 이미지와 텍스트 사이 간격 */
+}
+.gg-content-left {
+  float: left;
+  width: 49%;
+  margin-right: 2%;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+.gg-content-right {
+  float: right;
+  width: 49%;
+}

@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<response>
+  <header>
+    <resultCode>00</resultCode>
+    <resultMsg>NORMAL_CODE</resultMsg>
+  </header>
+  <body>
+    <items>
+      <item>
+        <op_at>N</op_at>
+        <op_st_dt>2024-10-18</op_st_dt>
+        <op_ed_dt>2024-10-27</op_ed_dt>
+        <pay_at>Y</pay_at>
+        <place_nm>가마골소극장</place_nm>
+        <title>실업자들</title>
+        <res_no>2024100032</res_no>
+      </item>
+      <item>
+        <op_at>N</op_at>
+        <op_st_dt>2024-10-19</op_st_dt>
+        <op_ed_dt>2024-10-19</op_ed_dt>
+        <pay_at>Y</pay_at>
+        <place_nm>기장군청 차성아트홀</place_nm>
+        <title>누가 내 머리에 똥 쌌어?</title>
+        <res_no>2024100068</res_no>
+      </item>
+      <item>
+        <op_at>N</op_at>
+        <op_st_dt>2024-10-19</op_st_dt>
+        <op_ed_dt>2024-10-20</op_ed_dt>
+        <pay_at>Y</pay_at>
+        <place_nm>부산시민회관</place_nm>
+        <title>핑크퐁과 아기상어의 무지개 구출 작전</title>
+        <res_no>2024100069</res_no>
+      </item>
+      <item>
+        <op_at>N</op_at>
+        <op_st_dt>2024-11-16</op_st_dt>
+        <op_ed_dt>2024-11-16</op_ed_dt>
+        <pay_at>Y</pay_at>
+        <place_nm>백양문화예술회관 공연장</place_nm>
+        <title>벽 속의 요정</title>
+        <res_no>2024100113</res_no>
+      </item>
+      <item>
+        <op_at>N</op_at>
+        <op_st_dt>2024-11-14</op_st_dt>
+        <op_ed_dt>2024-11-14</op_ed_dt>
+        <pay_at>Y</pay_at>
+        <place_nm>을숙도문화회관</place_nm>
+        <title>제17회 청년예술공감, Love in Serenade</title>
+        <res_no>2024100128</res_no>
+      </item>
+      <item>
+        <op_at>N</op_at>
+        <op_st_dt>2024-11-29</op_st_dt>
+        <op_ed_dt>2024-11-30</op_ed_dt>
+        <pay_at>Y</pay_at>
+        <place_nm>어댑터씨어터</place_nm>
+        <title>나에게만 들리는 목소리 </title>
+        <res_no>2024100148</res_no>
+      </item>
+      <item>
+        <op_at>N</op_at>
+        <op_st_dt>2024-11-20</op_st_dt>
+        <op_ed_dt>2024-12-05</op_ed_dt>
+        <pay_at>Y</pay_at>
+        <place_nm>해운대문화회관</place_nm>
+        <title>미스터마담</title>
+        <res_no>2024100166</res_no>
+      </item>
+      <item>
+        <op_at>N</op_at>
+        <op_st_dt>2024-11-10</op_st_dt>
+        <op_ed_dt>2024-11-10</op_ed_dt>
+        <pay_at>Y</pay_at>
+        <place_nm>기장군청 차성아트홀</place_nm>
+        <title>백설공주 </title>
+        <res_no>2024100171</res_no>
+      </item>
+      <item>
+        <op_at>N</op_at>
+        <op_st_dt>2024-11-23</op_st_dt>
+        <op_ed_dt>2024-11-24</op_ed_dt>
+        <pay_at>Y</pay_at>
+        <place_nm>신세계센텀시티 9층 문화홀</place_nm>
+        <title>알라딘 </title>
+        <res_no>2024100175</res_no>
+      </item>
+      <item>
+        <op_at>N</op_at>
+        <op_st_dt>2024-11-07</op_st_dt>
+        <op_ed_dt>2024-11-07</op_ed_dt>
+        <pay_at>Y</pay_at>
+        <place_nm>해운대문화회관</place_nm>
+        <title>레 미제라블 [해운대]</title>
+        <res_no>2024100176</res_no>
+      </item>
+      <item>
+        <op_at>N</op_at>
+        <op_st_dt>2024-11-23</op_st_dt>
+        <op_ed_dt>2024-11-24</op_ed_dt>
+        <pay_at>Y</pay_at>
+        <place_nm>영화의전당</place_nm>
+        <title>판</title>
+        <res_no>2024100179</res_no>
+      </item>
+      <item>
+        <op_at>N</op_at>
+        <op_st_dt>2024-11-16</op_st_dt>
+        <op_ed_dt>2024-11-17</op_ed_dt>
+        <pay_at>Y</pay_at>
+        <place_nm>부산문화회관</place_nm>
+        <title>바다에 뿌리 내린</title>
+        <res_no>2024110016</res_no>
+      </item>
+      <item>
+        <op_at>N</op_at>
+        <op_st_dt>2024-11-29</op_st_dt>
+        <op_ed_dt>2024-12-01</op_ed_dt>
+        <pay_at>Y</pay_at>
+        <place_nm>나다소극장</place_nm>
+        <title>천국으로 배달해드립니다</title>
+        <res_no>2024110101</res_no>
+      </item>
+      <item>
+        <op_at>N</op_at>
+        <op_st_dt>2024-12-05</op_st_dt>
+        <op_ed_dt>2024-12-06</op_ed_dt>
+        <pay_at>Y</pay_at>
+        <place_nm>부산시민회관</place_nm>
+        <title>악당의 색: Red </title>
+        <res_no>2024110112</res_no>
+      </item>
+      <item>
+        <op_at>N</op_at>
+        <op_st_dt>2024-12-06</op_st_dt>
+        <op_ed_dt>2024-12-08</op_ed_dt>
+        <pay_at>Y</pay_at>
+        <place_nm>영산대학교 성심오디토리움</place_nm>
+        <title>UNTIL DEATH </title>
+        <res_no>2024110113</res_no>
+      </item>
+      <item>
+        <op_at>N</op_at>
+        <op_st_dt>2024-12-14</op_st_dt>
+        <op_ed_dt>2024-12-22</op_ed_dt>
+        <pay_at>Y</pay_at>
+        <place_nm>부산시민회관</place_nm>
+        <title>시카고</title>
+        <res_no>2024110122</res_no>
+      </item>
+      <item>
+        <op_at>N</op_at>
+        <op_st_dt>2024-11-23</op_st_dt>
+        <op_ed_dt>2024-11-24</op_ed_dt>
+        <pay_at>Y</pay_at>
+        <place_nm>KBS 부산홀</place_nm>
+        <title>에그박사: 연구소에서 생긴 일 </title>
+        <res_no>2024110138</res_no>
+      </item>
+      <item>
+        <op_at>N</op_at>
+        <op_st_dt>2024-12-01</op_st_dt>
+        <op_ed_dt>2024-12-01</op_ed_dt>
+        <pay_at>Y</pay_at>
+        <place_nm>민주공원</place_nm>
+        <title>호두까기 인형 [부산]</title>
+        <res_no>2024110141</res_no>
+      </item>
+      <item>
+        <op_at>N</op_at>
+        <op_st_dt>2024-11-28</op_st_dt>
+        <op_ed_dt>2024-11-29</op_ed_dt>
+        <pay_at>N</pay_at>
+        <place_nm>부산학생예술문화회관</place_nm>
+        <title>빨래 </title>
+        <res_no>2024110161</res_no>
+      </item>
+      <item>
+        <op_at>N</op_at>
+        <op_st_dt>2024-12-06</op_st_dt>
+        <op_ed_dt>2024-12-08</op_ed_dt>
+        <pay_at>Y</pay_at>
+        <place_nm>소향씨어터 신한카드홀</place_nm>
+        <title>빈센트 반 고흐</title>
+        <res_no>2024110168</res_no>
+      </item>
+      <item>
+        <op_at>N</op_at>
+        <op_st_dt>2024-12-06</op_st_dt>
+        <op_ed_dt>2024-12-08</op_ed_dt>
+        <pay_at>Y</pay_at>
+        <place_nm>드림씨어터</place_nm>
+        <title>젠틀맨스 가이드: 사랑과 살인편</title>
+        <res_no>2024110189</res_no>
+      </item>
+      <item>
+        <op_at>N</op_at>
+        <op_st_dt>2024-12-04</op_st_dt>
+        <op_ed_dt>2024-12-05</op_ed_dt>
+        <pay_at>Y</pay_at>
+        <place_nm>금정문화회관</place_nm>
+        <title>락뮤지컬 프리즌</title>
+        <res_no>2024110191</res_no>
+      </item>
+    </items>
+    <numOfRows>100</numOfRows>
+    <pageNo>11</pageNo>
+    <totalCount>1022</totalCount>
+  </body>
+</response>

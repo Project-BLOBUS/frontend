@@ -272,7 +272,7 @@ function MainPage() {
               </div>
             </Link>
 
-            <Link to="/resource">
+            <Link to="/resource/culture">
               <div className="sm:w-[241.5px] w-[111px] h-[150px] bg-[linear-gradient(45deg,_#DB0153,_#FB0138)] mt-[-50px] sm:ml-[9px] ml-[7px] flex justify-center items-center hover:text-gray-300 hover:scale-90 transition duration-500">
                 지역자원
               </div>
