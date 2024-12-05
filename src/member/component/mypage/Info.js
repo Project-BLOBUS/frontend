@@ -1,10 +1,10 @@
 import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router";
 import { toast } from "react-toastify";
+import { getCookie, removeCookie } from "../../../etc/util/cookieUtil";
 import { getInfo, deleteId, sendMail } from "../../api/memberAPI";
-import { getCookie, removeCookie } from "../../util/cookieUtil";
 import useCustomTag from "../../hook/useCustomeTag";
-import Loading from "../../etc/Loading";
+import Loading from "../../../etc/component/Loading";
 
 const initState = {
   userId: "",
@@ -67,7 +67,7 @@ const Info = () => {
       .then(() => {
         removeCookie("jwt");
         removeCookie("expirationTime");
-        removeCookie("name");
+        removeCookie("userName");
         removeCookie("userId");
         removeCookie("userRole");
         removeCookie("idSave");
@@ -175,6 +175,8 @@ const Info = () => {
                           authCode: code,
                         });
                         toast.success("메일 전송 성공");
+                        // ToDEL 삭제
+                        setMember({ ...member, authCode: code });
                       } catch (error) {
                         toast.error("메일 전송에 실패했습니다.");
                       }
@@ -241,7 +243,7 @@ const makeRead = (name, info) => {
       <div className="bg-gray-200 w-1/4 p-4 border-b-2 border-gray-300 text-nowrap">
         {name}
       </div>
-      <div className="w-3/4 p-4 border-b-2 border-gray-300 text-left text-nowrap">
+      <div className="w-3/4 p-4 border-b-2 border-gray-300 text-left text-nowrap select-text">
         {info}
       </div>
     </div>

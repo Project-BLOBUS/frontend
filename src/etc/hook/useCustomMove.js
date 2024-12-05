@@ -23,28 +23,13 @@ const useCustomMove = (index) => {
     } else {
       queryStr = queryStrDefault;
     }
-    navigate({ pathname: `/${index}/list`, search: queryStr });
-  };
-
-  const moveToRead = (no) => {
-    navigate({ pathname: `/${index}/read/${no}`, search: queryStrDefault });
-  };
-
-  const moveToAdd = () => {
-    navigate({ pathname: `/${index}/add`, search: queryStrDefault });
-  };
-
-  const moveToModify = (no) => {
-    navigate({ pathname: `/${index}/modify/${no}`, search: queryStrDefault });
+    navigate({ pathname: `/${index}`, search: queryStr }, { replace: true });
   };
 
   return {
     page,
     size,
     moveToList,
-    moveToRead,
-    moveToAdd,
-    moveToModify,
   };
 };
 

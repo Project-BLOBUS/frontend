@@ -1,5 +1,5 @@
 import axios from "axios";
-import { getCookie } from "../util/cookieUtil";
+import { getCookie } from "../../etc/util/cookieUtil";
 
 const API_SERVER_HOST = "http://localhost:8080";
 const host = `${API_SERVER_HOST}/mypage`;
@@ -53,7 +53,7 @@ export const getCustom = async (
     params: {
       page: page,
       size: 6,
-      address: getCookie("address"),
+      address: getCookie("userAddress"),
       yListStr: yListStr,
       eListStr: eListStr,
       rListStr: rListStr,
@@ -83,7 +83,7 @@ export const getBookmark = async (pageParam, category) => {
 };
 
 // 작성글 조회
-export const getBoard = async (pageParam, board) => {
+export const getBoard = async (pageParam, dto) => {
   const { page, size } = pageParam;
   const res = await axios.get(`${host}/doc`, {
     headers: {
@@ -93,8 +93,8 @@ export const getBoard = async (pageParam, board) => {
       page: page,
       size: size,
       userId: getCookie("userId"),
-      boardType: board.type,
-      boardCategory: board.category,
+      boardType: dto.type,
+      category: dto.category,
     },
   });
 

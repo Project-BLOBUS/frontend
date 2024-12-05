@@ -1,6 +1,6 @@
 import { lazy, Suspense } from "react";
 import { Navigate } from "react-router";
-import Loading from "../etc/Loading";
+import Loading from "../../etc/component/Loading";
 
 const Custom = lazy(() => import("../component/mypage/Custom"));
 const Bookmark = lazy(() => import("../component/mypage/Bookmark"));

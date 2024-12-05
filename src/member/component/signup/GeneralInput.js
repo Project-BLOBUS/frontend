@@ -5,19 +5,24 @@ import { FaBackspace } from "react-icons/fa";
 import { GiSouthKorea } from "react-icons/gi";
 import { IoMdFemale, IoMdMale } from "react-icons/io";
 import { toast } from "react-toastify";
+import {
+  getCookie,
+  setCookie,
+  removeCookie,
+} from "../../../etc/util/cookieUtil";
 import { duplicate, sendMail, register } from "../../api/memberAPI";
-import { getCookie, setCookie, removeCookie } from "../../util/cookieUtil";
 import useCustomTag from "../../hook/useCustomeTag";
-import Loading from "../../etc/Loading";
+import Loading from "../../../etc/component/Loading";
 import AddressList from "../../data/AddressList";
 
 const initState = {
-  userId: "",
+  // ToDEL 삭제
+  userId: "bell4916@naver.com",
   authCode: "",
-  userPw: "",
-  confirmPw: "",
-  name: "",
-  phoneNum: "",
+  userPw: "Yang544110!@",
+  confirmPw: "Yang544110!@",
+  name: "양성규",
+  phoneNum: "01049164357",
   address: "",
   birthDate: null,
   gender: "M",
@@ -284,6 +289,8 @@ const GeneralInput = () => {
                       authCode: code,
                     });
                     toast.success("메일 전송 성공");
+                    // ToDEL 삭제
+                    setMember({ ...member, authCode: code });
                   } catch (error) {
                     toast.error("메일 전송에 실패했습니다.");
                   }

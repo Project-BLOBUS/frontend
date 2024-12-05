@@ -296,7 +296,7 @@ function MainPage() {
         </div>
       </div>
       <Footer />
-      <ToastContainer
+      {/* <ToastContainer
         position="bottom-center"
         autoClose={1000}
         hideProgressBar={false}
@@ -306,7 +306,7 @@ function MainPage() {
         pauseOnFocusLoss
         draggable={false}
         pauseOnHover={false}
-      />
+      /> */}
     </div>
   );
 }

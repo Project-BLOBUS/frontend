@@ -2,9 +2,9 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import { toast } from "react-toastify";
 import { getBookmark } from "../../api/mypageAPI";
-import useCustomMove from "../../hook/useCustomMove";
-import Loading from "../../etc/Loading";
-import Paging from "../../etc/Paging";
+import useCustomMove from "../../../etc/hook/useCustomMove";
+import Loading from "../../../etc/component/Loading";
+import Paging from "../../../etc/component/Paging";
 
 const initState = {
   dtoList: [],
@@ -22,7 +22,7 @@ const initState = {
 const Bookmark = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
-  const { page, size, moveToList } = useCustomMove("mypage/bookmark");
+  const { page, size, moveToList } = useCustomMove("mypage/bookmark/list");
 
   const [data, setData] = useState(initState);
 
@@ -50,7 +50,7 @@ const Bookmark = () => {
     setLoading(false);
   }, [page, size, category]);
 
-  const printDateTime = (dateTime) => {
+  const printDate = (dateTime) => {
     const year = dateTime.split("T")[0].split("-")[0];
     const month = dateTime.split("T")[0].split("-")[1];
     const date = dateTime.split("T")[0].split("-")[2];
@@ -104,7 +104,7 @@ const Bookmark = () => {
               >
                 <div className="w-full flex justify-between items-center">
                   <div className="w-full text-2xl text-left">{dto.title}</div>
-                  <div>{printDateTime(dto.atTime)}</div>
+                  <div>{printDate(dto.atTime)}</div>
                 </div>
 
                 <div className="w-full text-sm text-left flex justify-between items-center">

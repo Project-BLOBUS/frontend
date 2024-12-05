@@ -1,6 +1,6 @@
 import { lazy, Suspense } from "react";
 import { Navigate } from "react-router";
-import Loading from "../etc/Loading";
+import Loading from "../../etc/component/Loading";
 
 const Login = lazy(() => import("../component/login/Login"));
 

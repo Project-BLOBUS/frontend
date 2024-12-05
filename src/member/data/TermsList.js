@@ -25,11 +25,13 @@ const layout = (content) => {
     <div className="h-80 m-4 p-4 border border-gray-500 rounded text-base flex flex-col justify-start items-start space-y-4 overflow-y-scroll">
       {articleList.map((article, index) => (
         <div key={index}>
-          <div className="mb-1 font-bold">{article}</div>
+          <div className="mb-1 font-bold select-text">{article}</div>
           <div className="ml-2 text-xs flex flex-col justify-center items-start space-y-1">
             {content()[article.replace(/ /g, "").split("(")[0]].map(
               (text, i) => (
-                <span key={i}>{text}</span>
+                <span key={i} className="select-text">
+                  {text}
+                </span>
               )
             )}
           </div>
