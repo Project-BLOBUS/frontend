@@ -40,6 +40,7 @@ const EducationPage = () => {
       setLoading(true);
       // 최종 검색어(searchKeyword)를 사용하여 정책 조회
       const data = await fetchPagedPolicies(searchParams);
+      console.log(data);
       setPolicies(data.content);
       setTotalPages(data.totalPages);
     } catch (err) {
@@ -211,6 +212,13 @@ const EducationPage = () => {
 
   return (
     <div>
+      <div className="border-2 border-gray-200 rounded-md pt-4 pb-4 pr-4 bg-white">
+        <div className="flex items-center space-x-4">
+          <p className="text-3xl font-bold">
+            청년 교육 정책
+          </p>
+        </div>
+      </div>
       {/* 기존 필터 버튼들 그대로 유지 */}
       <div className="border-2 border-blue-400">
         <div className="flex gap-2">
@@ -275,12 +283,10 @@ const EducationPage = () => {
             >
               <div>
 
-                <h2 className="font-bold text-lg">{policy.title}</h2>
-                <p>{policy.overview}</p>
-                <p>
-                  Application Period: {policy.applicationPeriodStart} to{" "}
-                  {policy.applicationPeriodEnd}
-                </p>
+                <h2 className="font-bold text-lg">{policy.policyName}</h2>
+                <p>{policy.policyOverview}</p>
+                <p> 신청기간 : </p>
+                <p> {policy.policyApplicationStartPeriod} ~ {policy.policyApplicationEndPeriod} </p>
               </div>
             <button 
               className="border-2 border-red-600 m-2"
