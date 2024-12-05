@@ -1,5 +1,4 @@
 import { Suspense, lazy } from "react";
-import { Navigate } from "react-router";
 import jobRouter from "./jobRouter";
 import houseRouter from "./houseRouter";
 

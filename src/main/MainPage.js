@@ -8,6 +8,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 function MainPage() {
+
   const [activeNav, setActiveNav] = useState(null); // 클릭된 항목을 추적
 
   const handleNavClick = (nav) => {
@@ -83,11 +84,23 @@ function MainPage() {
     );
   };
 
+  const Unknown = [
+    { name: "기업메뉴1", link: "/" },
+    { name: "기업메뉴2", link: "/" },
+    { name: "기업메뉴3", link: "/" },
+  ];
+
   return (
     <div>
       {/* "메인"으로 설정된 페이지 제목 */}
-      <Header pageTitle="메인" titleBg="#EC0245" borderB={true} />
-
+      <div>
+        <Header 
+        navs2={Unknown}
+        pageTitle="메인" 
+        titleBg="#EC0245" 
+        borderB={true} 
+        />
+      </div>
       <div className="h-full w-[70.7%] ml-[15%] mt-[1.6%] flex flex-col sm:flex-row">
         {/* 왼쪽 라인 */}
         <div className="w-full sm:w-[535px]">
@@ -136,9 +149,9 @@ function MainPage() {
           </div>
         </div>
         {/* 오른쪽 라인 */}
-        <div className="ml-[1.8%] mt-[-1%] ">
+        <div className="ml-[1.8%] mt-[-1%]">
           <div className="sm:text-lg text-xl font-bold sm:ml-[0%] ml-[31.5%] mt-4 sm:mt-[-8px]">
-            실시간 정보
+            최신 정보
           </div>
           <div className="flex flex-wrap justify-center items-center text-md font-bold text-center mt-2 sm:mt-0 sm:ml-[-1%] ml-[-3%]">
             <nav
@@ -194,12 +207,16 @@ function MainPage() {
               exit={{ opacity: 0, y: -20 }} // 떠날 때: 다시 투명하고 위로 이동
               transition={{ duration: 0.5 }} // 애니메이션 지속 시간
             >
-              <span className="border-b-2 p-1">실시간 청년1</span>
+              
+              <span className="border-b-2 p-1">실시간 청년1
+                <div>부제목 내용 등등</div>
+              </span>
               <span className="border-b-2 p-1">실시간 청년2</span>
               <span className="border-b-2 p-1">실시간 청년3</span>
               <span className="border-b-2 p-1">실시간 청년4</span>
               <span className="border-b-2 p-1">실시간 청년5</span>
               <span className="border-b-2 p-1">실시간 청년6</span>
+              
             </motion.div>
           )}
 
@@ -253,15 +270,15 @@ function MainPage() {
               <span className="border-b-2 p-1">실시간 커뮤니티6</span>
             </motion.div>
           )}
-          <div className="mt-2 sm:w-[521px] w-[260.5px] h-[270px] sm:ml-[0px] ml-[10px] flex flex-wrap gap-4 text-white font-bold ">
+          <div className="mt-2 sm:w-[521px] w-[260.5px] h-[270px] sm:ml-[0px] ml-[13px] flex flex-wrap gap-4 text-white font-bold ">
             <Link to="/youth">
-              <div className="text-2xl sm:w-[250px] w-[120px] h-[150px] bg-[linear-gradient(45deg,_#0130BC,_#6E00FF)]  flex justify-center items-center hover:text-gray-300 hover:scale-90 transition duration-500">
+              <div className="sm:w-[250px] w-[120px] h-[150px] bg-[linear-gradient(45deg,_#0130BC,_#6E00FF)]  flex justify-center items-center hover:text-gray-300 hover:scale-90 transition duration-500">
                 청년관
               </div>
             </Link>
 
             <Link to="/enterprise">
-              <div className="sm:w-[241.5px] w-[111px] h-[100px] bg-[linear-gradient(45deg,_#DB0153,_#0130BC)] sm:ml-[9px] ml-[7px] flex justify-center items-center hover:text-gray-300 hover:scale-90 transition duration-500">
+              <div className="sm:w-[251px] w-[117px] h-[100px] bg-[linear-gradient(45deg,_#DB0153,_#0130BC)] sm:ml-[1px] ml-[7px] flex justify-center items-center hover:text-gray-300 hover:scale-90 transition duration-500">
                 기업관
               </div>
             </Link>
@@ -273,7 +290,7 @@ function MainPage() {
             </Link>
 
             <Link to="/resource">
-              <div className="sm:w-[241.5px] w-[111px] h-[150px] bg-[linear-gradient(45deg,_#DB0153,_#FB0138)] mt-[-50px] sm:ml-[9px] ml-[7px] flex justify-center items-center hover:text-gray-300 hover:scale-90 transition duration-500">
+              <div className="sm:w-[251px] w-[117px] h-[150px] bg-[linear-gradient(45deg,_#DB0153,_#FB0138)] mt-[-50px] sm:ml-[1px] ml-[7px] flex justify-center items-center hover:text-gray-300 hover:scale-90 transition duration-500">
                 지역자원
               </div>
             </Link>
