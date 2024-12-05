@@ -32,7 +32,7 @@ const MainPage = () => {
       </div>
 
       {/* 사이드바 영역 */}
-      <JobSidebarComponent />
+      {/* <JobSidebarComponent /> */}
     </>
   );
 };

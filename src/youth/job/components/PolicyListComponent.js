@@ -1,9 +1,9 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import useCustomMove from "../hooks/useCustomMove";
+import { calculateDDay, formatMngtMson } from "../utils/formatUtil";
 
 const PolicyListComponent = ({ policy }) => {
-  console.log("policy", policy);
-  const navigate = useNavigate();
+  const { moveToPolicyRead } = useCustomMove();
 
   // policy가 undefined이거나 null일 경우, 기본값을 사용하도록 안전하게 처리
   if (!policy) {
@@ -12,16 +12,14 @@ const PolicyListComponent = ({ policy }) => {
 
   return (
     <div
-      className="relative h-44 border border-gray-200 rounded-md px-3 pb-3 shadow-sm hover:shadow-md cursor-pointer transition-shadow duration-600"
+      className="relative h-44 border border-gray-200 rounded-md px-3 pb-3 shadow-sm hover:shadow-md cursor-pointer transition-shadow duration-500"
       onClick={() => {
-        navigate("/youth/job/policyRead");
-        // navigate(`/youth/job/policyRead/${policy.id}`); // 정책 ID로 상세 페이지 이동
+        moveToPolicyRead(policy.policyId);
       }}
     >
       {/* D-day 영역 */}
       <div className="absolute top-0 left-3 bg-[#6F00FF] text-white font-bold text-sm px-2 py-1 rounded-b-md inline-block">
-        {/* {policy.dDay ? `D-${policy.dDay}` : "D-0"} */}
-        디데이계산수정
+        {calculateDDay(policy.rqutPrdCn)}
       </div>
 
       {/* 제목 영역 */}
@@ -47,7 +45,7 @@ const PolicyListComponent = ({ policy }) => {
 
       {/* 하단의 출처 영역 */}
       <div className="absolute bottom-4 left-3 text-xs text-gray-500">
-        {policy.mngtMson || "주관기관 정보 없음"}
+        {formatMngtMson(policy.mngtMson)}
       </div>
     </div>
   );

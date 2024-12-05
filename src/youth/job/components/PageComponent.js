@@ -28,7 +28,7 @@ const PageComponent = ({ serverData, movePage }) => {
 
       {serverData.next ? (
         <div
-          className="m-2 p-2 text-center font-bold cursor-pointer "
+          className="m-2 p-2 text-center font-bold cursor-pointer"
           onClick={() => movePage({ page: serverData.nextPage })}
         >
           Next
