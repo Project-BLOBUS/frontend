@@ -3,9 +3,9 @@ import { useNavigate } from "react-router";
 import { FaSave } from "react-icons/fa";
 import { toast } from "react-toastify";
 import { loadSetting, saveSetting, getCustom } from "../../api/mypageAPI";
-import useCustomMove from "../../hook/useCustomMove";
-import Loading from "../../etc/Loading";
-import Paging from "../../etc/Paging";
+import useCustomMove from "../../../etc/hook/useCustomMove";
+import Loading from "../../../etc/component/Loading";
+import Paging from "../../../etc/component/Paging";
 
 const initState = {
   dtoList: [],
@@ -23,7 +23,7 @@ const initState = {
 const Custom = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
-  const { page, size, moveToList } = useCustomMove("mypage/custom");
+  const { page, size, moveToList } = useCustomMove("mypage/custom/list");
 
   const [data, setData] = useState(initState);
 
@@ -143,7 +143,7 @@ const Custom = () => {
       .join("/");
   };
 
-  const printDateTime = (dateTime) => {
+  const printDate = (dateTime) => {
     const year = dateTime.split("T")[0].split("-")[0];
     const month = dateTime.split("T")[0].split("-")[1];
     const date = dateTime.split("T")[0].split("-")[2];
@@ -228,7 +228,7 @@ const Custom = () => {
               >
                 <div className="w-full flex justify-between items-center">
                   <div className="w-full text-2xl text-left">{dto.title}</div>
-                  <div>{printDateTime(dto.createdAt)}</div>
+                  <div>{printDate(dto.createdAt)}</div>
                 </div>
 
                 <div className="w-full text-sm text-left">{dto.content}</div>

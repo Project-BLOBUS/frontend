@@ -1,15 +1,16 @@
 import { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { setCookie } from "../../../etc/util/cookieUtil";
 import { find } from "../../api/memberAPI";
-import { setCookie } from "../../util/cookieUtil";
 import useCustomTag from "../../hook/useCustomeTag";
-import Loading from "../../etc/Loading";
+import Loading from "../../../etc/component/Loading";
 
 const initState = {
+  // ToDEL 삭제
   userId: "",
-  name: "",
-  phoneNum: "",
+  name: "양성규",
+  phoneNum: "01049164357",
   roleName: "GENERAL",
 };
 
@@ -149,7 +150,7 @@ const FindId = () => {
           <>
             {makeAdd(
               "아이디",
-              <div className="w-full p-4 border border-gray-500 rounded shadow-lg text-left">
+              <div className="w-full p-4 border border-gray-500 rounded shadow-lg text-left select-text">
                 {member.userId}
               </div>
             )}

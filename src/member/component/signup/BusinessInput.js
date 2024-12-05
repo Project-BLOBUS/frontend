@@ -2,22 +2,27 @@ import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { FaBackspace } from "react-icons/fa";
 import { toast } from "react-toastify";
+import {
+  getCookie,
+  setCookie,
+  removeCookie,
+} from "../../../etc/util/cookieUtil";
 import { duplicate, register } from "../../api/memberAPI";
 import { checkBusinessCode } from "../../api/externalAPI ";
-import { getCookie, setCookie, removeCookie } from "../../util/cookieUtil";
 import useCustomTag from "../../hook/useCustomeTag";
-import Loading from "../../etc/Loading";
+import Loading from "../../../etc/component/Loading";
 import AddressList from "../../data/AddressList";
 
 const initState = {
-  userId: "",
+  // ToDEL 삭제
+  userId: "520-38-01151",
   file: "",
-  userPw: "",
-  confirmPw: "",
-  name: "",
-  phoneNum: "",
-  email: "",
-  address: "",
+  userPw: "qwerQWER1234!@#$",
+  confirmPw: "qwerQWER1234!@#$",
+  name: "Project BLOBUS",
+  phoneNum: "01049164357",
+  email: "blobus051@gmail.com",
+  address: "부산광역시-해운대구",
   roleName: "BUSINESS",
 };
 

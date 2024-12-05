@@ -1,7 +1,7 @@
 import React from "react";
 
 const PolicySearchBar = ({
-  title,
+  searchTitle,
   searchTerm,
   filterType,
   onSearch,
@@ -22,15 +22,15 @@ const PolicySearchBar = ({
     <div className="border-2 border-gray-200 rounded-md p-4 bg-white mb-5">
       <div className="flex items-center space-x-4">
         <p className="w-28 text-center text-xl font-semibold text-gray-700">
-          {title}
+          {searchTitle}
         </p>
         <select
           className="h-10 border-2 border-gray-300 rounded-md p-2 text-sm focus:outline-none"
           value={filterType}
           onChange={handleFilterChange}
         >
-          <option value="title">제목</option>
-          <option value="content">내용</option>
+          <option value="polyBizSjnm">제목</option>
+          <option value="polyItcnCn">내용</option>
           <option value="both">제목+내용</option>
         </select>
         <input

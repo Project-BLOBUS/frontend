@@ -2,7 +2,11 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { FaCheck, FaBackspace } from "react-icons/fa";
 import { toast } from "react-toastify";
-import { getCookie, setCookie, removeCookie } from "../../util/cookieUtil";
+import {
+  getCookie,
+  setCookie,
+  removeCookie,
+} from "../../../etc/util/cookieUtil";
 import TermsList from "../../data/TermsList";
 
 const Agree = () => {

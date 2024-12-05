@@ -4,10 +4,10 @@ import { AiOutlineGlobal } from "react-icons/ai";
 import { GiSouthKorea } from "react-icons/gi";
 import { IoMdFemale, IoMdMale } from "react-icons/io";
 import { toast } from "react-toastify";
+import { getCookie, setCookie } from "../../../etc/util/cookieUtil";
 import { getInfo, modify } from "../../api/memberAPI";
-import { getCookie, setCookie } from "../../util/cookieUtil";
 import useCustomTag from "../../hook/useCustomeTag";
-import Loading from "../../etc/Loading";
+import Loading from "../../../etc/component/Loading";
 import AddressList from "../../data/AddressList";
 
 const initState = {
@@ -198,7 +198,7 @@ const InfoMofiy = () => {
           setMember({ ...member, phoneNum: "" });
           refList.phoneNum.current.focus();
         } else {
-          setCookie("address", member.address);
+          setCookie("userAddress", member.address);
           navigate(-1, { replace: true });
           setTimeout(() => {
             toast.success("회원정보 수정 완료");

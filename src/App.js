@@ -5,32 +5,27 @@ import {
   Route,
   Navigate,
 } from "react-router-dom";
-import Loading from "./member/etc/Loading";
+import Loading from "./etc/component/Loading";
 import memberRouter from "./member/router/memberRouter";
 import mypageRouter from "./member/router/mypageRouter";
 import youthRouter from "./youth/router/youthRouter";
+import resourceRouter from "./resource/router/resourceRouter";
+import communityRouter from "./community/router/communityRouter";
 
 // Header 컴포넌트를 lazy로 불러오기
 const MainPage = lazy(() => import("./main/MainPage"));
-const Member = lazy(() => import("./member/page/MemberPage"));
-const MyPage = lazy(() => import("./member/page/MyPage"));
-const YouthPage = lazy(() => import("./youth/YouthPage"));
-const Enterprise = lazy(() => import("./enterprise/Enterprise"));
-const Community = lazy(() => import("./community/Community"));
-const Resource = lazy(() => import("./resource/Resource"));
-const ListComponent = lazy(() =>
-  import("../src/community/component/Listcomponent")
-);
-const AddComponent = lazy(() =>
-  import("../src/community/component/Addcomponent")
-);
-const DetailComponent = lazy(() =>
-  import("../src/community/component/Detailcomponent")
-);
 const AllSearch = lazy(() => import("./main/AllSearch"));
 const BLoBusIntro = lazy(() => import("./main/BLoBusIntro"));
 const BLoBusWork = lazy(() => import("./main/BLoBusWork"));
 const BLoBusNews = lazy(() => import("./main/BLoBusNews"));
+
+const Member = lazy(() => import("./member/page/MemberPage"));
+const MyPage = lazy(() => import("./member/page/MyPage"));
+
+const YouthPage = lazy(() => import("./youth/YouthPage"));
+const Enterprise = lazy(() => import("./enterprise/Enterprise"));
+const Resource = lazy(() => import("./resource/ResourcePage"));
+const Community = lazy(() => import("./community/page/Community"));
 
 const AppRoutes = () => (
   <Routes>
@@ -53,12 +48,14 @@ const AppRoutes = () => (
         <Route key={index} path={route.path} element={route.element} />
       ))}
     </Route>
+
     {/* /mypage 경로로 매핑 */}
     <Route path="/mypage" element={<MyPage />}>
       {mypageRouter().map((route, index) => (
         <Route key={index} path={route.path} element={route.element} />
       ))}
     </Route>
+
     {/* /youth 청년 */}
     <Route path="/youth" element={<YouthPage />}>
       {youthRouter().map((route, index) => (
@@ -73,45 +70,23 @@ const AppRoutes = () => (
     {/* /enterprise 기업 */}
     <Route path="/enterprise" element={<Enterprise />} />
 
-    {/* /community 커뮤니티 */}
-    <Route path="/community" element={<ListComponent />} />
-    <Route path="/community/add" element={<AddComponent />} />
-    <Route path="/community/detail/:id" element={<DetailComponent />} />
+    {/* /resource 경로*/}
+    <Route path="/resource" element={<Resource />}>
+      {resourceRouter().map((route, index) => (
+        <Route key={index} path={route.path} element={route.element} />
+      ))}
+    </Route>
 
-    {/* /resource 자원 */}
-    <Route path="/resource" element={<Resource />} />
+    {/* /comunity 커뮤니티 */}
+    <Route path="/community" element={<Community />}>
+      {communityRouter().map((route, index) => (
+        <Route key={index} path={route.path} element={route.element} />
+      ))}
+    </Route>
   </Routes>
 );
 
 const App = () => {
-  // const [posts, setPosts] = useState([]); // 게시글 상태 관리
-
-  // // 게시글 데이터 불러오기
-  // useEffect(() => {
-  //   const fetchPosts = async () => {
-  //     try {
-  //       const response = await axios.get("http://localhost:8080/api/community"); // 백엔드에서 데이터 가져오기
-  //       setPosts(response.data);
-  //     } catch (error) {
-  //       console.error("게시글 데이터를 불러오는데 실패했습니다.", error);
-  //     }
-  //   };
-  //   fetchPosts();
-  // }, []);
-
-  // // 게시글 추가 함수
-  // const addPost = async (newPost) => {
-  //   try {
-  //     const response = await axios.post(
-  //       "http://localhost:8080/api/community",
-  //       newPost
-  //     ); // 새로운 게시글 추가
-  //     setPosts([response.data, ...posts]); // 새 데이터 추가 후 상태 업데이트
-  //   } catch (error) {
-  //     console.error("게시글 추가에 실패했습니다.", error);
-  //   }
-  // };
-
   return (
     <Router>
       <Suspense fallback={<Loading />}>

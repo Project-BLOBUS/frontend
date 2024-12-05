@@ -7,11 +7,8 @@ function YouthPage() {
   const youths = [
     { name: "일자리", link: "job" },
     { name: "주거", link: "house" },
-    { name: "금융", link: "finance" },
+    { name: "복지", link: "welfare" },
     { name: "교육", link: "education" },
-    { name: "창업", link: "" },
-    { name: "지도", link: "" },
-    { name: "건의", link: "" },
   ];
 
   return (

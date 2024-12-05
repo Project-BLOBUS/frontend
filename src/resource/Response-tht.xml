@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?><response>
+  <header>
+    <resultCode>00</resultCode>
+    <resultMsg>NORMAL_CODE</resultMsg>
+  </header>
+  <body>
+    <items>
+      <item>
+        <op_at>N</op_at>
+        <op_st_dt>2024-12-03</op_st_dt>
+        <op_ed_dt>2024-12-07</op_ed_dt>
+        <pay_at>Y</pay_at>
+        <place_nm>부산아시아드주경기장</place_nm>
+        <title>한국 명작 희곡 윤조병 특별전: ㅉㅅㅉㅅ</title>
+        <res_no>2024110115</res_no>
+      </item>
+      <item>
+        <op_at>N</op_at>
+        <op_st_dt>2024-12-05</op_st_dt>
+        <op_ed_dt>2024-12-08</op_ed_dt>
+        <pay_at>Y</pay_at>
+        <place_nm>일터 소극장</place_nm>
+        <title>난쟁이들</title>
+        <res_no>2024110126</res_no>
+      </item>
+      <item>
+        <op_at>N</op_at>
+        <op_st_dt>2024-11-30</op_st_dt>
+        <op_ed_dt>2024-12-08</op_ed_dt>
+        <pay_at>Y</pay_at>
+        <place_nm>어댑터씨어터</place_nm>
+        <title>마이 디어, 헬렌</title>
+        <res_no>2024110129</res_no>
+      </item>
+      <item>
+        <op_at>N</op_at>
+        <op_st_dt>2024-11-01</op_st_dt>
+        <op_ed_dt>2025-01-05</op_ed_dt>
+        <pay_at>Y</pay_at>
+        <place_nm>부산메트로홀 (구. AN아트홀 광안)</place_nm>
+        <title>크리스마스 특별공연, 이프온리</title>
+        <res_no>2024110136</res_no>
+      </item>
+      <item>
+        <op_at>N</op_at>
+        <op_st_dt>2024-12-05</op_st_dt>
+        <op_ed_dt>2024-12-08</op_ed_dt>
+        <pay_at>Y</pay_at>
+        <place_nm>어댑터씨어터</place_nm>
+        <title>제갈옥남</title>
+        <res_no>2024110158</res_no>
+      </item>
+      <item>
+        <op_at>N</op_at>
+        <op_st_dt>2024-12-06</op_st_dt>
+        <op_ed_dt>2024-12-07</op_ed_dt>
+        <pay_at>Y</pay_at>
+        <place_nm>부산시민회관</place_nm>
+        <title>국립정동극장 연극시리즈, 더 드레서</title>
+        <res_no>2024110159</res_no>
+      </item>
+      <item>
+        <op_at>N</op_at>
+        <op_st_dt>2024-12-12</op_st_dt>
+        <op_ed_dt>2025-01-05</op_ed_dt>
+        <pay_at>Y</pay_at>
+        <place_nm>어댑터씨어터</place_nm>
+        <title>나는 쇼팽의 녹턴 B플랫 단조에 순결을 잃었다 </title>
+        <res_no>2024110167</res_no>
+      </item>
+      <item>
+        <op_at>N</op_at>
+        <op_st_dt>2024-12-01</op_st_dt>
+        <op_ed_dt>2024-12-01</op_ed_dt>
+        <pay_at>Y</pay_at>
+        <place_nm>영산대학교 성심오디토리움</place_nm>
+        <title>랜턴: 환영을 만드는 등불 </title>
+        <res_no>2024110201</res_no>
+      </item>
+      <item>
+        <op_at>N</op_at>
+        <op_st_dt>2024-12-25</op_st_dt>
+        <op_ed_dt>2024-12-29</op_ed_dt>
+        <pay_at>Y</pay_at>
+        <place_nm>공간소극장</place_nm>
+        <title>행인두부의 마음 </title>
+        <res_no>2024120012</res_no>
+      </item>
+      <item>
+        <op_at>N</op_at>
+        <op_st_dt>2024-12-24</op_st_dt>
+        <op_ed_dt>2024-12-31</op_ed_dt>
+        <pay_at>Y</pay_at>
+        <place_nm>나다소극장</place_nm>
+        <title>이게, 로맨스?! </title>
+        <res_no>2024120016</res_no>
+      </item>
+    </items>
+    <numOfRows>10</numOfRows>
+    <pageNo>96</pageNo>
+    <totalCount>961</totalCount>
+  </body>
+</response>

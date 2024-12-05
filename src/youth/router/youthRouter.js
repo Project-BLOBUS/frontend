@@ -1,15 +1,15 @@
 import { Suspense, lazy } from "react";
-import { Navigate } from "react-router";
 import jobRouter from "./jobRouter";
 import houseRouter from "./houseRouter";
+import { Navigate } from "react-router";
 
 const Loading = <div>Loading....</div>;
 const JobMain = lazy(() => import("../job/pages/MainPage"));
 const HouseMain = lazy(() => import("../house/pages/MainPage"));
-const Finance = lazy(() => import("../finance/FinancePage"));
+const Welfare = lazy(() => import("../welfare/WelfarePage"));
 const Education = lazy(() => import("../education/EducationPage"));
-const FinancePolicyDetail = lazy(() =>
-  import("../finance/FinancePolicyDetail")
+const WelfarePolicyDetail = lazy(() =>
+  import("../welfare/WelfarePolicyDetail")
 );
 const EducationPolicyDetail = lazy(() =>
   import("../education/EducationPolicyDetail")
@@ -17,6 +17,7 @@ const EducationPolicyDetail = lazy(() =>
 
 const youthRouter = () => {
   return [
+    { path: "", element: <Navigate replace to="job" /> },
     {
       path: "job",
       element: (
@@ -36,18 +37,18 @@ const youthRouter = () => {
       children: houseRouter(),
     },
     {
-      path: "finance",
+      path: "welfare",
       element: (
         <Suspense fallback={Loading}>
-          <Finance />
+          <Welfare />
         </Suspense>
       ),
     },
     {
-      path: "finance/:id",
+      path: "welfare/:id",
       element: (
         <Suspense fallback={Loading}>
-          <FinancePolicyDetail />
+          <WelfarePolicyDetail />
         </Suspense>
       ),
     },

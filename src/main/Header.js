@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
-import { getCookie, removeCookie } from "../member/util/cookieUtil";
+import { getCookie, removeCookie } from "../etc/util/cookieUtil";
 import "../main/index.css";
 import "react-toastify/dist/ReactToastify.css";
 
 function Header({
   navs = [],
+  navs2 = [],
   isWhite = false,
   pageTitle,
   titleBg = "#EC0245",
@@ -31,15 +32,29 @@ function Header({
     <div
       className={`font-bold ${borderB ? "border-b-2 main-border-bottom" : ""}`}
     >
-      <div className="w-full sm:w-[70.6%] mx-[15%] flex justify-between items-center">
+      <div className="w-full sm:w-[70.6%] sm:flex-row ml-[15%] flex justify-between items-center ">
         <Link to="/main">
-          <p className={`text-3xl ${blobusTextColor}`}>BLOBUS</p>
+          <p
+            className={`text-3xl ${blobusTextColor} ml-[-45px] mt-[-70px] sm:ml-[0px] sm:mt-[0px]`}
+          >
+            BLOBUS
+          </p>
         </Link>
 
-        <div className="flex justify-center items-center">
+        <div className="mt-[65px] sm:mt-[0px] flex ml-[-130px] sm:ml-[0px] flex-wrap sm:flex-none">
           {navs.map((nav) => (
             <Link
-              className={`m-4 ${linkTextColor} transition duration-500 hover:text-gray-300`}
+              className={`m-4 ${linkTextColor} transition duration-500 hover:text-gray-300 `}
+              key={nav.name}
+              to={nav.link}
+            >
+              {nav.name}
+            </Link>
+          ))}
+
+          {navs2.map((nav) => (
+            <Link
+              className={`m-3 ${linkTextColor} transition duration-500 hover:text-gray-300 opacity-0 pointer-events-none`}
               key={nav.name}
               to={nav.link}
             >
@@ -48,7 +63,7 @@ function Header({
           ))}
         </div>
 
-        <div className="w-1/6">
+        <div className="sm:mr-[14px] mr-[30px]">
           <p
             className={`mt-[-8px] h-[50px] rounded-b-[5px] flex justify-center items-center`}
             style={{ backgroundColor: titleBg, color: textC }}
@@ -57,20 +72,20 @@ function Header({
           </p>
 
           <div
-            className={`text-base text-center flex justify-center items-center ${linkTextColor}`}
+            className={`flex justify-center items-center mt-[10px] ${linkTextColor} mt-[20px] sm:mt-[0px] flex flex-wrap sm:flex-none`}
           >
             {!getCookie("jwt") ? (
               <>
                 <Link
-                  className="w-[45%] hover:text-gray-300 transition duration-500"
+                  className="transition duration-500 hover:text-gray-300"
                   to="/member/signup"
                   replace={pageTitle === "계정"}
                 >
                   회원가입
                 </Link>
-                <p className="w-[5%] p-2">|</p>
+                <p className="p-2 hidden sm:block">|</p>
                 <Link
-                  className="w-[45%] hover:text-gray-300 transition duration-500"
+                  className="transition duration-500 hover:text-gray-300 mt-[34px] sm:mt-[0px]"
                   to="/member/login"
                   replace={pageTitle === "계정"}
                 >
@@ -80,14 +95,14 @@ function Header({
             ) : (
               <>
                 <Link
-                  className="w-[45%] hover:text-gray-300 transition duration-500"
+                  className="transition duration-500 hover:text-gray-300"
                   to="/mypage"
                 >
                   마이페이지
                 </Link>
-                <p className="w-[5%] p-2">|</p>
+                <p className="p-2 hidden sm:block">|</p>
                 <Link
-                  className="w-[45%] hover:text-gray-300 transition duration-500"
+                  className="transition duration-500 hover:text-gray-300 mt-[34px] sm:mt-[0px]"
                   onClick={() => {
                     // TODO 로그아웃 모달창
                     if (window.confirm("로그아웃하시겠습니까?")) {
@@ -113,15 +128,6 @@ function Header({
           </div>
         </div>
       </div>
-
-      <ToastContainer
-        style={{ width: "auto" }}
-        className="text-xl text-center text-nowrap"
-        position="top-center"
-        autoClose={1000}
-        pauseOnFocusLoss={false}
-        pauseOnHover
-      />
     </div>
   );
 }

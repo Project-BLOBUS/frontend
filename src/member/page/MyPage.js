@@ -1,15 +1,22 @@
 import { useEffect, useState } from "react";
 import { Link, Outlet, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { getCookie } from "../util/cookieUtil";
+import { getCookie } from "../../etc/util/cookieUtil";
 import Header from "../../main/Header";
-import Loading from "../etc/Loading";
+import Loading from "../../etc/component/Loading";
 
 const MyPage = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
 
   const [jwt, setJwt] = useState(getCookie("jwt"));
+
+  const navList = [
+    { name: "청년관", link: "../youth" },
+    { name: "기업관", link: "../enterprise" },
+    { name: "지역관", link: "../resource" },
+    { name: "커뮤니티", link: "../community" },
+  ];
 
   useEffect(() => {
     setLoading(true);
@@ -40,6 +47,7 @@ const MyPage = () => {
       {loading && <Loading />}
       <div className="bg-[rgb(255,215,25)]">
         <Header
+          navs={navList}
           isWhite={true}
           pageTitle="마이페이지"
           titleBg="rgb(255,125,0)"
@@ -59,8 +67,8 @@ const MyPage = () => {
         </div>
       </div>
 
-      <div className="ml-[15%] pr-[15%] h-[calc(100vh-90px)] flex justify-center items-start overflow-y-scroll">
-        {/* <div className="mx-[15%] flex justify-center items-center"> */}
+      <div className="mx-[15%] flex justify-center items-center">
+        {/* <div className="ml-[15%] pr-[15%] h-[calc(100vh-90px)] flex justify-center items-start overflow-y-scroll"> */}
         <Outlet />
       </div>
     </>

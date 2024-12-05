@@ -2,9 +2,9 @@ import { useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { FaBackspace } from "react-icons/fa";
 import { toast } from "react-toastify";
+import { getCookie, setCookie } from "../../../etc/util/cookieUtil";
 import { login } from "../../api/memberAPI";
-import { getCookie, setCookie } from "../../util/cookieUtil";
-import Loading from "../../etc/Loading";
+import Loading from "../../../etc/component/Loading";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -53,8 +53,12 @@ const Login = () => {
           } else {
             setCookie("jwt", data.accessToken);
             setCookie("expirationTime", data.expirationTime);
-            setCookie("name", data.name);
-            setCookie("address", data.address);
+            setCookie("userName", data.name ?? "-");
+            setCookie("userAddress", data.address);
+            setCookie(
+              "userEmail",
+              userRole === "GENERAL" ? userId : data.email ?? "-"
+            );
             setCookie("userId", userId);
             setCookie("userRole", userRole);
             setCookie("idSave", userRole === "ADMIN" ? false : idSave);
@@ -82,6 +86,21 @@ const Login = () => {
   const onKeyUpLogin = (e) => {
     if (e.key === "Enter") {
       onCLickLogin(e);
+    } else if (e.key === "Escape") {
+      // ToDEL 삭제
+      if (userRole === "GENERAL") {
+        setUserId("bell4916@naver.com");
+        setUserPw("qwerQWER1234!@#$");
+        onCLickLogin(e);
+      } else if (userRole === "BUSINESS") {
+        setUserId("520-38-01151");
+        setUserPw("qwerQWER1234!@#$");
+        onCLickLogin(e);
+      } else if (userRole === "ADMIN") {
+        setUserId("ADMIN");
+        setUserPw("ADMIN");
+        onCLickLogin(e);
+      }
     }
   };
 

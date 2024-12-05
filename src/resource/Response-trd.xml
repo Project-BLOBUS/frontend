@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?><response>
+  <header>
+    <resultCode>00</resultCode>
+    <resultMsg>NORMAL_CODE</resultMsg>
+  </header>
+  <body>
+    <items>
+      <item>
+        <op_at>N</op_at>
+        <op_st_dt>2024-10-24</op_st_dt>
+        <op_ed_dt>2024-10-24</op_ed_dt>
+        <pay_at>Y</pay_at>
+        <place_nm>국립부산국악원</place_nm>
+        <title>음악축제: 악, 듣고 싶다: 국립부산국악원 기악단, 성악단</title>
+        <res_no>2024100078</res_no>
+      </item>
+      <item>
+        <op_at>N</op_at>
+        <op_st_dt>2024-11-16</op_st_dt>
+        <op_ed_dt>2024-11-16</op_ed_dt>
+        <pay_at>Y</pay_at>
+        <place_nm>북구문화예술회관</place_nm>
+        <title>시인 나태주 X 앙상블 더류, 시와 음악이 있는 콘서트: 좋다고 하니까 나도 좋다 </title>
+        <res_no>2024100123</res_no>
+      </item>
+      <item>
+        <op_at>N</op_at>
+        <op_st_dt>2024-11-11</op_st_dt>
+        <op_ed_dt>2024-11-11</op_ed_dt>
+        <pay_at>Y</pay_at>
+        <place_nm>해운대문화회관</place_nm>
+        <title>사자탈을 쓴 장산범</title>
+        <res_no>2024100152</res_no>
+      </item>
+      <item>
+        <op_at>N</op_at>
+        <op_st_dt>2024-10-31</op_st_dt>
+        <op_ed_dt>2024-10-31</op_ed_dt>
+        <pay_at>Y</pay_at>
+        <place_nm>해운대문화회관</place_nm>
+        <title>On Stage Concert, 예나드리 예술동행: 수다</title>
+        <res_no>2024100178</res_no>
+      </item>
+      <item>
+        <op_at>N</op_at>
+        <op_st_dt>2024-11-27</op_st_dt>
+        <op_ed_dt>2024-11-27</op_ed_dt>
+        <pay_at>N</pay_at>
+        <place_nm>부산예술회관</place_nm>
+        <title>문화가 있는 날 : 운사당(정자경 가야금병창아지트) </title>
+        <res_no>2024110065</res_no>
+      </item>
+      <item>
+        <op_at>N</op_at>
+        <op_st_dt>2024-11-14</op_st_dt>
+        <op_ed_dt>2024-11-14</op_ed_dt>
+        <pay_at>Y</pay_at>
+        <place_nm>부산예술회관</place_nm>
+        <title>하지희 가야금독주회_성금연류 가야금산조</title>
+        <res_no>2024110066</res_no>
+      </item>
+      <item>
+        <op_at>N</op_at>
+        <op_st_dt>2024-11-16</op_st_dt>
+        <op_ed_dt>2024-11-16</op_ed_dt>
+        <pay_at>N</pay_at>
+        <place_nm>부산예술회관</place_nm>
+        <title>부산풍물사랑 판(PAN) 2024년 제19회 정기공연</title>
+        <res_no>2024110067</res_no>
+      </item>
+      <item>
+        <op_at>N</op_at>
+        <op_st_dt>2024-12-07</op_st_dt>
+        <op_ed_dt>2024-12-07</op_ed_dt>
+        <pay_at>Y</pay_at>
+        <place_nm>국립부산국악원</place_nm>
+        <title>동화나라 별별친구: 빙빙빙 Being Being Being, 트라이아웃2</title>
+        <res_no>2024110107</res_no>
+      </item>
+      <item>
+        <op_at>N</op_at>
+        <op_st_dt>2024-12-13</op_st_dt>
+        <op_ed_dt>2024-12-14</op_ed_dt>
+        <pay_at>Y</pay_at>
+        <place_nm>국립부산국악원</place_nm>
+        <title>똥벼락 </title>
+        <res_no>2024110108</res_no>
+      </item>
+      <item>
+        <op_at>N</op_at>
+        <op_st_dt>2024-12-20</op_st_dt>
+        <op_ed_dt>2024-12-21</op_ed_dt>
+        <pay_at>Y</pay_at>
+        <place_nm>국립부산국악원</place_nm>
+        <title>동화나라 별별친구, 만보와 별별머리</title>
+        <res_no>2024110109</res_no>
+      </item>
+      <item>
+        <op_at>N</op_at>
+        <op_st_dt>2024-11-22</op_st_dt>
+        <op_ed_dt>2024-11-22</op_ed_dt>
+        <pay_at>N</pay_at>
+        <place_nm>부산문화회관</place_nm>
+        <title>대학생 작품제작 참여 지원사업, PPP (PUSAN PIRI PROJECT) : 도약</title>
+        <res_no>2024110143</res_no>
+      </item>
+      <item>
+        <op_at>N</op_at>
+        <op_st_dt>2024-12-07</op_st_dt>
+        <op_ed_dt>2024-12-07</op_ed_dt>
+        <pay_at>Y</pay_at>
+        <place_nm>국립부산국악원</place_nm>
+        <title>스타발굴프로젝트: 별, 빛, 밤 </title>
+        <res_no>2024110169</res_no>
+      </item>
+      <item>
+        <op_at>N</op_at>
+        <op_st_dt>2025-01-17</op_st_dt>
+        <op_ed_dt>2025-01-17</op_ed_dt>
+        <pay_at>Y</pay_at>
+        <place_nm>부산시민회관</place_nm>
+        <title>부산시민회관 신년음악회 </title>
+        <res_no>2024110207</res_no>
+      </item>
+    </items>
+    <numOfRows>49</numOfRows>
+    <pageNo>10</pageNo>
+    <totalCount>454</totalCount>
+  </body>
+</response>
