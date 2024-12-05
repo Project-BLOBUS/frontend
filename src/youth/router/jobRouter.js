@@ -22,7 +22,7 @@ const jobRouter = () => {
       ),
     },
     {
-      path: "policyRead",
+      path: "policyRead/:policyId",
       element: (
         <Suspense fallback={Loading}>
           <PolicyRead />

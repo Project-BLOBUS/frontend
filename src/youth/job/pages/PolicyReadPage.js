@@ -1,14 +1,29 @@
-import React from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { policyDetail } from "../api/jobApi";
+import { formatTextWithLineBreaks, formatUrl } from "../utils/formatUtil";
+
+const initState = {
+  policyId: 0,
+};
 
 const PolicyReadPage = () => {
   const navigate = useNavigate();
+  const { policyId } = useParams(); // URL에서 policyId 가져오기
+  const [policy, setPolicy] = useState(initState);
+  useEffect(() => {
+    policyDetail(policyId).then((data) => {
+      console.log(data);
+      setPolicy(data);
+    });
+  }, [policyId]);
 
   return (
     <>
       <div className="w-full bg-white p-8 rounded-md shadow-md border">
         {/* 정책 제목 */}
-        <h2 className="text-3xl font-bold mb-6">청년고용촉진지원</h2>
+        <h2 className="text-3xl font-bold mb-3">{policy.polyBizSjnm}</h2>
+        <p className="text-lg mb-6">{policy.polyItcnCn}</p>
 
         {/* 정책 설명 */}
         <div className="mb-8">
@@ -19,30 +34,24 @@ const PolicyReadPage = () => {
             <tbody>
               <tr className="border-b">
                 <td className="font-semibold w-1/4 py-2">정책 번호</td>
-                <td>R202402260087</td>
+                <td>{policy.bizId}</td>
               </tr>
               <tr className="border-b">
-                <td className="font-semibold py-2">정책 분야</td>
-                <td>일자리분야</td>
+                <td className="font-semibold w-1/4 py-2">정책 분야</td>
+                <td>{policy.polyRlmCd === "023020" ? "주거분야" : ""}</td>
               </tr>
               <tr className="border-b">
-                <td className="font-semibold py-2">지원 내용</td>
-                <td>
-                  미취업청년 시급 9,860원, 주 5일(일 8시간, 09:00 ~ 18:00)
-                  고용촉진지원금, 자격증 취득지원
-                </td>
+                <td className="font-semibold w-1/4 py-2">지원 내용</td>
+                <td>{formatTextWithLineBreaks(policy.sporCn)}</td>
               </tr>
               <tr className="border-b">
-                <td className="font-semibold py-2">사업 신청기간</td>
-                <td>2024년 02월 27일 ~ 2024년 03월 06일</td>
+                <td className="font-semibold w-1/4 py-2">사업 신청기간</td>
+                <td>{formatTextWithLineBreaks(policy.rqutPrdCn)}</td>
+                {/* <td>{policy.rqutPrdCn}</td> */}
               </tr>
               <tr className="border-b">
-                <td className="font-semibold py-2">지원 규모</td>
-                <td>145명</td>
-              </tr>
-              <tr>
-                <td className="font-semibold py-2">비고</td>
-                <td>24.02.27 10:00 ~ 03.06 18:00</td>
+                <td className="font-semibold w-1/4 py-2">지원 규모</td>
+                <td>{formatTextWithLineBreaks(policy.sporScvl)}</td>
               </tr>
             </tbody>
           </table>
@@ -57,19 +66,31 @@ const PolicyReadPage = () => {
             <tbody>
               <tr className="border-b">
                 <td className="font-semibold w-1/4 py-2">연령</td>
-                <td>만 19세 ~ 29세</td>
+                <td>{formatTextWithLineBreaks(policy.ageInfo)}</td>
               </tr>
               <tr className="border-b">
-                <td className="font-semibold py-2">거주 및 소득</td>
-                <td>부산광역시에 거주하는 만 29세 이하</td>
+                <td className="font-semibold w-1/4 py-2">거주 및 소득</td>
+                <td>{formatTextWithLineBreaks(policy.prcpCn)}</td>
               </tr>
               <tr className="border-b">
-                <td className="font-semibold py-2">학력</td>
-                <td>제한 없음</td>
+                <td className="font-semibold w-1/4 py-2">학력</td>
+                <td>{formatTextWithLineBreaks(policy.accrRqisCn)}</td>
               </tr>
               <tr className="border-b">
-                <td className="font-semibold py-2">추가 세부 사항</td>
-                <td>시청, 공공기관 등에서 제공</td>
+                <td className="font-semibold w-1/4 py-2">전공</td>
+                <td>{formatTextWithLineBreaks(policy.ㅁㅁㅁㅁㅁ)}</td>
+              </tr>
+              <tr className="border-b">
+                <td className="font-semibold w-1/4 py-2">취업상태</td>
+                <td>{formatTextWithLineBreaks(policy.ㅁㅁㅁㅁㅁ)}</td>
+              </tr>
+              <tr className="border-b">
+                <td className="font-semibold w-1/4 py-2">추가 세부 사항</td>
+                <td>{formatTextWithLineBreaks(policy.aditRscn)}</td>
+              </tr>
+              <tr className="border-b">
+                <td className="font-semibold w-1/4 py-2">참여제한대상</td>
+                <td>{formatTextWithLineBreaks(policy.prcpLmttTrgtCn)}</td>
               </tr>
             </tbody>
           </table>
@@ -84,30 +105,55 @@ const PolicyReadPage = () => {
             <tbody>
               <tr className="border-b">
                 <td className="font-semibold w-1/4 py-2">신청 절차</td>
-                <td>부산정보복지 신청 승인</td>
+                <td>{formatTextWithLineBreaks(policy.rqutProcCn)}</td>
               </tr>
               <tr className="border-b">
-                <td className="font-semibold w-1/4 py-2">신청 접수</td>
-                <td>
-                  부산정보복지포털 접수 :{" "}
-                  <a href="#" className="text-blue-500 underline">
-                    busanjob.net
-                  </a>
-                </td>
+                <td className="font-semibold w-1/4 py-2">신청 및 발표</td>
+                <td>{formatTextWithLineBreaks(policy.jdgnPresCn)}</td>
               </tr>
               <tr className="border-b">
-                <td className="font-semibold py-2">신청 및 발표</td>
-                <td>3.13 발표</td>
+                <td className="font-semibold w-1/4 py-2">신청접수</td>
+                <td>{formatUrl(policy.rqutUrla)}</td>
               </tr>
               <tr>
-                <td className="font-semibold py-2">제출 서류</td>
-                <td>신청서, 등본 등</td>
+                <td className="font-semibold w-1/4 py-2">제출서류</td>
+                <td>{formatTextWithLineBreaks(policy.pstnPaprCn)}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        {/* 기타 */}
+        <div className="mb-8">
+          <h3 className="w-full text-lg font-bold text-gray-600 mb-3 p-2 bg-gray-50">
+            기타
+          </h3>
+          <table className="table-auto w-full text-left text-sm text-gray-700 border-t-2 border-b-2">
+            <tbody>
+              <tr className="border-b">
+                <td className="font-semibold w-1/4 py-2">주관기관명</td>
+                <td>{formatTextWithLineBreaks(policy.mngtMson)}</td>
+              </tr>
+              <tr className="border-b">
+                <td className="font-semibold w-1/4 py-2">운영기관명</td>
+                <td>{formatTextWithLineBreaks(policy.cnsgNmor)}</td>
+              </tr>
+              <tr className="border-b">
+                <td className="font-semibold w-1/4 py-2">참고사이트1</td>
+                <td>{formatUrl(policy.rfcSiteUrla1)}</td>
+              </tr>
+              <tr className="border-b">
+                <td className="font-semibold w-1/4 py-2">참고사이트2</td>
+                <td>{formatUrl(policy.rfcSiteUrla2)}</td>
+              </tr>
+              <tr className="border-b">
+                <td className="font-semibold w-1/4 py-2">첨부파일</td>
+                <td>{formatTextWithLineBreaks(policy.etct)}</td>
               </tr>
             </tbody>
           </table>
         </div>
       </div>
-
       {/* 이전 페이지 버튼 */}
       <div className="w-full text-center">
         <button

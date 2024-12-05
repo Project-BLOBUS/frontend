@@ -77,7 +77,6 @@ const PolicyListPage = ({ title }) => {
 
       {/* 정책 리스트 영역 */}
       <div className="grid grid-cols-4 gap-4">
-        {/* {console.log("filteredServerData", { filteredServerData })} */}
         {filteredServerData.length > 0 ? (
           filteredServerData.map((policy) => (
             <PolicyListComponent key={policy.policyId} policy={policy} />
