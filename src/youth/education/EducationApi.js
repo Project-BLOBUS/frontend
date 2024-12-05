@@ -16,7 +16,7 @@ export const fetchPagedPolicies = async (data) => {
   // console.log(data);
   
   const page = data?.currentPage || 0;
-  const size = data?.pageSize || 5;
+  const size = data?.pageSize || 10;
   const keyword = data?.searchKeyword || "";
   const category = data?.selectedCategory || "전체";
   try {
