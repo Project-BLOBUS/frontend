@@ -8,12 +8,13 @@ const JobMain = lazy(() => import("../job/pages/MainPage"));
 const HouseMain = lazy(() => import("../house/pages/MainPage"));
 const Welfare = lazy(() => import("../welfare/WelfarePage"));
 const Education = lazy(() => import("../education/EducationPage"));
-const WelfarePolicyDetail = lazy(() =>
-  import("../welfare/WelfarePolicyDetail")
+const WelfarePolicyDetailRead = lazy(() =>
+  import("../welfare/WelfarePolicyDetailRead")
 );
-const EducationPolicyDetail = lazy(() =>
-  import("../education/EducationPolicyDetail")
+const EducationPolicyDetailRead = lazy(() =>
+  import("../education/EducationPolicyDetailRead")
 );
+const WelfarePolicyDetailModify = lazy(() => import("../welfare/WelfarePolicyDetailModify"));
 
 const youthRouter = () => {
   return [
@@ -48,7 +49,15 @@ const youthRouter = () => {
       path: "welfare/:id",
       element: (
         <Suspense fallback={Loading}>
-          <WelfarePolicyDetail />
+          <WelfarePolicyDetailRead />
+        </Suspense>
+      ),
+    },
+    {
+      path: "welfare/modify/:id",
+      element: (
+        <Suspense fallback={Loading}>
+          <WelfarePolicyDetailModify />
         </Suspense>
       ),
     },
@@ -64,7 +73,7 @@ const youthRouter = () => {
       path: "education/:id",
       element: (
         <Suspense fallback={Loading}>
-          <EducationPolicyDetail />
+          <EducationPolicyDetailRead />
         </Suspense>
       ),
     },

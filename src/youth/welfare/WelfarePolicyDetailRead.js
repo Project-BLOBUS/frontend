@@ -3,14 +3,15 @@ import { useNavigate, useParams, useLocation } from "react-router-dom";
 import { fetchPolicyById } from "./WelfareApi";
 import ShareModal from "./ShareModal";
 
-const WelfarePolicyDetail = () => {
+const WelfarePolicyDetailRead = () => {
   const { id } = useParams(); // URL에서 ID 가져오기
-  // const location = useLocation();
+  const location = useLocation();
   const [policy, setPolicy] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [isShareModalOpen, setIsShareModalOpen] = useState(false);
   const navigate = useNavigate();
+  const searchs = location.state?.searchs || {};
 
   useEffect(() => {
     const getPolicy = async () => {
@@ -49,7 +50,9 @@ const WelfarePolicyDetail = () => {
 
   const currentUrl = window.location.href;
 
-  
+  const handlePolicyModifyClick = (policyId) => {
+    navigate(`/youth/welfare/modify/${policyId}`, { state: { searchs } });
+  };
 
   return (
     <div>
@@ -244,12 +247,20 @@ const WelfarePolicyDetail = () => {
           </div>
         </div>
 
-        <div className="w-[200px] h-[20px] ml-[40%] mt-[5px]">
+        <div className="border-2 border-red-400 h-auto rounded-md pt-4 pb-4 pr-4 mt-[5px]">
+          <button
+            onClick={() => {
+              handlePolicyModifyClick(policy.policyId);
+            }}
+            className="border-2 border-blue-600 ml-2"
+          >
+            수정하기
+          </button>
           <button
             onClick={() => {
               navigate(-1);
             }}
-            className="border-2 border-red-600 m-2"
+            className="border-2 border-red-600"
           >
             목록으로 돌아가기
           </button>
@@ -266,4 +277,4 @@ const WelfarePolicyDetail = () => {
   );
 };
 
-export default WelfarePolicyDetail;
+export default WelfarePolicyDetailRead;

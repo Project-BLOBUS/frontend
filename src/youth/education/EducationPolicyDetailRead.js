@@ -3,7 +3,7 @@ import { useNavigate, useParams, useLocation } from "react-router-dom";
 import { fetchPolicyById } from "./EducationApi";
 import ShareModal from "./ShareModal";
 
-const EducationPolicyDetail = () => {
+const EducationPolicyDetailRead = () => {
   const { id } = useParams(); // URL에서 ID 가져오기
   // const location = useLocation();
   const [policy, setPolicy] = useState(null);
@@ -274,4 +274,4 @@ const EducationPolicyDetail = () => {
   );
 };
 
-export default EducationPolicyDetail;
+export default EducationPolicyDetailRead;
