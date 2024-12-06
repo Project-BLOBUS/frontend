@@ -4,7 +4,7 @@ import { Outlet } from "react-router";
 
 function Resources() {
   const resources = [
-    { name: "디지털 마케팅", link: "/" },
+    { name: "디지털 마케팅", link: "digital" },
     { name: "문화", link: "culture" },
     { name: "관광", link: "sightsee" },
   ];
