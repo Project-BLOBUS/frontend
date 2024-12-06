@@ -53,7 +53,6 @@ const Custom = () => {
   const [rList, setRList] = useState({
     전체: false,
     문화: false,
-    지원: false,
   });
 
   const [kList, setKList] = useState([]);
@@ -173,7 +172,7 @@ const Custom = () => {
 
         <div className="w-full border-b-4 border-gray-500 text-base flex justify-start items-center space-x-4">
           {makeSelect("청년", open, setOpen, yList, setYList, moveToList)}
-          {makeSelect("기업", open, setOpen, eList, setEList, moveToList)}
+          {/* {makeSelect("기업", open, setOpen, eList, setEList, moveToList)} */}
           {makeSelect("지역", open, setOpen, rList, setRList, moveToList)}
           {makeSelect("키워드", open, setOpen, kList, setKList, moveToList)}
 
