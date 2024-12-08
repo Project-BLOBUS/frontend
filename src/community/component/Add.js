@@ -4,7 +4,7 @@ import { FaLock, FaLockOpen } from "react-icons/fa";
 import { toast } from "react-toastify";
 import { getCookie } from "../../etc/util/cookieUtil";
 import { registerPost } from "../api/postAPI";
-import useCustomTag from "../hook/useCustomeTag";
+import useCommunityTag from "../hook/useCommunityTag";
 import Loading from "../../etc/component/Loading";
 
 const initPost = {
@@ -28,7 +28,7 @@ const initPost = {
 const Add = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
-  const { makeBtn } = useCustomTag();
+  const { makeBtn } = useCommunityTag();
 
   const [jwt, setJwt] = useState(getCookie("jwt"));
   const [post, setPost] = useState(initPost);
@@ -142,7 +142,7 @@ const Add = () => {
                   카테고리
                 </option>
                 <option value="청년">청년관</option>
-                <option value="기업">기업관</option>
+                {/* <option value="기업">기업관</option> */}
                 <option value="지역">지역관</option>
               </select>
 

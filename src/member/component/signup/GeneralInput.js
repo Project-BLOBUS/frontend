@@ -11,7 +11,7 @@ import {
   removeCookie,
 } from "../../../etc/util/cookieUtil";
 import { duplicate, sendMail, register } from "../../api/memberAPI";
-import useCustomTag from "../../hook/useCustomeTag";
+import useMemberTag from "../../hook/useMemberTag";
 import Loading from "../../../etc/component/Loading";
 import AddressList from "../../data/AddressList";
 
@@ -32,7 +32,7 @@ const initState = {
 
 const GeneralInput = () => {
   const navigate = useNavigate();
-  const { makeBtn, makeAdd, makeInput, makeSelect, makeRatio } = useCustomTag();
+  const { makeBtn, makeAdd, makeInput, makeSelect, makeRatio } = useMemberTag();
   const [loading, setLoading] = useState(false);
 
   const [member, setMember] = useState(initState);

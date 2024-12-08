@@ -4,7 +4,7 @@ import { FaLock } from "react-icons/fa";
 import { toast } from "react-toastify";
 import { getCookie } from "../../etc/util/cookieUtil";
 import { getPost, deletePost } from "../api/postAPI";
-import useCustomTag from "../hook/useCustomeTag";
+import useCommunityTag from "../hook/useCommunityTag";
 import Loading from "../../etc/component/Loading";
 import Comment from "./Comment";
 
@@ -31,7 +31,7 @@ const Read = () => {
   const location = useLocation();
   const [loading, setLoading] = useState(false);
   const { id } = useParams();
-  const { makeBtn } = useCustomTag();
+  const { makeBtn } = useCommunityTag();
 
   const [dto, setDto] = useState(initPost);
 
@@ -115,7 +115,7 @@ const Read = () => {
               <div className="text-left">
                 작성시간 : {printTime(dto.createdAt)}
                 <span className="text-gray-500">
-                  {new Date(dto.updatedAt) - new Date(dto.createdAt) < 1000
+                  {new Date(dto.updatedAt) - new Date(dto.createdAt) < 60 * 1000
                     ? ""
                     : ` (${printTime(dto.updatedAt)}에 수정됨)`}
                 </span>

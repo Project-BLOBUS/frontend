@@ -5,7 +5,7 @@ import { toast } from "react-toastify";
 import { getCookie } from "../../etc/util/cookieUtil";
 import { getPostList } from "../api/postAPI";
 import useCustomMove from "../../etc/hook/useCustomMove";
-import useCustomTag from "../hook/useCustomeTag";
+import useCommunityTag from "../hook/useCommunityTag";
 import Loading from "../../etc/component/Loading";
 import Paging from "../../etc/component/Paging";
 
@@ -26,7 +26,7 @@ const List = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const { page, size, moveToList } = useCustomMove("community/list");
-  const { makeBtn } = useCustomTag();
+  const { makeBtn } = useCommunityTag();
 
   const [data, setData] = useState(initState);
 
@@ -104,7 +104,7 @@ const List = () => {
           <div className="w-1/3 flex justify-start items-center space-x-2">
             {makeTab("전체", "", filter, setFilter, false, moveToList)}
             {makeTab("청년관", "청년", filter, setFilter, false, moveToList)}
-            {makeTab("기업관", "기업", filter, setFilter, false, moveToList)}
+            {/* {makeTab("기업관", "기업", filter, setFilter, false, moveToList)} */}
             {makeTab("지역관", "지역", filter, setFilter, false, moveToList)}
           </div>
 

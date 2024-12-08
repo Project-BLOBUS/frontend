@@ -1,4 +1,4 @@
-const useCustomTag = () => {
+const useMemberTag = () => {
   const makeBtn = (name, onClick) => {
     const bgColor = {
       "중복 확인": "bg-red-500 hover:bg-red-300",
@@ -125,4 +125,4 @@ const useCustomTag = () => {
   return { makeBtn, makeAdd, makeInput, makeSelect, makeRatio };
 };
 
-export default useCustomTag;
+export default useMemberTag;

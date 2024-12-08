@@ -10,7 +10,7 @@ import {
   registerComment,
 } from "../api/commentAPI";
 import useCustomMove from "../../etc/hook/useCustomMove";
-import useCustomTag from "../hook/useCustomeTag";
+import useCommunityTag from "../hook/useCommunityTag";
 import Loading from "../../etc/component/Loading";
 import Paging from "../../etc/component/Paging";
 
@@ -42,7 +42,7 @@ const Comment = () => {
   const [loading, setLoading] = useState(false);
   const { id } = useParams();
   const { page, size, moveToList } = useCustomMove(`community/read/${id}`);
-  const { makeBtn } = useCustomTag();
+  const { makeBtn } = useCommunityTag();
 
   const [data, setData] = useState(initState);
   const [dtoA, setDtoA] = useState(initComment);
@@ -288,7 +288,7 @@ const Comment = () => {
                         <div className="text-xs text-gray-400">
                           {new Date(comment.updatedAt) -
                             new Date(comment.createdAt) <
-                          1000
+                          60 * 1000
                             ? ` ${printTime(comment.createdAt)} 등록`
                             : ` ${printTime(comment.updatedAt)} 수정`}
                         </div>

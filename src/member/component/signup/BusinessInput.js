@@ -9,7 +9,7 @@ import {
 } from "../../../etc/util/cookieUtil";
 import { duplicate, register } from "../../api/memberAPI";
 import { checkBusinessCode } from "../../api/externalAPI ";
-import useCustomTag from "../../hook/useCustomeTag";
+import useMemberTag from "../../hook/useMemberTag";
 import Loading from "../../../etc/component/Loading";
 import AddressList from "../../data/AddressList";
 
@@ -28,7 +28,7 @@ const initState = {
 
 const BusinessInput = () => {
   const navigate = useNavigate();
-  const { makeBtn, makeAdd, makeInput, makeSelect } = useCustomTag();
+  const { makeBtn, makeAdd, makeInput, makeSelect } = useMemberTag();
   const [loading, setLoading] = useState(false);
 
   const [member, setMember] = useState(initState);

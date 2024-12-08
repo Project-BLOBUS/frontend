@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { setCookie } from "../../../etc/util/cookieUtil";
 import { find } from "../../api/memberAPI";
-import useCustomTag from "../../hook/useCustomeTag";
+import useMemberTag from "../../hook/useMemberTag";
 import Loading from "../../../etc/component/Loading";
 
 const initState = {
@@ -16,7 +16,7 @@ const initState = {
 
 const FindId = () => {
   const navigate = useNavigate();
-  const { makeAdd, makeInput } = useCustomTag();
+  const { makeAdd, makeInput } = useMemberTag();
   const [loading, setLoading] = useState(false);
 
   const [member, setMember] = useState(initState);
