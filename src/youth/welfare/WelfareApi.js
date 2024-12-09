@@ -52,9 +52,10 @@ export const fetchPolicyById = async (id) => {
 };
 
 // 정책 수정
-export const modifyPolicy = async (modifyData) => {
+export const modifyPolicy = async (policyId, modifyData) => {
   try {
-    const response = await axiosInstance.post(`/policies/${modifyData.policyId}`, modifyData);
+    const response = await axiosInstance.post(`/policies/${policyId}`, modifyData);
+    console.log(`Policy ID ${modifyData.policyId} updated successfully.`);
     return response.data;
   } catch (error) {
     console.error(`Failed to update policy ID ${modifyData.policyId}:`, error);

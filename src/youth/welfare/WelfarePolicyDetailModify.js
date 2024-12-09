@@ -1,13 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { fetchPolicyById, modifyPolicy } from './WelfareApi'; // API 함수 임포트
-import axios from 'axios';
 
 const WelfarePolicyDetailModify = () => {
   const navigate = useNavigate();
-  const location = useLocation();
-  const searchs = location.state?.searchs;
-  const policyId = location.pathname.split('/').pop();
+  const { id: policyId } = useParams(); // URL에서 policyId 추출
 
   const [policy, setPolicy] = useState({
     policyId: policyId,
@@ -44,6 +41,8 @@ const WelfarePolicyDetailModify = () => {
 
     fetchPolicyById(policyId).then((data) => setPolicy(data))
 
+    console.log("policy: " + policy.policyId);
+
   }, [policyId]);
 
   const handleChange = (e) => {
@@ -57,7 +56,7 @@ const WelfarePolicyDetailModify = () => {
 //policy를 json으로 만들어서 보내야함
   const handleClickModify = () => { //버튼 클릭시 
 
-    modifyPolicy(policy).then(data => {
+    modifyPolicy(policy.policyId, policy).then(data => {
       console.log("modify result: " + data)
     })
 

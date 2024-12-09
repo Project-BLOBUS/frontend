@@ -26,22 +26,19 @@ const WelfarePolicyDetailRead = () => {
     };
 
     getPolicy();
-  }, [id]);
+  }, [policy, id]);
 
-  // //  목록으로 돌아가기(이전 페이지로 이동)
-  // const handlePreviousPage = () => {
-  //   const searchs = location.state?.searchs || {};
-  //   const searchParams = new URLSearchParams({
-  //     page: searchs.currentPage + 1,
-  //     ...(searchs.searchKeyword && { keyword: searchs.searchKeyword }),
-  //     category: searchs.selectedCategory,
-  //   });
-  //   navigate(`/youth/welfare?${searchParams.toString()}`);    
-  // };
-  // ==> 위에꺼는 그냥 버튼에다가 
-  // onClick={() => {
-  //   navigate(-1);
-  // }}
+  //  목록으로 돌아가기(이전 페이지로 이동)
+  const handlePreviousPage = () => {
+    const searchs = location.state?.searchs || {};
+    const searchParams = new URLSearchParams({
+      page: searchs.currentPage + 1,
+      ...(searchs.searchKeyword && { keyword: searchs.searchKeyword }),
+      category: searchs.selectedCategory,
+    });
+    navigate(`/youth/welfare?${searchParams.toString()}`);    
+  };
+
   // 이거 넣어주는걸로 대체됨
 
   if (loading) return <p>Loading...</p>;
@@ -257,9 +254,7 @@ const WelfarePolicyDetailRead = () => {
             수정하기
           </button>
           <button
-            onClick={() => {
-              navigate(-1);
-            }}
+            onClick={handlePreviousPage}
             className="border-2 border-red-600"
           >
             목록으로 돌아가기
