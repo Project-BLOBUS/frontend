@@ -80,7 +80,11 @@ const WelfarePage = () => {
     };
   }, [location]);
 
-  
+    // 페이지 로드 시 스크롤을 맨 위로 이동
+    useEffect(() => {
+      window.scrollTo(0, 0);
+    }, []);
+
   // 페이지 변경 함수 수정
   const handlePageChange = (page) => {
     // 페이지의 제일 위쪽으로 이동

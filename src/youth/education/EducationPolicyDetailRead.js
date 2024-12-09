@@ -1,16 +1,20 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams, useLocation } from "react-router-dom";
-import { fetchPolicyById } from "./EducationApi";
+import { deletePolicy, fetchPolicyById } from "./EducationApi";
+import { getCookie } from "../../etc/util/cookieUtil";
 import ShareModal from "./ShareModal";
+import Swal from "sweetalert2";
 
 const EducationPolicyDetailRead = () => {
   const { id } = useParams(); // URL에서 ID 가져오기
-  // const location = useLocation();
+  const location = useLocation();
   const [policy, setPolicy] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [isShareModalOpen, setIsShareModalOpen] = useState(false);
   const navigate = useNavigate();
+  const searchs = location.state?.searchs || {};
+  const userRole = getCookie("userRole");
 
   useEffect(() => {
     const getPolicy = async () => {
@@ -25,23 +29,27 @@ const EducationPolicyDetailRead = () => {
     };
 
     getPolicy();
-  }, [id]);
+ 
+    if (location.state?.updated) {
+      getPolicy();
+    }
+  }, [id, location.state?.updated]); // 의존성 배열에 location.state?.updated 포함
 
-  // //  목록으로 돌아가기(이전 페이지로 이동)
-  // const handlePreviousPage = () => {
-  //   const searchs = location.state?.searchs || {};
-  //   const searchParams = new URLSearchParams({
-  //     page: searchs.currentPage + 1,
-  //     ...(searchs.searchKeyword && { keyword: searchs.searchKeyword }),
-  //     category: searchs.selectedCategory,
-  //   });
-  //   navigate(`/youth/education?${searchParams.toString()}`);    
-  // };
-  // ==> 위에꺼는 그냥 버튼에다가 
-  // onClick={() => {
-  //   navigate(-1);
-  // }}
-  // 이거 넣어주는걸로 대체됨
+  // 페이지 로드 시 스크롤을 맨 위로 이동
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  //  목록으로 돌아가기(이전 페이지로 이동)
+  const handlePreviousPage = () => {
+    const searchs = location.state?.searchs || {};
+    const searchParams = new URLSearchParams({
+      page: searchs.currentPage + 1,
+      ...(searchs.searchKeyword && { keyword: searchs.searchKeyword }),
+      category: searchs.selectedCategory,
+    });
+    navigate(`/youth/education?${searchParams.toString()}`);    
+  };
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>{error}</p>;
@@ -58,6 +66,48 @@ const EducationPolicyDetailRead = () => {
       </React.Fragment>
     ));
   }
+
+  const handlePolicyModifyClick = (policyId) => {
+    navigate(`/youth/education/modify/${policyId}`, { state: { searchs } });
+  };
+
+  const handleDeleteClick = () => {
+    Swal.fire({
+        icon: "warning",
+        title: "삭제",
+        text: `[${policy.policyName}] 정책을 삭제 하시겠습니까??`,
+        showCancelButton: true,
+        confirmButtonText: "삭제",
+        cancelButtonText: "취소",
+    }).then((res) => {
+        if (res.isConfirmed) {
+            deletePolicy(policy.policyId).then(() => {
+                Swal.fire({
+                    icon: "success",
+                    title: "삭제되었습니다.",
+                    showConfirmButton: false,
+                    timer: 1000
+                });
+                navigate(`/youth/education`, { state: { searchs } });
+            }).catch((error) => {
+                console.error("Failed to delete policy:", error);
+                Swal.fire({
+                    icon: "error",
+                    title: "정책 삭제에 실패했습니다.",
+                    text: error.message,
+                });
+            });
+        } else {
+            // 취소
+            Swal.fire({
+                icon: "info",
+                title: "삭제가 취소되었습니다.",
+                showConfirmButton: false,
+                timer: 1500
+            });
+          }
+        });
+    };
   
   return (
     <div>
@@ -252,12 +302,30 @@ const EducationPolicyDetailRead = () => {
           </div>
         </div>
 
-        <div className="w-[200px] h-[20px] ml-[40%] mt-[5px]">
+        <div className="border-2 border-red-400 h-auto rounded-md pt-4 pb-4 pr-4 mt-[5px]">
+          {userRole === "ADMIN" && (
+            <button
+              onClick={() => {
+                handlePolicyModifyClick(policy.policyId);
+              }}
+              className="border-2 border-blue-600 ml-2"
+            >
+              수정하기
+            </button>
+          )}
+          {userRole === "ADMIN" && (
+            <button
+              onClick={() => {
+                handleDeleteClick();
+              }}
+              className="border-2 border-blue-600 ml-2"
+            >
+              삭제하기
+            </button>
+          )}
           <button
-            onClick={() => {
-              navigate(-1);
-            }}
-            className="border-2 border-red-600 m-2"
+            onClick={handlePreviousPage}
+            className="border-2 border-red-600"
           >
             목록으로 돌아가기
           </button>

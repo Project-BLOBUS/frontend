@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { fetchPolicyById, modifyPolicy } from './WelfareApi'; // API 함수 임포트
+import { fetchPolicyById, modifyPolicy } from './EducationApi'; // API 함수 임포트
 import Swal from "sweetalert2";
 
-const WelfarePolicyDetailModify = () => {
+const EducationPolicyDetailModify = () => {
   const navigate = useNavigate();
   const { id: policyId } = useParams(); // URL에서 policyId 추출
 
@@ -75,7 +75,7 @@ const WelfarePolicyDetailModify = () => {
                     showConfirmButton: false,
                     timer: 1500
                 });
-                navigate(`/youth/welfare/${policy.policyId}`, { state: { updated: true } }); //수정한 상세 페이지로 이동하면서 상태 전달
+                navigate(`/youth/education/${policy.policyId}`, { state: { updated: true } }); //수정한 상세 페이지로 이동하면서 상태 전달
             }).catch((error) => {
                 console.error("Failed to modify policy:", error);
                 Swal.fire({
@@ -458,4 +458,4 @@ const WelfarePolicyDetailModify = () => {
   );
 };
 
-export default WelfarePolicyDetailModify;
+export default EducationPolicyDetailModify;

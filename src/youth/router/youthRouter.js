@@ -15,6 +15,7 @@ const EducationPolicyDetailRead = lazy(() =>
   import("../education/EducationPolicyDetailRead")
 );
 const WelfarePolicyDetailModify = lazy(() => import("../welfare/WelfarePolicyDetailModify"));
+const EducationPolicyDetailModify = lazy(() => import("../education/EducationPolicyDetailModify"));
 
 const youthRouter = () => {
   return [
@@ -74,6 +75,14 @@ const youthRouter = () => {
       element: (
         <Suspense fallback={Loading}>
           <EducationPolicyDetailRead />
+        </Suspense>
+      ),
+    },
+    {
+      path: "education/modify/:id",
+      element: (
+        <Suspense fallback={Loading}>
+          <EducationPolicyDetailModify />
         </Suspense>
       ),
     },
