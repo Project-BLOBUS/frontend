@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import "../css/Culture.css";
+import styles from "../css/Culture.module.css";
+// import "../css/Culture.css";
 
 const CultureListComponent = ({ culture }) => {
   const [isHovered, setIsHovered] = useState(false);
@@ -8,7 +9,7 @@ const CultureListComponent = ({ culture }) => {
   const handleMouseLeave = () => setIsHovered(false);
 
   return (
-    <div className=" relative border border-gray-200 rounded-md pb-3 shadow-sm hover:shadow-md cursor-pointer transition-shadow duration-300 overflow-hidden">
+    <div className="relative border border-gray-200 rounded-md pb-3 shadow-sm hover:shadow-md cursor-pointer transition-shadow duration-300 overflow-hidden">
       <div onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
         <div>
           <img
@@ -43,7 +44,7 @@ const CultureListComponent = ({ culture }) => {
         {/* 이동 버튼 */}
         {isHovered && (
           <button
-            className="btn"
+            className={styles.btn}
             onClick={() => window.open(culture.card._url, "_blank")}
           >
             <span>바로가기</span>

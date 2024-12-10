@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
-import "../css/Digital.css";
+import styles from "../css/Digital.module.css";
+// import "../css/Digital.css";
 
 function DigitalPage() {
   const cities = [
@@ -101,11 +102,11 @@ function DigitalPage() {
 
   return (
     <div
-      className="container"
+      className={styles.container}
       style={{ width: "99vw", height: "100vh", left: "-22%", display: "flex" }}
     >
       <div
-        className="sidebar"
+        className={styles.sidebar}
         style={{
           width: "250px",
           background: "rgba(0,0,0,0.8)",
@@ -132,7 +133,7 @@ function DigitalPage() {
           ))}
         </ul>
         <div
-          className="toggle-sound"
+          className={styles.toggleSound}
           onClick={toggleSound}
           style={{ marginTop: "20px" }}
         >
@@ -145,11 +146,12 @@ function DigitalPage() {
           <label>City sounds</label>
         </div>
       </div>
-      <div className="content" style={{ flex: 1, position: "relative" }}>
+      <div className={styles.content} style={{ flex: 1, position: "relative" }}>
         <iframe
           id="videoPlayer"
           width="100%"
           height="100%"
+          className={styles.iframe}
           src={currentCity.url}
           allow="autoplay; fullscreen"
           allowFullScreen

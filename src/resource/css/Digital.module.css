@@ -95,14 +95,14 @@ body {
   z-index: 1;
 }
 
-.toggle-sound {
+.toggleSound {
   display: flex;
   align-items: center;
   margin-top: 20px;
   cursor: pointer;
 }
 
-.toggle-sound input[type="checkbox"] {
+.toggleSound input[type="checkbox"] {
   appearance: none;
   width: 40px;
   height: 20px;
@@ -115,11 +115,11 @@ body {
   transition: background 0.3s;
 }
 
-.toggle-sound input[type="checkbox"]:checked {
+.toggleSound input[type="checkbox"]:checked {
   background: #4caf50;
 }
 
-.toggle-sound input[type="checkbox"]::before {
+.toggleSound input[type="checkbox"]::before {
   content: "";
   position: absolute;
   width: 18px;
@@ -131,11 +131,11 @@ body {
   transition: transform 0.3s;
 }
 
-.toggle-sound input[type="checkbox"]:checked::before {
+.toggleSound input[type="checkbox"]:checked::before {
   transform: translateX(20px);
 }
 
-.toggle-sound label {
+.toggleSound label {
   color: #fff;
   font-size: 14px;
 }

@@ -81,6 +81,7 @@ const CulturePage = () => {
   // selectedCategory가 변경될 때마다 필터링을 수행
   useEffect(() => {
     handleFilter();
+    console.log(allData);
   }, [selectedCategory]); // selectedCategory가 변경될 때마다 필터링 실행
 
   // 최상단으로 스크롤하는 함수

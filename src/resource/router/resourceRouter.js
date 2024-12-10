@@ -1,6 +1,8 @@
 import { Suspense, lazy } from "react";
 import { Navigate } from "react-router";
-
+// import CulturePage from "../page/CultureListPage";
+// import SightseePage from "../page/SightseeListPage";
+// import DigitalPage from "../page/DigitalListPage";
 // 로딩 중 표시할 컴포넌트
 const Loading = <div>Loading....</div>;
 
