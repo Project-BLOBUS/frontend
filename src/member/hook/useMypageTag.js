@@ -10,7 +10,7 @@ const useMypageTag = () => {
           목록
         </div>
 
-        <div className="w-full h-[420px] text-base text-nowrap flex flex-wrap justify-start items-start">
+        <div className="w-full h-[350px] text-base text-nowrap flex flex-wrap justify-start items-start">
           {data.dtoList.length === 0 ? (
             <div className="w-full py-20 text-2xl">
               해당하는 게시물이 없습니다.
@@ -19,7 +19,10 @@ const useMypageTag = () => {
             data.dtoList.map((dto, index) => (
               <div
                 key={index}
-                className={`w-[calc(100%/3-1rem)] h-[calc(100%/2-1rem)] mx-2 mt-2 p-4 border-2 border-gray-400 rounded-xl flex flex-col justify-center items-center space-y-4 cursor-pointer hover:bg-gray-200 transition duration-500`}
+                className={`w-[calc(100%/3-1rem)] h-[calc(100%/2-1rem)] mx-2 mt-2 p-4 border-2 border-gray-400 rounded-xl flex flex-col justify-center items-center space-y-4 ${
+                  dto.link &&
+                  "cursor-pointer hover:bg-gray-200 transition duration-500"
+                }`}
                 onClick={() =>
                   dto.mainCategory === "지역" && dto.link
                     ? window.open(dto.link)

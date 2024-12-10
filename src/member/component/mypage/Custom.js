@@ -37,7 +37,6 @@ const Custom = () => {
   const [yList, setYList] = useState({
     전체: false,
     일자리: false,
-    // 구인: false,
     주거: false,
     복지: false,
     교육: false,

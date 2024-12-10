@@ -114,7 +114,17 @@ const Document = () => {
 
         <div className="w-full h-[420px] text-base text-nowrap flex flex-col justify-start items-center">
           {data.dtoList.length === 0 ? (
-            <div className="w-full py-20 text-2xl">작성글 이력이 없습니다.</div>
+            <>
+              <div className="w-full pt-20 text-2xl">
+                작성글 이력이 없습니다.
+              </div>
+              <div
+                className="w-1/2 p-10 text-base text-right cursor-pointer hover:text-gray-300 hover:underline transition duration-500"
+                onClick={() => navigate("/community/add")}
+              >
+                글 쓰기
+              </div>
+            </>
           ) : (
             data.dtoList.map((dto, index) => (
               <div
