@@ -42,11 +42,6 @@ const Custom = () => {
     교육: false,
   });
 
-  const [eList, setEList] = useState({
-    전체: false,
-    기업: false,
-  });
-
   const [rList, setRList] = useState({
     전체: false,
     문화: false,
@@ -71,7 +66,6 @@ const Custom = () => {
             );
 
           set(yList, setYList);
-          set(eList, setEList);
           set(rList, setRList);
         } else {
           const set = (list, setList, data) =>
@@ -84,7 +78,6 @@ const Custom = () => {
             );
 
           set(yList, setYList, data.청년);
-          set(eList, setEList, data.기업);
           set(rList, setRList, data.지역);
 
           data.키워드 &&
@@ -108,11 +101,10 @@ const Custom = () => {
     setLoading(true);
 
     const yListStr = listToStr(yList);
-    const eListStr = listToStr(eList);
     const rListStr = listToStr(rList);
     const kListStr = listToStr(kList);
 
-    getCustom({ page, size }, yListStr, eListStr, rListStr, kListStr)
+    getCustom({ page, size }, yListStr, rListStr, kListStr)
       .then((data) => {
         if (data.error) {
           setData(initState);
@@ -129,7 +121,7 @@ const Custom = () => {
       });
 
     setLoading(false);
-  }, [page, size, yList, eList, rList, kList]);
+  }, [page, size, yList, rList, kList]);
 
   const listToStr = (list) => {
     return Object.entries(list)
@@ -148,7 +140,6 @@ const Custom = () => {
 
         <div className="w-full border-b-4 border-gray-500 text-base flex justify-start items-center space-x-4">
           {makeSelect("청년", open, setOpen, yList, setYList, moveToList)}
-          {/* {makeSelect("기업", open, setOpen, eList, setEList, moveToList)} */}
           {makeSelect("지역", open, setOpen, rList, setRList, moveToList)}
           {makeSelect("키워드", open, setOpen, kList, setKList, moveToList)}
 
@@ -157,12 +148,7 @@ const Custom = () => {
             onClick={() => {
               setLoading(true);
 
-              saveSetting(
-                listToStr(yList),
-                listToStr(eList),
-                listToStr(rList),
-                listToStr(kList)
-              )
+              saveSetting(listToStr(yList), listToStr(rList), listToStr(kList))
                 .then((data) => {
                   if (data.error) {
                     toast.error("설정 저장에 실패했습니다.", { toastId: "e" });

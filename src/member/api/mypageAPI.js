@@ -19,7 +19,7 @@ export const loadSetting = async () => {
 };
 
 // 커스텀 설정 저장
-export const saveSetting = async (yListStr, eListStr, rListStr, kListStr) => {
+export const saveSetting = async (yListStr, rListStr, kListStr) => {
   const res = await axios.post(`${host}/custom/setting`, null, {
     headers: {
       Authorization: `Bearer ${getCookie("jwt")}`,
@@ -27,7 +27,6 @@ export const saveSetting = async (yListStr, eListStr, rListStr, kListStr) => {
     params: {
       userId: getCookie("userId"),
       yListStr,
-      eListStr,
       rListStr,
       kListStr,
     },
@@ -37,13 +36,7 @@ export const saveSetting = async (yListStr, eListStr, rListStr, kListStr) => {
 };
 
 // 커스텀 조회
-export const getCustom = async (
-  pageParam,
-  yListStr,
-  eListStr,
-  rListStr,
-  kListStr
-) => {
+export const getCustom = async (pageParam, yListStr, rListStr, kListStr) => {
   const { page } = pageParam;
 
   const res = await axios.get(`${host}/custom/list`, {
@@ -55,7 +48,6 @@ export const getCustom = async (
       size: 6,
       address: getCookie("userAddress"),
       yListStr: yListStr,
-      eListStr: eListStr,
       rListStr: rListStr,
       kListStr: kListStr,
     },
