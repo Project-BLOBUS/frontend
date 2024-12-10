@@ -48,7 +48,7 @@ const EducationPolicyDetailRead = () => {
       ...(searchs.searchKeyword && { keyword: searchs.searchKeyword }),
       category: searchs.selectedCategory,
     });
-    navigate(`/youth/education?${searchParams.toString()}`);    
+    navigate(`/youth/education?${searchParams.toString()}`,{replace: true});    
   };
 
   if (loading) return <p>Loading...</p>;
@@ -154,7 +154,7 @@ const EducationPolicyDetailRead = () => {
                 </tr>
                 <tr className="border-b">
                   <td className="font-semibold py-2">사업 운영 기간</td>
-                  <td>{policy.policyOperatePeriod}</td>
+                  <td>{replaceNewlinesWithBr(policy.policyOperatePeriod)}</td>
                 </tr>
                 <tr className="border-b">
                   <td className="font-semibold py-2">사업 분기</td>
@@ -162,7 +162,7 @@ const EducationPolicyDetailRead = () => {
                 </tr>
                 <tr className="border-b">
                   <td className="font-semibold py-2">신청기간</td>
-                  <td>{policy.policyApplicationPeriod}</td>
+                  <td>{replaceNewlinesWithBr(policy.policyApplicationPeriod)}</td>
                 </tr>
               </tbody>
             </table>
@@ -226,7 +226,7 @@ const EducationPolicyDetailRead = () => {
                 </tr>
                 <tr className="border-b">
                   <td className="font-semibold py-2">취업 상태</td>
-                  <td>{policy.employmentStatus}</td>
+                  <td>{replaceNewlinesWithBr(policy.employmentStatus)}</td>
                 </tr>
                 <tr className="border-b">
                   <td className="font-semibold py-2">추가 필요 사항</td>

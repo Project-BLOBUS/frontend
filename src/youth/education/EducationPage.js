@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import { fetchPagedPolicies } from "./EducationApi";
+import { calculateDDay, formatMngtMson } from "../job/utils/formatUtil";
 
 const EducationPage = () => {
   const [policies, setPolicies] = useState([]);
@@ -14,11 +15,12 @@ const EducationPage = () => {
 
   // 입력 중인 검색어와 최종 검색어를 분리
   const [inputKeyword, setInputKeyword] = useState("");
-  const [selectedCategory, setSelectedCategory] = useState("전체"); // 선택된 카테고리 상태
+  const [selectedProgress, setSelectedProgress] = useState("상태전체"); // 선택된 진행 상태 상태
+  const [selectedCategory, setSelectedCategory] = useState("유형전체"); // 선택된 카테고리 상태
 
   // 페이징을 위한 값들
-  const pageSize = 10; 
-  const pagesPerGroup = 10; 
+  const pageSize = 12; 
+  const pagesPerGroup = 5; 
   const currentPage = (parseInt(searchParams.get("page")) || 1) - 1; 
   const currentPageGroup = Math.floor(currentPage / pagesPerGroup);
   const startPage = currentPageGroup * pagesPerGroup;
@@ -29,7 +31,8 @@ const EducationPage = () => {
       currentPage: 0,
       pageSize: pageSize,
       searchKeyword: "",
-      selectedCategory: "전체"
+      selectedProgress: "상태전체",
+      selectedCategory: "유형전체"
     }
   );
 
@@ -40,7 +43,6 @@ const EducationPage = () => {
       setLoading(true);
       // 최종 검색어(searchKeyword)를 사용하여 정책 조회
       const data = await fetchPagedPolicies(searchParams);
-      console.log(data);
       setPolicies(data.content);
       setTotalPages(data.totalPages);
     } catch (err) {
@@ -56,16 +58,19 @@ const EducationPage = () => {
       const params = new URLSearchParams(window.location.search);
       const page = parseInt(params.get("page")) - 1 || 0;
       const keyword = params.get("keyword") || "";
-      const category = params.get("category") || "전체";
+      const category = params.get("category") || "유형전체";
+      const progress = params.get("progress") || "상태전체";
   
       const updatedSearchParams = {
         currentPage: page,
         pageSize: pageSize,
         searchKeyword: keyword,
+        selectedProgress: progress,
         selectedCategory: category
       };
   
       setSearchs(updatedSearchParams);
+      setSelectedProgress(progress);
       setSelectedCategory(category);
       setInputKeyword(keyword);
       getPagedPolicies(updatedSearchParams);
@@ -100,7 +105,8 @@ const EducationPage = () => {
     setSearchParams({
       page: page + 1,
       ...(searchs.searchKeyword && { keyword: searchs.searchKeyword }),
-      category: searchs.selectedCategory,
+      progress: searchs.selectedProgress,
+      category: searchs.selectedCategory
     });
 
     getPagedPolicies(updatedSearchs);
@@ -118,7 +124,16 @@ const EducationPage = () => {
   //   setSearchs(updatedSearchs);
   // };
 
-  // 카테고리 변경 핸들러 통합
+  // 상태 카테고리 변경 핸들러 통합
+  const handleProgressChange = (progress) => {
+    setSelectedProgress(progress);
+    setSearchs((prevSearchs) => ({
+      ...prevSearchs,
+      selectedProgress: progress
+    }));
+  };
+
+  // 유형 카테고리 변경 핸들러 통합
   const handleCategoryChange = (category) => {
     setSelectedCategory(category);
     setSearchs((prevSearchs) => ({
@@ -126,17 +141,6 @@ const EducationPage = () => {
       selectedCategory: category
     }));
   };
-  
-  const renderCategoryButton = (category) => (
-    <button
-      className={`bg-blue-300 text-white px-4 py-2 rounded ${
-        selectedCategory === category ? "bg-blue-500" : ""
-      }`}
-      onClick={() => handleCategoryChange(category)}
-    >
-      {category}
-    </button>
-  );
 
   // 검색 핸들러 추가 - 입력 중인 검색어를 최종 검색어로 설정
   const handleSearch = () => {
@@ -150,6 +154,7 @@ const EducationPage = () => {
     setSearchParams({ 
       page: 1, 
       ...(inputKeyword && { keyword: inputKeyword }),
+      progress: selectedProgress,
       category: selectedCategory 
     });
   
@@ -207,7 +212,7 @@ const EducationPage = () => {
       onClick={onClick}
       disabled={disabled}
       className={`px-4 py-2 mx-1 rounded ${
-        currentPage === page ? "bg-blue-500 text-white" : "bg-gray-200"
+        currentPage === page ? "text-[#6F00FF] font-bold" : "bg-white"
       } ${disabled ? "disabled:opacity-50" : ""}`}
     >
       {label}
@@ -218,61 +223,65 @@ const EducationPage = () => {
   if (error) return <p>{error}</p>;
 
   return (
-    <div>
-      <div className="border-2 border-gray-200 rounded-md pt-4 pb-4 pr-4 bg-white">
+    <div className="guide-line">
+      <div className="text-3xl font-bold mb-6 pb-4 border-b-2 border-b-gray-200">
         <div className="flex items-center space-x-4">
           <p className="text-3xl font-bold">
             청년 교육 정책
           </p>
         </div>
       </div>
-      {/* 기존 필터 버튼들 그대로 유지 */}
-      <div className="border-2 border-blue-400">
-        <div className="flex gap-2">
-          {renderCategoryButton("전체")}
-          {renderCategoryButton("제목")}
-          {renderCategoryButton("내용")}
-        </div>
-        
-        <div className="flex gap-2">
-          <button className="bg-blue-300 text-white px-4 py-2 rounded">부산진구</button>
-          <button className="bg-blue-300 text-white px-4 py-2 rounded">해운대구</button>
-          <button className="bg-blue-300 text-white px-4 py-2 rounded">서구</button>
-          <button className="bg-blue-300 text-white px-4 py-2 rounded">동구</button>
-          <button className="bg-blue-300 text-white px-4 py-2 rounded">중구</button>
-          <button className="bg-blue-300 text-white px-4 py-2 rounded">북구</button>
-          <button className="bg-blue-300 text-white px-4 py-2 rounded">etc..</button>
-        </div>
-      </div>
 
       {/* 검색 입력창 및 버튼 */}
-      <div className="border-2 border-blue-400 h-[100px] flex items-center justify-center px-4">
-        <div className="flex items-center gap-2">
+      <div className="border-2 border-gray-200 rounded-md p-4 bg-white mb-5">
+        <div className="flex items-center space-x-4">
+          <p className="w-28 text-center text-xl font-semibold text-gray-700">
+            교육 정책
+          </p>
+          상태
+          <select
+            className="h-10 border-2 border-gray-300 rounded-md p-2 text-sm focus:outline-none"
+            value={selectedProgress}
+            onChange={(e) => handleProgressChange(e.target.value)}
+          >
+            <option value="상태전체">전체</option>
+            <option value="진행중">진행중</option>
+            <option value="마감">마감</option>
+          </select>
+          유형
+          <select
+            className="h-10 border-2 border-gray-300 rounded-md p-2 text-sm focus:outline-none"
+            value={selectedCategory}
+            onChange={(e) => handleCategoryChange(e.target.value)}
+          >
+            <option value="유형전체">전체</option>
+            <option value="제목">제목</option>
+            <option value="내용">내용</option>
+          </select>
           <input
             type="text"
-            placeholder="검색어 입력창"
+            placeholder="검색어를 입력하세요"
             value={inputKeyword}
-            // 입력 중인 검색어 상태 업데이트
             onChange={(e) => {
               setInputKeyword(e.target.value)
             }}
-            // 엔터 키 입력 시 검색 실행
-            onKeyPress={(e) => {
-              if (e.key === 'Enter') {
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
                 handleSearch();
+                e.preventDefault(); // 기본 Enter 동작(폼 제출 등) 방지
               }
             }}
-            className="border border-gray-300 px-4 py-2 rounded w-[750px]"
+            className="h-10 flex-grow border-b-2 border-b-gray-300 p-2 text-sm bg-inherit focus:outline-none"
           />
-          <button 
+          <button
             onClick={handleSearch}
-            className="bg-blue-500 text-white px-4 py-2 rounded"
+            className="bg-[#6F00FF] text-white px-8 py-2 rounded-md hover:bg-[#420099] transition-colors duration-500"
           >
             검색
           </button>
-          <button 
+          <button
             onClick={handleReset}
-            className="bg-gray-500 text-white px-4 py-2 rounded"
+            className="bg-[#6F00FF] text-white px-8 py-2 rounded-md hover:bg-[#420099] transition-colors duration-500"
           >
             초기화
           </button>
@@ -280,22 +289,47 @@ const EducationPage = () => {
       </div>
 
       {/* 기존 정책 리스트 렌더링 */}
-      <div className="border-2 border-blue-400 h-[68%] mt-[2%]">
-        <ul>
+      <div className="grid grid-cols-4 gap-4">
           {policies.map((policy) => (
-            <li 
-              key={policy.policyId} 
-              className="border border-blue-300 m-2 cursor-pointer flex justify-between items-center"
-              onClick={() => handlePolicyClick(policy.policyId)}
+            <div
+              key={policy.policyId}
+              className="relative h-44 border border-gray-200 rounded-md px-3 pb-3 shadow-sm hover:shadow-md cursor-pointer transition-shadow duration-500"
+              onClick={() => {
+                handlePolicyClick(policy.policyId);
+              }}
             >
-              <div>
-
-                <h2 className="font-bold text-lg">{policy.policyName}</h2>
-                <p>{policy.policyOverview}</p>
-                <p> 신청기간 : </p>
-                <p> {policy.policyApplicationStartPeriod} ~ {policy.policyApplicationEndPeriod} </p>
+              {/* D-day 영역 */}
+              <div className="absolute top-0 left-3 bg-[#6F00FF] text-white font-bold text-sm px-2 py-1 rounded-b-md inline-block">
+                {calculateDDay(policy.policyApplicationPeriod)}
               </div>
-            <button 
+
+              {/* 제목 영역 */}
+              <div className="absolute top-[40px] left-3 right-3">
+                <h2 className="font-semibold text-xl overflow-hidden text-ellipsis line-clamp-1">
+                  {policy.policyName || "제목 없음"}
+                  </h2>
+              </div>
+
+              {/* 서브제목 영역 */}
+              <div className="absolute top-[70px] left-3 right-3">
+                <p className="text-sm text-gray-600 overflow-hidden text-ellipsis line-clamp-2">
+                  {policy.policyOverview || "서브제목 없음"}
+                </p>
+              </div>
+
+              {/* 대상 영역 */}
+              <div className="absolute top-[115px] left-3 right-3">
+                <p className="text-xs text-gray-500 overflow-hidden text-ellipsis line-clamp-1">
+                  {policy.ageRequirement ? `신청연령: ${policy.ageRequirement}` : "연령 정보 없음"}
+                </p>
+              </div>
+
+              {/* 하단의 출처 영역 */}
+              <div className="absolute bottom-4 left-3 text-xs text-gray-500">
+                {formatMngtMson(policy.hostOrganization)}
+              </div>
+              
+            {/* <button 
               className="border-2 border-red-600 m-2"
               onClick={(e) => {
                 e.stopPropagation();
@@ -304,10 +338,9 @@ const EducationPage = () => {
               }}
             >
               즐겨찾기
-            </button>
-            </li>
+            </button> */}
+            </div>
           ))}
-        </ul>
       </div>
 
       {/* 기존 페이징 버튼 */}

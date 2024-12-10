@@ -18,19 +18,20 @@ export const fetchPagedPolicies = async (data) => {
   const page = data?.currentPage || 0;
   const size = data?.pageSize || 10;
   const keyword = data?.searchKeyword || "";
-  const category = data?.selectedCategory || "전체";
+  const progress = data?.selectedProgress || "상태전체";
+  const category = data?.selectedCategory || "유형전체";
   try {
-    const response = await axiosInstance.get(`/paged-policies?page=${page}&size=${size}&keyword=${encodeURIComponent(keyword)}&category=${encodeURIComponent(category)}`);
+    const response = await axiosInstance.get(`/paged-policies?page=${page}&size=${size}&keyword=${encodeURIComponent(keyword)}&progress=${encodeURIComponent(progress)}&category=${encodeURIComponent(category)}`);
     // console.log(response);
     return response.data; // 데이터를 반환 (Page 객체)
   } catch (error) {
-    console.error(`Failed to fetch policies for page ${page} and keyword "${keyword}", and category "${category}":`, error);
+    console.error(`Failed to fetch policies for page ${page} and keyword "${keyword}", and progress "${progress}" and category "${category}":`, error);
     throw error; // 에러 전달
   }
 };
 
 // // 페이징된 정책 가져오기
-// export const fetchPagedPolicies = async (page, size, keyword="", category = "전체") => {
+// export const fetchPagedPolicies = async (page, size, keyword="", category = "제목+내용") => {
 //   try {
 //     const response = await axiosInstance.get(`/paged-policies?page=${page}&size=${size}&keyword=${encodeURIComponent(keyword)}&category=${encodeURIComponent(category)}`);
 //     return response.data; // 데이터를 반환 (Page 객체)

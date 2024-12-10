@@ -142,19 +142,19 @@ const WelfarePolicyDetailRead = () => {
               <tbody>
                 <tr className="border-b">
                   <td className="font-semibold py-2">정책 소개</td>
-                  <td>{policy.policyOverview}</td>
+                  <td>{replaceNewlinesWithBr(policy.policyOverview)}</td>
                 </tr>
                 <tr className="border-b">
                   <td className="font-semibold w-1/4 py-2">정책 상세 내용</td>
-                  <td>{policy.policyContent1}</td>
+                  <td>{replaceNewlinesWithBr(policy.policyContent1)}</td>
                 </tr>
                 <tr className="border-b">
                   <td className="font-semibold py-2">지원 규모</td>
-                  <td>{policy.supportScale}</td>
+                  <td>{replaceNewlinesWithBr(policy.supportScale)}</td>
                 </tr>
                 <tr className="border-b">
                   <td className="font-semibold py-2">사업 운영 기간</td>
-                  <td>{policy.policyOperatePeriod}</td>
+                  <td>{replaceNewlinesWithBr(policy.policyOperatePeriod)}</td>
                 </tr>
                 <tr className="border-b">
                   <td className="font-semibold py-2">사업 분기</td>
@@ -162,7 +162,7 @@ const WelfarePolicyDetailRead = () => {
                 </tr>
                 <tr className="border-b">
                   <td className="font-semibold py-2">신청기간</td>
-                  <td>{policy.policyApplicationPeriod}</td>
+                  <td>{replaceNewlinesWithBr(policy.policyApplicationPeriod)}</td>
                 </tr>
               </tbody>
             </table>
@@ -175,11 +175,11 @@ const WelfarePolicyDetailRead = () => {
               <tbody>
                 <tr className="border-b">
                   <td className="font-semibold w-1/4 py-2">신청 절차 내용</td>
-                  <td>{policy.applicationProcedure}</td>
+                  <td>{replaceNewlinesWithBr(policy.applicationProcedure)}</td>
                 </tr>
                 <tr className="border-b">
                   <td className="font-semibold w-1/4 py-2">심사 및 발표</td>
-                  <td>{policy.judgingPresentation}</td>
+                  <td>{replaceNewlinesWithBr(policy.judgingPresentation)}</td>
                 </tr>
                 <tr className="border-b">
                   <td className="font-semibold w-1/4 py-2">신청 사이트</td>
@@ -197,7 +197,7 @@ const WelfarePolicyDetailRead = () => {
                 </tr>
                 <tr className="border-b">
                   <td className="font-semibold w-1/4 py-2">제출 서류 내용</td>
-                  <td>{policy.submitionDocument}</td>
+                  <td>{replaceNewlinesWithBr(policy.submitionDocument)}</td>
                 </tr>
               </tbody>
             </table>
@@ -210,11 +210,11 @@ const WelfarePolicyDetailRead = () => {
               <tbody>
                 <tr className="border-b">
                   <td className="font-semibold w-1/4 py-2">연령 요건</td>
-                  <td>{policy.ageRequirement}</td>
+                  <td>{replaceNewlinesWithBr(policy.ageRequirement)}</td>
                 </tr>
                 <tr className="border-b">
                   <td className="font-semibold w-1/4 py-2">거주지 및 소득</td>
-                  <td>{policy.proposerRequirement}</td>
+                  <td>{replaceNewlinesWithBr(policy.proposerRequirement)}</td>
                 </tr>
                 <tr className="border-b">
                   <td className="font-semibold w-1/4 py-2">학력</td>
@@ -226,11 +226,11 @@ const WelfarePolicyDetailRead = () => {
                 </tr>
                 <tr className="border-b">
                   <td className="font-semibold py-2">취업 상태</td>
-                  <td>{policy.employmentStatus}</td>
+                  <td>{replaceNewlinesWithBr(policy.employmentStatus)}</td>
                 </tr>
                 <tr className="border-b">
                   <td className="font-semibold py-2">추가 필요 사항</td>
-                  <td>{policy.additionalRequirement}</td>
+                  <td>{replaceNewlinesWithBr(policy.additionalRequirement)}</td>
                 </tr>
               </tbody>
             </table>
@@ -295,7 +295,7 @@ const WelfarePolicyDetailRead = () => {
                 </tr>
                 <tr>
                   <td className="font-semibold py-2">기타</td>
-                  <td>{policy.etc}</td>
+                  <td>{replaceNewlinesWithBr(policy.etc)}</td>
                 </tr>
               </tbody>
             </table>
