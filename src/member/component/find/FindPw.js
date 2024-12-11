@@ -7,10 +7,11 @@ import useMemberTag from "../../hook/useMemberTag";
 import Loading from "../../../etc/component/Loading";
 
 const initState = {
-  userId: "",
+  // ToDEL 삭제
+  userId: "bell4916@naver.com",
   authCode: "",
-  userPw: "",
-  confirmPw: "",
+  userPw: "qwerQWER1234!@#$",
+  confirmPw: "qwerQWER1234!@#$",
   roleName: "GENERAL",
 };
 
@@ -172,6 +173,8 @@ const FindPw = () => {
                       authCode: code,
                     });
                     toast.success("메일 전송 성공");
+                    // ToDEL 삭제
+                    setMember({ ...member, authCode: code });
                   } catch (error) {
                     toast.error("메일 전송에 실패했습니다.");
                   }
