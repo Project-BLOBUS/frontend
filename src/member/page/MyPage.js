@@ -13,7 +13,6 @@ const MyPage = () => {
 
   const navList = [
     { name: "청년관", link: "../youth" },
-    { name: "기업관", link: "../enterprise" },
     { name: "지역관", link: "../resource" },
     { name: "커뮤니티", link: "../community" },
   ];
@@ -59,7 +58,7 @@ const MyPage = () => {
           <div className="py-6 text-xl text-white">마이페이지</div>
 
           <div className="bg-white p-4 rounded-xl flex flex-col justify-center items-center space-y-2">
-            {makeNav("커스텀", "custom")}
+            {makeNav("추천", "custom")}
             {makeNav("즐겨찾기", "bookmark")}
             {makeNav("작성글", "doc")}
             {makeNav("내정보", "info")}

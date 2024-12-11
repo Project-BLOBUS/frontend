@@ -6,7 +6,7 @@ import { IoMdFemale, IoMdMale } from "react-icons/io";
 import { toast } from "react-toastify";
 import { getCookie, setCookie } from "../../../etc/util/cookieUtil";
 import { getInfo, modify } from "../../api/memberAPI";
-import useCustomTag from "../../hook/useCustomeTag";
+import useInfoTag from "../../hook/useInfoTag";
 import Loading from "../../../etc/component/Loading";
 import AddressList from "../../data/AddressList";
 
@@ -26,7 +26,7 @@ const initState = {
 const InfoMofiy = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
-  const { makeInput, makeSelect, makeRatio } = useCustomTag();
+  const { makeModify, makeInput, makeSelect, makeRatio } = useInfoTag();
 
   const [member, setMember] = useState(initState);
 
@@ -247,7 +247,7 @@ const InfoMofiy = () => {
 
           <>
             {/* 아이디 */}
-            {makeRead(
+            {makeModify(
               "아이디",
               makeInput(
                 "text",
@@ -255,14 +255,12 @@ const InfoMofiy = () => {
                 member.userId,
                 "",
                 onChange,
-                false,
-                refList.userId,
-                "w-full border-none rounded-none shadow-none"
+                refList.userId
               )
             )}
 
             {/* 비밀번호 */}
-            {makeRead(
+            {makeModify(
               "비밀번호",
               makeInput(
                 "password",
@@ -270,14 +268,12 @@ const InfoMofiy = () => {
                 member.userPw,
                 "변경을 원할 경우에 입력",
                 onChange,
-                true,
-                refList.userPw,
-                "w-full border-none shadow-none"
+                refList.userPw
               )
             )}
 
             {/* 비밀번호 확인 */}
-            {makeRead(
+            {makeModify(
               "비밀번호 확인",
               makeInput(
                 "password",
@@ -285,14 +281,12 @@ const InfoMofiy = () => {
                 member.confirmPw,
                 "미입력 시 변경되지 않음",
                 onChange,
-                true,
-                refList.confirmPw,
-                "w-full border-none shadow-none"
+                refList.confirmPw
               )
             )}
 
             {/* 이름 */}
-            {makeRead(
+            {makeModify(
               "이름",
               makeInput(
                 "text",
@@ -300,14 +294,12 @@ const InfoMofiy = () => {
                 member.name,
                 "이름",
                 onChange,
-                true,
-                refList.name,
-                "w-full border-none shadow-none"
+                refList.name
               )
             )}
 
             {/* 연락처 */}
-            {makeRead(
+            {makeModify(
               "연락처",
               makeInput(
                 "text",
@@ -315,14 +307,12 @@ const InfoMofiy = () => {
                 member.phoneNum,
                 '"─" 없이 입력',
                 onChange,
-                true,
-                refList.phoneNum,
-                "w-full border-none shadow-none"
+                refList.phoneNum
               )
             )}
 
             {/* 주소 */}
-            {makeRead(
+            {makeModify(
               "주소",
               <div className="w-full flex justify-center items-center space-x-1">
                 {makeSelect(
@@ -331,9 +321,7 @@ const InfoMofiy = () => {
                   address.regionList,
                   "시/도 선택",
                   onChangeAddress,
-                  true,
-                  refList.region,
-                  "w-1/2 border-none shadow-none"
+                  refList.region
                 )}
                 {makeSelect(
                   "city",
@@ -341,15 +329,13 @@ const InfoMofiy = () => {
                   address.cityList,
                   "시/구/군 선택",
                   onChangeAddress,
-                  true,
-                  refList.city,
-                  "w-1/2 border-none shadow-none"
+                  refList.city
                 )}
               </div>
             )}
 
             {/* 생년월일 */}
-            {makeRead(
+            {makeModify(
               "생년월일",
               <div className="w-full flex justify-center items-center space-x-1">
                 {makeSelect(
@@ -361,9 +347,7 @@ const InfoMofiy = () => {
                   ).reverse(),
                   "연도 선택",
                   onChangeBirth,
-                  true,
-                  refList.year,
-                  "w-1/3 border-none shadow-none"
+                  refList.year
                 )}
                 {makeSelect(
                   "month",
@@ -371,9 +355,7 @@ const InfoMofiy = () => {
                   [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
                   "월 선택",
                   onChangeBirth,
-                  true,
-                  refList.month,
-                  "w-1/3 border-none shadow-none"
+                  refList.month
                 )}
                 {makeSelect(
                   "date",
@@ -390,15 +372,13 @@ const InfoMofiy = () => {
                   ),
                   "일 선택",
                   onChangeBirth,
-                  true,
-                  refList.date,
-                  "w-1/3 border-none shadow-none"
+                  refList.date
                 )}
               </div>
             )}
 
             {/* 성별 */}
-            {makeRead(
+            {makeModify(
               "성별",
               <div className="w-full flex justify-center items-center space-x-1">
                 {makeRatio(
@@ -407,9 +387,7 @@ const InfoMofiy = () => {
                   "남성",
                   () =>
                     member.gender === "M" ||
-                    setMember({ ...member, gender: "M" }),
-                  true,
-                  "w-1/2 border-none shadow-none"
+                    setMember({ ...member, gender: "M" })
                 )}
                 {makeRatio(
                   member.gender === "F",
@@ -417,32 +395,20 @@ const InfoMofiy = () => {
                   "여성",
                   () =>
                     member.gender === "F" ||
-                    setMember({ ...member, gender: "F" }),
-                  true,
-                  "w-1/2 border-none shadow-none"
+                    setMember({ ...member, gender: "F" })
                 )}
               </div>
             )}
 
             {/* 내외국인 */}
-            {makeRead(
+            {makeModify(
               "내와국인",
               <div className="w-full flex justify-center items-center space-x-1">
-                {makeRatio(
-                  !member.foreigner,
-                  GiSouthKorea,
-                  "내국인",
-                  () => setMember({ ...member, foreigner: false }),
-                  true,
-                  "w-1/2 border-none shadow-none"
+                {makeRatio(!member.foreigner, GiSouthKorea, "내국인", () =>
+                  setMember({ ...member, foreigner: false })
                 )}
-                {makeRatio(
-                  member.foreigner,
-                  AiOutlineGlobal,
-                  "외국인",
-                  () => setMember({ ...member, foreigner: true }),
-                  true,
-                  "w-1/2 border-none  shadow-none"
+                {makeRatio(member.foreigner, AiOutlineGlobal, "외국인", () =>
+                  setMember({ ...member, foreigner: true })
                 )}
               </div>
             )}
@@ -450,23 +416,6 @@ const InfoMofiy = () => {
         </div>
       </div>
     </>
-  );
-};
-
-const makeRead = (name, input, onlyRead) => {
-  return (
-    <div className="w-full text-base flex justify-center items-center">
-      <div className="bg-gray-200 w-1/4 p-4 border-b-2 border-gray-300 text-nowrap">
-        {name}
-      </div>
-      <div
-        className={`${
-          onlyRead && "p-4"
-        } w-3/4 border-b-2 border-gray-300 text-left text-nowrap`}
-      >
-        {input}
-      </div>
-    </div>
   );
 };
 

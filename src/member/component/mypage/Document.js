@@ -4,6 +4,7 @@ import { FaLock } from "react-icons/fa";
 import { toast } from "react-toastify";
 import { getBoard } from "../../api/mypageAPI";
 import useCustomMove from "../../../etc/hook/useCustomMove";
+import useMypageTag from "../../hook/useMypageTag";
 import Loading from "../../../etc/component/Loading";
 import Paging from "../../../etc/component/Paging";
 
@@ -24,6 +25,7 @@ const Document = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const { page, size, moveToList } = useCustomMove("mypage/doc/list");
+  const { makeDocTab } = useMypageTag();
 
   const [data, setData] = useState(initState);
 
@@ -89,16 +91,16 @@ const Document = () => {
 
         <div className="w-full text-base flex justify-center items-center">
           <div className="w-1/2 border-b-4 border-gray-500 flex justify-start items-center">
-            {makeTab("전체", "", board, setBoard, true, moveToList)}
-            {makeTab("자유", "자유", board, setBoard, true, moveToList)}
-            {makeTab("건의", "건의", board, setBoard, true, moveToList)}
-            {makeTab("댓글", "댓글", board, setBoard, true, moveToList)}
+            {makeDocTab("전체", "", board, setBoard, true, moveToList)}
+            {makeDocTab("자유", "자유", board, setBoard, true, moveToList)}
+            {makeDocTab("건의", "건의", board, setBoard, true, moveToList)}
+            {makeDocTab("댓글", "댓글", board, setBoard, true, moveToList)}
           </div>
           <div className="w-1/2 border-b-4 border-gray-500 flex justify-end items-center">
-            {makeTab("지역", "지역", board, setBoard, false, moveToList)}
-            {makeTab("기업", "기업", board, setBoard, false, moveToList)}
-            {makeTab("청년", "청년", board, setBoard, false, moveToList)}
-            {makeTab("전체", "", board, setBoard, false, moveToList)}
+            {makeDocTab("지역", "지역", board, setBoard, false, moveToList)}
+            {/* {makeDocTab("기업", "기업", board, setBoard, false, moveToList)} */}
+            {makeDocTab("청년", "청년", board, setBoard, false, moveToList)}
+            {makeDocTab("전체", "", board, setBoard, false, moveToList)}
           </div>
         </div>
 
@@ -112,46 +114,62 @@ const Document = () => {
 
         <div className="w-full h-[420px] text-base text-nowrap flex flex-col justify-start items-center">
           {data.dtoList.length === 0 ? (
-            <div className="w-full py-20 text-2xl">작성글 이력이 없습니다.</div>
+            <>
+              <div className="w-full pt-20 text-2xl">
+                작성글 이력이 없습니다.
+              </div>
+              <div
+                className="w-1/2 p-10 text-base text-right cursor-pointer hover:text-gray-300 hover:underline transition duration-500"
+                onClick={() => navigate("/community/add")}
+              >
+                글 쓰기
+              </div>
+            </>
           ) : (
-            data.dtoList.map((doc, index) => (
+            data.dtoList.map((dto, index) => (
               <div
                 key={index}
                 className={`w-full h-[10%] py-2 border-b-2 border-gray-400 flex justify-center items-center cursor-pointer hover:bg-gray-300 transition duration-500`}
-                onClick={() => navigate(`/community/read/${doc.id}`)}
+                onClick={() => navigate(`/community/read/${dto.id}`)}
               >
-                <div className={`${css} w-[8%] border-r-2`}>{doc.id}</div>
+                <div className={`${css} w-[8%] border-r-2`}>{dto.id}</div>
 
                 <div className={`${css} w-[8%] border-r-2`}>
-                  {doc.boardType}
+                  {dto.boardType}
                 </div>
 
                 <div
                   className={`${css} w-[64%] border-r-2 flex justify-start items-center space-x-2`}
                 >
-                  {doc.category === "청년" ? (
-                    <div className="text-blue-500">[청년]</div>
-                  ) : doc.category === "기업" ? (
-                    <div className="text-red-500">[기업]</div>
-                  ) : (
-                    <div className="text-green-500">[지역]</div>
-                  )}
-                  {doc.visibility ? <FaLock /> : <></>}
-                  <div className="">{doc.title}</div>
+                  <div
+                    className={
+                      dto.category === "청년"
+                        ? "text-blue-500"
+                        : dto.category === "기업"
+                        ? "text-red-500"
+                        : dto.category === "지역"
+                        ? "text-green-500"
+                        : "text-gray-500"
+                    }
+                  >
+                    [{dto.category}]
+                  </div>
+                  {dto.visibility ? <FaLock /> : <></>}
+                  <div className="">{dto.title}</div>
 
                   <div className="text-xs text-red-500 font-bold">
-                    {doc.commentCount > 0 && doc.commentCount}
+                    {dto.commentCount > 0 && dto.commentCount}
                   </div>
                 </div>
 
                 <div className={`${css} w-[10%] border-r-2`}>
-                  {printTime(doc.createdAt)}
+                  {printTime(dto.createdAt)}
                 </div>
 
                 <div className={`${css} w-[10%] border-r-0`}>
-                  {new Date(doc.updatedAt) - new Date(doc.createdAt) < 1000
+                  {new Date(dto.updatedAt) - new Date(dto.createdAt) < 60 * 1000
                     ? "-"
-                    : printTime(doc.updatedAt)}
+                    : printTime(dto.updatedAt)}
                 </div>
               </div>
             ))
@@ -163,26 +181,6 @@ const Document = () => {
         </div>
       </div>
     </>
-  );
-};
-
-const makeTab = (name, value, board, setBoard, isType, moveToList) => {
-  return (
-    <div
-      className={`w-16 p-2 rounded-t-xl ${
-        (isType ? value === board.type : value === board.category)
-          ? "bg-gray-500 text-white"
-          : "text-gray-300 cursor-pointer hover:bg-gray-300 hover:text-black transition duration-500"
-      }`}
-      onClick={() => {
-        isType
-          ? setBoard({ ...board, type: value })
-          : setBoard({ ...board, category: value });
-        moveToList(1);
-      }}
-    >
-      {name}
-    </div>
   );
 };
 

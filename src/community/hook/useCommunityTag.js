@@ -1,4 +1,4 @@
-const useCustomTag = () => {
+const useCommunityTag = () => {
   const makeBtn = (name, color, onClick) => {
     const bgColor = {
       none: "bg-none text-black hover:bg-gray-500 hover:text-gray-300",
@@ -22,4 +22,4 @@ const useCustomTag = () => {
   return { makeBtn };
 };
 
-export default useCustomTag;
+export default useCommunityTag;

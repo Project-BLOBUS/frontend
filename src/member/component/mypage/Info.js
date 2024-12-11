@@ -3,7 +3,8 @@ import { useNavigate } from "react-router";
 import { toast } from "react-toastify";
 import { getCookie, removeCookie } from "../../../etc/util/cookieUtil";
 import { getInfo, deleteId, sendMail } from "../../api/memberAPI";
-import useCustomTag from "../../hook/useCustomeTag";
+import useMemberTag from "../../hook/useMemberTag";
+import useInfoTag from "../../hook/useInfoTag";
 import Loading from "../../../etc/component/Loading";
 
 const initState = {
@@ -20,7 +21,8 @@ const initState = {
 
 const Info = () => {
   const navigate = useNavigate();
-  const { makeBtn, makeAdd, makeInput } = useCustomTag();
+  const { makeBtn, makeAdd, makeInput } = useMemberTag();
+  const { makeRead } = useInfoTag();
   const [loading, setLoading] = useState(false);
 
   const [member, setMember] = useState(initState);
@@ -234,19 +236,6 @@ const Info = () => {
         </div>
       )}
     </>
-  );
-};
-
-const makeRead = (name, info) => {
-  return (
-    <div className="w-full text-base flex justify-center items-center">
-      <div className="bg-gray-200 w-1/4 p-4 border-b-2 border-gray-300 text-nowrap">
-        {name}
-      </div>
-      <div className="w-3/4 p-4 border-b-2 border-gray-300 text-left text-nowrap select-text">
-        {info}
-      </div>
-    </div>
   );
 };
 
