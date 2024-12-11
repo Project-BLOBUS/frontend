@@ -4,6 +4,7 @@ import { Navigate } from "react-router-dom";
 const Loading = <div>Loading....</div>;
 const PolicyList = lazy(() => import("../job/pages/PolicyListPage"));
 const PolicyRead = lazy(() => import("../job/pages/PolicyReadPage"));
+const PolicyModify = lazy(() => import("../job/pages/PolicyModifyPage"));
 const InfoList = lazy(() => import("../job/pages/InfoListPage"));
 const InfoRead = lazy(() => import("../job/pages/InfoReadPage"));
 
@@ -26,6 +27,14 @@ const jobRouter = () => {
       element: (
         <Suspense fallback={Loading}>
           <PolicyRead />
+        </Suspense>
+      ),
+    },
+    {
+      path: "policyModify/:policyId",
+      element: (
+        <Suspense fallback={Loading}>
+          <PolicyModify />
         </Suspense>
       ),
     },
