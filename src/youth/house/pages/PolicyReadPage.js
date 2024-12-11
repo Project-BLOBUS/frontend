@@ -5,6 +5,7 @@ import { formatTextWithLineBreaks, formatUrl } from "../utils/formatUtil";
 import { getCookie } from "../../../etc/util/cookieUtil";
 import useCustomMove from "../hooks/useCustomMove";
 import Swal from "sweetalert2";
+import BookBtn from "../../../member/component/mypage/BookBtn";
 
 const initState = {
   policyId: 0,
@@ -68,7 +69,10 @@ const PolicyReadPage = () => {
     <>
       <div className="w-full bg-white p-8 rounded-md shadow-md border">
         {/* 정책 제목 */}
-        <h2 className="text-3xl font-bold mb-3">{policy.polyBizSjnm}</h2>
+        <div className="flex justify-between">
+          <h2 className="text-3xl font-bold mb-3">{policy.polyBizSjnm}</h2>
+          <BookBtn main="청년" sub="주거" targetId={policy.policyId} />
+        </div>
         <p className="text-lg mb-6">{policy.polyItcnCn}</p>
 
         {/* 정책 설명 */}
