@@ -4,6 +4,7 @@ import { Navigate } from "react-router-dom";
 const Loading = <div>Loading....</div>;
 const PolicyList = lazy(() => import("../house/pages/PolicyListPage"));
 const PolicyRead = lazy(() => import("../house/pages/PolicyReadPage"));
+const PolicyModify = lazy(() => import("../house/pages/PolicyModifyPage"));
 
 const houseRouter = () => {
   return [
@@ -20,7 +21,7 @@ const houseRouter = () => {
       ),
     },
     {
-      path: "policyRead",
+      path: "policyRead/:policyId",
       element: (
         <Suspense fallback={Loading}>
           <PolicyRead />
@@ -28,10 +29,10 @@ const houseRouter = () => {
       ),
     },
     {
-      path: "policyRead/:policyId",
+      path: "policyModify/:policyId",
       element: (
         <Suspense fallback={Loading}>
-          <PolicyRead />
+          <PolicyModify />
         </Suspense>
       ),
     },

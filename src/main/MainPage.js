@@ -7,7 +7,7 @@ import { motion } from "framer-motion";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-function MainPage() {
+const MainPage = () => {
   const [activeNav, setActiveNav] = useState(null); // 클릭된 항목을 추적
 
   const handleNavClick = (nav) => {
@@ -89,6 +89,12 @@ function MainPage() {
     { name: "기업메뉴3", link: "/" },
   ];
 
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") {
+      handleSearchClick();
+    }
+   };
+
   return (
     <div>
       {/* "메인"으로 설정된 페이지 제목 */}
@@ -137,6 +143,7 @@ function MainPage() {
               className="font-bold text-md sm:text-lg mt-2 rounded-tl-[25px] rounded-bl-[25px] border-2 w-[230px] sm:w-[450px] h-[30px] sm:h-[50px] p-4 focus:outline-none"
               value={searchs} // 상태값을 input에 바인딩
               onChange={handleSearchChange} // 검색어 입력 시 상태 업데이트
+              onKeyDown={handleKeyDown} // 엔터 키 입력 시 검색 실행
             />
 
             <div

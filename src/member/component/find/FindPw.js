@@ -3,11 +3,10 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { getCookie, setCookie } from "../../../etc/util/cookieUtil";
 import { sendMail, modify } from "../../api/memberAPI";
-import useCustomTag from "../../hook/useCustomeTag";
+import useMemberTag from "../../hook/useMemberTag";
 import Loading from "../../../etc/component/Loading";
 
 const initState = {
-  // ToDEL 삭제
   userId: "",
   authCode: "",
   userPw: "",
@@ -17,7 +16,7 @@ const initState = {
 
 const FindPw = () => {
   const navigate = useNavigate();
-  const { makeBtn, makeAdd, makeInput } = useCustomTag();
+  const { makeBtn, makeAdd, makeInput } = useMemberTag();
   const [loading, setLoading] = useState(false);
 
   const [member, setMember] = useState(initState);

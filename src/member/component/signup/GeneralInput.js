@@ -11,7 +11,7 @@ import {
   removeCookie,
 } from "../../../etc/util/cookieUtil";
 import { duplicate, sendMail, register } from "../../api/memberAPI";
-import useCustomTag from "../../hook/useCustomeTag";
+import useMemberTag from "../../hook/useMemberTag";
 import Loading from "../../../etc/component/Loading";
 import AddressList from "../../data/AddressList";
 
@@ -31,7 +31,7 @@ const initState = {
 
 const GeneralInput = () => {
   const navigate = useNavigate();
-  const { makeBtn, makeAdd, makeInput, makeSelect, makeRatio } = useCustomTag();
+  const { makeBtn, makeAdd, makeInput, makeSelect, makeRatio } = useMemberTag();
   const [loading, setLoading] = useState(false);
 
   const [member, setMember] = useState(initState);
@@ -279,7 +279,6 @@ const GeneralInput = () => {
                 {makeBtn("메일 전송", async () => {
                   setLoading(true);
 
-                  // TODO 인증메일 디자인
                   try {
                     const code = await sendMail(member);
                     setValidation({

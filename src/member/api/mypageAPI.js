@@ -19,7 +19,7 @@ export const loadSetting = async () => {
 };
 
 // 커스텀 설정 저장
-export const saveSetting = async (yListStr, eListStr, rListStr, kListStr) => {
+export const saveSetting = async (yListStr, rListStr, kListStr) => {
   const res = await axios.post(`${host}/custom/setting`, null, {
     headers: {
       Authorization: `Bearer ${getCookie("jwt")}`,
@@ -27,7 +27,6 @@ export const saveSetting = async (yListStr, eListStr, rListStr, kListStr) => {
     params: {
       userId: getCookie("userId"),
       yListStr,
-      eListStr,
       rListStr,
       kListStr,
     },
@@ -37,13 +36,7 @@ export const saveSetting = async (yListStr, eListStr, rListStr, kListStr) => {
 };
 
 // 커스텀 조회
-export const getCustom = async (
-  pageParam,
-  yListStr,
-  eListStr,
-  rListStr,
-  kListStr
-) => {
+export const getCustom = async (pageParam, yListStr, rListStr, kListStr) => {
   const { page } = pageParam;
 
   const res = await axios.get(`${host}/custom/list`, {
@@ -55,7 +48,6 @@ export const getCustom = async (
       size: 6,
       address: getCookie("userAddress"),
       yListStr: yListStr,
-      eListStr: eListStr,
       rListStr: rListStr,
       kListStr: kListStr,
     },
@@ -64,10 +56,44 @@ export const getCustom = async (
   return res.data;
 };
 
-// 즐겨찾기 조회
+// 즐겨찾기 여부확인
+export const checkBookmark = async (main, sub, targetId) => {
+  const res = await axios.get(`${host}/bookmark`, {
+    headers: {
+      Authorization: `Bearer ${getCookie("jwt")}`,
+    },
+    params: {
+      userId: getCookie("userId"),
+      main,
+      sub,
+      targetId,
+    },
+  });
+
+  return res.data;
+};
+
+// 즐겨찾기 변경
+export const changeBookmark = async (main, sub, targetId) => {
+  const res = await axios.post(`${host}/bookmark`, null, {
+    headers: {
+      Authorization: `Bearer ${getCookie("jwt")}`,
+    },
+    params: {
+      userId: getCookie("userId"),
+      main,
+      sub,
+      targetId,
+    },
+  });
+
+  return res.data;
+};
+
+// 즐겨찾기 목록 조회
 export const getBookmark = async (pageParam, category) => {
   const { page } = pageParam;
-  const res = await axios.get(`${host}/bookmark`, {
+  const res = await axios.get(`${host}/bookmark/list`, {
     headers: {
       Authorization: `Bearer ${getCookie("jwt")}`,
     },
