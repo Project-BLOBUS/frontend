@@ -29,17 +29,6 @@ export const fetchPagedPolicies = async (data) => {
   }
 };
 
-// // 페이징된 정책 가져오기
-// export const fetchPagedPolicies = async (page, size, keyword="", category = "전체") => {
-//   try {
-//     const response = await axiosInstance.get(`/paged-policies?page=${page}&size=${size}&keyword=${encodeURIComponent(keyword)}&category=${encodeURIComponent(category)}`);
-//     return response.data; // 데이터를 반환 (Page 객체)
-//   } catch (error) {
-//     console.error(`Failed to fetch policies for page ${page} and keyword "${keyword}", and category "${category}":`, error);
-//     throw error; // 에러 전달
-//   }
-// };
-
 // 특정 ID의 정책 가져오기
 export const fetchPolicyById = async (id) => {
   try {
