@@ -13,7 +13,6 @@ const MyPage = () => {
 
   const navList = [
     { name: "청년관", link: "../youth" },
-    // { name: "기업관", link: "../enterprise" },
     { name: "지역관", link: "../resource" },
     { name: "커뮤니티", link: "../community" },
   ];

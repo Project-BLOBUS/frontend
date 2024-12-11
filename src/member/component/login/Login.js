@@ -48,7 +48,7 @@ const Login = () => {
           } else if (data.error) {
             setUserPw("");
             toast.error("로그인에 실패했습니다. (5회 이상 실패 시 계정 잠금)");
-          } else if (userRole !== data.roleName) {
+          } else if (userRole !== data.roleName && data.roleName !== "ADMIN") {
             toast.warn("계정종류를 다시 선택하세요.");
           } else {
             setCookie("jwt", data.accessToken);
@@ -116,7 +116,7 @@ const Login = () => {
         <div className="w-full flex justify-between items-center">
           {makeTab("일반", "GENERAL", userRole, setUserRole)}
           {makeTab("기업", "BUSINESS", userRole, setUserRole)}
-          {makeTab("관리자", "ADMIN", userRole, setUserRole)}
+          {/* {makeTab("관리자", "ADMIN", userRole, setUserRole)} */}
         </div>
 
         <input
@@ -196,7 +196,7 @@ const Login = () => {
 const makeTab = (name, role, userRole, setUserRole) => {
   return (
     <div
-      className={`w-1/3 p-4 rounded-t-2xl ${
+      className={`w-full p-4 rounded-t-2xl ${
         userRole === role
           ? "bg-sky-500 text-white"
           : "text-gray-300 cursor-pointer hover:bg-sky-300 hover:text-black transition duration-500"

@@ -43,7 +43,7 @@ const Agree = () => {
     <>
       <div className="w-full max-w-[600px] min-w-min text-xl text-center font-bold flex flex-col justify-center items-center space-y-4">
         <div className="bg-white w-full my-4 text-5xl text-sky-500">
-          {role === "general" ? "일반계정" : "기업계정"} 약관동의
+          약관동의
         </div>
 
         <div className="w-full border border-gray-500 rounded text-4xl flex justify-center items-cente cursor-pointer">
@@ -114,7 +114,7 @@ const Agree = () => {
 
       {modal.open && (
         <div className="bg-black bg-opacity-50 w-full h-full flex justify-center items-center fixed inset-0">
-          <div className="bg-white w-5/6 max-w-[650px] p-4 rounded">
+          <div className="bg-white w-[70%] max-w-[700px] p-4 rounded">
             <div className="text-3xl text-center font-bold">{modal.title}</div>
             {modal.content}
             <div className="flex justify-end items-center">
