@@ -16,13 +16,12 @@ import Loading from "../../../etc/component/Loading";
 import AddressList from "../../data/AddressList";
 
 const initState = {
-  // ToDEL 삭제
-  userId: "bell4916@naver.com",
+  userId: "",
   authCode: "",
-  userPw: "Yang544110!@",
-  confirmPw: "Yang544110!@",
-  name: "양성규",
-  phoneNum: "01049164357",
+  userPw: "",
+  confirmPw: "",
+  name: "",
+  phoneNum: "",
   address: "",
   birthDate: null,
   gender: "M",
