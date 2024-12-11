@@ -7,9 +7,10 @@ import useMemberTag from "../../hook/useMemberTag";
 import Loading from "../../../etc/component/Loading";
 
 const initState = {
+  // ToDEL 삭제
   userId: "",
-  name: "",
-  phoneNum: "",
+  name: "양성규",
+  phoneNum: "01049164357",
   roleName: "GENERAL",
 };
 

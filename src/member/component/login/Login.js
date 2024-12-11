@@ -57,11 +57,11 @@ const Login = () => {
             setCookie("userAddress", data.address);
             setCookie(
               "userEmail",
-              userRole === "GENERAL" ? userId : data.email ?? "-"
+              userRole === "GENERAL" ? data.userId : data.email ?? "-"
             );
-            setCookie("userId", userId);
-            setCookie("userRole", userRole);
-            setCookie("idSave", userRole === "ADMIN" ? false : idSave);
+            setCookie("userId", data.userId);
+            setCookie("userRole", data.roleName);
+            setCookie("idSave", data.roleName === "ADMIN" ? false : idSave);
 
             setTimeout(() => {
               toast.success("로그인 완료");
@@ -86,6 +86,21 @@ const Login = () => {
   const onKeyUpLogin = (e) => {
     if (e.key === "Enter") {
       onCLickLogin(e);
+    } else if (e.key === "Escape") {
+      // ToDEL 삭제
+      if (userRole === "GENERAL") {
+        setUserId("bell4916@naver.com");
+        setUserPw("qwerQWER1234!@#$");
+        onCLickLogin(e);
+      } else if (userRole === "BUSINESS") {
+        setUserId("520-38-01151");
+        setUserPw("qwerQWER1234!@#$");
+        onCLickLogin(e);
+      } else if (userRole === "ADMIN") {
+        setUserId("ADMIN");
+        setUserPw("ADMIN");
+        onCLickLogin(e);
+      }
     }
   };
 
