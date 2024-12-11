@@ -121,7 +121,10 @@ const EducationPolicyDetailRead = () => {
       {/* <div className="w-[70%] h-[600px] ml-[15%]  border-2 border-red-600"> */}
       <div className="h-auto flex flex-col mt-1 w-full bg-white rounded-md shadow-md border">
         <div className="border-2 border-gray-500 rounded-md pl-4 pt-4">
+          {/* 정책명 */}
           <h1 className="text-3xl font-bold mb-6">{policy.policyName}</h1>
+          {/* 정책 소개 */}
+          <div className="font-semibold py-2">{policy.policyOverview}</div>
           <div className="flex justify-end">
             <button className="border-2 border-red-600 m-2">즐겨찾기</button>
               <button
@@ -141,63 +144,16 @@ const EducationPolicyDetailRead = () => {
             <table className="table-auto w-full text-left text-sm text-gray-700 border-t-2 border-b-2">
               <tbody>
                 <tr className="border-b">
-                  <td className="font-semibold py-2">정책 소개</td>
-                  <td>{replaceNewlinesWithBr(policy.policyOverview)}</td>
+                  <td className="font-semibold w-1/4 py-2">지원 내용</td>
+                  <td>{replaceNewlinesWithBr(policy.policyContent1)}</td>
                 </tr>
                 <tr className="border-b">
-                  <td className="font-semibold w-1/4 py-2">정책 상세 내용</td>
-                  <td>{replaceNewlinesWithBr(policy.policyContent1)}</td>
+                  <td className="font-semibold py-2">사업신청기간</td>
+                  <td>{replaceNewlinesWithBr(policy.policyApplicationPeriod)}</td>
                 </tr>
                 <tr className="border-b">
                   <td className="font-semibold py-2">지원 규모</td>
                   <td>{replaceNewlinesWithBr(policy.supportScale)}</td>
-                </tr>
-                <tr className="border-b">
-                  <td className="font-semibold py-2">사업 운영 기간</td>
-                  <td>{replaceNewlinesWithBr(policy.policyOperatePeriod)}</td>
-                </tr>
-                <tr className="border-b">
-                  <td className="font-semibold py-2">사업 분기</td>
-                  <td>{policy.policyDateType}</td>
-                </tr>
-                <tr className="border-b">
-                  <td className="font-semibold py-2">신청기간</td>
-                  <td>{replaceNewlinesWithBr(policy.policyApplicationPeriod)}</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-          <div className="mb-8">
-            <h3 className="w-full text-lg font-bold text-gray-600 mb-3 p-2 bg-gray-50">
-              신청 방법
-            </h3>
-            <table className="table-auto w-full text-left text-sm text-gray-700 border-t-2 border-b-2">
-              <tbody>
-                <tr className="border-b">
-                  <td className="font-semibold w-1/4 py-2">신청 절차 내용</td>
-                  <td>{replaceNewlinesWithBr(policy.applicationProcedure)}</td>
-                </tr>
-                <tr className="border-b">
-                  <td className="font-semibold w-1/4 py-2">심사 및 발표</td>
-                  <td>{replaceNewlinesWithBr(policy.judgingPresentation)}</td>
-                </tr>
-                <tr className="border-b">
-                  <td className="font-semibold w-1/4 py-2">신청 사이트</td>
-                  <td>
-                    {policy.applicationSite && policy.applicationSite !== 'null' && policy.applicationSite !== '-' ? (
-                      <a href={policy.applicationSite} target="_blank" rel="noopener noreferrer" className="text-blue-500 underline break-all inline-block">
-                        {policy.applicationSite}
-                      </a>
-                    ) : (
-                      <span className="text-gray-500">
-                        링크 없음
-                      </span>
-                    )}
-                  </td>
-                </tr>
-                <tr className="border-b">
-                  <td className="font-semibold w-1/4 py-2">제출 서류 내용</td>
-                  <td>{replaceNewlinesWithBr(policy.submitionDocument)}</td>
                 </tr>
               </tbody>
             </table>
@@ -209,7 +165,7 @@ const EducationPolicyDetailRead = () => {
             <table className="table-auto w-full text-left text-sm text-gray-700 border-t-2 border-b-2">
               <tbody>
                 <tr className="border-b">
-                  <td className="font-semibold w-1/4 py-2">연령 요건</td>
+                  <td className="font-semibold w-1/4 py-2">연령</td>
                   <td>{replaceNewlinesWithBr(policy.ageRequirement)}</td>
                 </tr>
                 <tr className="border-b">
@@ -225,12 +181,51 @@ const EducationPolicyDetailRead = () => {
                   <td>{policy.majorIn}</td>
                 </tr>
                 <tr className="border-b">
-                  <td className="font-semibold py-2">취업 상태</td>
+                  <td className="font-semibold py-2">취업상태</td>
                   <td>{replaceNewlinesWithBr(policy.employmentStatus)}</td>
                 </tr>
                 <tr className="border-b">
-                  <td className="font-semibold py-2">추가 필요 사항</td>
+                  <td className="font-semibold py-2">추가 세부 사항</td>
                   <td>{replaceNewlinesWithBr(policy.additionalRequirement)}</td>
+                </tr>
+                <tr className="border-b">
+                  <td className="font-semibold py-2">참여 제한 대상</td>
+                  <td>{replaceNewlinesWithBr(policy.participationRestriction)}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div className="mb-8">
+            <h3 className="w-full text-lg font-bold text-gray-600 mb-3 p-2 bg-gray-50">
+              신청 방법
+            </h3>
+            <table className="table-auto w-full text-left text-sm text-gray-700 border-t-2 border-b-2">
+              <tbody>
+                <tr className="border-b">
+                  <td className="font-semibold w-1/4 py-2">신청 절차</td>
+                  <td>{replaceNewlinesWithBr(policy.applicationProcedure)}</td>
+                </tr>
+                <tr className="border-b">
+                  <td className="font-semibold w-1/4 py-2">심사 및 발표</td>
+                  <td>{replaceNewlinesWithBr(policy.judgingPresentation)}</td>
+                </tr>
+                <tr className="border-b">
+                  <td className="font-semibold w-1/4 py-2">신청 사이트</td>
+                  <td>
+                    {policy.applicationSite && policy.applicationSite !== 'null' && policy.applicationSite !== '-' ? (
+                      <a href={policy.applicationSite} target="_blank" rel="noopener noreferrer" className="text-blue-500 underline">
+                        {policy.applicationSite}
+                      </a>
+                    ) : (
+                      <span className="text-gray-500">
+                        링크 없음
+                      </span>
+                    )}
+                  </td>
+                </tr>
+                <tr className="border-b">
+                  <td className="font-semibold w-1/4 py-2">제출 서류</td>
+                  <td>{replaceNewlinesWithBr(policy.submitionDocument)}</td>
                 </tr>
               </tbody>
             </table>
@@ -246,10 +241,6 @@ const EducationPolicyDetailRead = () => {
                   <td>{policy.hostOrganization}</td>
                 </tr>
                 <tr className="border-b">
-                  <td className="font-semibold w-1/4 py-2">주관 기관 담당자 이름</td>
-                  <td>{policy.hstOrgManagerName}</td>
-                </tr>
-                <tr className="border-b">
                   <td className="font-semibold w-1/4 py-2">주관 기관 담당자 연락처</td>
                   <td>{policy.hstOrgManagerPhone}</td>
                 </tr>
@@ -258,18 +249,14 @@ const EducationPolicyDetailRead = () => {
                   <td>{policy.operatingAgency}</td>
                 </tr>
                 <tr className="border-b">
-                  <td className="font-semibold w-1/4 py-2">운영 기관 담당자 이름</td>
-                  <td>{policy.operAgenManagerName}</td>
-                </tr>
-                <tr className="border-b">
                   <td className="font-semibold w-1/4 py-2">운영 기관 담당자 연락처</td>
                   <td>{policy.operAgenManagerPhone}</td>
                 </tr>
                 <tr className="border-b">
                   <td className="font-semibold w-1/4 py-2">참고 사이트1</td>
-                  <td>
+                  <td className=" w-3/4 ">
                    {policy.referenceSite1 && policy.referenceSite1 !== 'null' && policy.referenceSite1 !== '-' ? (
-                      <a href={policy.referenceSite1} target="_blank" rel="noopener noreferrer" className="text-blue-500 underline break-all inline-block">
+                      <a href={policy.referenceSite1} target="_blank" rel="noopener noreferrer" className="text-blue-500 underline">
                         {policy.referenceSite1}
                       </a>
                     ) : (
@@ -283,7 +270,7 @@ const EducationPolicyDetailRead = () => {
                   <td className="font-semibold py-2">참고 사이트2</td>
                   <td>
                     {policy.referenceSite2 && policy.referenceSite2 !== 'null' && policy.referenceSite2 !== '-' ? (
-                      <a href={policy.referenceSite2} target="_blank" rel="noopener noreferrer" className="text-blue-500 underline break-all inline-block">
+                      <a href={policy.referenceSite2} target="_blank" rel="noopener noreferrer" className="text-blue-500 underline">
                         {policy.referenceSite2}
                       </a>
                     ) : (
@@ -293,9 +280,10 @@ const EducationPolicyDetailRead = () => {
                     )}
                   </td>
                 </tr>
-                <tr>
-                  <td className="font-semibold py-2">기타</td>
-                  <td>{replaceNewlinesWithBr(policy.etc)}</td>
+                {/* 첨부파일 추가해야됨 */}
+                <tr className="border-b">
+                  <td className="font-semibold w-1/4 py-2">첨부파일</td>
+                  <td>첨부파일 로직 추가 필요</td>
                 </tr>
               </tbody>
             </table>
