@@ -108,8 +108,9 @@ function Header({
                     if (window.confirm("로그아웃하시겠습니까?")) {
                       removeCookie("jwt");
                       removeCookie("expirationTime");
-                      removeCookie("name");
-                      removeCookie("address");
+                      removeCookie("userName");
+                      removeCookie("userEmail");
+                      removeCookie("userAddress");
 
                       if (!getCookie("idSave")) {
                         removeCookie("userId");

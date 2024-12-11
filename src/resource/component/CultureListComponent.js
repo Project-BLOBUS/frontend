@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import styles from "../css/Culture.module.css";
+import BookBtn from "../../member/component/mypage/BookBtn";
 // import "../css/Culture.css";
 
 const CultureListComponent = ({ culture }) => {
@@ -9,7 +10,7 @@ const CultureListComponent = ({ culture }) => {
   const handleMouseLeave = () => setIsHovered(false);
 
   return (
-    <div className="relative border border-gray-200 rounded-md pb-3 shadow-sm hover:shadow-md cursor-pointer transition-shadow duration-300 overflow-hidden">
+    <div className="relative border border-gray-200 rounded-md pb-3 shadow-sm hover:shadow-md transition-shadow duration-300 overflow-hidden">
       <div onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
         <div>
           <img
@@ -19,9 +20,12 @@ const CultureListComponent = ({ culture }) => {
           />
         </div>
         <div className="p-4">
-          <h3 className="text-lg font-semibold">
-            {culture.title?._text || "제목 정보 없음"}
-          </h3>
+          <div className="flex justify-between">
+            <h3 className="text-lg font-semibold">
+              {culture.title?._text || "제목 정보 없음"}
+            </h3>
+            <BookBtn main="지역" sub="문화" targetId={culture.res_no?._text} />
+          </div>
           <p className="text-sm text-gray-600">
             {culture.place_nm?._text || "시설명 정보 없음"}
           </p>

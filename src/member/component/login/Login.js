@@ -57,11 +57,11 @@ const Login = () => {
             setCookie("userAddress", data.address);
             setCookie(
               "userEmail",
-              userRole === "GENERAL" ? userId : data.email ?? "-"
+              userRole === "GENERAL" ? data.userId : data.email ?? "-"
             );
-            setCookie("userId", userId);
-            setCookie("userRole", userRole);
-            setCookie("idSave", userRole === "ADMIN" ? false : idSave);
+            setCookie("userId", data.userId);
+            setCookie("userRole", data.roleName);
+            setCookie("idSave", data.roleName === "ADMIN" ? false : idSave);
 
             setTimeout(() => {
               toast.success("로그인 완료");

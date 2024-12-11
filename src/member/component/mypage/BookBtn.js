@@ -3,6 +3,7 @@ import { toast } from "react-toastify";
 import { FaRegStar, FaStar } from "react-icons/fa";
 import { checkBookmark, changeBookmark } from "../../api/mypageAPI";
 import Loading from "../../../etc/component/Loading";
+import { getCookie } from "../../../etc/util/cookieUtil";
 
 const BookBtn = ({ main, sub, targetId }) => {
   const [loading, setLoading] = useState(false);
@@ -28,36 +29,38 @@ const BookBtn = ({ main, sub, targetId }) => {
   return (
     <>
       {loading && <Loading />}
-      <button
-        className={`p-2 text-2xl transition duration-500 ${
-          check === hover ? "text-gray-500" : "text-yellow-500"
-        }`}
-        onMouseEnter={() => setHover(true)}
-        onMouseLeave={() => setHover(false)}
-        onClick={() => {
-          setLoading(true);
+      {getCookie("userRole") === "GENERAL" && (
+        <button
+          className={`p-2 text-2xl transition duration-500 ${
+            check === hover ? "text-gray-500" : "text-yellow-500"
+          }`}
+          onMouseEnter={() => setHover(true)}
+          onMouseLeave={() => setHover(false)}
+          onClick={() => {
+            setLoading(true);
 
-          changeBookmark(main, sub, targetId)
-            .then((data) => {
-              if (data.error) {
-                toast.error("즐겨찾기에 실패했습니다.", { toastId: "e" });
-              } else {
-                setCheck(!check);
-              }
-            })
-            .catch((error) => {
-              if (error.code === "ERR_NETWORK") {
-                toast.error("서버연결에 실패했습니다.", { toastId: "e" });
-              } else {
-                toast.error("즐겨찾기에 실패했습니다.", { toastId: "e" });
-              }
-            });
+            changeBookmark(main, sub, targetId)
+              .then((data) => {
+                if (data.error) {
+                  toast.error("즐겨찾기에 실패했습니다.", { toastId: "e" });
+                } else {
+                  setCheck(!check);
+                }
+              })
+              .catch((error) => {
+                if (error.code === "ERR_NETWORK") {
+                  toast.error("서버연결에 실패했습니다.", { toastId: "e" });
+                } else {
+                  toast.error("즐겨찾기에 실패했습니다.", { toastId: "e" });
+                }
+              });
 
-          setLoading(false);
-        }}
-      >
-        {check === hover ? <FaRegStar /> : <FaStar />}
-      </button>
+            setLoading(false);
+          }}
+        >
+          {check === hover ? <FaRegStar /> : <FaStar />}
+        </button>
+      )}
     </>
   );
 };
