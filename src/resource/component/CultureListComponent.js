@@ -24,7 +24,6 @@ const CultureListComponent = ({ culture }) => {
             <h3 className="text-lg font-semibold">
               {culture.title?._text || "제목 정보 없음"}
             </h3>
-            {console.log(culture.res_no?._text)}
             <BookBtn main="지역" sub="문화" targetId={culture.res_no?._text} />
           </div>
           <p className="text-sm text-gray-600">
