@@ -287,8 +287,6 @@ const GeneralInput = () => {
                       authCode: code,
                     });
                     toast.success("메일 전송 성공");
-                    // ToDEL 삭제
-                    setMember({ ...member, authCode: code });
                   } catch (error) {
                     toast.error("메일 전송에 실패했습니다.");
                   }
