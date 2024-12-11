@@ -1,10 +1,11 @@
 import React, { useState, useCallback,useEffect  } from "react";
 import Header from "./Header";
 import { fetchPolicyTitles, fetchCommunityTitles } from "./AllSearchApi"; // 커뮤니티 API 추가
-import { useSearchParams } from "react-router-dom";
+import { useSearchParams,useNavigate  } from "react-router-dom";
 
 const AllSearch = () => {
   const [searchParams, ] = useSearchParams();
+  const navigate = useNavigate(); // 네비게이션을 위한 useNavigate 훅
   
   const [, setLoading] = useState(true);
   const [totalPages, setTotalPages] = useState(0);
@@ -85,7 +86,7 @@ const AllSearch = () => {
 
   useEffect(() => {
     handleSearchClick();
-  }, [category]);
+  }, [currentPage,category]);
 
   // 검색 버튼 클릭 시 데이터 fetch
   const handleSearchClick = () => {
@@ -105,6 +106,11 @@ const AllSearch = () => {
     }
   };
 
+  // 커뮤니티 항목 클릭 시 상세 페이지로 이동
+  const handleCommunityClick = (id) => {
+    console.log("Selected ID:", id);
+    navigate(`/community/read/${id}`); // 해당 id를 이용해 Read.js 페이지로 이동
+  };
 
   return (
     <div>
@@ -177,14 +183,19 @@ const AllSearch = () => {
               </li>
             ))}
 
-          {category === "community" &&
-            communityPolicies.map((item, index) => (
-              <li key={item.id} className="flex justify-center items-center bg-white w-[470px] h-[80px] ml-8 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300 ease-in-out cursor-pointer border-2 border-gray-400 overflow-y-auto m-2">
-                <p className="text-sm font-bold text-gray-800 p-1">
-                  {index + (currentPage - 1) * 10 + 1}. {item}
-                </p>
-              </li>
+{category === "community" &&
+  communityPolicies.map((item, index) => (
+    <li 
+      key={item.id || index + 1} // id가 없으면 index를 사용
+      onClick={() => handleCommunityClick(item.id || index + 1)}
+      className="flex justify-center items-center bg-white w-[470px] h-[80px] ml-8 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300 ease-in-out cursor-pointer border-2 border-gray-400 overflow-y-auto m-2"
+    >
+      <p className="text-sm font-bold text-gray-800 p-1">
+        {index + (currentPage - 1) * 10 + 1}. {item} {/* item.title로 제목을 출력 */}
+      </p>
+    </li>
             ))}
+
         </ul>
       )}
 
