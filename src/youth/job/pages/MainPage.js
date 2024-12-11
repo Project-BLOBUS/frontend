@@ -9,7 +9,8 @@ const MainPage = () => {
   const getTitle = () => {
     if (
       location.pathname.includes("/job/policyList") ||
-      location.pathname.includes("/job/policyRead")
+      location.pathname.includes("/job/policyRead") ||
+      location.pathname.includes("/job/policyModify")
     )
       return "청년 일자리 정책";
     else if (

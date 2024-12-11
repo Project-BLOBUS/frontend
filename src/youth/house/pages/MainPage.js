@@ -8,7 +8,8 @@ const MainPage = () => {
   const getTitle = () => {
     if (
       location.pathname.includes("/house/policyList") ||
-      location.pathname.includes("/house/policyRead")
+      location.pathname.includes("/house/policyRead") ||
+      location.pathname.includes("/house/policyModify")
     )
       return "청년 주거 정책";
   };

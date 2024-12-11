@@ -9,7 +9,6 @@ const getNum = (param, defaultValue) => {
   if (!param) {
     return defaultValue;
   }
-
   return parseInt(param);
 };
 
@@ -17,7 +16,6 @@ const useCustomMove = () => {
   const navigate = useNavigate();
 
   const [refresh, setRefresh] = useState(false);
-
   const [queryParams] = useSearchParams();
 
   const page = getNum(queryParams.get("page"), 1);
@@ -52,11 +50,12 @@ const useCustomMove = () => {
     setRefresh(!refresh); //추가
   };
 
-  const moveToModify = (policyId) => {
+  const moveToPolicyModify = (policyId) => {
+    console.log("moveToPolicyModify -policyId : " + policyId);
     console.log(queryDefault);
 
     navigate({
-      pathname: `../modify/${policyId}`,
+      pathname: `../policyModify/${policyId}`,
       search: queryDefault, //수정시에 기존의 쿼리 스트링 유지를 위해
     });
   };
@@ -70,7 +69,7 @@ const useCustomMove = () => {
 
   return {
     moveToPolicyList,
-    moveToModify,
+    moveToPolicyModify,
     moveToPolicyRead,
     page,
     size,

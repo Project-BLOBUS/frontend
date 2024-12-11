@@ -84,7 +84,7 @@ export const formatUrl = (url) => {
         href={url}
         target="_blank"
         rel="noopener noreferrer"
-        className="text-blue-500"
+        className="break-all inline-block text-blue-500"
       >
         {url}
       </a>
