@@ -130,15 +130,12 @@ function Header({
         </div>
       </div>
       <ToastContainer
+        style={{ width: "auto" }}
+        className="text-base text-center text-nowrap"
         position="bottom-center"
         autoClose={1000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable={false}
-        pauseOnHover={false}
+        pauseOnFocusLoss={false}
+        pauseOnHover
       />
     </div>
   );
