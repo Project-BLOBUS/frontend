@@ -95,7 +95,34 @@ const WelfarePolicyDetailModify = () => {
             });
         }
     });
-};
+  };
+
+  const renderInputField = (name, value, label, isTextarea = false) => (
+    <tr className="border-b">
+      <td className="font-semibold w-1/4 py-2">{label}</td>
+      <td className="h-full py-2">
+        {isTextarea ? (
+          <textarea
+            name={name}
+            value={value}
+            onChange={handleChange}
+            className="w-full p-2 outline-none border rounded resize-none h-full"
+            style={{ minHeight: "100%" }} // 부모의 높이에 맞춤
+            rows="3"
+          ></textarea>
+        ) : (
+          <input
+            name={name}
+            type="text"
+            value={value}
+            onChange={handleChange}
+            className="w-full p-2 outline-none border rounded h-full"
+            style={{ minHeight: "100%" }} // 부모의 높이에 맞춤
+          />
+        )}
+      </td>
+    </tr>
+  );
 
   return (
     <div>
@@ -108,26 +135,22 @@ const WelfarePolicyDetailModify = () => {
       </div>
       {/* <div className="w-[70%] h-[600px] ml-[15%]  border-2 border-red-600"> */}
       <div className="h-auto flex flex-col mt-1 w-full bg-white rounded-md shadow-md border">
-        <div className="border-2 border-gray-500 rounded-md pl-4 pt-4">
-          {/* 정책명 */}
-          <h1 className="text-3xl font-bold mb-6">
-            <input 
-              className="w-full border-2 border-gray-500 rounded-md"
-              type="text"
-              name="policyName"
-              value={policy.policyName}
-              onChange={handleChange}
-            />
-          </h1>
-          {/* 정책 소개 */}
-          <div className="font-semibold py-2">
-            <input 
-              className="w-full border-2 border-gray-500 rounded-md"
-              type="text"
-              name="policyOverview"
-              value={policy.policyOverview}
-              onChange={handleChange}
-            />
+        <div className="border-2 border-gray-500 rounded-md flex-grow mt-1">
+          <div className="mb-8">
+            <h3 className="text-lg font-bold text-gray-600 mb-3 p-2 bg-gray-50">
+              정책명
+            </h3>
+            <table className="table-auto w-full text-left text-sm text-gray-700 border-t-2 border-b-2">
+              <tbody>
+                {renderInputField("policyName", policy.policyName, "정책명", true)}
+                {renderInputField(
+                  "policyOverview",
+                  policy.policyOverview,
+                  "정책소개",
+                  true
+                )}
+              </tbody>
+            </table>
           </div>
         </div>
         {/* <div className="border-2 border-blue-400 h-[68%] mt-[2%]"> */}
@@ -136,43 +159,11 @@ const WelfarePolicyDetailModify = () => {
             <h3 className="w-full text-lg font-bold text-gray-600 mb-3 p-2 bg-gray-50">
               정책 설명
             </h3>
-            <table className="table-auto w-full text-left text-sm text-gray-700 border-t-2 border-b-2">
+            <table className="table-auto w-full text-left text-sm text-gray-600 border-t-2 border-b-2">
               <tbody>
-                <tr className="border-b">
-                  <td className="font-semibold w-1/4 py-2">지원 내용</td>
-                  <td>
-                      <input
-                        className='w-full h-full'
-                        type="text"
-                        name="policyContent1"
-                        value={policy.policyContent1}
-                        onChange={handleChange}
-                      />
-                  </td>
-                </tr>
-                <tr className="border-b">
-                  <td className="font-semibold py-2">신청기간</td>
-                  <td>
-                      <input
-                        type="text"
-                        name="policyApplicationPeriod"
-                        value={policy.policyApplicationPeriod}
-                        onChange={handleChange}
-                      />
-                  </td>
-                </tr>
-                <tr className="border-b">
-                  <td className="font-semibold py-2">지원 규모</td>
-                  <td>
-                      <input
-                        className='w-full'
-                        type="text"
-                        name="supportScale"
-                        value={policy.supportScale}
-                        onChange={handleChange}
-                      />
-                  </td>
-                </tr>
+                {renderInputField("policyContent1", policy.policyContent1, "지원내용", true)}
+                {renderInputField("policyApplicationPeriod", policy.policyApplicationPeriod, "사업신청기간", true)}
+                {renderInputField("supportScale", policy.supportScale, "지원 규모", true)}
               </tbody>
             </table>
           </div>
@@ -182,85 +173,20 @@ const WelfarePolicyDetailModify = () => {
               지원 대상
             </h3>
             <table className="table-auto w-full text-left text-sm text-gray-700 border-t-2 border-b-2">
-              <tbody>
-                <tr className="border-b">
-                  <td className="font-semibold w-1/4 py-2">연령</td>
-                  <td>
-                      <input
-                        type="text"
-                        name="ageRequirement"
-                        value={policy.ageRequirement}
-                        onChange={handleChange}
-                      />
-                  </td>
-                </tr>
-                <tr className="border-b">
-                  <td className="font-semibold w-1/4 py-2">거주지 및 소득</td>
-                  <td>
-                      <input
-                        type="text"
-                        name="proposerRequirement"
-                        value={policy.proposerRequirement}
-                        onChange={handleChange}
-                      />
-                  </td>
-                </tr>
-                <tr className="border-b">
-                  <td className="font-semibold w-1/4 py-2">학력</td>
-                  <td>
-                      <input
-                        type="text"
-                        name="academicBackground"
-                        value={policy.academicBackground}
-                        onChange={handleChange}
-                      />
-                  </td>
-                </tr>
-                <tr className="border-b">
-                  <td className="font-semibold w-1/4 py-2">전공</td>
-                  <td>
-                      <input
-                        type="text"
-                        name="majorIn"
-                        value={policy.majorIn}
-                        onChange={handleChange}
-                      />
-                  </td>
-                </tr>
-                <tr className="border-b">
-                  <td className="font-semibold py-2">취업상태</td>
-                  <td>
-                      <input
-                        type="text"
-                        name="employmentStatus"
-                        value={policy.employmentStatus}
-                        onChange={handleChange}
-                      />
-                  </td>
-                </tr>
-                <tr className="border-b">
-                  <td className="font-semibold py-2">추가 세부 사항</td>
-                  <td>
-                      <input
-                        type="text"
-                        name="additionalRequirement"
-                        value={policy.additionalRequirement}
-                        onChange={handleChange}
-                      />
-                  </td>
-                </tr>
-                <tr className="border-b">
-                  <td className="font-semibold py-2">참여 제한 대상</td>
-                  <td>
-                      <input
-                        type="text"
-                        name="participationRestriction"
-                        value={policy.participationRestriction}
-                        onChange={handleChange}
-                      />
-                  </td>
-                </tr>
-              </tbody>
+            <tbody>
+              {renderInputField("ageRequirement", policy.ageRequirement, "연령")}
+              {renderInputField("proposerRequirement", policy.proposerRequirement, "거주지 및 소득", true)}
+              {renderInputField("academicBackground", policy.academicBackground, "학력")}
+              {renderInputField("majorIn", policy.majorIn, "전공")}
+              {renderInputField("employmentStatus", policy.employmentStatus, "취업상태", true)}
+              {renderInputField("additionalRequirement", policy.additionalRequirement, "추가 세부 사항", true)}
+              {renderInputField(
+                "participationRestriction",
+                policy.participationRestriction,
+                "참여제한대상", 
+                true
+              )}
+            </tbody>
             </table>
           </div>
           <div className="mb-8">
@@ -269,50 +195,20 @@ const WelfarePolicyDetailModify = () => {
             </h3>
             <table className="table-auto w-full text-left text-sm text-gray-700 border-t-2 border-b-2">
               <tbody>
-                <tr className="border-b">
-                  <td className="font-semibold w-1/4 py-2">신청 절차</td>
-                  <td>
-                      <input
-                        type="text"
-                        name="applicationProcedure"
-                        value={policy.applicationProcedure}
-                        onChange={handleChange}
-                      />
-                  </td>
-                </tr>
-                <tr className="border-b">
-                  <td className="font-semibold w-1/4 py-2">심사 및 발표</td>
-                  <td>
-                      <input
-                        type="text"
-                        name="judgingPresentation"
-                        value={policy.judgingPresentation}
-                        onChange={handleChange}
-                      />
-                  </td>
-                </tr>
-                <tr className="border-b">
-                  <td className="font-semibold w-1/4 py-2">신청 사이트</td>
-                  <td>
-                      <input
-                        type="text"
-                        name="applicationSite"
-                        value={policy.applicationSite}
-                        onChange={handleChange}
-                      />
-                  </td>
-                </tr>
-                <tr className="border-b">
-                  <td className="font-semibold w-1/4 py-2">제출서류</td>
-                  <td>
-                      <input
-                        type="text"
-                        name="submitionDocument"
-                        value={policy.submitionDocument}
-                        onChange={handleChange}
-                      />
-                  </td>
-                </tr>
+                {renderInputField(
+                  "applicationProcedure",
+                  policy.applicationProcedure,
+                  "신청 절차",
+                  true
+                )}
+                {renderInputField("judgingPresentation", policy.judgingPresentation, "심사 및 발표", true)}
+                {renderInputField("applicationSite", policy.applicationSite, "신청 사이트", true)}
+                {renderInputField(
+                  "submitionDocument",
+                  policy.submitionDocument,
+                  "제출서류",
+                  true
+                )}
               </tbody>
             </table>
           </div>
@@ -322,72 +218,30 @@ const WelfarePolicyDetailModify = () => {
             </h3>
             <table className="table-auto w-full text-left text-sm text-gray-700 border-t-2 border-b-2">
               <tbody>
-                <tr className="border-b">
-                  <td className="font-semibold w-1/4 py-2">주관 기관</td>
-                  <td>
-                      <input
-                        type="text"
-                        name="hostOrganization"
-                        value={policy.hostOrganization}
-                        onChange={handleChange}
-                      />
-                  </td>
-                </tr>
-                <tr className="border-b">
-                  <td className="font-semibold w-1/4 py-2">주관 기관 담당자 연락처</td>
-                  <td>
-                      <input
-                        type="text"
-                        name="hstOrgManagerPhone"
-                        value={policy.hstOrgManagerPhone}
-                        onChange={handleChange}
-                      />
-                  </td>
-                </tr>
-                <tr className="border-b">
-                  <td className="font-semibold w-1/4 py-2">운영 기관</td>
-                  <td>
-                      <input
-                        type="text"
-                        name="operatingAgency"
-                        value={policy.operatingAgency}
-                        onChange={handleChange}
-                      />
-                  </td>
-                </tr>
-                <tr className="border-b">
-                  <td className="font-semibold w-1/4 py-2">운영 기관 담당자 연락처</td>
-                  <td>
-                      <input
-                        type="text"
-                        name="operAgenManagerPhone"
-                        value={policy.operAgenManagerPhone}
-                        onChange={handleChange}
-                      />
-                  </td>
-                </tr>
-                <tr className="border-b">
-                  <td className="font-semibold w-1/4 py-2">참고 사이트1</td>
-                  <td className=" w-3/4 ">
-                      <input
-                        type="text"
-                        name="referenceSite1"
-                        value={policy.referenceSite1}
-                        onChange={handleChange}
-                      />
-                  </td>
-                </tr>
-                <tr className="border-b">
-                  <td className="font-semibold py-2">참고 사이트2</td>
-                  <td>
-                      <input
-                        type="text"
-                        name="referenceSite2"
-                        value={policy.referenceSite2}
-                        onChange={handleChange}
-                      />
-                  </td>
-                </tr>
+                {renderInputField("hostOrganization", policy.hostOrganization, "주관기관")}
+                {renderInputField(
+                  "hstOrgManagerPhone",
+                  policy.hstOrgManagerPhone,
+                  "주관기관 담당자 연락처"
+                )}
+                {renderInputField("operatingAgency", policy.operatingAgency, "운영기관")}
+                {renderInputField(
+                  "operAgenManagerPhone",
+                  policy.operAgenManagerPhone,
+                  "운영기관 담당자 연락처"
+                )}
+                {renderInputField(
+                  "referenceSite1",
+                  policy.referenceSite1,
+                  "참고사이트1",
+                  true
+                )}
+                {renderInputField(
+                  "referenceSite2",
+                  policy.referenceSite2,
+                  "참고사이트2",
+                  true
+                )}
                 {/* <tr>
                   <td className="font-semibold py-2">첨부파일</td>
                   <td>
