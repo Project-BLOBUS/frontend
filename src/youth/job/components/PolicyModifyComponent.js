@@ -23,7 +23,9 @@ const PolicyModifyComponent = ({ policyId }) => {
     rqutUrla: "",
     pstnPaprCn: "",
     mngtMson: "",
+    cherCtpcCn: "",
     cnsgNmor: "",
+    tintCherCtpcCn: "",
     rfcSiteUrla1: "",
     rfcSiteUrla2: "",
   };
@@ -119,7 +121,12 @@ const PolicyModifyComponent = ({ policyId }) => {
             {renderInputField("accrRqisCn", policy.accrRqisCn, "학력")}
             {renderInputField("majrRqisCn", policy.majrRqisCn, "전공")}
             {renderInputField("empmSttsCn", policy.empmSttsCn, "취업상태")}
-            {renderInputField("aditRscn", policy.aditRscn, "추가 세부 사항")}
+            {renderInputField(
+              "aditRscn",
+              policy.aditRscn,
+              "추가 세부 사항",
+              true
+            )}
             {renderInputField(
               "prcpLmttTrgtCn",
               policy.prcpLmttTrgtCn,
@@ -138,7 +145,7 @@ const PolicyModifyComponent = ({ policyId }) => {
             {renderInputField(
               "rqutProcCn",
               policy.rqutProcCn,
-              "신청 절차",
+              "신청방법 및및 절차",
               true
             )}
             {renderInputField("jdgnPresCn", policy.jdgnPresCn, "심사 및 발표")}
@@ -163,13 +170,13 @@ const PolicyModifyComponent = ({ policyId }) => {
             {renderInputField(
               "cherCtpcCn",
               policy.cherCtpcCn,
-              "주관기관 담당자 연락처"
+              "주관기관 연락처"
             )}
             {renderInputField("cnsgNmor", policy.cnsgNmor, "운영기관")}
             {renderInputField(
               "tintCherCtpcCn",
               policy.tintCherCtpcCn,
-              "운영기관 담당자 연락처"
+              "운영기관 연락처"
             )}
             {renderInputField(
               "rfcSiteUrla1",

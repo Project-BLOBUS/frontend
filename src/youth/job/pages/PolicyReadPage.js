@@ -14,7 +14,7 @@ const initState = {
 const PolicyReadPage = () => {
   const { policyId } = useParams(); // URL에서 policyId 가져오기
   const [policy, setPolicy] = useState(initState);
-  const userRole = getCookie("userRole");
+  const userRole = getCookie("userId");
 
   useEffect(() => {
     policyDetail(policyId).then((data) => {
@@ -162,7 +162,7 @@ const PolicyReadPage = () => {
           <table className="table-auto w-full text-left text-sm text-gray-700 border-t-2 border-b-2">
             <tbody>
               <tr className="border-b">
-                <td className="font-semibold w-1/4 py-2">신청 절차</td>
+                <td className="font-semibold w-1/4 py-2">신청방법 및 절차</td>
                 <td className="leading-6">
                   {formatTextWithLineBreaks(policy.rqutProcCn)}
                 </td>
