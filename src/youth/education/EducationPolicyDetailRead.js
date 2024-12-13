@@ -15,7 +15,7 @@ const EducationPolicyDetailRead = () => {
   const [isShareModalOpen, setIsShareModalOpen] = useState(false);
   const navigate = useNavigate();
   const searchs = location.state?.searchs || {};
-  const userRole = getCookie("userRole");
+  const userRole = getCookie("userId");
 
   useEffect(() => {
     const getPolicy = async () => {

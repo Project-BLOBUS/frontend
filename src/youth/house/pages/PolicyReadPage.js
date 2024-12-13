@@ -14,7 +14,7 @@ const initState = {
 const PolicyReadPage = () => {
   const { policyId } = useParams(); // URL에서 policyId 가져오기
   const [policy, setPolicy] = useState(initState);
-  const userRole = getCookie("userRole");
+  const userRole = getCookie("userId");
 
   useEffect(() => {
     policyDetail(policyId).then((data) => {
