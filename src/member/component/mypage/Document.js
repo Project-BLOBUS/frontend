@@ -80,23 +80,22 @@ const Document = () => {
     }
   };
 
-  const css = "h-full px-4 border-gray-400";
   return (
     <>
       {loading && <Loading />}
       <div className="w-full text-xl text-center font-bold flex flex-col justify-center items-center">
-        <div className="w-full py-4 text-3xl text-left flex justify-between items-center">
+        <div className="w-full my-2 py-4 text-3xl text-left border-b-2 border-gray-300 flex justify-between items-center">
           작성글
         </div>
 
-        <div className="w-full text-base flex justify-center items-center">
-          <div className="w-1/2 border-b-4 border-gray-500 flex justify-start items-center">
+        <div className="w-full my-2 text-base flex justify-center items-center">
+          <div className="w-1/2 text-base flex justify-start items-center space-x-2">
             {makeDocTab("전체", "", board, setBoard, true, moveToList)}
             {makeDocTab("자유", "자유", board, setBoard, true, moveToList)}
             {makeDocTab("건의", "건의", board, setBoard, true, moveToList)}
             {makeDocTab("댓글", "댓글", board, setBoard, true, moveToList)}
           </div>
-          <div className="w-1/2 border-b-4 border-gray-500 flex justify-end items-center">
+          <div className="w-1/2 text-base flex justify-end items-center space-x-2">
             {makeDocTab("지역", "지역", board, setBoard, false, moveToList)}
             {/* {makeDocTab("기업", "기업", board, setBoard, false, moveToList)} */}
             {makeDocTab("청년", "청년", board, setBoard, false, moveToList)}
@@ -104,22 +103,22 @@ const Document = () => {
           </div>
         </div>
 
-        <div className="bg-gray-200 w-full h-[50px] py-2 border-b-4 border-gray-500 text-base flex justify-center items-center">
-          <div className={`${css} w-[8%] border-r-2`}>번호</div>
-          <div className={`${css} w-[8%] border-r-2`}>구분</div>
-          <div className={`${css} w-[64%] border-r-2`}>제목</div>
-          <div className={`${css} w-[10%] border-r-2`}>작성</div>
-          <div className={`${css} w-[10%] border-r-0`}>수정</div>
+        <div className="w-full mt-2 py-2 border-t-2 border-b border-t-yellow-500 border-b-gray-500 text-sm flex justify-center items-center">
+          <div className="w-[8%]">번호</div>
+          <div className="w-[10%]">구분</div>
+          <div className="w-full">제목</div>
+          <div className="w-[12%]">작성</div>
+          <div className="w-[12%]">수정</div>
         </div>
 
-        <div className="w-full h-[420px] text-base text-nowrap flex flex-col justify-start items-center">
+        <div className="w-full text-sm text-nowrap flex flex-col justify-start items-center">
           {data.dtoList.length === 0 ? (
             <>
-              <div className="w-full pt-20 text-2xl">
+              <div className="w-full pt-10 text-2xl">
                 작성글 이력이 없습니다.
               </div>
               <div
-                className="w-1/2 p-10 text-base text-right cursor-pointer hover:text-gray-300 hover:underline transition duration-500"
+                className="w-1/2 p-10 text-base text-right cursor-pointer hover:text-gray-300 transition duration-500"
                 onClick={() => navigate("/community/add")}
               >
                 글 쓰기
@@ -129,18 +128,13 @@ const Document = () => {
             data.dtoList.map((dto, index) => (
               <div
                 key={index}
-                className={`w-full h-[10%] py-2 border-b-2 border-gray-400 flex justify-center items-center cursor-pointer hover:bg-gray-300 transition duration-500`}
+                className={`w-full py-2 border-b-2 border-gray-300 flex justify-center items-center cursor-pointer`}
                 onClick={() => navigate(`/community/read/${dto.id}`)}
               >
-                <div className={`${css} w-[8%] border-r-2`}>{dto.id}</div>
+                <div className="w-[8%]">{dto.id}</div>
+                <div className="w-[10%]">{dto.boardType}</div>
 
-                <div className={`${css} w-[8%] border-r-2`}>
-                  {dto.boardType}
-                </div>
-
-                <div
-                  className={`${css} w-[64%] border-r-2 flex justify-start items-center space-x-2`}
-                >
+                <div className="w-full flex justify-start items-center space-x-2">
                   <div
                     className={
                       dto.category === "청년"
@@ -162,11 +156,8 @@ const Document = () => {
                   </div>
                 </div>
 
-                <div className={`${css} w-[10%] border-r-2`}>
-                  {printTime(dto.createdAt)}
-                </div>
-
-                <div className={`${css} w-[10%] border-r-0`}>
+                <div className="w-[12%]">{printTime(dto.createdAt)}</div>
+                <div className="w-[12%]">
                   {new Date(dto.updatedAt) - new Date(dto.createdAt) < 60 * 1000
                     ? "-"
                     : printTime(dto.updatedAt)}

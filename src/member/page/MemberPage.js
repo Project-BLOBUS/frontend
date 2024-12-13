@@ -42,7 +42,7 @@ const MemberPage = () => {
           <div className="bg-pink-500">
             <Header
               isWhite={true}
-              pageTitle="계정"
+              pageTitle="메인"
               titleBg="#BE185D"
               borderB={false}
             />

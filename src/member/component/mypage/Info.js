@@ -97,7 +97,7 @@ const Info = () => {
     <>
       {loading && <Loading />}
       <div className="w-full text-xl text-center font-bold flex flex-col justify-center items-center">
-        <div className="w-full py-4 border-b-4 border-gray-500 text-3xl text-left flex justify-between items-center">
+        <div className="w-full my-2 py-4 text-3xl text-left border-b-2 border-gray-300 flex justify-between items-center">
           내 정보
         </div>
 

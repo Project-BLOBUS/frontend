@@ -56,10 +56,10 @@ const MyPage = () => {
 
       <div className="w-[15%] h-screen pt-20 text-base text-center flex flex-col justify-start items-center fixed z-0">
         <div className="w-[70%] border-2 border-gray-300 rounded-[8px] font-bold">
-          <div className="py-4 text-2xl">마이페이지</div>
+          <div className="py-4 text-xl">마이페이지</div>
 
           <div className="bg-white rounded-b-[8px] flex flex-col justify-center items-center">
-            {makeNav("추천", "custom")}
+            {makeNav("커스텀", "custom")}
             {makeNav("즐겨찾기", "bookmark")}
             {makeNav("작성글", "doc")}
             {makeNav("내정보", "info")}
@@ -84,7 +84,7 @@ const makeNav = (name, link) => {
       className={`w-full px-4 py-2 border-t-2 border-gray-300 text-left ${
         act
           ? "text-yellow-500 cursor-default"
-          : "text-gray-500 hover:bg-gray-200 hover:text-yellow-500 transition duration-500"
+          : "text-gray-500 hover:text-yellow-500 transition duration-500"
       }`}
       onClick={(e) =>
         window.location.pathname.includes(link) && e.preventDefault()
