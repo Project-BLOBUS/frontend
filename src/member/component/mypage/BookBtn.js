@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { FaRegStar, FaStar } from "react-icons/fa";
+import { getCookie } from "../../../etc/util/cookieUtil";
 import { checkBookmark, changeBookmark } from "../../api/mypageAPI";
 import Loading from "../../../etc/component/Loading";
-import { getCookie } from "../../../etc/util/cookieUtil";
 
 const BookBtn = ({ main, sub, targetId }) => {
   const [loading, setLoading] = useState(false);
@@ -12,15 +12,16 @@ const BookBtn = ({ main, sub, targetId }) => {
   useEffect(() => {
     setLoading(true);
 
-    checkBookmark(main, sub, targetId)
-      .then((data) => setCheck(data))
-      .catch((error) => {
-        if (error.code === "ERR_NETWORK") {
-          toast.error("서버연결에 실패했습니다.", { toastId: "e" });
-        } else {
-          toast.error("즐겨찾기에 실패했습니다.", { toastId: "e" });
-        }
-      });
+    getCookie("jwt") &&
+      checkBookmark(main, sub, targetId)
+        .then((data) => setCheck(data))
+        .catch((error) => {
+          if (error.code === "ERR_NETWORK") {
+            toast.error("서버연결에 실패했습니다.", { toastId: "e" });
+          } else {
+            toast.error("즐겨찾기에 실패했습니다.", { toastId: "e" });
+          }
+        });
 
     setLoading(false);
   }, [main, sub, targetId, check]);
@@ -28,7 +29,7 @@ const BookBtn = ({ main, sub, targetId }) => {
   return (
     <>
       {loading && <Loading />}
-      {getCookie("userRole") === "GENERAL" && (
+      {getCookie("jwt") && getCookie("userRole") === "GENERAL" && (
         <button
           className={`p-2 text-2xl transition duration-500 ${
             check ? "text-yellow-500" : "text-gray-500"
