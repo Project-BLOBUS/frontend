@@ -8,7 +8,6 @@ import { getCookie } from "../../../etc/util/cookieUtil";
 const BookBtn = ({ main, sub, targetId }) => {
   const [loading, setLoading] = useState(false);
   const [check, setCheck] = useState(false);
-  const [hover, setHover] = useState(false);
 
   useEffect(() => {
     setLoading(true);
@@ -32,10 +31,8 @@ const BookBtn = ({ main, sub, targetId }) => {
       {getCookie("userRole") === "GENERAL" && (
         <button
           className={`p-2 text-2xl transition duration-500 ${
-            check === hover ? "text-gray-500" : "text-yellow-500"
+            check ? "text-yellow-500" : "text-gray-500"
           }`}
-          onMouseEnter={() => setHover(true)}
-          onMouseLeave={() => setHover(false)}
           onClick={() => {
             setLoading(true);
 
@@ -58,7 +55,7 @@ const BookBtn = ({ main, sub, targetId }) => {
             setLoading(false);
           }}
         >
-          {check === hover ? <FaRegStar /> : <FaStar />}
+          {check ? <FaStar /> : <FaRegStar />}
         </button>
       )}
     </>

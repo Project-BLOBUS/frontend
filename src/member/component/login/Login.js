@@ -5,6 +5,7 @@ import { toast } from "react-toastify";
 import { getCookie, setCookie } from "../../../etc/util/cookieUtil";
 import { login } from "../../api/memberAPI";
 import Loading from "../../../etc/component/Loading";
+import imgLogin from "./login.png";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -90,101 +91,107 @@ const Login = () => {
   };
 
   return (
-    <>
+    <div className="w-full p-10 text-center font-bold flex flex-col justify-center items-center">
       {loading && <Loading />}
-      <div
-        className="w-full max-w-[600px] min-w-min text-xl text-center font-bold flex flex-col justify-center items-center space-y-3"
-        onKeyUp={onKeyUpLogin}
-      >
-        <div className="w-full my-4 text-5xl text-sky-500">로그인</div>
+      <div className="w-full text-3xl p-2 text-left">통합 로그인</div>
 
-        <div className="w-full flex justify-between items-center">
-          {makeTab("일반", "GENERAL", userRole, setUserRole)}
-          {makeTab("기업", "BUSINESS", userRole, setUserRole)}
-          {/* {makeTab("관리자", "ADMIN", userRole, setUserRole)} */}
-        </div>
-
-        <input
-          className="w-full p-4 border border-gray-500 rounded-lg"
-          type="text"
-          name="userId"
-          value={userId ?? ""}
-          placeholder="아이디"
-          autoComplete="off"
-          onChange={(e) => setUserId(e.target.value)}
-          ref={idRef}
-        />
-
-        <input
-          className="w-full p-4 border border-gray-500 rounded-lg"
-          type="password"
-          name="userPw"
-          value={userPw ?? ""}
-          placeholder="비밀번호"
-          autoComplete="off"
-          onChange={(e) => setUserPw(e.target.value)}
-          ref={pwRef}
-        />
-
-        {userRole === "ADMIN" || (
-          <div className="group w-full flex justify-center items-center cursor-pointer">
-            <input
-              className="w-4 h-4"
-              type="checkbox"
-              name="idSave"
-              checked={idSave}
-              onChange={() => setIdSave(!idSave)}
-            />
-            <div
-              className={`ml-2 transition duration-500 ${
-                idSave
-                  ? "group-hover:text-gray-300"
-                  : "group-hover:text-sky-300"
-              }`}
-              onClick={() => setIdSave(!idSave)}
-            >
-              아이디 저장
-            </div>
+      <div className="w-full border border-gray-500 rounded-xl flex justify-center items-center">
+        <div className="w-1/2 p-6 text-xl text-left border-r border-e-gray-500 flex flex-col justify-center items-center">
+          <img className="w-[70%]" src={imgLogin} alt="로그인" />
+          <div className="w-full px-2">BLOBUS에 방문해주셔서 감사합니다.</div>
+          <div className="w-full px-2">
+            로그인 하시면 보다 다양한 서비스 이용이 가능합니다.
           </div>
-        )}
-
-        <div className="w-full pt-2 text-2xl flex flex-row-reverse justify-center items-center">
-          <button
-            className="bg-sky-500 w-5/6 p-4 rounded-2xl shadow-xl text-white hover:bg-sky-300 hover:text-black transition duration-500"
-            onClick={onCLickLogin}
-          >
-            LOGIN
-          </button>
-
-          <button
-            className="bg-gray-500 w-1/6 mr-4 p-4 rounded-2xl shadow-xl text-white flex justify-center items-center hover:bg-gray-300 hover:text-black transition duration-500"
-            onClick={() =>
-              navigate(window.history.length > 1 ? -1 : "/", { replace: true })
-            }
-          >
-            <FaBackspace className="text-3xl" />
-          </button>
         </div>
 
-        <div className="w-full pt-2 px-10 flex justify-between items-center">
-          {makeLink("/member/find/id", "아이디 찾기")}
-          <div>|</div>
-          {makeLink("/member/find/pw", "비밀번호 찾기")}
-          <div>|</div>
-          {makeLink("/member/signup", "회원가입")}
+        <div
+          className="w-1/2 p-6 flex flex-col justify-center items-center space-y-2"
+          onKeyUp={onKeyUpLogin}
+        >
+          <div className="w-full px-20 pb-2 text-xl flex justify-around items-center space-x-4">
+            {makeTab("일반회원", "GENERAL", userRole, setUserRole)}
+            {makeTab("기업회원", "BUSINESS", userRole, setUserRole)}
+            {/* {makeTab("관리자", "ADMIN", userRole, setUserRole)} */}
+          </div>
+
+          <input
+            className="w-full p-4 border border-gray-500 rounded-full shadow-md"
+            type="text"
+            name="userId"
+            value={userId ?? ""}
+            placeholder="아이디"
+            autoComplete="off"
+            onChange={(e) => setUserId(e.target.value)}
+            ref={idRef}
+          />
+
+          <input
+            className="w-full p-4 border border-gray-500 rounded-full shadow-md"
+            type="password"
+            name="userPw"
+            value={userPw ?? ""}
+            placeholder="비밀번호"
+            autoComplete="off"
+            onChange={(e) => setUserPw(e.target.value)}
+            ref={pwRef}
+          />
+
+          {userRole === "ADMIN" || (
+            <div className="group flex justify-center items-center cursor-pointer">
+              <input
+                className="w-4 h-4"
+                type="checkbox"
+                name="idSave"
+                checked={idSave}
+                onChange={() => setIdSave(!idSave)}
+              />
+              <div
+                className="ml-2 group-hover:text-pink-300 transition duration-500"
+                onClick={() => setIdSave(!idSave)}
+              >
+                아이디 저장
+              </div>
+            </div>
+          )}
+
+          <div className="w-full py-4 text-xl flex flex-row-reverse justify-center items-center">
+            <button
+              className="bg-pink-500 w-5/6 p-4 rounded-full shadow-lg text-white hover:bg-pink-300 hover:text-black transition duration-500"
+              onClick={onCLickLogin}
+            >
+              LOGIN
+            </button>
+
+            <button
+              className="bg-gray-500 w-1/6 mr-4 p-4 rounded-xl shadow-lg text-white flex justify-center items-center hover:bg-gray-300 hover:text-black transition duration-500"
+              onClick={() =>
+                navigate(window.history.length > 1 ? -1 : "/", {
+                  replace: true,
+                })
+              }
+            >
+              <FaBackspace className="text-2xl" />
+            </button>
+          </div>
+
+          <div className="w-full text-xs px-4 flex justify-between items-center">
+            {makeLink("/member/find/id", "아이디 찾기")}
+            {makeLink("/member/find/pw", "비밀번호 찾기")}
+            {makeLink("/member/signup", "회원가입")}
+          </div>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 
 const makeTab = (name, role, userRole, setUserRole) => {
   return (
     <div
-      className={`w-full p-4 rounded-t-2xl ${
+      className={`w-full p-2 border-2 rounded-full ${
         userRole === role
-          ? "bg-sky-500 text-white"
-          : "text-gray-300 cursor-pointer hover:bg-sky-300 hover:text-black transition duration-500"
+          ? "border-2 border-pink-500"
+          : "text-gray-300 border-white cursor-pointer hover:border-pink-500 hover:text-black transition duration-500"
       }`}
       onClick={() => setUserRole(role)}
     >
