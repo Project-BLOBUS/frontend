@@ -53,11 +53,12 @@ const MyPage = () => {
           borderB={false}
         />
       </div>
-      <div className="w-[15%] h-screen pt-20 text-base text-center flex flex-col justify-start items-center fixed z-0">
-        <div className="bg-pink-500 w-2/3 border-2 rounded-2xl font-bold">
-          <div className="py-6 text-xl text-white">마이페이지</div>
 
-          <div className="bg-white p-4 rounded-xl flex flex-col justify-center items-center space-y-2">
+      <div className="w-[15%] h-screen pt-20 text-base text-center flex flex-col justify-start items-center fixed z-0">
+        <div className="w-[70%] border-2 border-gray-300 rounded-[8px] font-bold">
+          <div className="py-4 text-2xl">마이페이지</div>
+
+          <div className="bg-white rounded-b-[8px] flex flex-col justify-center items-center">
             {makeNav("추천", "custom")}
             {makeNav("즐겨찾기", "bookmark")}
             {makeNav("작성글", "doc")}
@@ -80,10 +81,10 @@ const makeNav = (name, link) => {
     <Link
       to={`/mypage/${link}`}
       replace={window.location.pathname.includes("modify")}
-      className={`w-full p-2 border-b-2 rounded ${
+      className={`w-full px-4 py-2 border-t-2 border-gray-300 text-left ${
         act
-          ? "text-pink-500 cursor-default"
-          : "hover:bg-gray-300 hover:text-white transition duration-500"
+          ? "text-yellow-500 cursor-default"
+          : "text-gray-500 hover:bg-gray-200 hover:text-yellow-500 transition duration-500"
       }`}
       onClick={(e) =>
         window.location.pathname.includes(link) && e.preventDefault()

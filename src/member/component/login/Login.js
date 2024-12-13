@@ -106,7 +106,7 @@ const Login = () => {
   };
 
   return (
-    <div className="w-full px-10 py-4 text-center font-bold flex flex-col justify-center items-center">
+    <div className="w-full p-10 text-center font-bold flex flex-col justify-center items-center">
       {loading && <Loading />}
       <div className="w-full text-3xl p-2 text-left">통합 로그인</div>
 
@@ -189,7 +189,7 @@ const Login = () => {
             </button>
           </div>
 
-          <div className="w-full px-10 flex justify-around items-center">
+          <div className="w-full text-xs px-4 flex justify-between items-center">
             {makeLink("/member/find/id", "아이디 찾기")}
             {makeLink("/member/find/pw", "비밀번호 찾기")}
             {makeLink("/member/signup", "회원가입")}
@@ -203,7 +203,7 @@ const Login = () => {
 const makeTab = (name, role, userRole, setUserRole) => {
   return (
     <div
-      className={`w-full p-4 border-2 rounded-full ${
+      className={`w-full p-2 border-2 rounded-full ${
         userRole === role
           ? "border-2 border-pink-500"
           : "text-gray-300 border-white cursor-pointer hover:border-pink-500 hover:text-black transition duration-500"
