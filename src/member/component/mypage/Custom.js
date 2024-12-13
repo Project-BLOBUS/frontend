@@ -29,7 +29,7 @@ const Custom = () => {
 
   const [open, setOpen] = useState({
     청년: false,
-    기업: false,
+    // 기업: false,
     지역: false,
     키워드: false,
   });
@@ -52,11 +52,12 @@ const Custom = () => {
   useEffect(() => {
     setLoading(true);
 
+    // 커스텀 설정 불러오기
     loadSetting()
-      .then((data) => {
-        if (data.error) {
+      .then((load) => {
+        if (load.error) {
           toast.error("설정 불러오기에 실패했습니다.", { toastId: "e" });
-        } else if (Object.keys(data).length === 0) {
+        } else if (Object.keys(load).length === 0) {
           const set = (list, setList) =>
             setList(
               Object.keys(list).reduce((acc, key) => {
@@ -68,20 +69,20 @@ const Custom = () => {
           set(yList, setYList);
           set(rList, setRList);
         } else {
-          const set = (list, setList, data) =>
-            data &&
+          const set = (list, setList, load) =>
+            load &&
             setList(
               Object.keys(list).reduce((acc, key) => {
-                acc[key] = data.includes(key);
+                acc[key] = load.includes(key);
                 return acc;
               }, {})
             );
 
-          set(yList, setYList, data.청년);
-          set(rList, setRList, data.지역);
+          set(yList, setYList, load.청년);
+          set(rList, setRList, load.지역);
 
-          data.키워드 &&
-            data.키워드.split("/").forEach((key) => {
+          load.키워드 &&
+            load.키워드.split("/").forEach((key) => {
               setKList((prev) => ({ ...prev, [key]: true }));
             });
         }
@@ -104,12 +105,13 @@ const Custom = () => {
     const rListStr = listToStr(rList);
     const kListStr = listToStr(kList);
 
+    // 커스텀 목록 조회
     getCustom({ page, size }, yListStr, rListStr, kListStr)
-      .then((data) => {
-        if (data.error) {
+      .then((get) => {
+        if (get.error) {
           setData(initState);
         } else {
-          setData(data);
+          setData(get);
         }
       })
       .catch((error) => {
@@ -134,23 +136,24 @@ const Custom = () => {
     <>
       {loading && <Loading />}
       <div className="w-full text-xl text-center font-bold flex flex-col justify-center items-center">
-        <div className="w-full py-4 text-3xl text-left flex justify-between items-center">
+        <div className="w-full my-4 py-4 text-3xl text-left border-b-2 border-gray-500 flex justify-between items-center">
           커스텀
         </div>
 
-        <div className="w-full border-b-4 border-gray-500 text-base flex justify-start items-center space-x-4">
-          {makeSelect("청년", open, setOpen, yList, setYList, moveToList)}
-          {makeSelect("지역", open, setOpen, rList, setRList, moveToList)}
-          {makeSelect("키워드", open, setOpen, kList, setKList, moveToList)}
+        <div className="w-full my-2 text-base flex justify-start items-center space-x-4">
+          {makeSelect("청년 ▼", open, setOpen, yList, setYList, moveToList)}
+          {makeSelect("지역 ▼", open, setOpen, rList, setRList, moveToList)}
+          {/* {makeSelect("키워드", open, setOpen, kList, setKList, moveToList)} */}
 
           <FaSave
             className="text-3xl flex justify-center items-center cursor-pointer hover:text-gray-300 transition duration-500"
             onClick={() => {
               setLoading(true);
 
+              // 커스텀 설정 저장하기
               saveSetting(listToStr(yList), listToStr(rList), listToStr(kList))
-                .then((data) => {
-                  if (data.error) {
+                .then((save) => {
+                  if (save.error) {
                     toast.error("설정 저장에 실패했습니다.", { toastId: "e" });
                   } else {
                     toast.success("설정 저장 성공");

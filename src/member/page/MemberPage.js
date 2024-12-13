@@ -38,19 +38,20 @@ const MemberPage = () => {
       {loading ? (
         <Loading />
       ) : (
-        <>
-          <div className="bg-sky-500">
+        <div className="bg-orange-50 h-screen">
+          <div className="bg-pink-500">
             <Header
               isWhite={true}
               pageTitle="계정"
-              titleBg="#0369A1"
+              titleBg="#BE185D"
               borderB={false}
             />
           </div>
-          <div className="mx-[15%] flex justify-center items-center">
+
+          <div className="bg-white mx-[10%] flex justify-center items-center">
             <Outlet />
           </div>
-        </>
+        </div>
       )}
     </>
   );

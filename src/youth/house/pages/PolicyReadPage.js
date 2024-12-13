@@ -165,7 +165,7 @@ const PolicyReadPage = () => {
           <table className="table-auto w-full text-left text-sm text-gray-700 border-t-2 border-b-2">
             <tbody>
               <tr className="border-b">
-                <td className="font-semibold w-1/4 py-2">신청 절차</td>
+                <td className="font-semibold w-1/4 py-2">신청방법 및 절차</td>
                 <td className="leading-6">
                   {formatTextWithLineBreaks(policy.rqutProcCn)}
                 </td>
@@ -204,9 +204,7 @@ const PolicyReadPage = () => {
                 </td>
               </tr>
               <tr className="border-b">
-                <td className="font-semibold w-1/4 py-2">
-                  주관기관 담당자 연락처
-                </td>
+                <td className="font-semibold w-1/4 py-2">주관기관 연락처</td>
                 <td className="leading-6">
                   {formatTextWithLineBreaks(policy.cherCtpcCn)}
                 </td>
@@ -218,9 +216,7 @@ const PolicyReadPage = () => {
                 </td>
               </tr>
               <tr className="border-b">
-                <td className="font-semibold w-1/4 py-2">
-                  운영기관 담당자 연락처
-                </td>
+                <td className="font-semibold w-1/4 py-2">운영기관 연락처</td>
                 <td className="leading-6">
                   {formatTextWithLineBreaks(policy.tintCherCtpcCn)}
                 </td>

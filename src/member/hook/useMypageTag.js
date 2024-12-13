@@ -101,14 +101,14 @@ const useMypageTag = () => {
     return (
       <div className="flex flex-col justify-center items-center relative">
         <div
-          className={`${bgColor[name][0]} w-28 p-2 border-gray-500 rounded-t-xl text-white cursor-pointer hover:text-black transition duration-500`}
+          className={`w-20 p-2 border border-gray-500 rounded cursor-pointer hover:text-black transition duration-500`}
           onClick={() => setOpen({ ...open, [name]: !open[name] })}
         >
           {name}
         </div>
         {open[name] && (
-          <div className="bg-white w-full p-2 border-2 rounded-b text-xs flex flex-col justify-center items-center space-y-1 absolute top-10 left-0 z-10">
-            {name === "키워드" && (
+          <div className="bg-white w-full mt-[.1rem] border text-sm flex flex-col justify-center items-center absolute top-10 left-0 z-10">
+            {/* {name === "키워드" && (
               <input
                 className="w-full p-2 border border-gray-500 rounded text-center"
                 type="text"
@@ -120,15 +120,15 @@ const useMypageTag = () => {
                   }
                 }}
               />
-            )}
+            )} */}
             {Object.keys(list).map((key) => (
-              <div className="w-full flex justify-center items-center">
+              <div
+                key={key}
+                className="w-full border flex justify-center items-center"
+              >
                 <div
-                  key={key}
-                  className={`w-full p-2 rounded-xl cursor-pointer transition duration-500 ${
-                    list[key]
-                      ? `${bgColor[name][1]} text-white hover:bg-black hover:text-red-500`
-                      : `${bgColor[name][2]} bg-gray-500 text-gray-300 hover:text-white`
+                  className={`w-full p-2 cursor-pointer transition duration-500 ${
+                    list[key] ? "text-yellow-500" : "text-gray-300"
                   }`}
                   onClick={() => {
                     if (key === "전체") {
@@ -153,7 +153,7 @@ const useMypageTag = () => {
                 >
                   {key}
                 </div>
-                {name === "키워드" && (
+                {/* {name === "키워드" && (
                   <div
                     className="w-4 ml-1 rounded-full text-base text-red-500 cursor-pointer"
                     onClick={() => {
@@ -164,7 +164,7 @@ const useMypageTag = () => {
                   >
                     x
                   </div>
-                )}
+                )} */}
               </div>
             ))}
           </div>

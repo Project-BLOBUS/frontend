@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import styles from "../css/Digital.module.css";
-// import "../css/Digital.css";
 
 function DigitalPage() {
   const cities = [
@@ -30,33 +29,33 @@ function DigitalPage() {
     },
   ];
 
-  const [currentCity, setCurrentCity] = useState(cities[0]); // 영상 링크
-  const [isMuted, setIsMuted] = useState(true); // 초기 상태를 음소거로 설정
+  const [currentCity, setCurrentCity] = useState(cities[0]);
+  const [isMuted, setIsMuted] = useState(true); // 초기 음소거 상태
   const [player, setPlayer] = useState(null);
 
   useEffect(() => {
     const onYouTubeIframeAPIReady = () => {
-      console.log("YouTube API Ready");
       const iframePlayer = new window.YT.Player("videoPlayer", {
         events: {
           onReady: (event) => {
-            console.log("player Ready");
+            const playerInstance = event.target;
+            setPlayer(playerInstance); // player가 준비된 후 setPlayer로 설정
+
             if (isMuted) {
-              event.target.mute();
+              playerInstance.mute(); // 음소거
             } else {
-              event.target.unMute();
+              playerInstance.unMute(); // 음소거 해제
             }
-            event.target.playVideo();
+            playerInstance.playVideo(); // 영상 시작
           },
           onStateChange: (event) => {
             if (event.data === window.YT.PlayerState.ENDED) {
-              event.target.seekTo(0); // 영상의 처음으로 이동
-              event.target.playVideo(); // 반복 재생
+              event.target.seekTo(0);
+              event.target.playVideo();
             }
           },
         },
       });
-      setPlayer(iframePlayer);
     };
 
     if (!window.YT) {
@@ -67,10 +66,14 @@ function DigitalPage() {
     } else {
       onYouTubeIframeAPIReady();
     }
-  }, []);
+  }, [isMuted]); // isMuted 상태가 변경될 때마다 player를 초기화
 
   const toggleSound = () => {
-    if (!player) return; // player가 준비되지 않은 경우 호출 방지
+    if (!player) {
+      console.error("Player is not ready!");
+      return; // player가 준비되지 않았을 경우 실행하지 않음
+    }
+
     if (isMuted) {
       player.unMute();
     } else {
@@ -80,22 +83,21 @@ function DigitalPage() {
   };
 
   const changeVideo = (city) => {
-    if (!player || typeof player.loadVideoById !== "function") {
+    if (!player) {
       console.error("Player is not ready!");
       return;
-    } // player가 준비되지 않은 경우 호출 방지
+    }
 
     const videoId = city.url.split("/embed/")[1].split("?")[0];
     player.loadVideoById(videoId);
 
-    // 비디오 로드 후 음소거 상태를 재설정
     setTimeout(() => {
       if (isMuted) {
-        player.mute(); // 음소거 유지
+        player.mute();
       } else {
-        player.unMute(); // 활성화 상태 유지
+        player.unMute();
       }
-    }, 1000); // 약간의 딜레이를 주어 API가 완전히 적용된 후 음소거 상태를 설정
+    }, 1000);
 
     setCurrentCity(city);
   };

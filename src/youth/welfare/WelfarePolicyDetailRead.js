@@ -112,6 +112,19 @@ const WelfarePolicyDetailRead = () => {
     });
   };
 
+  const isValidUrl = (url) => {
+    const urlPattern = new RegExp(
+      "^(https?:\\/\\/)?" + // 프로토콜
+        "((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.?)+[a-z]{2,}|" + // 도메인 이름
+        "((\\d{1,3}\\.){3}\\d{1,3}))" + // OR IP (v4) 주소
+        "(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*" + // 포트 및 경로
+        "(\\?[;&a-z\\d%_.~+=-]*)?" + // 쿼리 문자열
+        "(\\#[-a-z\\d_]*)?$",
+      "i" // 프래그먼트 로케이터
+    );
+    return !!urlPattern.test(url);
+  };
+
   return (
     <div>
       <div className="border-2 border-gray-500 rounded-md pt-4 pb-4 pr-4 bg-white">
@@ -221,8 +234,7 @@ const WelfarePolicyDetailRead = () => {
                   <td className="font-semibold w-1/4 py-2">신청 사이트</td>
                   <td>
                     {policy.applicationSite &&
-                    policy.applicationSite !== "null" &&
-                    policy.applicationSite !== "-" ? (
+                    isValidUrl(policy.applicationSite) ? (
                       <a
                         href={policy.applicationSite}
                         target="_blank"
