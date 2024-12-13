@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
 import { getCookie, removeCookie } from "../../etc/util/cookieUtil";
-import Header from "../../main/Header";
 import Loading from "../../etc/component/Loading";
+import Header from "../../main/Header";
+import Footer from "../../main/Footer";
 
 const MemberPage = () => {
   const navigate = useNavigate();
@@ -51,6 +52,8 @@ const MemberPage = () => {
           <div className="bg-white mx-[10%] flex justify-center items-center">
             <Outlet />
           </div>
+
+          <Footer />
         </div>
       )}
     </>

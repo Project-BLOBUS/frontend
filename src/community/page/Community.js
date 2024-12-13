@@ -1,6 +1,7 @@
 import { Outlet } from "react-router";
 import Header from "../../main/Header";
 import { FaArrowUp, FaArrowDown } from "react-icons/fa";
+import Footer from "../../main/Footer";
 
 const Community = () => {
   const navList = [
@@ -26,7 +27,9 @@ const Community = () => {
         <Outlet />
       </div>
 
-      <div className="text-base font-bold flex flex-col justify-center items-center space-y-4 fixed bottom-[7.5%] right-[7.5%]">
+      <Footer />
+
+      {/* <div className="text-base font-bold flex flex-col justify-center items-center space-y-4 fixed bottom-[7.5%] right-[7.5%]">
         <button
           className="bg-yellow-300 p-4 rounded-full hover:bg-yellow-500 hover:text-white transition duration-500"
           onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
@@ -44,7 +47,7 @@ const Community = () => {
         >
           <FaArrowDown />
         </button>
-      </div>
+      </div> */}
     </>
   );
 };
