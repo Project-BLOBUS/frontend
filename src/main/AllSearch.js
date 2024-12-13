@@ -1,12 +1,13 @@
 import React, { useState, useCallback,useEffect  } from "react";
 import Header from "./Header";
 import { fetchPolicyTitles, fetchCommunityTitles } from "./AllSearchApi"; // 커뮤니티 API 추가
-import { useSearchParams,useNavigate  } from "react-router-dom";
+import { useSearchParams, Link  } from "react-router-dom";
+import { FaLock} from "react-icons/fa";
+import { toast } from "react-toastify";
+import { getCookie } from "../etc/util/cookieUtil";
 
 const AllSearch = () => {
-  const [searchParams, ] = useSearchParams();
-  const navigate = useNavigate(); // 네비게이션을 위한 useNavigate 훅
-  
+  const [searchParams,setSearchParams ] = useSearchParams();
   const [, setLoading] = useState(true);
   const [totalPages, setTotalPages] = useState(0);
   const [policyTotalItems, setPolicyTotalItems] = useState(0);
@@ -14,15 +15,20 @@ const AllSearch = () => {
   const [, setError] = useState(null);
   const [policies, setPolicies] = useState([]); //청년
   const [communityPolicies, setCommunityPolicies] = useState([]); // 커뮤니티 데이터 상태
-  const [currentPage, setCurrentPage] = useState(1); // 현재 페이지 상태
+  const [currentPage, setCurrentPage] = useState(parseInt(searchParams.get('page')) || 1); // 페이지 상태
   const [search, setSearch] = useState(searchParams.get('query') || ''); // 검색어 상태
-  const [category, setCategory] = useState('policy'); // 청년관 검색어 상태
+  const [category, setCategory] = useState(searchParams.get('category') || 'policy'); // URL에서 카테고리 값 가져오기
 
 
   // 페이지 변경 함수
   const handlePageChange = (pageNumber) => {
     if (pageNumber > 0 && pageNumber <= totalPages) {
       setCurrentPage(pageNumber);
+      setSearchParams(prevParams => {
+        const newParams = new URLSearchParams(prevParams);
+        newParams.set('page', pageNumber); // 페이지 번호를 URL에 업데이트
+        return newParams;
+      });
     }
   };
 
@@ -84,6 +90,15 @@ const AllSearch = () => {
     }
   }, [search, currentPage, category]);
 
+
+  useEffect(() => {
+    setSearchParams((prevParams) => {
+      const newParams = new URLSearchParams(prevParams);
+      newParams.set('category', category); // 카테고리 값 업데이트
+      return newParams;
+    });
+  }, [category, setSearchParams]);
+
   useEffect(() => {
     handleSearchClick();
   }, [currentPage,category]);
@@ -100,17 +115,17 @@ const AllSearch = () => {
     setCurrentPage(1);
   }, [search]);
 
+  useEffect(() => {
+    setCurrentPage(parseInt(searchParams.get('page')) || 1); // URL에서 페이지 번호를 가져옴
+  }, [searchParams]);
+
   const handleKeyDown = (e) => {
     if(e.key ==="Enter") {
       handleSearchClick();
     }
-  };
+  };  
 
-  // 커뮤니티 항목 클릭 시 상세 페이지로 이동
-  const handleCommunityClick = (id) => {
-    console.log("Selected ID:", id);
-    navigate(`/community/read/${id}`); // 해당 id를 이용해 Read.js 페이지로 이동
-  };
+   
 
   return (
     <div>
@@ -176,26 +191,42 @@ const AllSearch = () => {
 
           {category === "policy" &&
             policies.map((item, index) => (
-              <li key={item.id} className="flex justify-center items-center bg-white w-[470px] h-[80px] ml-8 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300 ease-in-out cursor-pointer border-2 border-gray-400 overflow-y-auto m-2">
-                <p className="text-sm font-bold text-gray-800 p-[15px]">
-                  {index + (currentPage - 1) * 10 + 1}. {item}
-                </p>
+              <Link to={
+                item.category === 'job' || item.category === 'house' 
+                ? `/youth/${item.category}/policyRead/${item.id}` 
+                : `/youth/${item.category}/${item.id}`}>
+              <li key={item.id} 
+              className="flex justify-center items-center bg-white w-[470px] h-[80px] ml-8 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300 ease-in-out cursor-pointer border-2 border-gray-400 overflow-y-auto m-2">
+                  <p className="text-sm font-bold text-gray-800 p-[15px]">
+                    {index + (currentPage - 1) * 10 + 1}. {item.title}
+                  </p>
               </li>
+              </Link>
             ))}
 
-{category === "community" &&
-  communityPolicies.map((item, index) => (
-    <li 
-      key={item.id || index + 1} // id가 없으면 index를 사용
-      onClick={() => handleCommunityClick(item.id || index + 1)}
-      className="flex justify-center items-center bg-white w-[470px] h-[80px] ml-8 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300 ease-in-out cursor-pointer border-2 border-gray-400 overflow-y-auto m-2"
-    >
-      <p className="text-sm font-bold text-gray-800 p-1">
-        {index + (currentPage - 1) * 10 + 1}. {item} {/* item.title로 제목을 출력 */}
-      </p>
-    </li>
+        {category === "community" &&
+          communityPolicies.map((item, index) => (
+            <Link to={`/community/read/${item.id}`}>
+            <li key={item.id} 
+              className="flex justify-center items-center bg-white w-[470px] h-[80px] ml-8 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300 ease-in-out cursor-pointer border-2 border-gray-400 overflow-y-auto m-2"
+              onClick={(e) => {  
+                if (
+                  (getCookie("userRole") !== "ADMIN" &&
+                  item.visibility &&
+                  item.author_id !== getCookie("userId"))
+                ) {
+                  toast.error("열람 권한이 없습니다.");
+                  e.stopPropagation();
+                  e.preventDefault();
+                }
+              }}>
+                   {item.visibility ? <FaLock /> : <></>}
+                  <p className="text-sm font-bold text-gray-800 p-1">
+                    {index + (currentPage - 1) * 10 + 1}. {item.title} {/* item.title로 제목을 출력 */}
+                  </p>
+              </li>
+              </Link>
             ))}
-
         </ul>
       )}
 
