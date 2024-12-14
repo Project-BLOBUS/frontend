@@ -129,11 +129,18 @@ const FindPw = () => {
   return (
     <>
       {loading && <Loading />}
-      <div className="w-full max-w-[600px] min-w-min text-xl text-center font-bold flex flex-col justify-center items-center space-y-4">
-        <div className="bg-white w-full my-4 text-5xl text-sky-500">
+      <div className="w-1/2 h-[500px] p-10 border-2 border-gray-300 rounded-xl shadow-xl text-base text-center font-bold flex flex-col justify-center items-center">
+        <div className="w-full h-[20%] text-4xl flex justify-center items-center">
           비밀번호 찾기
-          <div className=" w-full mt-4 text-xs text-gray-500">
-            기업계정은 관리자에게 문의바랍니다.
+        </div>
+
+        <div className="w-full h-[10%] text-sm flex flex-col justify-center items-center">
+          <div className="w-full h-1/2">
+            회원정보에 등록된 정보로 비밀번호를 찾을 수 있습니다.
+          </div>
+
+          <div className="w-full h-1/2 text-gray-500">
+            ※ 기업계정은 관리자에게 문의바랍니다.
           </div>
         </div>
 
@@ -267,6 +274,41 @@ const FindPw = () => {
         </div>
       </div>
     </>
+  );
+};
+
+const makeInput = (type, name, value, hint, ref, onChange) => {
+  return (
+    <input
+      className="w-full px-6 py-4 border border-gray-500 rounded-full shadow-md text-left tracking-widest"
+      type={type}
+      name={name}
+      value={value ?? ""}
+      placeholder={hint}
+      maxLength={
+        name === "authCode"
+          ? 6
+          : name === "userPw" || name === "confirmPw"
+          ? 16
+          : name === "phoneNum"
+          ? 11
+          : undefined
+      }
+      autoComplete="off"
+      ref={ref}
+      onChange={onChange}
+    />
+  );
+};
+
+const makeBtn = (name, onClick) => {
+  return (
+    <button
+      className="w-full p-4 border-2 border-pink-500 rounded-full shadow-lg text-pink-500 hover:bg-pink-500 hover:text-white transition duration-500"
+      onClick={onClick}
+    >
+      {name}
+    </button>
   );
 };
 
