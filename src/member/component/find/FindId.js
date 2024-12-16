@@ -7,14 +7,16 @@ import useMemberTag from "../../hook/useMemberTag";
 import Loading from "../../../etc/component/Loading";
 
 const initState = {
+  // ToDEL 삭제
   userId: "",
-  name: "",
-  phoneNum: "",
+  name: "김테스트",
+  phoneNum: "01012345678",
   roleName: "GENERAL",
 };
 
 const FindId = () => {
   const navigate = useNavigate();
+  const { makeBtn2, makeInput } = useMemberTag();
   const [loading, setLoading] = useState(false);
 
   const [member, setMember] = useState(initState);
@@ -92,7 +94,7 @@ const FindId = () => {
   return (
     <>
       {loading && <Loading />}
-      <div className="w-1/2 h-[500px] p-10 border-2 border-gray-300 rounded-xl shadow-xl text-base text-center font-bold flex flex-col justify-center items-center">
+      <div className="w-1/2 h-[90%] px-10 py-4 border-2 border-gray-300 rounded shadow-xl text-base text-center font-bold flex flex-col justify-center items-center">
         <div className="w-full h-[20%] text-4xl flex justify-center items-center">
           아이디 찾기
         </div>
@@ -109,7 +111,7 @@ const FindId = () => {
               </div>
             </div>
 
-            <div className="w-full h-[35%] flex flex-col justify-center items-center space-y-2">
+            <div className="w-full h-[35%] text-sm flex flex-col justify-center items-center space-y-2">
               {/* 이름 */}
               {makeInput(
                 "text",
@@ -117,9 +119,9 @@ const FindId = () => {
                 member.name,
                 "이름",
                 refList.name,
-                onChange
+                onChange,
+                true
               )}
-
               {/* 연락처 */}
               {makeInput(
                 "text",
@@ -127,13 +129,14 @@ const FindId = () => {
                 member.phoneNum,
                 "연락처",
                 refList.phoneNum,
-                onChange
+                onChange,
+                true
               )}
             </div>
 
             <div className="w-full h-[35%] flex flex-col justify-center items-center space-y-2">
-              {makeBtn("아이디 찾기", onCLickFind)}
-              {makeBtn("뒤로가기", () => navigate(-1, { replace: true }))}
+              {makeBtn2("아이디 찾기", onCLickFind)}
+              {makeBtn2("뒤로가기", () => navigate(-1, { replace: true }))}
             </div>
           </>
         ) : (
@@ -147,13 +150,13 @@ const FindId = () => {
             </div>
 
             <div className="w-full h-[35%] flex flex-col justify-center items-center space-y-2">
-              {makeBtn("로그인", () => {
+              {makeBtn2("로그인", () => {
                 setCookie("userId", member.userId);
                 setCookie("userRole", member.roleName);
                 navigate("/member/login", { replace: true });
               })}
 
-              {makeBtn("비밀번호 찾기", () =>
+              {makeBtn2("비밀번호 찾기", () =>
                 navigate("/member/find/pw", { replace: true })
               )}
             </div>
@@ -161,41 +164,6 @@ const FindId = () => {
         )}
       </div>
     </>
-  );
-};
-
-const makeInput = (type, name, value, hint, ref, onChange) => {
-  return (
-    <input
-      className="w-full px-6 py-4 border border-gray-500 rounded-full shadow-md text-left tracking-widest"
-      type={type}
-      name={name}
-      value={value ?? ""}
-      placeholder={hint}
-      maxLength={
-        name === "authCode"
-          ? 6
-          : name === "userPw" || name === "confirmPw"
-          ? 16
-          : name === "phoneNum"
-          ? 11
-          : undefined
-      }
-      autoComplete="off"
-      ref={ref}
-      onChange={onChange}
-    />
-  );
-};
-
-const makeBtn = (name, onClick) => {
-  return (
-    <button
-      className="w-full p-4 border-2 border-pink-500 rounded-full shadow-lg text-pink-500 hover:bg-pink-500 hover:text-white transition duration-500"
-      onClick={onClick}
-    >
-      {name}
-    </button>
   );
 };
 

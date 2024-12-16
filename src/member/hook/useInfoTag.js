@@ -1,11 +1,20 @@
 const useInfoTag = () => {
+  const makeBtn2 = (name, onClick) => {
+    return (
+      <button
+        className="bg-white w-fit mx-2 px-4 py-2 border-2 border-gray-300 rounded text-base text-nowrap hover:border-yellow-500 transition duration-500"
+        onClick={onClick}
+      >
+        {name}
+      </button>
+    );
+  };
+
   const makeRead = (name, info) => {
     return (
-      <div className="w-full text-base flex justify-center items-center">
-        <div className="bg-gray-200 w-1/4 p-4 border-b-2 border-gray-300 text-nowrap">
-          {name}
-        </div>
-        <div className="w-3/4 p-4 border-b-2 border-gray-300 text-left text-nowrap select-text">
+      <div className="w-full flex justify-center items-center">
+        <div className="w-1/3 px-4 py-2 text-left text-nowrap">{name}</div>
+        <div className="w-2/3 px-4 py-2 text-right text-nowrap font-normal select-text">
           {info}
         </div>
       </div>
@@ -14,26 +23,22 @@ const useInfoTag = () => {
 
   const makeModify = (name, input, onlyRead) => {
     return (
-      <div className="w-full text-base flex justify-center items-center">
-        <div className="bg-gray-200 w-1/4 p-4 border-b-2 border-gray-300 text-nowrap">
-          {name}
-        </div>
-        <div
-          className={`${
-            onlyRead && "p-4"
-          } w-3/4 border-b-2 border-gray-300 text-left text-nowrap`}
-        >
+      <div className="w-full flex justify-center items-center">
+        <div className="w-1/3 px-4 py-2 text-left text-nowrap">{name}</div>
+        <div className={`${onlyRead && "p-4"} w-2/3 text-left text-nowrap`}>
           {input}
         </div>
       </div>
     );
   };
 
-  const makeInput = (type, name, value, hint, onChange, ref, width) => {
+  const makeInput = (type, name, value, hint, ref, onChange, style) => {
     return (
       <input
-        className={`${width ?? "w-full"} p-4 text-left tracking-widest ${
-          name !== "userId" || "bg-gray-400 text-white placeholder-gray-300"
+        className={`${
+          style ?? "w-full"
+        } px-4 py-2 border-2 border-gray-300 rounded-full shadow-lg text-left tracking-wides ${
+          name !== "userId" || "bg-gray-300 text-white placeholder-white"
         }`}
         type={type}
         name={name}
@@ -48,28 +53,23 @@ const useInfoTag = () => {
             : undefined
         }
         autoComplete="off"
+        ref={ref}
         onChange={onChange}
         disabled={name === "userId"}
-        ref={ref}
       />
     );
   };
 
-  const makeSelect = (name, value, list, hint, onChange, ref) => {
+  const makeSelect = (name, value, list, hint, ref, onChange) => {
     return (
       <select
-        className="w-full p-4 text-center"
+        className="w-full py-2 border-2 border-gray-300 rounded-full shadow-lg text-center tracking-widest cursor-pointer"
         name={name}
         value={value}
-        onChange={onChange}
         ref={ref}
+        onChange={onChange}
       >
-        <option
-          className="bg-sky-500 text-white font-bold"
-          value=""
-          disabled
-          selected
-        >
+        <option value="" disabled selected>
           {hint}
         </option>
         {list.map((data) => (
@@ -84,10 +84,10 @@ const useInfoTag = () => {
   const makeRatio = (value, Icon, text, onClick) => {
     return (
       <div
-        className={`w-full p-4 flex justify-center items-center space-x-4 ${
+        className={`w-full py-2 border-2 border-gray-300 rounded-full shadow-lg text-center tracking-widest flex justify-center items-center ${
           value
             ? "text-black"
-            : "text-gray-300 cursor-pointer hover:bg-sky-500 hover:text-white transition duration-500"
+            : "text-gray-300 cursor-pointer transition duration-500"
         }`}
         onClick={onClick}
       >
@@ -97,7 +97,7 @@ const useInfoTag = () => {
     );
   };
 
-  return { makeRead, makeModify, makeInput, makeSelect, makeRatio };
+  return { makeBtn2, makeRead, makeModify, makeInput, makeSelect, makeRatio };
 };
 
 export default useInfoTag;

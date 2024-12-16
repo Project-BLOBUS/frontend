@@ -49,7 +49,8 @@ const Comment = () => {
   const [dtoM, setDtoM] = useState(initComment);
 
   const [reload, setReload] = useState(false);
-  const [hover, setHover] = useState(false);
+  const [hoverA, setHoverA] = useState(false);
+  const [hoverM, setHoverM] = useState(false);
   const refAdd = useRef(null);
   const refModify = useRef(null);
 
@@ -175,116 +176,41 @@ const Comment = () => {
     <>
       {loading && <Loading />}
       <div className="w-full flex flex-col justify-center items-center">
-        <div className="bg-white w-full p-4 border rounded-t-xl shadow-lg text-left">
-          댓글 수 {data.dtoList.length}개
-        </div>
-        <div className="bg-white w-full mb-4 p-4 border rounded-b-xl shadow-lg flex justify-center items-center space-x-2">
-          {getCookie("jwt") ? (
-            <>
-              {makeInput(
-                dtoA,
-                setDtoA,
-                hover,
-                setHover,
-                setLoading,
-                onClickAdd,
-                refAdd
-              )}
-              {makeBtn("등록", "blue", () => onClickAdd(dtoA))}
-              {makeBtn("취소", "orange", () =>
-                setDtoA({ ...dtoA, content: "", visibility: false })
-              )}
-            </>
-          ) : (
-            <>
-              <div className="mr-2">댓글 작성을 원하시면 로그인 하세요.</div>
-              {makeBtn("로그인", "blue", () => navigate("/member/login"))}
-            </>
-          )}
+        <div className="w-full py-2 border-gray-300 text-left">
+          댓글 <span className="text-red-500">{data.totalCount}</span>
         </div>
 
-        <div className="w-full flex flex-col justify-center items-center">
+        <div className="w-full py-2 border-b-2 border-gray-300 flex flex-col justify-center items-center space-y-2">
+          {makeText(dtoA, setDtoA, setLoading, refAdd)}
+          <div className="w-full px-2 flex justify-end items-center">
+            {makeBtnLock(dtoA, setDtoA, hoverA, setHoverA, refAdd)}
+            {makeBtn("등록", () => onClickAdd(dtoA))}
+          </div>
+        </div>
+
+        <div className="w-full text-sm font-normal flex flex-col justify-center items-center">
           {data.dtoList.map((comment, index) =>
-            comment.edit ? (
+            !comment.edit ? (
               <div
                 key={comment.id}
-                className="bg-white px-4 text-sm w-full border rounded flex justify-center items-center space-x-2"
-              >
-                <div className="w-full py-2 flex justify-center items-center space-x-2">
-                  {makeInput(
-                    dtoM,
-                    setDtoM,
-                    hover,
-                    setHover,
-                    setLoading,
-                    () => {
-                      onClickModify(dtoM);
-                      setData({
-                        ...data,
-                        dtoList: data.dtoList.map((item, idx) =>
-                          idx === index ? { ...item, edit: false } : item
-                        ),
-                      });
-                    },
-                    refModify
-                  )}
-
-                  {makeBtn("완료", "blue", () => {
-                    onClickModify(dtoM);
-                    setData({
-                      ...data,
-                      dtoList: data.dtoList.map((item, idx) =>
-                        idx === index ? { ...item, edit: false } : item
-                      ),
-                    });
-                  })}
-
-                  {makeBtn("취소", "orange", () =>
-                    setData({
-                      ...data,
-                      dtoList: data.dtoList.map((item, idx) =>
-                        idx === index ? { ...item, edit: false } : item
-                      ),
-                    })
-                  )}
-                </div>
-              </div>
-            ) : (
-              <div
-                key={comment.id}
-                className="bg-white px-4 py-2 text-base w-full border rounded flex justify-center items-center space-x-2"
+                className="w-full px-4 py-2 border-b-2 border-gray-300 flex justify-center items-end space-x-2"
               >
                 {getCookie("userRole") !== "ADMIN" &&
                 comment.visibility &&
                 comment.postAuthor !== getCookie("userId") &&
                 comment.authorId !== getCookie("userId") ? (
-                  <div className="py-2 flex justify-center items-center space-x-2">
+                  <div className="py-2 text-base flex justify-center items-center space-x-2">
                     <FaLock className="text-red-500" />
                     <div>비밀 댓글입니다.</div>
                   </div>
                 ) : (
                   <>
-                    <div
-                      className={`${
-                        comment.authorId === getCookie("userId") &&
-                        !data.dtoList.some((item) => item.edit ?? false)
-                          ? "w-[calc(100%-136px)]"
-                          : comment.postAuthor === getCookie("userId") ||
-                            getCookie("userRole") === "ADMIN"
-                          ? "w-[calc(100%-68px)]"
-                          : "w-full"
-                      } py-2 flex justify-ceneter items-center`}
-                    >
-                      <div className="w-1/2 flex justify-start items-center space-x-2">
+                    <div className="w-full py-2 flex flex-col justify-ceneter items-center space-y-2">
+                      <div className="w-full select-text flex justify-start items-center space-x-2">
+                        <div>{comment.authorName}</div>
                         {comment.visibility && (
                           <FaLock className="text-red-500" />
                         )}
-                        <div className="text-left font-light select-text">
-                          {comment.content}
-                        </div>
-                      </div>
-
-                      <div className="w-1/2 flex justify-end items-center space-x-2">
                         <div className="text-xs text-gray-400">
                           {new Date(comment.updatedAt) -
                             new Date(comment.createdAt) <
@@ -292,29 +218,21 @@ const Comment = () => {
                             ? ` ${printTime(comment.createdAt)} 등록`
                             : ` ${printTime(comment.updatedAt)} 수정`}
                         </div>
-
-                        <div className="flex justify-center items-center space-x-1">
-                          <div>{comment.authorName}</div>
-                          <div
-                            className="px-1 text-[.7rem] font-normal rounded cursor-pointer hover:bg-gray-300 hover:text-white transition duration-500"
-                            onClick={() => {
-                              navigator.clipboard.writeText(
-                                comment.authorEmail
-                              );
-                              toast.success("메일 복사 완료");
-                            }}
-                          >
-                            {comment.authorEmail}
-                          </div>
-                        </div>
                       </div>
+
+                      <div
+                        className="w-full text-left select-text"
+                        dangerouslySetInnerHTML={{
+                          __html: comment.content.replace(/\n/g, "<br/>"),
+                        }}
+                      />
                     </div>
                   </>
                 )}
 
                 {comment.authorId === getCookie("userId") &&
                   !data.dtoList.some((item) => item.edit ?? false) &&
-                  makeBtn("수정", "green", () => {
+                  makeBtn("수정", () => {
                     setLoading(true);
 
                     setData({
@@ -339,7 +257,7 @@ const Comment = () => {
                 {(comment.postAuthor === getCookie("userId") ||
                   comment.authorId === getCookie("userId") ||
                   getCookie("userRole") === "ADMIN") &&
-                  makeBtn("삭제", "red", () => {
+                  makeBtn("삭제", () => {
                     setLoading(true);
 
                     deleteComment(comment.id);
@@ -352,12 +270,40 @@ const Comment = () => {
                     setLoading(false);
                   })}
               </div>
+            ) : (
+              <div key={comment.id} className="w-full">
+                <div className="w-full p-2 border-b-2 border-gray-300 flex flex-col justify-center items-center space-y-2">
+                  {makeText(dtoM, setDtoM, setLoading, refModify)}
+                  <div className="w-full px-2 flex justify-end items-center space-x-2">
+                    {makeBtnLock(dtoM, setDtoM, hoverM, setHoverM, refModify)}
+
+                    {makeBtn("완료", () => {
+                      onClickModify(dtoM);
+                      setData({
+                        ...data,
+                        dtoList: data.dtoList.map((item, idx) =>
+                          idx === index ? { ...item, edit: false } : item
+                        ),
+                      });
+                    })}
+
+                    {makeBtn("취소", () =>
+                      setData({
+                        ...data,
+                        dtoList: data.dtoList.map((item, idx) =>
+                          idx === index ? { ...item, edit: false } : item
+                        ),
+                      })
+                    )}
+                  </div>
+                </div>
+              </div>
             )
           )}
         </div>
       </div>
 
-      {data.dtoList.length > 0 && (
+      {data.totalCount > 100 && (
         <div className="w-full flex justify-center items-center">
           <Paging data={data} movePage={moveToList} />
         </div>
@@ -366,45 +312,49 @@ const Comment = () => {
   );
 };
 
-const makeInput = (dto, setDto, hover, setHover, setLoading, onClick, ref) => {
+const makeText = (dto, setDto, setLoading, ref) => {
   return (
     <>
-      <div
-        className={`p-3 rounded cursor-pointer transition duration-500 ${
-          dto.visibility
-            ? "text-red-500 hover:bg-gray-500 hover:text-gray-300"
-            : "text-gray-300 hover:bg-gray-500 hover:text-red-500"
-        }`}
-        onMouseEnter={() => setHover(true)}
-        onMouseLeave={() => setHover(false)}
-        onClick={() => {
-          setDto({ ...dto, visibility: !dto.visibility });
-          ref.current.focus();
-        }}
-      >
-        {dto.visibility === hover ? <FaLockOpen /> : <FaLock />}
-      </div>
-
-      <input
-        className="w-[calc(100%-184px)] p-2 border border-black rounded text-sm font-normal"
+      <textarea
+        className="w-full h-[100px] p-2 border-2 border-gray-300 rounded text-sm font-normal"
         type="text"
         value={dto.content}
-        placeholder="댓글을 입력하세요."
+        placeholder={
+          getCookie("jwt") ? "댓글을 입력하세요." : "로그인이 필요합니다."
+        }
         autoComplete="off"
+        ref={ref}
         onChange={(e) => setDto({ ...dto, content: e.target.value })}
         onKeyUp={(e) => {
           setLoading(true);
-          if (e.key === "Enter") {
-            onClick(dto);
-          } else if (e.key === "Escape") {
+          if (e.key === "Escape") {
             e.target.value = "";
           }
           setLoading(false);
         }}
-        ref={ref}
         disabled={!getCookie("jwt")}
       />
     </>
+  );
+};
+
+const makeBtnLock = (dto, setDto, hover, setHover, ref) => {
+  return (
+    <button
+      className={`p-3 border-2 border-gray-300 rounded cursor-pointer transition duration-500 ${
+        dto.visibility
+          ? "text-red-500  hover:text-gray-500"
+          : "text-gray-500 hover:text-red-500"
+      }`}
+      onMouseEnter={() => setHover(true)}
+      onMouseLeave={() => setHover(false)}
+      onClick={() => {
+        setDto({ ...dto, visibility: !dto.visibility });
+        ref.current.focus();
+      }}
+    >
+      {dto.visibility === hover ? <FaLockOpen /> : <FaLock />}
+    </button>
   );
 };
 

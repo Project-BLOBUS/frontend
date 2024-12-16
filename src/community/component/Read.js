@@ -96,63 +96,29 @@ const Read = () => {
   return (
     <>
       {loading && <Loading />}
-      <div className="bg-gray-100 w-full my-4 p-4 text-base text-center font-bold flex flex-col justify-center items-center">
+      <div className="w-full text-base text-center font-bold flex flex-col justify-center items-center">
+        <div className="w-full my-2 py-4 text-3xl text-left border-b-2 border-gray-300 flex justify-between items-center">
+          커뮤니티
+        </div>
+
         <div className="w-full flex flex-col justify-center items-center space-y-4">
-          <div className="w-full pt-2 px-4 text-sm flex justify-between items-center space-x-2">
-            <div>
-              <div className="text-left">
-                작성자 : {dto.authorName}
-                <span
-                  className="ml-1 px-1 text-xs text-gray-500 rounded cursor-pointer hover:bg-gray-500 hover:text-white transition duration-500"
-                  onClick={() => {
-                    navigator.clipboard.writeText(dto.authorEmail);
-                    toast.success("메일 복사 완료");
-                  }}
-                >
-                  {dto.authorEmail}
-                </span>
-              </div>
-              <div className="text-left">
-                작성시간 : {printTime(dto.createdAt)}
-                <span className="text-gray-500">
-                  {new Date(dto.updatedAt) - new Date(dto.createdAt) < 60 * 1000
-                    ? ""
-                    : ` (${printTime(dto.updatedAt)}에 수정됨)`}
-                </span>
-              </div>
-            </div>
-
-            <div className="flex justify-center items-center space-x-2">
-              {dto.prev &&
-                makeBtn("이전", "none", () =>
-                  navigate(`/community/read/${dto.prev}`, {
-                    state: { back: window.location.href },
-                  })
-                )}
-              {makeBtn("목록", "none", () => navigate("/community/list"))}
-              {dto.next &&
-                makeBtn("다음", "none", () =>
-                  navigate(`/community/read/${dto.next}`, {
-                    state: { back: window.location.href },
-                  })
-                )}
-            </div>
-          </div>
-
           <div className="w-full flex flex-col justify-center items-center">
-            <div className="bg-white w-full p-4 border rounded-t-xl shadow-lg text-2xl text-left flex justify-between items-center">
+            <div className="w-full py-2 border-b-2 border-red-500 text-xl text-left flex justify-between items-center">
               <div className="flex justify-center items-center space-x-2">
-                <div className="text-base text-gray-500">
-                  {dto.boardType}글/{dto.category}관
-                </div>
                 <div>{dto.visibility && <FaLock />}</div>
-                <div className="select-text">{dto.title}</div>
+                <div className="select-text">
+                  {dto.title.length > 40
+                    ? dto.title.slice(dto.title.length - 40) + ". . ."
+                    : dto.title}
+                </div>
               </div>
 
-              <div className="flex justify-center items-center space-x-2">
+              <div className="flex justify-center items-center space-x-0">
+                {dto.authorId === getCookie("userId") &&
+                  makeBtn("수정", () => navigate(`/community/modify/${id}`))}
                 {(dto.authorId === getCookie("userId") ||
                   getCookie("userRole") === "ADMIN") &&
-                  makeBtn("삭제", "red", () => {
+                  makeBtn("삭제", () => {
                     setLoading(true);
 
                     deletePost(id);
@@ -164,17 +130,49 @@ const Read = () => {
 
                     setLoading(false);
                   })}
-                {dto.authorId === getCookie("userId") &&
-                  makeBtn("수정", "green", () =>
-                    navigate(`/community/modify/${id}`)
-                  )}
-                {getCookie("jwt") &&
-                  makeBtn("글쓰기", "blue", () => navigate("/community/add"))}
+              </div>
+            </div>
+
+            <div className="w-full p-2 text-xs flex justify-between items-center">
+              <div className="w-1/2 flex justify-start items-center space-x-4">
+                <div className="flex justify-center items-center space-x-2">
+                  <div>구분</div>
+                  <div className="text-gray-400">{dto.boardType}</div>
+                </div>
+                <div className="flex justify-center items-center space-x-2">
+                  <div>카테고리</div>
+                  <div className="text-gray-400">{dto.category}</div>
+                </div>
+              </div>
+
+              <div className="w-1/2 flex justify-end items-center space-x-4">
+                <div className="flex justify-center items-center space-x-2">
+                  <div>작성자</div>
+                  <div className="text-gray-400">{dto.authorName}</div>
+                  {/* <div
+                    className="text-gray-500 cursor-pointer"
+                    onDoubleClick={() => {
+                      navigator.clipboard.writeText(dto.authorEmail);
+                      toast.success("메일 복사 완료");
+                    }}
+                  >
+                    {dto.authorEmail}
+                  </div> */}
+                </div>
+                <div className="flex justify-center items-center space-x-2">
+                  <div>작성일자</div>
+                  <div className="text-gray-400">
+                    {new Date(dto.updatedAt) - new Date(dto.createdAt) <
+                    60 * 1000
+                      ? printTime(dto.createdAt)
+                      : ` (${printTime(dto.updatedAt)}에 수정됨)`}
+                  </div>
+                </div>
               </div>
             </div>
 
             <div
-              className="bg-white w-full p-4 border rounded-b-lg shadow-lg text-left font-normal select-text"
+              className="w-full h-[300px] p-2 border-y-2 border-gray-300 text-sm text-left font-normal select-text overflow-y-scroll"
               dangerouslySetInnerHTML={{
                 __html: dto.content.replace(/\n/g, "<br/>"),
               }}
@@ -182,6 +180,26 @@ const Read = () => {
           </div>
 
           <Comment />
+          <div className="flex justify-center items-center">
+            {/* {dto.prev &&
+              makeBtn("이전", () =>
+                navigate(`/community/read/${dto.prev}`, {
+                  state: { back: window.location.href },
+                })
+              )} */}
+            <button
+              className="px-10 py-4 border-2 border-gray-300 rounded text-base text-nowrap hover:bg-[#DDDDDD] transition duration-500"
+              onClick={() => navigate("/community/list")}
+            >
+              목록으로
+            </button>
+            {/* {dto.next &&
+              makeBtn("다음", () =>
+                navigate(`/community/read/${dto.next}`, {
+                  state: { back: window.location.href },
+                })
+              )} */}
+          </div>
         </div>
       </div>
     </>

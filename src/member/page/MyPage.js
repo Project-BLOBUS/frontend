@@ -68,7 +68,7 @@ const MyPage = () => {
         </div>
       </div>
 
-      <div className="mx-[15%] flex justify-center items-center">
+      <div className="mx-[15%] h-[calc(100%-82px-122px)] flex justify-center items-center">
         {/* <div className="ml-[15%] pr-[15%] h-[calc(100vh-90px)] flex justify-center items-start overflow-y-scroll"> */}
         <Outlet />
       </div>

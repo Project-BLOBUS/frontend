@@ -27,7 +27,7 @@ const initState = {
 
 const BusinessInput = () => {
   const navigate = useNavigate();
-  const { makeBtn, makeAdd, makeInput, makeSelect } = useMemberTag();
+  const { makeBtn, makeBtn2, makeAdd, makeInput, makeSelect } = useMemberTag();
   const [loading, setLoading] = useState(false);
 
   const [member, setMember] = useState(initState);
@@ -199,209 +199,197 @@ const BusinessInput = () => {
   return (
     <>
       {loading && <Loading />}
-      <div className="w-full max-w-[600px] min-w-min text-xl text-center font-bold flex flex-col justify-center items-center space-y-1">
-        <div className="bg-white w-full my-4 text-5xl text-sky-500">
+      <div className="w-[70%] h-[90%] px-10 py-4 border-2 border-gray-300 rounded shadow-xl text-base text-center font-bold flex flex-col justify-center items-center">
+        <div className="w-full h-[20%] text-4xl flex justify-center items-center">
           기업계정 회원가입
         </div>
 
-        {/* 아이디 */}
-        {makeAdd(
-          "아이디",
-          <div className="w-full h-full flex justify-center items-center space-x-1">
-            {makeInput(
-              "text",
-              "userId",
-              member.userId,
-              "사업자 등록 번호",
-              onChange,
-              !validation.isAuth,
-              refList.userId,
-              !/^\d{3}-\d{2}-\d{5}$/.test(member.userId)
-                ? "w-full"
-                : !validation.isAuth
-                ? "w-5/6"
-                : "w-full"
-            )}
-            {!/^\d{3}-\d{2}-\d{5}$/.test(member.userId) ? (
-              <></>
-            ) : !validation.isIdValid ? (
-              <>
-                {makeBtn("중복 확인", async () => {
-                  setLoading(true);
+        <div className="w-full h-[65%] my-4 p-4 border-2 border-gray-300 rounded text-sm flex flex-col justify-start items-center overflow-y-scroll space-y-2">
+          {/* 아이디 */}
+          {makeAdd(
+            "아이디",
+            <div className="w-full h-full flex justify-center items-center space-x-1">
+              {makeInput(
+                "text",
+                "userId",
+                member.userId,
+                "사업자 등록 번호",
+                refList.userId,
+                onChange,
+                !validation.isAuth,
+                !/^\d{3}-\d{2}-\d{5}$/.test(member.userId)
+                  ? "w-full"
+                  : !validation.isAuth
+                  ? "w-[calc(100%-100px)]"
+                  : "w-full"
+              )}
+              {!/^\d{3}-\d{2}-\d{5}$/.test(member.userId) ? (
+                <></>
+              ) : !validation.isIdValid ? (
+                <>
+                  {makeBtn("중복 확인", async () => {
+                    setLoading(true);
 
-                  try {
-                    const data = await duplicate(member);
-                    if (!data) {
-                      setValidation({ ...validation, isIdValid: true });
-                      toast.success("가입 가능한 아이디");
+                    try {
+                      const data = await duplicate(member);
+                      if (!data) {
+                        setValidation({ ...validation, isIdValid: true });
+                        toast.success("가입 가능한 아이디");
+                      } else {
+                        toast.warn("중복된 아이디, 다시 입력하세요.");
+                        refList.userId.current.focus();
+                      }
+                    } catch (error) {
+                      toast.error("서버연결에 실패했습니다.");
+                    }
+
+                    setLoading(false);
+                  })}
+                </>
+              ) : !validation.isAuth ? (
+                <>
+                  {makeBtn("등록 확인", async () => {
+                    setLoading(true);
+
+                    const result = await checkBusinessCode(member.userId);
+                    if (result.b_stt_cd) {
+                      setValidation({ ...validation, isAuth: true });
+
+                      toast.success("등록확인 완료");
+                      setTimeout(() => {
+                        toast.info(result.b_stt + " / " + result.tax_type);
+                      }, 100);
+
+                      refList.userPw.current.focus();
                     } else {
-                      toast.warn("중복된 아이디, 다시 입력하세요.");
+                      toast.warn("사업자등록번호 조회 실패, 다시 입력하세요.");
                       refList.userId.current.focus();
                     }
-                  } catch (error) {
-                    toast.error("서버연결에 실패했습니다.");
-                  }
 
-                  setLoading(false);
-                })}
-              </>
-            ) : !validation.isAuth ? (
-              <>
-                {makeBtn("등록 확인", async () => {
-                  setLoading(true);
-
-                  const result = await checkBusinessCode(member.userId);
-                  if (result.b_stt_cd) {
-                    setValidation({ ...validation, isAuth: true });
-
-                    toast.success("등록확인 완료");
-                    setTimeout(() => {
-                      toast.info(result.b_stt + " / " + result.tax_type);
-                    }, 100);
-
-                    refList.userPw.current.focus();
-                  } else {
-                    toast.warn("사업자등록번호 조회 실패, 다시 입력하세요.");
-                    refList.userId.current.focus();
-                  }
-
-                  setLoading(false);
-                })}
-              </>
-            ) : (
-              <></>
-            )}
-          </div>
-        )}
-
-        {/* 사업자등록증 */}
-        {makeAdd(
-          "첨부파일",
-          makeInput(
-            "file",
-            "file",
-            member.file,
-            "",
-            onChange,
-            validation.isAuth,
-            refList.file
-          )
-        )}
-
-        {/* 비밀번호 */}
-        {makeAdd(
-          "비밀번호",
-          makeInput(
-            "password",
-            "userPw",
-            member.userPw,
-            "영어 대소문자, 숫자, 특수기호를 포함한 8~16글자",
-            onChange,
-            validation.isAuth,
-            refList.userPw
-          )
-        )}
-
-        {/* 비밀번호 확인 */}
-        {makeAdd(
-          "비밀번호 확인",
-          makeInput(
-            "password",
-            "confirmPw",
-            member.confirmPw,
-            "비밀번호 재입력",
-            onChange,
-            validation.isAuth,
-            refList.confirmPw
-          )
-        )}
-
-        {/* 기업명 */}
-        {makeAdd(
-          "기업명",
-          makeInput(
-            "text",
-            "name",
-            member.name,
+                    setLoading(false);
+                  })}
+                </>
+              ) : (
+                <></>
+              )}
+            </div>
+          )}
+          {/* 사업자등록증 */}
+          {makeAdd(
+            "첨부파일",
+            makeInput(
+              "file",
+              "file",
+              member.file,
+              "",
+              refList.file,
+              onChange,
+              validation.isAuth
+            )
+          )}
+          {/* 비밀번호 */}
+          {makeAdd(
+            "비밀번호",
+            makeInput(
+              "password",
+              "userPw",
+              member.userPw,
+              "영어 대소문자, 숫자, 특수기호를 포함한 8~16글자",
+              refList.userPw,
+              onChange,
+              validation.isAuth
+            )
+          )}
+          {/* 비밀번호 확인 */}
+          {makeAdd(
+            "비밀번호 확인",
+            makeInput(
+              "password",
+              "confirmPw",
+              member.confirmPw,
+              "비밀번호 재입력",
+              refList.confirmPw,
+              onChange,
+              validation.isAuth
+            )
+          )}
+          {/* 기업명 */}
+          {makeAdd(
             "기업명",
-            onChange,
-            validation.isAuth,
-            refList.name
-          )
-        )}
+            makeInput(
+              "text",
+              "name",
+              member.name,
+              "기업명",
+              refList.name,
+              onChange,
+              validation.isAuth
+            )
+          )}
+          {/* 담당자 연락처 */}
+          {makeAdd(
+            "담당자 연락처",
+            makeInput(
+              "text",
+              "phoneNum",
+              member.phoneNum,
+              '"─" 없이 입력',
+              refList.phoneNum,
+              onChange,
+              validation.isAuth
+            )
+          )}
+          {/* 담당자 이메일 */}
+          {makeAdd(
+            "담당자 이메일",
+            makeInput(
+              "email",
+              "email",
+              member.email,
+              "example@domain.com",
+              refList.email,
+              onChange,
+              validation.isAuth
+            )
+          )}
+          {/* 기업 주소 */}
+          {makeAdd(
+            "기업 주소",
+            <div className="w-full flex justify-center items-center space-x-1">
+              {makeSelect(
+                "region",
+                address.region,
+                address.regionList,
+                "시/도 선택",
+                refList.region,
+                onChangeAddress,
+                validation.isAuth
+              )}
+              {makeSelect(
+                "city",
+                address.city,
+                address.cityList,
+                "시/구/군 선택",
+                refList.city,
+                onChangeAddress,
+                validation.isAuth
+              )}
+            </div>
+          )}
+        </div>
 
-        {/* 담당자 연락처 */}
-        {makeAdd(
-          "담당자 연락처",
-          makeInput(
-            "text",
-            "phoneNum",
-            member.phoneNum,
-            '"─" 없이 입력',
-            onChange,
-            validation.isAuth,
-            refList.phoneNum
-          )
-        )}
+        <div className="w-full h-[15%] text-2xl flex flex-row-reverse justify-center items-center">
+          {makeBtn2("완료", onCLickRegister)}
 
-        {/* 담당자 이메일 */}
-        {makeAdd(
-          "담당자 이메일",
-          makeInput(
-            "email",
-            "email",
-            member.email,
-            "example@domain.com",
-            onChange,
-            validation.isAuth,
-            refList.email
-          )
-        )}
-
-        {/* 기업 주소 */}
-        {makeAdd(
-          "기업 주소",
-          <div className="w-full flex justify-center items-center space-x-1">
-            {makeSelect(
-              "region",
-              address.region,
-              address.regionList,
-              "시/도 선택",
-              onChangeAddress,
-              validation.isAuth,
-              refList.region,
-              "w-1/2"
-            )}
-            {makeSelect(
-              "city",
-              address.city,
-              address.cityList,
-              "시/구/군 선택",
-              onChangeAddress,
-              validation.isAuth,
-              refList.city,
-              "w-1/2"
-            )}
-          </div>
-        )}
-
-        <div className="w-full pt-2 text-2xl text-center font-bold flex flex-row-reverse justify-center items-center">
-          <button
-            className="bg-sky-500 w-3/4 p-4 rounded-xl text-white hover:bg-sky-300 hover:text-black transition duration-500"
-            onClick={onCLickRegister}
-          >
-            완료
-          </button>
-
-          <button
-            className="bg-gray-500 w-1/4 mr-4 p-4 rounded-xl text-white flex justify-center items-center hover:bg-gray-300 hover:text-black transition duration-500"
+          {/* <button
+            className="bg-gray-500 w-1/4 mr-4 p-4 rounded-xl shadow-md text-white flex justify-center items-center hover:bg-gray-300 hover:text-black transition duration-500"
             onClick={() => {
               removeCookie("isAgree");
               navigate("/member/signup/agree/general", { replace: true });
-            }}
+              }}
           >
             <FaBackspace className="text-3xl" />
-          </button>
+          </button> */}
         </div>
       </div>
     </>

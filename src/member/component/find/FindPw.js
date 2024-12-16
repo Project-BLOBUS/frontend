@@ -7,16 +7,17 @@ import useMemberTag from "../../hook/useMemberTag";
 import Loading from "../../../etc/component/Loading";
 
 const initState = {
-  userId: "",
+  // ToDEL 삭제
+  userId: "test@test.com",
   authCode: "",
-  userPw: "",
-  confirmPw: "",
+  userPw: "qwerQWER1234!@#$",
+  confirmPw: "qwerQWER1234!@#$",
   roleName: "GENERAL",
 };
 
 const FindPw = () => {
   const navigate = useNavigate();
-  const { makeBtn, makeAdd, makeInput } = useMemberTag();
+  const { makeBtn, makeBtn2, makeAdd, makeInput } = useMemberTag();
   const [loading, setLoading] = useState(false);
 
   const [member, setMember] = useState(initState);
@@ -50,6 +51,20 @@ const FindPw = () => {
       });
     }
     setMember({ ...member, [name]: value });
+  };
+
+  const onClickAuth = () => {
+    setLoading(true);
+
+    if (validation.authCode === member.authCode * 1) {
+      setValidation({ ...validation, isAuth: true });
+      toast.success("인증 완료");
+    } else {
+      toast.warn("코드를 다시 입력하세요.");
+      refList.authCode.current.focus();
+    }
+
+    setLoading(false);
   };
 
   const validField = () => {
@@ -129,186 +144,136 @@ const FindPw = () => {
   return (
     <>
       {loading && <Loading />}
-      <div className="w-1/2 h-[500px] p-10 border-2 border-gray-300 rounded-xl shadow-xl text-base text-center font-bold flex flex-col justify-center items-center">
+      <div className="w-1/2 h-[90%] px-10 py-4 border-2 border-gray-300 rounded shadow-xl text-base text-center font-bold flex flex-col justify-center items-center">
         <div className="w-full h-[20%] text-4xl flex justify-center items-center">
-          비밀번호 찾기
+          비밀번호 {!validation.isAuth ? " 찾기" : " 변경"}
         </div>
 
-        <div className="w-full h-[10%] text-sm flex flex-col justify-center items-center">
-          <div className="w-full h-1/2">
-            회원정보에 등록된 정보로 비밀번호를 찾을 수 있습니다.
-          </div>
+        {!validation.isAuth ? (
+          <>
+            <div className="w-full h-[10%] text-sm flex flex-col justify-center items-center">
+              <div className="w-full h-1/2">
+                회원정보에 등록된 정보로 비밀번호를 찾을 수 있습니다.
+              </div>
+              <div className="w-full h-1/2 text-gray-500">
+                ※ 기업계정은 관리자에게 문의바랍니다.
+              </div>
+            </div>
 
-          <div className="w-full h-1/2 text-gray-500">
-            ※ 기업계정은 관리자에게 문의바랍니다.
-          </div>
-        </div>
+            <div className="w-full h-[35%] text-sm flex flex-col justify-center items-center space-y-2">
+              {/* 아이디 */}
+              {makeAdd(
+                "아이디",
+                <div className="w-full h-full flex justify-center items-center space-x-1">
+                  {makeInput(
+                    "email",
+                    "userId",
+                    member.userId,
+                    "이메일",
+                    refList.userId,
+                    onChange,
+                    !validation.isAuth,
+                    !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(member.userId)
+                      ? "w-full"
+                      : !validation.isMailSent
+                      ? "w-[calc(100%-100px)]"
+                      : "w-full"
+                  )}
+                  {!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(member.userId) ? (
+                    <></>
+                  ) : !validation.isMailSent ? (
+                    <>
+                      {makeBtn("메일 전송", async () => {
+                        setLoading(true);
 
-        {/* 아이디 */}
-        {makeAdd(
-          "아이디",
-          <div className="w-full h-full flex justify-center items-center space-x-1">
-            {makeInput(
-              "email",
-              "userId",
-              member.userId,
-              "이메일",
-              onChange,
-              !validation.isAuth,
-              refList.userId,
-              !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(member.userId)
-                ? "w-full"
-                : !validation.isMailSent
-                ? "w-5/6"
-                : !validation.isAuth
-                ? "w-7/12"
-                : "w-full"
-            )}
-            {!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(member.userId) ? (
-              <></>
-            ) : !validation.isMailSent ? (
-              <>
-                {makeBtn("메일 전송", async () => {
-                  setLoading(true);
+                        try {
+                          const code = await sendMail(member);
+                          setValidation({
+                            ...validation,
+                            isMailSent: true,
+                            authCode: code,
+                          });
+                          toast.success("메일 전송 성공");
+                          // ToDEL 삭제
+                          setMember({ ...member, authCode: code });
+                        } catch (error) {
+                          toast.error("메일 전송에 실패했습니다.");
+                        }
 
-                  try {
-                    const code = await sendMail(member);
-                    setValidation({
-                      ...validation,
-                      isMailSent: true,
-                      authCode: code,
-                    });
-                    toast.success("메일 전송 성공");
-                  } catch (error) {
-                    toast.error("메일 전송에 실패했습니다.");
-                  }
+                        setLoading(false);
+                      })}
+                    </>
+                  ) : (
+                    <></>
+                  )}
+                </div>
+              )}
 
-                  setLoading(false);
-                })}
-              </>
-            ) : !validation.isAuth ? (
-              <>
-                {makeInput(
+              {/* 인증번호 */}
+              {makeAdd(
+                "인증번호",
+                makeInput(
                   "text",
                   "authCode",
                   member.authCode,
                   "인증번호",
-                  onChange,
-                  !validation.isAuth,
                   refList.authCode,
-                  "w-1/4 text-center"
-                )}
-                {makeBtn("인증 확인", () => {
-                  setLoading(true);
-
-                  if (validation.authCode === member.authCode * 1) {
-                    setValidation({ ...validation, isAuth: true });
-                    toast.success("인증 완료");
-                  } else {
-                    toast.warn("코드를 다시 입력하세요.");
-                    refList.authCode.current.focus();
-                  }
-
-                  setLoading(false);
-                })}
-              </>
-            ) : (
-              <></>
-            )}
-          </div>
-        )}
-
-        {validation.isAuth && (
+                  onChange,
+                  validation.isMailSent
+                )
+              )}
+            </div>
+          </>
+        ) : (
           <>
-            {/* 비밀번호 */}
-            {makeAdd(
-              "비밀번호",
-              makeInput(
-                "password",
-                "userPw",
-                member.userPw,
-                "영어 대소문자, 숫자, 특수기호를 포함한 8~16글자",
-                onChange,
-                validation.isAuth,
-                refList.userPw
-              )
-            )}
+            <div className="w-full h-[10%] text-sm flex flex-col justify-center items-center">
+              <div className="w-full h-1/2">인증이 완료되었습니다.</div>
+              <div className="w-full h-1/2">변경할 비밀번호를 입력하세요.</div>
+            </div>
 
-            {/* 비밀번호 확인 */}
-            {makeAdd(
-              "비밀번호 확인",
-              makeInput(
-                "password",
-                "confirmPw",
-                member.confirmPw,
-                "비밀번호 재입력",
-                onChange,
-                validation.isAuth,
-                refList.confirmPw
-              )
-            )}
+            <div className="w-full h-[35%] text-sm flex flex-col justify-center items-center space-y-2">
+              {/* 비밀번호 */}
+              {makeAdd(
+                "비밀번호",
+                makeInput(
+                  "password",
+                  "userPw",
+                  member.userPw,
+                  "영어 대소문자, 숫자, 특수기호를 포함한 8~16글자",
+                  refList.userPw,
+                  onChange,
+                  validation.isAuth
+                )
+              )}
+              {/* 비밀번호 확인 */}
+              {makeAdd(
+                "비밀번호 확인",
+                makeInput(
+                  "password",
+                  "confirmPw",
+                  member.confirmPw,
+                  "비밀번호 재입력",
+                  refList.confirmPw,
+                  onChange,
+                  validation.isAuth
+                )
+              )}
+            </div>
           </>
         )}
 
-        <div className="w-full pt-4 text-2xl text-center font-bold flex flex-row-reverse justify-center items-center">
-          {validation.isAuth && (
-            <button
-              className="bg-sky-500 w-3/4 p-4 rounded-xl text-white hover:bg-sky-300 hover:text-black transition duration-500"
-              onClick={onClickModify}
-            >
-              완료
-            </button>
-          )}
-          <button
-            className={`${
-              !validation.isAuth ? "w-full" : "w-1/4 mr-4"
-            } bg-gray-500 p-4 rounded-xl text-white flex justify-center items-center hover:bg-gray-300 hover:text-black transition duration-500`}
-            onClick={() => {
-              setCookie("userId", member.userId);
-              setCookie("userRole", member.roleName);
-              navigate("/member/login", { replace: true });
-            }}
-          >
-            취소
-          </button>
+        <div className="w-full h-[35%] flex flex-col justify-center items-center space-y-2">
+          {!validation.isAuth
+            ? makeBtn2("인증 확인", onClickAuth)
+            : makeBtn2("변경 완료", onClickModify)}
+          {makeBtn2("뒤로가기", () => {
+            setCookie("userId", member.userId);
+            setCookie("userRole", member.roleName);
+            navigate("/member/login", { replace: true });
+          })}
         </div>
       </div>
     </>
-  );
-};
-
-const makeInput = (type, name, value, hint, ref, onChange) => {
-  return (
-    <input
-      className="w-full px-6 py-4 border border-gray-500 rounded-full shadow-md text-left tracking-widest"
-      type={type}
-      name={name}
-      value={value ?? ""}
-      placeholder={hint}
-      maxLength={
-        name === "authCode"
-          ? 6
-          : name === "userPw" || name === "confirmPw"
-          ? 16
-          : name === "phoneNum"
-          ? 11
-          : undefined
-      }
-      autoComplete="off"
-      ref={ref}
-      onChange={onChange}
-    />
-  );
-};
-
-const makeBtn = (name, onClick) => {
-  return (
-    <button
-      className="w-full p-4 border-2 border-pink-500 rounded-full shadow-lg text-pink-500 hover:bg-pink-500 hover:text-white transition duration-500"
-      onClick={onClick}
-    >
-      {name}
-    </button>
   );
 };
 

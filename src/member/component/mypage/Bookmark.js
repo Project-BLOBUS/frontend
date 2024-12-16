@@ -22,7 +22,7 @@ const initState = {
 const Bookmark = () => {
   const [loading, setLoading] = useState(false);
   const { page, size, moveToList } = useCustomMove("mypage/bookmark/list");
-  const { makeList, makeBookTab } = useMypageTag();
+  const { makeBookTab, makeList } = useMypageTag();
 
   const [data, setData] = useState(initState);
 

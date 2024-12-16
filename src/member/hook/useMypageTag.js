@@ -3,74 +3,14 @@ import { useNavigate } from "react-router";
 const useMypageTag = () => {
   const navigate = useNavigate();
 
-  const makeList = (data) => {
+  const makeBtn = (name, onClick) => {
     return (
-      <>
-        <div className="w-full text-base text-nowrap flex flex-wrap justify-start items-start">
-          {data.dtoList.length === 0 ? (
-            <div className="w-full py-20 text-2xl">
-              해당하는 게시물이 없습니다.
-            </div>
-          ) : (
-            data.dtoList.map((dto, index) => (
-              <div
-                key={index}
-                className={`w-[calc(100%/3-0rem)] h-[calc(100%/2-0rem)] p-4 border-2 border-gray-300 rounded-xl flex flex-col justify-center items-center space-y-4 ${
-                  dto.link &&
-                  "cursor-pointer hover:bg-gray-200 transition duration-500"
-                }`}
-                onClick={() =>
-                  dto.mainCategory === "지역" && dto.link
-                    ? window.open(dto.link)
-                    : dto.link && navigate(dto.link)
-                }
-              >
-                <div className="w-full flex justify-between items-center">
-                  <div className="w-full text-xl">
-                    {dto.title.length > 12
-                      ? dto.title.slice(0, 12) + "..."
-                      : dto.title}
-                  </div>
-                </div>
-
-                <div className="w-full flex justify-center items-center space-x-2">
-                  <div className="w-1/3">{dto.startDate}</div>
-                  <div>~</div>
-                  <div className="w-1/3">{dto.endDate}</div>
-                </div>
-
-                <div className="w-full text-sm flex justify-between items-center">
-                  <div
-                    className={`${
-                      dto.mainCategory === "청년"
-                        ? "bg-blue-500"
-                        : dto.mainCategory === "기업"
-                        ? "bg-red-500"
-                        : dto.mainCategory === "지역"
-                        ? "bg-green-500"
-                        : "bg-gray-500"
-                    } p-2 text-white`}
-                  >
-                    {dto.mainCategory} / {dto.subCategory}
-                  </div>
-
-                  {new Date() - new Date(dto.endDate) < 0 ? (
-                    new Date() - new Date(dto.startDate) < 0 ? (
-                      <div className="bg-blue-300 p-2 rounded-xl">진행 전</div>
-                    ) : (
-                      <div className="bg-green-300 p-2 rounded-xl">진행 중</div>
-                    )
-                  ) : !(dto.startDate && dto.endDate) ? (
-                    <div className="bg-gray-300 p-2 rounded-xl">기간없음</div>
-                  ) : (
-                    <div className="bg-red-300 p-2 rounded-xl">종료</div>
-                  )}
-                </div>
-              </div>
-            ))
-          )}
-        </div>
-      </>
+      <button
+        className="w-fit mx-2 px-4 py-2 border-2 border-gray-300 rounded text-base text-nowrap hover:bg-[#DDDDDD] transition duration-500"
+        onClick={onClick}
+      >
+        {name}
+      </button>
     );
   };
 
@@ -188,7 +128,77 @@ const useMypageTag = () => {
     );
   };
 
-  return { makeList, makeSelect, makeBookTab, makeDocTab };
+  const makeList = (data) => {
+    return (
+      <>
+        <div className="w-full text-base text-nowrap flex flex-wrap justify-start items-start">
+          {data.dtoList.length === 0 ? (
+            <div className="w-full py-20 text-2xl">
+              해당하는 게시물이 없습니다.
+            </div>
+          ) : (
+            data.dtoList.map((dto, index) => (
+              <div
+                key={index}
+                className={`w-[calc(100%/3-0rem)] h-[calc(100%/2-0rem)] p-4 border-2 border-gray-300 rounded-xl flex flex-col justify-center items-center space-y-4 ${
+                  dto.link &&
+                  "cursor-pointer hover:bg-gray-200 transition duration-500"
+                }`}
+                onClick={() =>
+                  dto.mainCategory === "지역" && dto.link
+                    ? window.open(dto.link)
+                    : dto.link && navigate(dto.link)
+                }
+              >
+                <div className="w-full flex justify-between items-center">
+                  <div className="w-full text-xl">
+                    {dto.title.length > 12
+                      ? dto.title.slice(0, 12) + "..."
+                      : dto.title}
+                  </div>
+                </div>
+
+                <div className="w-full flex justify-center items-center space-x-2">
+                  <div className="w-1/3">{dto.startDate}</div>
+                  <div>~</div>
+                  <div className="w-1/3">{dto.endDate}</div>
+                </div>
+
+                <div className="w-full text-sm flex justify-between items-center">
+                  <div
+                    className={`${
+                      dto.mainCategory === "청년"
+                        ? "bg-blue-500"
+                        : dto.mainCategory === "기업"
+                        ? "bg-red-500"
+                        : dto.mainCategory === "지역"
+                        ? "bg-green-500"
+                        : "bg-gray-500"
+                    } p-2 text-white`}
+                  >
+                    {dto.mainCategory} / {dto.subCategory}
+                  </div>
+
+                  {new Date() - new Date(dto.endDate) < 0 ? (
+                    new Date() - new Date(dto.startDate) < 0 ? (
+                      <div className="bg-blue-300 p-2 rounded-xl">진행 전</div>
+                    ) : (
+                      <div className="bg-green-300 p-2 rounded-xl">진행 중</div>
+                    )
+                  ) : !(dto.startDate && dto.endDate) ? (
+                    <div className="bg-gray-300 p-2 rounded-xl">기간없음</div>
+                  ) : (
+                    <div className="bg-red-300 p-2 rounded-xl">종료</div>
+                  )}
+                </div>
+              </div>
+            ))
+          )}
+        </div>
+      </>
+    );
+  };
+  return { makeBtn, makeSelect, makeBookTab, makeDocTab, makeList };
 };
 
 export default useMypageTag;

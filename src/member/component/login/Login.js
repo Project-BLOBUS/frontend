@@ -1,12 +1,16 @@
 import { useRef, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { FaBackspace } from "react-icons/fa";
 import { toast } from "react-toastify";
 import { getCookie, setCookie } from "../../../etc/util/cookieUtil";
 import { login } from "../../api/memberAPI";
+import useMemberTag from "../../hook/useMemberTag";
 import Loading from "../../../etc/component/Loading";
 import imgLogin from "./login.png";
 
 const Login = () => {
+  const navigate = useNavigate();
+  const { makeInput } = useMemberTag();
   const [loading, setLoading] = useState(false);
 
   const [userId, setUserId] = useState(getCookie("userId") ?? "");
@@ -85,17 +89,28 @@ const Login = () => {
   const onKeyUpLogin = (e) => {
     if (e.key === "Enter") {
       onCLickLogin(e);
+    } else if (e.key === "Escape") {
+      // ToDEL 삭제
+      if (userRole === "GENERAL") {
+        setUserId("test@test.com");
+        setUserPw("qwerQWER1234!@#$");
+        onCLickLogin(e);
+      } else if (userRole === "BUSINESS") {
+        setUserId("ADMIN");
+        setUserPw("ADMIN");
+        onCLickLogin(e);
+      }
     }
   };
 
   return (
     <div className="w-full text-center font-bold flex flex-col justify-center items-center">
       {loading && <Loading />}
-      <div className="w-full text-3xl p-4 text-left">통합 로그인</div>
+      <div className="w-full text-4xl p-4 text-left">통합 로그인</div>
 
-      <div className="w-full border-2 border-gray-300 rounded-xl shadow-xl text-base flex justify-center items-center">
-        <div className="w-1/2 p-8 border-r-2 border-e-gray-300 text-left flex flex-col justify-center items-center">
-          <img className="w-full" src={imgLogin} alt="로그인" />
+      <div className="w-full border-2 border-gray-300 rounded-xl shadow-md text-base flex justify-center items-center">
+        <div className="w-1/2 p-4 border-r-2 border-gray-300 text-left flex flex-col justify-center items-center">
+          <img className="w-[80%]" src={imgLogin} alt="로그인" />
           <div className="w-full">BLOBUS에 방문해주셔서 감사합니다.</div>
           <div className="w-full">
             로그인 하시면 보다 다양한 서비스 이용이 가능합니다.
@@ -103,21 +118,33 @@ const Login = () => {
         </div>
 
         <div
-          className="w-1/2 p-8 flex flex-col justify-center items-center space-y-2"
+          className="w-1/2 px-8 p-4 flex flex-col justify-center items-center space-y-2"
           onKeyUp={onKeyUpLogin}
         >
-          <div className="w-full px-20 py-2 text-xl flex justify-around items-center space-x-4">
+          <div className="w-full px-10 py-2 text-2xl flex justify-around items-center space-x-4">
             {makeTab("일반회원", "GENERAL", userRole, setUserRole)}
             {makeTab("기업회원", "BUSINESS", userRole, setUserRole)}
             {/* {makeTab("관리자", "ADMIN", userRole, setUserRole)} */}
           </div>
 
           <div className="w-full py-2 flex flex-col justify-center items-center space-y-2">
-            {makeInput("text", "userId", userId, "아이디", idRef, (e) =>
-              setUserId(e.target.value)
+            {makeInput(
+              "text",
+              "userId",
+              userId,
+              "아이디",
+              idRef,
+              (e) => setUserId(e.target.value),
+              true
             )}
-            {makeInput("password", "userPw", userPw, "비밀번호", pwRef, (e) =>
-              setUserPw(e.target.value)
+            {makeInput(
+              "password",
+              "userPw",
+              userPw,
+              "비밀번호",
+              pwRef,
+              (e) => setUserPw(e.target.value),
+              true
             )}
 
             {userRole === "ADMIN" || (
@@ -141,11 +168,11 @@ const Login = () => {
               className="bg-pink-500 w-full p-4 rounded-full shadow-lg text-2xl text-white"
               onClick={onCLickLogin}
             >
-              LOGIN
+              로그인
             </button>
 
             {/* <button
-              className="bg-gray-500 w-1/6 mr-4 p-4 rounded-xl shadow-lg text-white flex justify-center items-center"
+              className="bg-gray-500 w-1/6 mr-4 p-4 rounded-xl shadow-md text-white flex justify-center items-center"
               onClick={() =>
                 navigate(window.history.length > 1 ? -1 : "/", {
                   replace: true,
@@ -170,7 +197,7 @@ const Login = () => {
 const makeTab = (name, role, userRole, setUserRole) => {
   return (
     <div
-      className={`w-full p-2 border-2 rounded-full ${
+      className={`w-40 p-4 border-2 rounded-full ${
         userRole === role
           ? "border-pink-500"
           : "text-gray-300 border-white cursor-pointer hover:border-pink-500 hover:text-black transition duration-500"
@@ -179,22 +206,6 @@ const makeTab = (name, role, userRole, setUserRole) => {
     >
       {name}
     </div>
-  );
-};
-
-const makeInput = (type, name, value, hint, ref, onChange) => {
-  return (
-    <input
-      className="w-full px-6 py-4 border border-gray-500 rounded-full shadow-md text-left tracking-widest"
-      type={type}
-      name={name}
-      value={value ?? ""}
-      placeholder={hint}
-      maxLength={name === "phoneNum" ? 11 : undefined}
-      autoComplete="off"
-      ref={ref}
-      onChange={onChange}
-    />
   );
 };
 

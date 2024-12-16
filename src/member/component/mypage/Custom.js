@@ -22,7 +22,7 @@ const initState = {
 const Custom = () => {
   const [loading, setLoading] = useState(false);
   const { page, size, moveToList } = useCustomMove("mypage/custom/list");
-  const { makeList, makeSelect } = useMypageTag();
+  const { makeBtn, makeSelect, makeList } = useMypageTag();
 
   const [data, setData] = useState(initState);
 
@@ -173,20 +173,16 @@ const Custom = () => {
               ))}
             </div>
           </div>
-
-          <button
-            className="w-24 m-2 px-4 py-2 border-2 border-gray-300 rounded hover:bg-[#DDDDDD] transition duration-500"
-            onClick={() => {
+          <div className="py-2">
+            {makeBtn("검색", () => {
               const value = inputRef.current?.value.trim();
               if (value !== "") {
                 setKList({ ...kList, [value]: true });
                 inputRef.current.value = "";
                 inputRef.current.focus();
               }
-            }}
-          >
-            검색
-          </button>
+            })}
+          </div>
         </div>
 
         <div className="w-full my-2 text-base flex justify-between items-center">
@@ -196,37 +192,32 @@ const Custom = () => {
             {/* {makeSelect("키워드", open, setOpen, kList, setKList, moveToList)} */}
           </div>
 
-          <button
-            className="p-2 border-2 border-yellow-300 rounded text-yellow-500 hover:bg-[#DDDDDD] transition duration-500"
-            onClick={() => {
-              setLoading(true);
+          {makeBtn("필터 저장", () => {
+            setLoading(true);
 
-              // 커스텀 설정 저장하기
-              saveSetting(listToStr(yList), listToStr(rList), listToStr(kList))
-                .then((save) => {
-                  if (save.error) {
-                    toast.error("설정 저장에 실패했습니다.", { toastId: "e" });
-                  } else {
-                    toast.success("설정 저장 성공");
-                  }
-                })
-                .catch((error) => {
-                  if (error.code === "ERR_NETWORK") {
-                    toast.error("서버연결에 실패했습니다.", { toastId: "e" });
-                  } else {
-                    toast.error("설정 저장에 실패했습니다.", { toastId: "e" });
-                  }
-                });
+            // 커스텀 설정 저장하기
+            saveSetting(listToStr(yList), listToStr(rList), listToStr(kList))
+              .then((save) => {
+                if (save.error) {
+                  toast.error("설정 저장에 실패했습니다.", { toastId: "e" });
+                } else {
+                  toast.success("설정 저장 성공");
+                }
+              })
+              .catch((error) => {
+                if (error.code === "ERR_NETWORK") {
+                  toast.error("서버연결에 실패했습니다.", { toastId: "e" });
+                } else {
+                  toast.error("설정 저장에 실패했습니다.", { toastId: "e" });
+                }
+              });
 
-              setOpen(
-                Object.fromEntries(Object.keys(open).map((key) => [key, false]))
-              );
+            setOpen(
+              Object.fromEntries(Object.keys(open).map((key) => [key, false]))
+            );
 
-              setLoading(false);
-            }}
-          >
-            필터 저장
-          </button>
+            setLoading(false);
+          })}
         </div>
 
         {makeList(data)}

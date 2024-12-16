@@ -25,7 +25,7 @@ const Document = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const { page, size, moveToList } = useCustomMove("mypage/doc/list");
-  const { makeDocTab } = useMypageTag();
+  const { makeBtn, makeDocTab } = useMypageTag();
 
   const [data, setData] = useState(initState);
 
@@ -111,29 +111,26 @@ const Document = () => {
           <div className="w-[12%]">수정</div>
         </div>
 
-        <div className="w-full text-sm text-nowrap flex flex-col justify-start items-center">
+        <div className="w-full text-sm text-nowrap font-normal flex flex-col justify-start items-center">
           {data.dtoList.length === 0 ? (
             <>
-              <div className="w-full pt-10 text-2xl">
+              <div className="w-full py-20 text-2xl font-bold">
                 작성글 이력이 없습니다.
               </div>
-              <div
-                className="w-1/2 p-10 text-base text-right cursor-pointer hover:text-gray-300 transition duration-500"
-                onClick={() => navigate("/community/add")}
-              >
-                글 쓰기
+
+              <div className="w-full py-2 flex justify-end items-center">
+                {makeBtn("글쓰기", () => navigate("/community/add"))}
               </div>
             </>
           ) : (
             data.dtoList.map((dto, index) => (
               <div
                 key={index}
-                className={`w-full py-2 border-b-2 border-gray-300 flex justify-center items-center cursor-pointer`}
+                className="w-full py-2 border-b-2 border-gray-300 flex justify-center items-center cursor-pointer"
                 onClick={() => navigate(`/community/read/${dto.id}`)}
               >
                 <div className="w-[8%]">{dto.id}</div>
                 <div className="w-[10%]">{dto.boardType}</div>
-
                 <div className="w-full flex justify-start items-center space-x-2">
                   <div
                     className={
@@ -149,13 +146,15 @@ const Document = () => {
                     [{dto.category}]
                   </div>
                   {dto.visibility ? <FaLock /> : <></>}
-                  <div className="">{dto.title}</div>
-
+                  <div>
+                    {dto.title.length > 45
+                      ? dto.title.slice(dto.title.length - 45) + " . . ."
+                      : dto.title}
+                  </div>
                   <div className="text-xs text-red-500 font-bold">
                     {dto.commentCount > 0 && dto.commentCount}
                   </div>
                 </div>
-
                 <div className="w-[12%]">{printTime(dto.createdAt)}</div>
                 <div className="w-[12%]">
                   {new Date(dto.updatedAt) - new Date(dto.createdAt) < 60 * 1000

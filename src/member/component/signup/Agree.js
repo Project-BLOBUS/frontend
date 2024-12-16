@@ -7,17 +7,24 @@ import {
   setCookie,
   removeCookie,
 } from "../../../etc/util/cookieUtil";
+import useMemberTag from "../../hook/useMemberTag";
+import Loading from "../../../etc/component/Loading";
 import TermsList from "../../data/TermsList";
 
 const Agree = () => {
   const navigate = useNavigate();
   const { role } = useParams();
+  const { makeBtn2 } = useMemberTag();
+  const [loading, setLoading] = useState(false);
 
   const [termsList, setTermsList] = useState([]);
   const [agreeAll, setAgreeAll] = useState(false);
   const [modal, setModal] = useState({ title: "", content: null, open: false });
 
   useEffect(() => {
+    setLoading(true);
+
+    removeCookie("isAgree");
     if (!getCookie("isChoice")) {
       removeCookie("isChoice");
       navigate("/member/signup/choice", { replace: true });
@@ -29,6 +36,8 @@ const Agree = () => {
     }));
 
     setTermsList(newTermsList);
+
+    setLoading(false);
   }, [TermsList]);
 
   const openModal = (title, content) => {
@@ -41,74 +50,72 @@ const Agree = () => {
 
   return (
     <>
-      <div className="w-full max-w-[600px] min-w-min text-xl text-center font-bold flex flex-col justify-center items-center space-y-4">
-        <div className="bg-white w-full my-4 text-5xl text-sky-500">
+      {loading && <Loading />}
+      <div className="w-[70%] h-[90%] px-10 py-4 border-2 border-gray-300 rounded shadow-xl text-base text-center font-bold flex flex-col justify-center items-center">
+        <div className="w-full h-[20%] text-4xl flex justify-center items-center">
           약관동의
         </div>
 
-        <div className="w-full border border-gray-500 rounded text-4xl flex justify-center items-cente cursor-pointer">
-          {makeAgree("전체 동의", agreeAll, () => {
-            setAgreeAll(!agreeAll);
-            setTermsList((prev) =>
-              prev.map((term) => ({ ...term, agree: !agreeAll }))
-            );
+        <div className="w-full h-[65%] flex flex-col justify-center items-center">
+          <div className="w-full h-1/4 border-b-2 border-gray-300 text-3xl flex justify-center items-center cursor-pointer">
+            {makeAgree("전체 동의", agreeAll, () => {
+              setAgreeAll(!agreeAll);
+              setTermsList((prev) =>
+                prev.map((term) => ({ ...term, agree: !agreeAll }))
+              );
+            })}
+          </div>
+
+          <div className="w-full h-3/4 flex flex-col justify-center items-center space-y-2">
+            {termsList.map((data, index) => (
+              <div
+                key={index}
+                className="w-full flex justify-center items-center"
+              >
+                {makeAgree(
+                  data.title,
+                  data.agree,
+                  () => {
+                    setTermsList((prev) => {
+                      const newTermsList = prev.map((term) =>
+                        data.title === term.title
+                          ? { ...term, agree: !term.agree }
+                          : term
+                      );
+                      setAgreeAll(newTermsList.every((term) => term.agree));
+                      return newTermsList;
+                    });
+                  },
+                  data.required
+                )}
+                {makeDetail(data.title, data.content, openModal)}
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="w-full h-[15%] text-2xl flex flex-row-reverse justify-center items-center">
+          {makeBtn2("다음", () => {
+            if (
+              termsList.every((term) => (term.required ? term.agree : true))
+            ) {
+              setCookie("isAgree", true);
+              removeCookie("isChoice");
+              navigate(`/member/signup/input/${role}`);
+            } else {
+              toast.warn("필수항목에 모두 동의하세요.");
+            }
           })}
-        </div>
 
-        <div className="w-full flex flex-col justify-center items-center">
-          {termsList.map((data, index) => (
-            <div
-              key={index}
-              className="w-full border border-gray-500 rounded flex justify-start items-center"
-            >
-              {makeAgree(
-                data.title,
-                data.agree,
-                () => {
-                  setTermsList((prev) => {
-                    const newTermsList = prev.map((term) =>
-                      data.title === term.title
-                        ? { ...term, agree: !term.agree }
-                        : term
-                    );
-                    setAgreeAll(newTermsList.every((term) => term.agree));
-                    return newTermsList;
-                  });
-                },
-                data.required
-              )}
-              {makeBtn(data.title, data.content, openModal)}
-            </div>
-          ))}
-        </div>
-
-        <div className="w-full py-2 text-2xl flex flex-row-reverse justify-center items-center">
-          <button
-            className="bg-sky-500 w-5/6 p-4 rounded-xl text-white hover:bg-sky-300 hover:text-black transition duration-500"
-            onClick={() => {
-              if (
-                termsList.every((term) => (term.required ? term.agree : true))
-              ) {
-                setCookie("isAgree", true);
-                removeCookie("isChoice");
-                navigate(`/member/signup/input/${role}`);
-              } else {
-                toast.warn("필수항목에 모두 동의하세요.");
-              }
-            }}
-          >
-            다음
-          </button>
-
-          <button
-            className="bg-gray-500 w-1/6 mr-4 p-4 rounded-xl text-white flex justify-center items-center hover:bg-gray-300 hover:text-black transition duration-500"
+          {/* <button
+            className="bg-gray-500 w-1/6 mr-4 p-4 rounded-xl shadow-md text-white flex justify-center items-center hover:bg-gray-300 hover:text-black transition duration-500"
             onClick={() => {
               removeCookie("isChoice");
               navigate("/member/signup/choice", { replace: true });
             }}
           >
             <FaBackspace className="text-3xl" />
-          </button>
+          </button> */}
         </div>
       </div>
 
@@ -119,7 +126,7 @@ const Agree = () => {
             {modal.content}
             <div className="flex justify-end items-center">
               <button
-                className="bg-red-500 px-4 py-2 text-base font-bold rounded-xl text-white hover:bg-red-300 hover:text-black transition duration-500"
+                className="p-2 text-base font-bold hover:text-gray-300 transition duration-500"
                 onClick={closeModal}
               >
                 닫기
@@ -135,43 +142,25 @@ const Agree = () => {
 const makeAgree = (title, agree, setAgree, 필수) => {
   return (
     <div
-      className={`group h-full flex items-center space-x-4 cursor-pointer ${
-        필수 === undefined
-          ? "w-full p-4 justify-center"
-          : "w-[90%] py-4 pl-4 justify-start"
-      }`}
+      className="w-full h-full p-4 flex justify-start items-center space-x-4 cursor-pointer"
       onClick={setAgree}
     >
       <FaCheck
-        className={`p-2 border rounded-3xl group-hover:scale-125 transition duration-500 ${
-          필수 === undefined ? "w-12 h-12" : "w-8 h-8"
-        }
-        ${
-          agree
-            ? "bg-blue-500 border-blue-500 text-white group-hover:bg-gray-500 group-hover:border-gray-500 group-hover:text"
-            : "border-gray-500 text-gray-500 group-hover:bg-blue-500 group-hover:border-blue-500 group-hover:text-white"
-        }`}
+        className={`w-6 h-6 p-1 border border-gray-500 rounded text-white transition duration-500 
+        ${agree ? "bg-blue-500 border-blue-500" : "border-gray-300"}`}
       />
-      {필수 === undefined ? (
-        <div>{title}</div>
-      ) : (
-        <div className="w-full text-left cursor-pointer">
-          {title}
-          {필수 ? (
-            <span className="ml-2 text-red-500">(필수)</span>
-          ) : (
-            <span className="ml-2 text-blue-500">(선택)</span>
-          )}
-        </div>
-      )}
+      <div className="text-left">
+        {title}
+        {필수 === undefined ? "" : 필수 ? " (필수)" : " (선택)"}
+      </div>
     </div>
   );
 };
 
-const makeBtn = (title, content, openModal) => {
+const makeDetail = (title, content, openModal) => {
   return (
     <button
-      className="w-[10%] mr-4 p-1 border border-gray-500 rounded text-base hover:bg-sky-500 hover:border-sky-500 hover:text-white transition duration-500"
+      className="w-16 p-1 border border-gray-500 rounded hover:bg-[#DDDDDD] transition duration-500"
       onClick={() => openModal(title, content)}
     >
       보기

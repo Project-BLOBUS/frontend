@@ -23,7 +23,7 @@ const Community = () => {
         />
       </div>
 
-      <div className="mx-[15%] flex justify-center items-center">
+      <div className="mx-[15%] h-[calc(100%-82px-102px)] flex justify-center items-center">
         <Outlet />
       </div>
 

@@ -24,7 +24,11 @@ const MemberPage = () => {
 
       const newJwt = getCookie("jwt");
       if (newJwt) {
-        navigate(-1, { replace: true });
+        if (window.history.length < 2) {
+          navigate("/", { replace: true });
+        } else {
+          navigate(-1, { replace: true });
+        }
       } else {
         setJwt(newJwt);
       }

@@ -1,15 +1,19 @@
 const useMemberTag = () => {
   const makeBtn = (name, onClick) => {
-    const bgColor = {
-      "중복 확인": "bg-red-500 hover:bg-red-300",
-      "메일 전송": "bg-green-500 hover:bg-green-300",
-      "인증 확인": "bg-blue-500 hover:bg-blue-300",
-      "등록 확인": "bg-blue-500 hover:bg-blue-300",
-    };
-
     return (
       <button
-        className={`${bgColor[name]} w-1/6 h-full rounded-xl text-xs text-nowrap text-white hover:text-black transition duration-500`}
+        className="w-[100px] h-full border-2 border-gray-300 rounded-full shadow-lg text-xs text-nowrap hover:bg-[#DDDDDD] transition duration-500"
+        onClick={onClick}
+      >
+        {name}
+      </button>
+    );
+  };
+
+  const makeBtn2 = (name, onClick) => {
+    return (
+      <button
+        className="w-full p-4 border-2 border-pink-500 rounded-full shadow-lg text-pink-500 hover:bg-pink-500 hover:text-white transition duration-500"
         onClick={onClick}
       >
         {name}
@@ -20,8 +24,8 @@ const useMemberTag = () => {
   const makeAdd = (label, makeInput) => {
     return (
       <div className="w-full flex justify-center items-center">
-        <div className="w-full flex justify-center items-stretch text-base font-bold space-x-2">
-          <div className="bg-sky-300 w-1/4 p-4 rounded text-nowrap flex justify-center items-center">
+        <div className="w-full flex justify-center items-stretch font-bold space-x-2">
+          <div className="w-1/4 p-2 text-nowrap flex justify-start items-center">
             {label}
           </div>
           <div className="w-3/4 flex justify-center items-center">
@@ -32,13 +36,13 @@ const useMemberTag = () => {
     );
   };
 
-  const makeInput = (type, name, value, hint, onChange, isAuth, ref, width) => {
+  const makeInput = (type, name, value, hint, ref, onChange, isAuth, style) => {
     return (
       <input
         className={`${
-          width ?? "w-full"
-        } p-4 border border-gray-500 rounded shadow-lg text-left tracking-widest ${
-          isAuth || "bg-gray-400 border-none text-white placeholder-gray-300"
+          style ?? "w-full"
+        } px-6 py-4 border-2 border-gray-300 rounded-full shadow-lg text-left tracking-widest ${
+          isAuth || "bg-gray-300 text-white placeholder-white"
         }`}
         type={type}
         name={name}
@@ -55,42 +59,26 @@ const useMemberTag = () => {
             : undefined
         }
         autoComplete="off"
+        ref={ref}
         onChange={onChange}
         disabled={!isAuth}
-        ref={ref}
       />
     );
   };
 
-  const makeSelect = (
-    name,
-    value,
-    list,
-    hint,
-    onChange,
-    isAuth,
-    ref,
-    width
-  ) => {
+  const makeSelect = (name, value, list, hint, ref, onChange, isAuth) => {
     return (
       <select
-        className={`${
-          width ?? "w-full"
-        } p-4 border border-gray-500 rounded shadow-lg text-center ${
-          isAuth || "bg-gray-500 border-none text-gray-300"
+        className={`w-full p-4 border-2 border-gray-300 rounded-full shadow-lg text-center tracking-widest cursor-pointer ${
+          isAuth || "bg-gray-300 text-white placeholder-white"
         }`}
         name={name}
         value={value}
+        ref={ref}
         onChange={onChange}
         disabled={!isAuth}
-        ref={ref}
       >
-        <option
-          className="bg-sky-500 text-white font-bold"
-          value=""
-          disabled
-          selected
-        >
+        <option value="" disabled selected>
           {hint}
         </option>
         {list.map((data) => (
@@ -102,17 +90,15 @@ const useMemberTag = () => {
     );
   };
 
-  const makeRatio = (value, Icon, text, onClick, isAuth, width) => {
+  const makeRatio = (value, Icon, text, onClick, isAuth) => {
     return (
       <div
-        className={`${
-          width ?? "w-full"
-        } p-4 border border-gray-500 rounded shadow-lg flex justify-center items-center space-x-4 ${
+        className={`w-full p-4 border-2 border-gray-300 rounded-full shadow-lg text-center tracking-widest flex justify-center items-center ${
           isAuth
             ? value
               ? "text-black"
-              : "text-gray-300 cursor-pointer hover:bg-sky-500 hover:text-white transition duration-500"
-            : "bg-gray-400 border-none text-gray-300"
+              : "text-gray-300 cursor-pointer transition duration-500"
+            : "bg-gray-300 text-white"
         }`}
         onClick={isAuth ? onClick : undefined}
       >
@@ -122,7 +108,7 @@ const useMemberTag = () => {
     );
   };
 
-  return { makeBtn, makeAdd, makeInput, makeSelect, makeRatio };
+  return { makeBtn, makeBtn2, makeAdd, makeInput, makeSelect, makeRatio };
 };
 
 export default useMemberTag;
