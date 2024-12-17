@@ -46,7 +46,7 @@ const MyPage = () => {
     <>
       {loading && <Loading />}
       <div className="h-screen">
-        <div className="bg-[rgb(255,215,25)]">
+        <div>
           <Header
             navs={navList}
             isWhite={true}
