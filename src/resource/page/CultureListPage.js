@@ -94,6 +94,11 @@ const CulturePage = () => {
 
   return (
     <div className="container mx-auto">
+      <div className="h-2/3 mt-14">
+        <h1 className="text-3xl font-bold mb-6 pb-4 border-b-2 border-b-gray-200">
+          문화
+        </h1>
+      </div>
       {/* 검색 영역 */}
       <CultureSearchBar
         searchTitle="문화 검색"

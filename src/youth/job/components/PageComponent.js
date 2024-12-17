@@ -3,10 +3,10 @@ const PageComponent = ({ serverData, movePage }) => {
     <div className="m-6 flex justify-center">
       {serverData.prev ? (
         <div
-          className="m-2 p-2 text-center font-bold cursor-pointer"
+          className="m-2 p-2 text-center cursor-pointer"
           onClick={() => movePage({ page: serverData.prevPage })}
         >
-          Prev{" "}
+          {"< "}
         </div>
       ) : (
         <></>
@@ -28,10 +28,10 @@ const PageComponent = ({ serverData, movePage }) => {
 
       {serverData.next ? (
         <div
-          className="m-2 p-2 text-center font-bold cursor-pointer"
+          className="m-2 p-2 text-center cursor-pointer"
           onClick={() => movePage({ page: serverData.nextPage })}
         >
-          Next
+          {" >"}
         </div>
       ) : (
         <></>

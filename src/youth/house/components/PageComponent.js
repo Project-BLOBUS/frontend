@@ -6,7 +6,7 @@ const PageComponent = ({ serverData, movePage }) => {
           className="m-2 p-2 text-center font-bold cursor-pointer"
           onClick={() => movePage({ page: serverData.prevPage })}
         >
-          Prev{" "}
+          {"< "}
         </div>
       ) : (
         <></>
@@ -31,7 +31,7 @@ const PageComponent = ({ serverData, movePage }) => {
           className="m-2 p-2 text-center font-bold cursor-pointer "
           onClick={() => movePage({ page: serverData.nextPage })}
         >
-          Next
+          {" >"}
         </div>
       ) : (
         <></>

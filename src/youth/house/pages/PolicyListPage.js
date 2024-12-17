@@ -22,8 +22,8 @@ const PolicyListPage = ({ title }) => {
   const [serverData, setServerData] = useState(initState); // 전체 정책 리스트
   const [filteredServerData, setFilteredServerData] = useState([]); // 필터된 정책 리스트
   const [searchTerm, setSearchTerm] = useState(""); // 검색 키워드
-  const [filterType, setFilterType] = useState("polyBizSjnm"); // 검색 필터타입
-  const [policyStsType, setPolicyStsType] = useState("stsAll"); // 상태필터 타입
+  const [policyStsType, setPolicyStsType] = useState("stsAll"); // 진행상태 필터 타입
+  const [filterType, setFilterType] = useState("both"); // 검색범위 필터 타입
   const [searchTrigger, setSearchTrigger] = useState(false); // 검색 트리거 상태
 
   const { page, size, refresh, moveToPolicyList } = useCustomMove(); //refresh
@@ -75,7 +75,6 @@ const PolicyListPage = ({ title }) => {
     <>
       {/* 정책 검색 영역 */}
       <PolicySearchBar
-        searchTitle={"주거 정책"}
         policyStsType={policyStsType}
         searchTerm={searchTerm}
         filterType={filterType}
