@@ -2,7 +2,7 @@ const useCommunityTag = () => {
   const makeBtn = (name, onClick) => {
     return (
       <button
-        className="w-fit mx-2 px-4 py-2 border-2 border-gray-300 rounded text-base text-nowrap hover:bg-[#DDDDDD] transition duration-500"
+        className="bg-gray-50 w-fit mx-2 px-4 py-2 border-2 border-gray-300 rounded-md text-base text-nowrap font-bold hover:bg-[#DDDDDD] transition duration-500"
         onClick={onClick}
       >
         {name}
@@ -15,8 +15,8 @@ const useCommunityTag = () => {
       <div
         className={`w-20 p-2 border-2 rounded-full ${
           (isType ? value === filter.type : value === filter.category)
-            ? "border-red-500"
-            : "border-gray-300 cursor-pointer hover:border-red-500 transition duration-500"
+            ? "border-[#DB0153]"
+            : "border-gray-300 cursor-pointer hover:border-[#DB0153] transition duration-500"
         }`}
         onClick={() => {
           isType

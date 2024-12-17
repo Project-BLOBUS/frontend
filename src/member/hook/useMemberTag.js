@@ -2,7 +2,7 @@ const useMemberTag = () => {
   const makeBtn = (name, onClick) => {
     return (
       <button
-        className="w-[100px] h-full border-2 border-gray-300 rounded-full shadow-lg text-xs text-nowrap hover:bg-[#DDDDDD] transition duration-500"
+        className="bg-gray-50 w-[100px] h-full border-2 border-gray-300 rounded-full shadow-lg text-xs text-nowrap hover:bg-[#DDDDDD] transition duration-500"
         onClick={onClick}
       >
         {name}

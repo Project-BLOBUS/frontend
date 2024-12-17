@@ -74,39 +74,23 @@ const Read = () => {
     const month = dateTime.split("T")[0].split("-")[1];
     const date = dateTime.split("T")[0].split("-")[2];
 
-    const diff = new Date() - new Date(dateTime);
-
-    if (diff > 365 * 24 * 60 * 60 * 1000) {
-      return year + "-" + month;
-    } else if (diff > 14 * 24 * 60 * 60 * 1000) {
-      return month + "/" + date;
-    } else if (diff > 24 * 60 * 60 * 1000) {
-      return Math.round(diff / 24 / 60 / 60 / 1000, 0) + "일 전";
-    } else if (diff > 60 * 60 * 1000) {
-      return Math.round(diff / 60 / 60 / 1000, 0) + "시간 전";
-    } else if (diff > 60 * 1000) {
-      return Math.round(diff / 60 / 1000, 0) + "분 전";
-    } else if (diff > 1000) {
-      return Math.round(diff / 1000, 0) + "초 전";
-    } else {
-      return "1초 전";
-    }
+    return year + "-" + month + "-" + date;
   };
 
   return (
     <>
       {loading && <Loading />}
-      <div className="w-full text-base text-center font-bold flex flex-col justify-center items-center">
-        <div className="w-full my-2 py-4 text-3xl text-left border-b-2 border-gray-300 flex justify-between items-center">
+      <div className="w-full pb-4 text-base text-center font-bold flex flex-col justify-center items-center">
+        <div className="w-full my-2 p-4 text-3xl text-left border-b-2 border-gray-300 flex justify-between items-center">
           커뮤니티
         </div>
 
         <div className="w-full flex flex-col justify-center items-center space-y-4">
           <div className="w-full flex flex-col justify-center items-center">
-            <div className="w-full py-2 border-b-2 border-red-500 text-xl text-left flex justify-between items-center">
+            <div className="w-full py-2 border-b-2 border-[#DB0153] text-2xl text-left flex justify-between items-center">
               <div className="flex justify-center items-center space-x-2">
                 <div>{dto.visibility && <FaLock />}</div>
-                <div className="select-text  truncate">
+                <div className="select-text truncate">
                   {dto.title.length > 50
                     ? dto.title.slice(0, dto.title.length - 50) + " . . ."
                     : dto.title}
@@ -133,22 +117,22 @@ const Read = () => {
               </div>
             </div>
 
-            <div className="w-full p-2 text-xs flex justify-between items-center">
+            <div className="w-full px-2 py-4 flex justify-between items-center">
               <div className="w-1/2 flex justify-start items-center space-x-4">
                 <div className="flex justify-center items-center space-x-2">
                   <div>구분</div>
-                  <div className="text-gray-400">{dto.boardType}</div>
+                  <div className="text-gray-500">{dto.boardType}</div>
                 </div>
                 <div className="flex justify-center items-center space-x-2">
                   <div>카테고리</div>
-                  <div className="text-gray-400">{dto.category}</div>
+                  <div className="text-gray-500">{dto.category}</div>
                 </div>
               </div>
 
               <div className="w-1/2 flex justify-end items-center space-x-4">
                 <div className="flex justify-center items-center space-x-2">
                   <div>작성자</div>
-                  <div className="text-gray-400">{dto.authorName}</div>
+                  <div className="text-gray-500">{dto.authorName}</div>
                   {/* <div
                     className="text-gray-500 cursor-pointer"
                     onDoubleClick={() => {
@@ -161,18 +145,15 @@ const Read = () => {
                 </div>
                 <div className="flex justify-center items-center space-x-2">
                   <div>작성일자</div>
-                  <div className="text-gray-400">
-                    {new Date(dto.updatedAt) - new Date(dto.createdAt) <
-                    60 * 1000
-                      ? printTime(dto.createdAt)
-                      : ` (${printTime(dto.updatedAt)}에 수정됨)`}
+                  <div className="text-gray-500">
+                    {printTime(dto.createdAt)}
                   </div>
                 </div>
               </div>
             </div>
 
             <div
-              className="w-full h-72 p-2 border-y-2 border-gray-300 text-sm text-left font-normal select-text overflow-y-auto"
+              className="w-full h-72 p-2 border-y-2 border-gray-300 text-left font-normal select-text overflow-y-auto"
               dangerouslySetInnerHTML={{
                 __html: dto.content.replace(/\n/g, "<br/>"),
               }}
@@ -188,7 +169,7 @@ const Read = () => {
                 })
               )} */}
             <button
-              className="px-10 py-4 border-2 border-gray-300 rounded text-base text-nowrap hover:bg-[#DDDDDD] transition duration-500"
+              className="px-10 py-4 border-2 border-gray-300 rounded text-nowrap hover:bg-[#DDDDDD] transition duration-500"
               onClick={() => navigate("/community/list")}
             >
               목록으로
