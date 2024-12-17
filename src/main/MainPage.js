@@ -40,7 +40,7 @@ const MainPage = () => {
   const slides = [
     {
       url: "https://img.freepik.com/premium-vector/young-businessman-speaking-screen-announcer-teacher_147644-3273.jpg?w=900",
-      link: "/blobusIntro",
+      link: "/blobusintro",
       text: "BLoBus 소개",
       style: "w-full h-full bg-center bg-cover rounded-lg",
       textStyle:
@@ -93,7 +93,7 @@ const MainPage = () => {
     if (e.key === "Enter") {
       handleSearchClick();
     }
-   };
+  };
 
   return (
     <div>
@@ -305,6 +305,6 @@ const MainPage = () => {
       <Footer />
     </div>
   );
-}
+};
 
 export default MainPage;
