@@ -105,7 +105,12 @@ function DigitalPage() {
   return (
     <div
       className={styles.container}
-      style={{ width: "99vw", height: "100vh", left: "-22%", display: "flex" }}
+      style={{
+        width: "99.5vw",
+        height: "100vh",
+        left: "-22%",
+        display: "flex",
+      }}
     >
       <div
         className={styles.sidebar}

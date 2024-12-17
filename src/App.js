@@ -15,7 +15,7 @@ import communityRouter from "./community/router/communityRouter";
 // Header 컴포넌트를 lazy로 불러오기
 const MainPage = lazy(() => import("./main/MainPage"));
 const AllSearch = lazy(() => import("./main/AllSearch"));
-const BLoBusIntro = lazy(() => import("./main/BLoBusIntro"));
+const BLoBusIntro = lazy(() => import("./main/BloBusInfo"));
 const BLoBusWork = lazy(() => import("./main/BLoBusWork"));
 const BLoBusNews = lazy(() => import("./main/BLoBusNews"));
 
