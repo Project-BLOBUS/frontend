@@ -52,7 +52,7 @@ const Agree = () => {
     <>
       {loading && <Loading />}
       <div className="w-[70%] h-[90%] px-10 py-4 border-2 border-gray-300 rounded shadow-xl text-base text-center font-bold flex flex-col justify-center items-center">
-        <div className="w-full h-[20%] text-4xl flex justify-center items-center">
+        <div className="w-full h-[20%] text-5xl flex justify-center items-center">
           약관동의
         </div>
 
@@ -66,7 +66,7 @@ const Agree = () => {
             })}
           </div>
 
-          <div className="w-full h-3/4 flex flex-col justify-center items-center space-y-2">
+          <div className="w-full h-3/4 flex flex-col justify-center items-center space-y-4">
             {termsList.map((data, index) => (
               <div
                 key={index}
@@ -100,7 +100,7 @@ const Agree = () => {
               termsList.every((term) => (term.required ? term.agree : true))
             ) {
               setCookie("isAgree", true);
-              removeCookie("isChoice");
+              // removeCookie("isChoice");
               navigate(`/member/signup/input/${role}`);
             } else {
               toast.warn("필수항목에 모두 동의하세요.");

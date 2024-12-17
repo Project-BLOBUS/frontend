@@ -316,7 +316,7 @@ const makeText = (dto, setDto, setLoading, ref) => {
   return (
     <>
       <textarea
-        className="w-full h-[100px] p-2 border-2 border-gray-300 rounded text-sm font-normal"
+        className="w-full h-[100px] p-2 border-2 border-gray-300 rounded text-sm font-normal resize-none"
         type="text"
         value={dto.content}
         placeholder={

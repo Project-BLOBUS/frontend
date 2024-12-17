@@ -84,7 +84,7 @@ const Document = () => {
     <>
       {loading && <Loading />}
       <div className="w-full text-xl text-center font-bold flex flex-col justify-center items-center">
-        <div className="w-full my-2 py-4 text-3xl text-left border-b-2 border-gray-300 flex justify-between items-center">
+        <div className="w-full my-2 py-4 text-3xl text-left border-b-2 border-gray-300">
           작성글
         </div>
 
@@ -104,11 +104,11 @@ const Document = () => {
         </div>
 
         <div className="w-full mt-2 py-2 border-t-2 border-b border-t-yellow-500 border-b-gray-500 text-sm flex justify-center items-center">
-          <div className="w-[8%]">번호</div>
-          <div className="w-[10%]">구분</div>
-          <div className="w-full">제목</div>
-          <div className="w-[12%]">작성</div>
-          <div className="w-[12%]">수정</div>
+          <div className="w-[5%]">번호</div>
+          <div className="w-[8%]">구분</div>
+          <div className="w-[67%]">제목</div>
+          <div className="w-[10%]">작성</div>
+          <div className="w-[10%]">수정</div>
         </div>
 
         <div className="w-full text-sm text-nowrap font-normal flex flex-col justify-start items-center">
@@ -129,9 +129,9 @@ const Document = () => {
                 className="w-full py-2 border-b-2 border-gray-300 flex justify-center items-center cursor-pointer"
                 onClick={() => navigate(`/community/read/${dto.id}`)}
               >
-                <div className="w-[8%]">{dto.id}</div>
-                <div className="w-[10%]">{dto.boardType}</div>
-                <div className="w-full flex justify-start items-center space-x-2">
+                <div className="w-[5%]">{dto.id}</div>
+                <div className="w-[8%]">{dto.boardType}</div>
+                <div className="w-[67%] flex justify-start items-center space-x-2">
                   <div
                     className={
                       dto.category === "청년"
@@ -146,17 +146,13 @@ const Document = () => {
                     [{dto.category}]
                   </div>
                   {dto.visibility ? <FaLock /> : <></>}
-                  <div>
-                    {dto.title.length > 45
-                      ? dto.title.slice(dto.title.length - 45) + " . . ."
-                      : dto.title}
-                  </div>
+                  <div className="truncate">{dto.title}</div>
                   <div className="text-xs text-red-500 font-bold">
                     {dto.commentCount > 0 && dto.commentCount}
                   </div>
                 </div>
-                <div className="w-[12%]">{printTime(dto.createdAt)}</div>
-                <div className="w-[12%]">
+                <div className="w-[10%]">{printTime(dto.createdAt)}</div>
+                <div className="w-[10%]">
                   {new Date(dto.updatedAt) - new Date(dto.createdAt) < 60 * 1000
                     ? "-"
                     : printTime(dto.updatedAt)}

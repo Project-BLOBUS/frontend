@@ -9,7 +9,6 @@ import { getInfo, modify } from "../../api/memberAPI";
 import useInfoTag from "../../hook/useInfoTag";
 import Loading from "../../../etc/component/Loading";
 import AddressList from "../../data/AddressList";
-import { FaCircleUser } from "react-icons/fa6";
 
 const initState = {
   userId: "",
@@ -225,11 +224,11 @@ const InfoMofiy = () => {
     <>
       {loading && <Loading />}
       <div className="w-full text-base text-center font-bold flex flex-col justify-center items-center">
-        <div className="w-full my-2 py-4 text-3xl text-left border-b-2 border-gray-300 flex justify-between items-center">
+        <div className="w-full my-2 py-4 text-3xl text-left border-b-2 border-gray-300">
           내 정보 - 수정
         </div>
 
-        <div className="bg-white w-2/3 p-4 border-2 border-gray-300 rounded shadow-xl flex flex-col justify-center items-center space-y-2">
+        <div className="bg-white w-2/3 mt-10 p-4 border-2 border-gray-300 rounded shadow-xl flex flex-col justify-center items-center space-y-2">
           {/* 아이디 */}
           {makeModify(
             "아이디",
@@ -396,10 +395,10 @@ const InfoMofiy = () => {
         </div>
 
         <div className="w-2/3 py-2 flex justify-end items-center space-x-0">
-          {makeBtn2("완료", onClickModify)}
           {makeBtn2("취소", () => {
             navigate(-1, { replace: true });
           })}
+          {makeBtn2("완료", onClickModify)}
         </div>
       </div>
     </>

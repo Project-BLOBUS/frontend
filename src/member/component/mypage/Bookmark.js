@@ -54,11 +54,11 @@ const Bookmark = () => {
     <>
       {loading && <Loading />}
       <div className="w-full text-xl text-center font-bold flex flex-col justify-center items-center">
-        <div className="w-full my-2 py-4 text-3xl text-left border-b-2 border-gray-300 flex justify-between items-center">
+        <div className="w-full my-2 py-4 text-3xl text-left border-b-2 border-gray-300">
           즐겨찾기
         </div>
 
-        <div className="w-full my-2 text-base flex justify-start items-center space-x-2">
+        <div className="w-full my-2 px-2 text-base flex justify-start items-center space-x-2">
           {makeBookTab("전체", "", category, setCategory, moveToList)}
           {makeBookTab("청년", "청년", category, setCategory, moveToList)}
           {/* {makeBookTab("기업", "기업", category, setCategory, moveToList)} */}

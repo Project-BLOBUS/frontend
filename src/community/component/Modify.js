@@ -159,8 +159,8 @@ const Modify = () => {
               </div>
 
               <div className="flex justify-center items-center space-x-0">
-                {makeBtn("완료", () => onClickModify(post))}
                 {makeBtn("뒤로", () => navigate(-1, { replace: true }))}
+                {makeBtn("완료", () => onClickModify(post))}
               </div>
             </div>
           </div>
@@ -198,7 +198,7 @@ const Modify = () => {
           </div>
 
           <textarea
-            className="w-full h-[300px] p-2 border-2 border-gray-300 rounded text-sm text-left font-normal select-text overflow-y-scroll"
+            className="w-full h-[23.5rem] p-2 border-2 border-gray-300 rounded text-sm text-left font-normal select-text overflow-y-auto resize-none"
             type="text"
             name="content"
             value={post.content}

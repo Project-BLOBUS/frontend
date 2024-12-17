@@ -152,12 +152,12 @@ const List = () => {
         </div>
 
         <div className="w-full mt-2 py-2 border-t-2 border-b border-t-red-500 border-b-gray-500 text-sm flex justify-center items-center">
-          <div className="w-[8%]">번호</div>
-          <div className="w-[10%]">구분</div>
-          <div className="w-full">제목</div>
-          <div className="w-[15%]">작성자</div>
-          <div className="w-[12%]">작성</div>
-          <div className="w-[12%]">수정</div>
+          <div className="w-[5%]">번호</div>
+          <div className="w-[8%]">구분</div>
+          <div className="w-[55%]">제목</div>
+          <div className="w-[12%]">작성자</div>
+          <div className="w-[10%]">작성</div>
+          <div className="w-[10%]">수정</div>
         </div>
 
         <div className="w-full text-sm text-nowrap font-normal flex flex-col justify-start items-center">
@@ -193,9 +193,9 @@ const List = () => {
                   } else navigate(`/community/read/${dto.id}`);
                 }}
               >
-                <div className="w-[8%]">{dto.id}</div>
-                <div className="w-[10%]">{dto.boardType}</div>
-                <div className="w-full flex justify-start items-center space-x-2">
+                <div className="w-[5%]">{dto.id}</div>
+                <div className="w-[8%]">{dto.boardType}</div>
+                <div className="w-[55%] flex justify-start items-center space-x-2">
                   {dto.category === "청년" ? (
                     <div className="text-blue-500">[청년]</div>
                   ) : dto.category === "기업" ? (
@@ -204,18 +204,16 @@ const List = () => {
                     <div className="text-green-500">[지역]</div>
                   )}
                   {dto.visibility ? <FaLock /> : <></>}
-                  <div>
-                    {dto.title.length > 40
-                      ? dto.title.slice(dto.title.length - 40) + " . . ."
-                      : dto.title}
-                  </div>
+                  <div className="truncate">{dto.title}</div>
                   <div className="text-xs text-red-500">
                     {dto.commentList.length > 0 && dto.commentList.length}
                   </div>
                 </div>
-                <div className="w-[15%]">{dto.authorName}</div>
-                <div className="w-[12%]">{printTime(dto.createdAt)}</div>
-                <div className="w-[12%]">
+                <div className="w-[12%] truncate">{dto.authorName}</div>
+                <div className="w-[10%] truncate">
+                  {printTime(dto.createdAt)}
+                </div>
+                <div className="w-[10%] truncate">
                   {new Date(dto.updatedAt) - new Date(dto.createdAt) < 60 * 1000
                     ? "-"
                     : printTime(dto.updatedAt)}

@@ -22,7 +22,7 @@ const initState = {
 const Custom = () => {
   const [loading, setLoading] = useState(false);
   const { page, size, moveToList } = useCustomMove("mypage/custom/list");
-  const { makeBtn, makeSelect, makeList } = useMypageTag();
+  const { makeBtn, makeBtn2, makeSelect, makeList } = useMypageTag();
 
   const [data, setData] = useState(initState);
 
@@ -136,11 +136,11 @@ const Custom = () => {
     <>
       {loading && <Loading />}
       <div className="w-full text-xl text-center font-bold flex flex-col justify-center items-center">
-        <div className="w-full my-2 py-4 text-3xl text-left border-b-2 border-gray-300 flex justify-between items-center">
+        <div className="w-full my-2 py-4 text-3xl text-left border-b-2 border-gray-300">
           커스텀
         </div>
 
-        <div className="w-full my-2 border-2 border-gray-300 rounded text-base flex justify-center items-start">
+        <div className="w-full my-2 px-2 border-2 border-gray-300 rounded text-base flex justify-center items-start">
           <div className="w-[15%] p-4">키워드 검색</div>
 
           <div className="w-full flex flex-col justify-center items-center">
@@ -185,14 +185,14 @@ const Custom = () => {
           </div>
         </div>
 
-        <div className="w-full my-2 text-base flex justify-between items-center">
+        <div className="w-full my-2 px-2 text-base flex justify-between items-center">
           <div className="flex justify-center items-center space-x-4">
             {makeSelect("청년 ▼", open, setOpen, yList, setYList, moveToList)}
             {makeSelect("지역 ▼", open, setOpen, rList, setRList, moveToList)}
             {/* {makeSelect("키워드", open, setOpen, kList, setKList, moveToList)} */}
           </div>
 
-          {makeBtn("필터 저장", () => {
+          {makeBtn2("필터 저장", () => {
             setLoading(true);
 
             // 커스텀 설정 저장하기

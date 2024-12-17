@@ -1,7 +1,7 @@
 const Paging = ({ data, movePage }) => {
   const pageCSS = "h-full p-2 rounded-3xl";
-  const prevComent = "이전";
-  const nextComent = "다음";
+  const prevComent = "<";
+  const nextComent = ">";
 
   return (
     <div className="text-base text-center font-bold flex justify-center items-center">

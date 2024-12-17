@@ -53,7 +53,7 @@ const MemberPage = () => {
             />
           </div>
 
-          <div className="bg-white mx-[15%] h-[calc(100%-82px-112px)] flex justify-center items-center">
+          <div className="bg-white mx-[15%] h-[calc(100%-82px-102px)] flex justify-center items-center">
             <Outlet />
           </div>
 

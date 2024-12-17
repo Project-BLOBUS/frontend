@@ -106,9 +106,9 @@ const Read = () => {
             <div className="w-full py-2 border-b-2 border-red-500 text-xl text-left flex justify-between items-center">
               <div className="flex justify-center items-center space-x-2">
                 <div>{dto.visibility && <FaLock />}</div>
-                <div className="select-text">
-                  {dto.title.length > 40
-                    ? dto.title.slice(dto.title.length - 40) + ". . ."
+                <div className="select-text  truncate">
+                  {dto.title.length > 50
+                    ? dto.title.slice(0, dto.title.length - 50) + " . . ."
                     : dto.title}
                 </div>
               </div>
@@ -172,7 +172,7 @@ const Read = () => {
             </div>
 
             <div
-              className="w-full h-[300px] p-2 border-y-2 border-gray-300 text-sm text-left font-normal select-text overflow-y-scroll"
+              className="w-full h-72 p-2 border-y-2 border-gray-300 text-sm text-left font-normal select-text overflow-y-auto"
               dangerouslySetInnerHTML={{
                 __html: dto.content.replace(/\n/g, "<br/>"),
               }}

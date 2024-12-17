@@ -12,7 +12,7 @@ const Community = () => {
   ];
 
   return (
-    <>
+    <div className="h-screen">
       <div className="bg-[#DB0153]">
         <Header
           navs={navList}
@@ -23,7 +23,7 @@ const Community = () => {
         />
       </div>
 
-      <div className="mx-[15%] h-[calc(100%-82px-102px)] flex justify-center items-center">
+      <div className="mx-[15%] min-h-[calc(100%-82px-102px)] flex justify-center items-start">
         <Outlet />
       </div>
 
@@ -48,7 +48,7 @@ const Community = () => {
           <FaArrowDown />
         </button>
       </div> */}
-    </>
+    </div>
   );
 };
 

@@ -14,6 +14,17 @@ const useMypageTag = () => {
     );
   };
 
+  const makeBtn2 = (name, onClick) => {
+    return (
+      <button
+        className="bg-white w-fit mx-2 px-4 py-2 border-2 border-gray-300 rounded text-base text-nowrap hover:border-yellow-500 transition duration-500"
+        onClick={onClick}
+      >
+        {name}
+      </button>
+    );
+  };
+
   const makeSelect = (name, open, setOpen, list, setList, moveToList) => {
     return (
       <div className="flex flex-col justify-center items-center relative">
@@ -140,7 +151,7 @@ const useMypageTag = () => {
             data.dtoList.map((dto, index) => (
               <div
                 key={index}
-                className={`w-[calc(100%/3-0rem)] h-[calc(100%/2-0rem)] p-4 border-2 border-gray-300 rounded-xl flex flex-col justify-center items-center space-y-4 ${
+                className={`bg-white w-[calc(100%/4-1rem)] h-[calc(100%/3-1rem)] m-2 px-4 pb-4 border-2 border-gray-300 rounded shadow-md text-xs flex flex-col justify-center items-center space-y-2 ${
                   dto.link &&
                   "cursor-pointer hover:bg-gray-200 transition duration-500"
                 }`}
@@ -150,46 +161,68 @@ const useMypageTag = () => {
                     : dto.link && navigate(dto.link)
                 }
               >
-                <div className="w-full flex justify-between items-center">
-                  <div className="w-full text-xl">
-                    {dto.title.length > 12
-                      ? dto.title.slice(0, 12) + "..."
-                      : dto.title}
-                  </div>
-                </div>
-
-                <div className="w-full flex justify-center items-center space-x-2">
-                  <div className="w-1/3">{dto.startDate}</div>
-                  <div>~</div>
-                  <div className="w-1/3">{dto.endDate}</div>
-                </div>
-
-                <div className="w-full text-sm flex justify-between items-center">
+                <div className="w-full text-md flex justify-between items-center">
                   <div
-                    className={`${
+                    className={`px-4 py-2 border-t-2 rounded-b-xl text-white ${
                       dto.mainCategory === "청년"
-                        ? "bg-blue-500"
+                        ? "bg-blue-500 border-blue-500"
                         : dto.mainCategory === "기업"
-                        ? "bg-red-500"
+                        ? "bg-red-500 border-red-500"
                         : dto.mainCategory === "지역"
-                        ? "bg-green-500"
-                        : "bg-gray-500"
-                    } p-2 text-white`}
+                        ? "bg-green-500 border-green-500"
+                        : "bg-gray-500 border-gray-500"
+                    }`}
+                  >
+                    {new Date() - new Date(dto.endDate) < 0
+                      ? "D" +
+                        Math.round(
+                          (new Date() - new Date(dto.endDate)) /
+                            24 /
+                            60 /
+                            60 /
+                            1000,
+                          0
+                        )
+                      : !(dto.startDate && dto.endDate)
+                      ? "상시"
+                      : "마감"}
+                  </div>
+
+                  <div
+                    className={`px-4 py-2 border-x-2 border-b-2 rounded-b-xl ${
+                      dto.mainCategory === "청년"
+                        ? "border-blue-500 text-blue-500"
+                        : dto.mainCategory === "기업"
+                        ? "border-red-500 text-red-500"
+                        : dto.mainCategory === "지역"
+                        ? "border-green-500 text-green-500"
+                        : "border-gray-500 text-gray-500"
+                    }`}
                   >
                     {dto.mainCategory} / {dto.subCategory}
                   </div>
+                </div>
 
-                  {new Date() - new Date(dto.endDate) < 0 ? (
-                    new Date() - new Date(dto.startDate) < 0 ? (
-                      <div className="bg-blue-300 p-2 rounded-xl">진행 전</div>
-                    ) : (
-                      <div className="bg-green-300 p-2 rounded-xl">진행 중</div>
-                    )
-                  ) : !(dto.startDate && dto.endDate) ? (
-                    <div className="bg-gray-300 p-2 rounded-xl">기간없음</div>
+                <div className="w-full text-xl text-left truncate">
+                  {dto.title}
+                </div>
+                <div className="w-full h-8 text-md text-left text-wrap text-ellipsis font-normal overflow-hidden ">
+                  {dto.content || "　"}
+                </div>
+
+                <div className="w-full pt-4 font-light flex justify-start items-center space-x-1">
+                  {!dto.startDate && !dto.endDate ? (
+                    "상시"
                   ) : (
-                    <div className="bg-red-300 p-2 rounded-xl">종료</div>
+                    <>
+                      <div>{dto.startDate}</div>
+                      <div>~</div>
+                      <div>{dto.endDate}</div>
+                    </>
                   )}
+                </div>
+                <div className="w-full text-left font-normal truncate">
+                  {dto.place}
                 </div>
               </div>
             ))
@@ -198,7 +231,7 @@ const useMypageTag = () => {
       </>
     );
   };
-  return { makeBtn, makeSelect, makeBookTab, makeDocTab, makeList };
+  return { makeBtn, makeBtn2, makeSelect, makeBookTab, makeDocTab, makeList };
 };
 
 export default useMypageTag;

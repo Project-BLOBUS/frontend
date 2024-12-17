@@ -19,11 +19,11 @@ const Login = () => {
     <>
       {loading && <Loading />}
       <div className="w-[70%] h-[90%] px-10 py-4 border-2 border-gray-300 rounded shadow-xl text-base text-center font-bold flex flex-col justify-center items-center">
-        <div className="w-full h-[20%] text-4xl flex justify-center items-center">
+        <div className="w-full h-[20%] text-5xl flex justify-center items-center">
           가입계정 선택
         </div>
 
-        <div className="w-full h-[10%] text-sm flex flex-col justify-center items-center">
+        <div className="w-full h-[10%] text-md flex flex-col justify-center items-center">
           <div className="w-full h-1/2">BLOBUS에 오신걸 환영합니다.</div>
           <div className="w-full h-1/2">
             가입 할 계정의 종류를 선택해주세요.

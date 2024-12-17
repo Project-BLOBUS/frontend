@@ -106,10 +106,10 @@ const Login = () => {
   return (
     <div className="w-full text-center font-bold flex flex-col justify-center items-center">
       {loading && <Loading />}
-      <div className="w-full text-4xl p-4 text-left">통합 로그인</div>
+      <div className="w-full text-5xl p-4 text-left">통합 로그인</div>
 
       <div className="w-full border-2 border-gray-300 rounded-xl shadow-md text-base flex justify-center items-center">
-        <div className="w-1/2 p-4 border-r-2 border-gray-300 text-left flex flex-col justify-center items-center">
+        <div className="w-1/2 p-4 border-r-2 border-gray-300 text-xl text-left flex flex-col justify-center items-center">
           <img className="w-[80%]" src={imgLogin} alt="로그인" />
           <div className="w-full">BLOBUS에 방문해주셔서 감사합니다.</div>
           <div className="w-full">
