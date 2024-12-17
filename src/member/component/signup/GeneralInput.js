@@ -31,7 +31,8 @@ const initState = {
 
 const GeneralInput = () => {
   const navigate = useNavigate();
-  const { makeBtn, makeAdd, makeInput, makeSelect, makeRatio } = useMemberTag();
+  const { makeBtn, makeBtn2, makeAdd, makeInput, makeSelect, makeRatio } =
+    useMemberTag();
   const [loading, setLoading] = useState(false);
 
   const [member, setMember] = useState(initState);
@@ -226,304 +227,286 @@ const GeneralInput = () => {
   return (
     <>
       {loading && <Loading />}
-      <div className="w-full max-w-[600px] min-w-min text-xl text-center font-bold flex flex-col justify-center items-center space-y-1">
-        <div className="bg-white w-full my-4 text-5xl text-sky-500">
+      <div className="w-[70%] h-[90%] px-10 py-4 border-2 border-gray-300 rounded shadow-xl text-base text-center font-bold flex flex-col justify-center items-center">
+        <div className="w-full h-[20%] text-5xl flex justify-center items-center">
           일반계정 회원가입
         </div>
 
-        {/* 아이디 */}
-        {makeAdd(
-          "아이디",
-          <div className="w-full h-full flex justify-center items-center space-x-1">
-            {makeInput(
-              "email",
-              "userId",
-              member.userId,
-              "이메일",
-              onChange,
-              !validation.isAuth,
-              refList.userId,
-              !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(member.userId)
-                ? "w-full"
-                : !validation.isMailSent
-                ? "w-5/6"
-                : !validation.isAuth
-                ? "w-7/12"
-                : "w-full"
-            )}
-            {!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(member.userId) ? (
-              <></>
-            ) : !validation.isIdValid ? (
-              <>
-                {makeBtn("중복 확인", async () => {
-                  setLoading(true);
+        <div className="w-full h-[65%] my-4 p-4 border-2 border-gray-300 rounded text-sm flex flex-col justify-start items-center overflow-y-scroll space-y-2">
+          {/* 아이디 */}
+          {makeAdd(
+            "아이디",
+            <div className="w-full h-full flex justify-center items-center space-x-1">
+              {makeInput(
+                "email",
+                "userId",
+                member.userId,
+                "이메일",
+                refList.userId,
+                onChange,
+                !validation.isAuth,
+                !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(member.userId)
+                  ? "w-full"
+                  : !validation.isMailSent
+                  ? "w-[calc(100%-100px)]"
+                  : !validation.isAuth
+                  ? "w-[calc(100%-105px-8rem)]"
+                  : "w-full"
+              )}
+              {!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(member.userId) ? (
+                <></>
+              ) : !validation.isIdValid ? (
+                <>
+                  {makeBtn("중복 확인", async () => {
+                    setLoading(true);
 
-                  try {
-                    const data = await duplicate(member);
-                    if (!data) {
-                      setValidation({ ...validation, isIdValid: true });
-                      toast.success("가입 가능한 아이디");
-                    } else {
-                      toast.warn("중복된 아이디, 다시 입력하세요.");
-                      refList.userId.current.focus();
+                    try {
+                      const data = await duplicate(member);
+                      if (!data) {
+                        setValidation({ ...validation, isIdValid: true });
+                        toast.success("가입 가능한 아이디");
+                      } else {
+                        toast.warn("중복된 아이디, 다시 입력하세요.");
+                        refList.userId.current.focus();
+                      }
+                    } catch (error) {
+                      toast.error("서버연결에 실패했습니다.");
                     }
-                  } catch (error) {
-                    toast.error("서버연결에 실패했습니다.");
-                  }
 
-                  setLoading(false);
-                })}
-              </>
-            ) : !validation.isMailSent ? (
-              <>
-                {makeBtn("메일 전송", async () => {
-                  setLoading(true);
+                    setLoading(false);
+                  })}
+                </>
+              ) : !validation.isMailSent ? (
+                <>
+                  {makeBtn("메일 전송", async () => {
+                    setLoading(true);
 
-                  try {
-                    const code = await sendMail(member);
-                    setValidation({
-                      ...validation,
-                      isMailSent: true,
-                      authCode: code,
-                    });
-                    toast.success("메일 전송 성공");
-                  } catch (error) {
-                    toast.error("메일 전송에 실패했습니다.");
-                  }
+                    try {
+                      const code = await sendMail(member);
+                      setValidation({
+                        ...validation,
+                        isMailSent: true,
+                        authCode: code,
+                      });
+                      toast.success("메일 전송 성공");
+                    } catch (error) {
+                      toast.error("메일 전송에 실패했습니다.");
+                    }
 
-                  setLoading(false);
-                })}
-              </>
-            ) : !validation.isAuth ? (
-              <>
-                {makeInput(
-                  "text",
-                  "authCode",
-                  member.authCode,
-                  "인증번호",
-                  onChange,
-                  !validation.isAuth,
-                  refList.authCode,
-                  "w-1/4 text-center"
-                )}
-                {makeBtn("인증 확인", () => {
-                  setLoading(true);
+                    setLoading(false);
+                  })}
+                </>
+              ) : !validation.isAuth ? (
+                <>
+                  {makeInput(
+                    "text",
+                    "authCode",
+                    member.authCode,
+                    "인증번호",
+                    refList.authCode,
+                    onChange,
+                    !validation.isAuth,
+                    "w-32 text-center"
+                  )}
+                  {makeBtn("인증 확인", () => {
+                    setLoading(true);
 
-                  if (validation.authCode === member.authCode * 1) {
-                    setValidation({ ...validation, isAuth: true });
-                    toast.success("인증 완료");
-                    refList.userPw.current.focus();
-                  } else {
-                    toast.warn("인증 코드를 다시 입력하세요.");
-                    refList.authCode.current.focus();
-                  }
+                    if (validation.authCode === member.authCode * 1) {
+                      setValidation({ ...validation, isAuth: true });
+                      toast.success("인증 완료");
+                      refList.userPw.current.focus();
+                    } else {
+                      toast.warn("인증 코드를 다시 입력하세요.");
+                      refList.authCode.current.focus();
+                    }
 
-                  setLoading(false);
-                })}
-              </>
-            ) : (
-              <></>
-            )}
-          </div>
-        )}
-
-        {/* 비밀번호 */}
-        {makeAdd(
-          "비밀번호",
-          makeInput(
-            "password",
-            "userPw",
-            member.userPw,
-            "영어 대소문자, 숫자, 특수기호를 포함한 8~16글자",
-            onChange,
-            validation.isAuth,
-            refList.userPw
-          )
-        )}
-
-        {/* 비밀번호 확인 */}
-        {makeAdd(
-          "비밀번호 확인",
-          makeInput(
-            "password",
-            "confirmPw",
-            member.confirmPw,
-            "비밀번호 재입력",
-            onChange,
-            validation.isAuth,
-            refList.confirmPw
-          )
-        )}
-
-        {/* 이름 */}
-        {makeAdd(
-          "이름",
-          makeInput(
-            "text",
-            "name",
-            member.name,
+                    setLoading(false);
+                  })}
+                </>
+              ) : (
+                <></>
+              )}
+            </div>
+          )}
+          {/* 비밀번호 */}
+          {makeAdd(
+            "비밀번호",
+            makeInput(
+              "password",
+              "userPw",
+              member.userPw,
+              "영어 대소문자, 숫자, 특수기호를 포함한 8~16글자",
+              refList.userPw,
+              onChange,
+              validation.isAuth
+            )
+          )}
+          {/* 비밀번호 확인 */}
+          {makeAdd(
+            "비밀번호 확인",
+            makeInput(
+              "password",
+              "confirmPw",
+              member.confirmPw,
+              "비밀번호 재입력",
+              refList.confirmPw,
+              onChange,
+              validation.isAuth
+            )
+          )}
+          {/* 이름 */}
+          {makeAdd(
             "이름",
-            onChange,
-            validation.isAuth,
-            refList.name
-          )
-        )}
+            makeInput(
+              "text",
+              "name",
+              member.name,
+              "이름",
+              refList.name,
+              onChange,
+              validation.isAuth
+            )
+          )}
+          {/* 연락처 */}
+          {makeAdd(
+            "연락처",
+            makeInput(
+              "text",
+              "phoneNum",
+              member.phoneNum,
+              '"─" 없이 입력',
+              refList.phoneNum,
+              onChange,
+              validation.isAuth
+            )
+          )}
+          {/* 주소 */}
+          {makeAdd(
+            "주소",
+            <div className="w-full flex justify-center items-center space-x-1">
+              {makeSelect(
+                "region",
+                address.region,
+                address.regionList,
+                "시/도 선택",
+                refList.region,
+                onChangeAddress,
+                validation.isAuth
+              )}
+              {makeSelect(
+                "city",
+                address.city,
+                address.cityList,
+                "시/구/군 선택",
+                refList.city,
+                onChangeAddress,
+                validation.isAuth
+              )}
+            </div>
+          )}
+          {/* 생년월일 */}
+          {makeAdd(
+            "생년월일",
+            <div className="w-full flex justify-center items-center space-x-1">
+              {makeSelect(
+                "year",
+                birthDate.year,
+                Array.from(
+                  { length: new Date().getFullYear() - 1900 + 1 },
+                  (_, i) => 1900 + i
+                ).reverse(),
+                "연도 선택",
+                refList.year,
+                onChangeBirth,
+                validation.isAuth
+              )}
+              {makeSelect(
+                "month",
+                birthDate.month,
+                [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+                "월 선택",
+                refList.month,
+                onChangeBirth,
+                validation.isAuth
+              )}
+              {makeSelect(
+                "date",
+                birthDate.date,
+                Array.from(
+                  {
+                    length: new Date(
+                      birthDate.year,
+                      birthDate.month,
+                      0
+                    ).getDate(),
+                  },
+                  (_, i) => i + 1
+                ),
+                "일 선택",
+                refList.date,
+                onChangeBirth,
+                validation.isAuth
+              )}
+            </div>
+          )}
+          {/* 성별 */}
+          {makeAdd(
+            "성별",
+            <div className="w-full flex justify-center items-center space-x-1">
+              {makeRatio(
+                member.gender === "M",
+                IoMdMale,
+                "남성",
+                () =>
+                  member.gender === "M" ||
+                  setMember({ ...member, gender: "M" }),
+                validation.isAuth
+              )}
+              {makeRatio(
+                member.gender === "F",
+                IoMdFemale,
+                "여성",
+                () =>
+                  member.gender === "F" ||
+                  setMember({ ...member, gender: "F" }),
+                validation.isAuth
+              )}
+            </div>
+          )}
+          {/* 내외국인 */}
+          {makeAdd(
+            "내와국인",
+            <div className="w-full flex justify-center items-center space-x-1">
+              {makeRatio(
+                !member.foreigner,
+                GiSouthKorea,
+                "내국인",
+                () => setMember({ ...member, foreigner: false }),
+                validation.isAuth
+              )}
+              {makeRatio(
+                member.foreigner,
+                AiOutlineGlobal,
+                "외국인",
+                () => setMember({ ...member, foreigner: true }),
+                validation.isAuth
+              )}
+            </div>
+          )}
+        </div>
 
-        {/* 연락처 */}
-        {makeAdd(
-          "연락처",
-          makeInput(
-            "text",
-            "phoneNum",
-            member.phoneNum,
-            '"─" 없이 입력',
-            onChange,
-            validation.isAuth,
-            refList.phoneNum
-          )
-        )}
+        <div className="w-full h-[15%] text-2xl flex flex-row-reverse justify-center items-center">
+          {makeBtn2("완료", onCLickRegister)}
 
-        {/* 주소 */}
-        {makeAdd(
-          "주소",
-          <div className="w-full flex justify-center items-center space-x-1">
-            {makeSelect(
-              "region",
-              address.region,
-              address.regionList,
-              "시/도 선택",
-              onChangeAddress,
-              validation.isAuth,
-              refList.region,
-              "w-1/2"
-            )}
-            {makeSelect(
-              "city",
-              address.city,
-              address.cityList,
-              "시/구/군 선택",
-              onChangeAddress,
-              validation.isAuth,
-              refList.city,
-              "w-1/2"
-            )}
-          </div>
-        )}
-
-        {/* 생년월일 */}
-        {makeAdd(
-          "생년월일",
-          <div className="w-full flex justify-center items-center space-x-1">
-            {makeSelect(
-              "year",
-              birthDate.year,
-              Array.from(
-                { length: new Date().getFullYear() - 1900 + 1 },
-                (_, i) => 1900 + i
-              ).reverse(),
-              "연도 선택",
-              onChangeBirth,
-              validation.isAuth,
-              refList.year,
-              "w-1/3"
-            )}
-            {makeSelect(
-              "month",
-              birthDate.month,
-              [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
-              "월 선택",
-              onChangeBirth,
-              validation.isAuth,
-              refList.month,
-              "w-1/3"
-            )}
-            {makeSelect(
-              "date",
-              birthDate.date,
-              Array.from(
-                {
-                  length: new Date(
-                    birthDate.year,
-                    birthDate.month,
-                    0
-                  ).getDate(),
-                },
-                (_, i) => i + 1
-              ),
-              "일 선택",
-              onChangeBirth,
-              validation.isAuth,
-              refList.date,
-              "w-1/3"
-            )}
-          </div>
-        )}
-
-        {/* 성별 */}
-        {makeAdd(
-          "성별",
-          <div className="w-full flex justify-center items-center space-x-1">
-            {makeRatio(
-              member.gender === "M",
-              IoMdMale,
-              "남성",
-              () =>
-                member.gender === "M" || setMember({ ...member, gender: "M" }),
-              validation.isAuth,
-              "w-1/2"
-            )}
-            {makeRatio(
-              member.gender === "F",
-              IoMdFemale,
-              "여성",
-              () =>
-                member.gender === "F" || setMember({ ...member, gender: "F" }),
-              validation.isAuth,
-              "w-1/2"
-            )}
-          </div>
-        )}
-
-        {/* 내외국인 */}
-        {makeAdd(
-          "내와국인",
-          <div className="w-full flex justify-center items-center space-x-1">
-            {makeRatio(
-              !member.foreigner,
-              GiSouthKorea,
-              "내국인",
-              () => setMember({ ...member, foreigner: false }),
-              validation.isAuth,
-              "w-1/2"
-            )}
-            {makeRatio(
-              member.foreigner,
-              AiOutlineGlobal,
-              "외국인",
-              () => setMember({ ...member, foreigner: true }),
-              validation.isAuth,
-              "w-1/2"
-            )}
-          </div>
-        )}
-
-        <div className="w-full pt-2 text-2xl text-center font-bold flex flex-row-reverse justify-center items-center">
-          <button
-            className="bg-sky-500 w-3/4 p-4 rounded-xl text-white hover:bg-sky-300 hover:text-black transition duration-500"
-            onClick={onCLickRegister}
-          >
-            완료
-          </button>
-
-          <button
-            className="bg-gray-500 w-1/4 mr-4 p-4 rounded-xl text-white flex justify-center items-center hover:bg-gray-300 hover:text-black transition duration-500"
+          {/* <button
+            className="bg-gray-500 w-1/4 mr-4 p-4 rounded-xl shadow-md text-white flex justify-center items-center hover:bg-gray-300 hover:text-black transition duration-500"
             onClick={() => {
               removeCookie("isAgree");
               navigate("/member/signup/agree/general", { replace: true });
-            }}
+              }}
           >
             <FaBackspace className="text-3xl" />
-          </button>
+          </button> */}
         </div>
       </div>
     </>

@@ -45,7 +45,7 @@ export const getCustom = async (pageParam, yListStr, rListStr, kListStr) => {
     },
     params: {
       page: page,
-      size: 6,
+      size: 12,
       address: getCookie("userAddress"),
       yListStr: yListStr,
       rListStr: rListStr,
@@ -99,7 +99,7 @@ export const getBookmark = async (pageParam, category) => {
     },
     params: {
       page: page,
-      size: 6,
+      size: 12,
       userId: getCookie("userId"),
       category: category,
     },

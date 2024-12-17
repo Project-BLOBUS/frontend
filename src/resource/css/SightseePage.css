@@ -104,24 +104,42 @@
 }
 
 /* 해인 */
-.gg-container {
-  clear: both;
-  background-color: #ffffff;
-  border-radius: 10px;
-  padding: 110px 20px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 그림자 효과 */
-  width: 900px; /* 전체 컨테이너 폭 */
-  height: 500px;
-  margin: 0px auto; /* 상단 여백 추가 및 가운데 정렬 */
-  gap: 20px; /* 이미지와 텍스트 사이 간격 */
+.sightsee-button-custom {
+  text-align: center;
+  width: 200px;
+  font-size: 16px;
+  font-weight: 600;
+  color: #fff;
+  cursor: pointer;
+  height: 55px;
+  text-align: center;
+  border: none;
+  background-size: 300% 100%;
+  border-radius: 50px;
+  -o-transition: all 0.4s ease-in-out;
+  -webkit-transition: all 0.4s ease-in-out;
+  transition: all 0.4s ease-in-out;
 }
-.gg-content-left {
-  float: left;
-  width: 49%;
-  margin-right: 2%;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+
+/* 버튼 스타일 */
+.sightsee-button-custom.color {
+  background-image: linear-gradient(
+    to right,
+    #6253e1,
+    #852d91,
+    #a3a1ff,
+    #f24645
+  );
+  box-shadow: 0 4px 15px 0 rgba(126, 52, 161, 0.75);
 }
-.gg-content-right {
-  float: right;
-  width: 49%;
+
+.sightsee-button-custom:focus {
+  outline: none;
+}
+
+.sightsee-button-custom:hover {
+  background-position: 100% 0;
+  -o-transition: all 0.4s ease-in-out;
+  -webkit-transition: all 0.4s ease-in-out;
+  transition: all 0.4s ease-in-out;
 }

@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
 import { getCookie, removeCookie } from "../../etc/util/cookieUtil";
-import Header from "../../main/Header";
 import Loading from "../../etc/component/Loading";
+import Header from "../../main/Header";
+import Footer from "../../main/Footer";
 
 const MemberPage = () => {
   const navigate = useNavigate();
@@ -23,7 +24,11 @@ const MemberPage = () => {
 
       const newJwt = getCookie("jwt");
       if (newJwt) {
-        navigate(-1, { replace: true });
+        if (window.history.length < 2) {
+          navigate("/", { replace: true });
+        } else {
+          navigate(-1, { replace: true });
+        }
       } else {
         setJwt(newJwt);
       }
@@ -38,19 +43,21 @@ const MemberPage = () => {
       {loading ? (
         <Loading />
       ) : (
-        <div className="bg-orange-50 h-screen">
+        <div className="h-screen">
           <div className="bg-pink-500">
             <Header
               isWhite={true}
-              pageTitle="계정"
+              pageTitle="메인"
               titleBg="#BE185D"
               borderB={false}
             />
           </div>
 
-          <div className="bg-white mx-[10%] flex justify-center items-center">
+          <div className="bg-white mx-[15%] h-[calc(100%-82px-102px)] flex justify-center items-center">
             <Outlet />
           </div>
+
+          <Footer />
         </div>
       )}
     </>

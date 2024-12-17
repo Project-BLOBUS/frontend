@@ -1,5 +1,4 @@
-import { useEffect, useState } from "react";
-import { FaSave } from "react-icons/fa";
+import { useEffect, useRef, useState } from "react";
 import { toast } from "react-toastify";
 import { loadSetting, saveSetting, getCustom } from "../../api/mypageAPI";
 import useCustomMove from "../../../etc/hook/useCustomMove";
@@ -23,13 +22,12 @@ const initState = {
 const Custom = () => {
   const [loading, setLoading] = useState(false);
   const { page, size, moveToList } = useCustomMove("mypage/custom/list");
-  const { makeList, makeSelect } = useMypageTag();
+  const { makeBtn, makeBtn2, makeSelect, makeList } = useMypageTag();
 
   const [data, setData] = useState(initState);
 
   const [open, setOpen] = useState({
     청년: false,
-    // 기업: false,
     지역: false,
     키워드: false,
   });
@@ -48,6 +46,8 @@ const Custom = () => {
   });
 
   const [kList, setKList] = useState([]);
+
+  const inputRef = useRef(null);
 
   useEffect(() => {
     setLoading(true);
@@ -136,44 +136,88 @@ const Custom = () => {
     <>
       {loading && <Loading />}
       <div className="w-full text-xl text-center font-bold flex flex-col justify-center items-center">
-        <div className="w-full my-4 py-4 text-3xl text-left border-b-2 border-gray-500 flex justify-between items-center">
+        <div className="w-full my-2 py-4 text-3xl text-left border-b-2 border-gray-300">
           커스텀
         </div>
 
-        <div className="w-full my-2 text-base flex justify-start items-center space-x-4">
-          {makeSelect("청년 ▼", open, setOpen, yList, setYList, moveToList)}
-          {makeSelect("지역 ▼", open, setOpen, rList, setRList, moveToList)}
-          {/* {makeSelect("키워드", open, setOpen, kList, setKList, moveToList)} */}
+        <div className="w-full my-2 px-2 border-2 border-gray-300 rounded text-base flex justify-center items-start">
+          <div className="w-[15%] p-4">키워드 검색</div>
 
-          <FaSave
-            className="text-3xl flex justify-center items-center cursor-pointer hover:text-gray-300 transition duration-500"
-            onClick={() => {
-              setLoading(true);
+          <div className="w-full flex flex-col justify-center items-center">
+            <input
+              className="w-full my-2 p-2 border-b-2 border-gray-300 text-sm"
+              type="text"
+              placeholder="키워드를 입력하세요"
+              ref={inputRef}
+              onKeyUp={(e) => {
+                if (e.key === "Enter" && e.target.value.trim() !== "") {
+                  setKList({ ...kList, [e.target.value.trim()]: true });
+                  e.target.value = "";
+                }
+              }}
+            />
+            <div className="w-full flex flex-wrap justify-start items-center">
+              {Object.keys(kList).map((key) => (
+                <div
+                  key={key}
+                  className="bg-gray-300 m-1 px-4 py-1 rounded-full text-xs text-nowrap flex justify-center items-center cursor-pointer transition duration-500"
+                  onClick={() => {
+                    const updatedList = { ...kList };
+                    delete updatedList[key];
+                    setKList(updatedList);
+                  }}
+                >
+                  {key}
+                  <span className="ml-2 text-red-500">X</span>
+                </div>
+              ))}
+            </div>
+          </div>
+          <div className="py-2">
+            {makeBtn("검색", () => {
+              const value = inputRef.current?.value.trim();
+              if (value !== "") {
+                setKList({ ...kList, [value]: true });
+                inputRef.current.value = "";
+                inputRef.current.focus();
+              }
+            })}
+          </div>
+        </div>
 
-              // 커스텀 설정 저장하기
-              saveSetting(listToStr(yList), listToStr(rList), listToStr(kList))
-                .then((save) => {
-                  if (save.error) {
-                    toast.error("설정 저장에 실패했습니다.", { toastId: "e" });
-                  } else {
-                    toast.success("설정 저장 성공");
-                  }
-                })
-                .catch((error) => {
-                  if (error.code === "ERR_NETWORK") {
-                    toast.error("서버연결에 실패했습니다.", { toastId: "e" });
-                  } else {
-                    toast.error("설정 저장에 실패했습니다.", { toastId: "e" });
-                  }
-                });
+        <div className="w-full my-2 px-2 text-base flex justify-between items-center">
+          <div className="flex justify-center items-center space-x-4">
+            {makeSelect("청년 ▼", open, setOpen, yList, setYList, moveToList)}
+            {makeSelect("지역 ▼", open, setOpen, rList, setRList, moveToList)}
+            {/* {makeSelect("키워드", open, setOpen, kList, setKList, moveToList)} */}
+          </div>
 
-              setOpen(
-                Object.fromEntries(Object.keys(open).map((key) => [key, false]))
-              );
+          {makeBtn2("필터 저장", () => {
+            setLoading(true);
 
-              setLoading(false);
-            }}
-          />
+            // 커스텀 설정 저장하기
+            saveSetting(listToStr(yList), listToStr(rList), listToStr(kList))
+              .then((save) => {
+                if (save.error) {
+                  toast.error("설정 저장에 실패했습니다.", { toastId: "e" });
+                } else {
+                  toast.success("설정 저장 성공");
+                }
+              })
+              .catch((error) => {
+                if (error.code === "ERR_NETWORK") {
+                  toast.error("서버연결에 실패했습니다.", { toastId: "e" });
+                } else {
+                  toast.error("설정 저장에 실패했습니다.", { toastId: "e" });
+                }
+              });
+
+            setOpen(
+              Object.fromEntries(Object.keys(open).map((key) => [key, false]))
+            );
+
+            setLoading(false);
+          })}
         </div>
 
         {makeList(data)}

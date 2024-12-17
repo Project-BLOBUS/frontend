@@ -21,9 +21,12 @@ function Resources() {
           borderB={false}
         />
       </div>
-      <div className="w-[70%] h-[600px] ml-[15%]">
-        <Outlet />
+      <div>
+        <div className="w-[70%] h-[600px] ml-[15%]">
+          <Outlet />
+        </div>
       </div>
+      ;
     </div>
   );
 }

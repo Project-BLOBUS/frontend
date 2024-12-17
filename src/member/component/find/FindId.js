@@ -15,7 +15,7 @@ const initState = {
 
 const FindId = () => {
   const navigate = useNavigate();
-  const { makeAdd, makeInput } = useMemberTag();
+  const { makeBtn2, makeInput } = useMemberTag();
   const [loading, setLoading] = useState(false);
 
   const [member, setMember] = useState(initState);
@@ -93,85 +93,71 @@ const FindId = () => {
   return (
     <>
       {loading && <Loading />}
-      <div className="w-full max-w-[600px] min-w-min text-xl text-center font-bold flex flex-col justify-center items-center space-y-4">
-        <div className="bg-white w-full my-4 text-5xl text-sky-500">
+      <div className="w-1/2 h-[90%] px-10 py-4 border-2 border-gray-300 rounded shadow-xl text-base text-center font-bold flex flex-col justify-center items-center">
+        <div className="w-full h-[20%] text-5xl flex justify-center items-center">
           아이디 찾기
-          <div className=" w-full mt-4 text-xs text-gray-500">
-            기업계정은 관리자에게 문의바랍니다.
-          </div>
         </div>
 
-        {/* 이름 */}
-        {makeAdd(
-          "이름",
-          makeInput(
-            "text",
-            "name",
-            member.name,
-            "이름",
-            onChange,
-            true,
-            refList.name
-          )
-        )}
-
-        {/* 연락처 */}
-        {makeAdd(
-          "연락처",
-          makeInput(
-            "text",
-            "phoneNum",
-            member.phoneNum,
-            '"─" 없이 입력',
-            onChange,
-            true,
-            refList.phoneNum
-          )
-        )}
-
         {member.userId === "" ? (
-          <div className="w-full pt-4 text-2xl text-center font-bold flex flex-row-reverse justify-center items-center">
-            <button
-              className="bg-sky-500 w-3/4 p-4 rounded-xl text-white hover:bg-sky-300 hover:text-black transition duration-500"
-              onClick={onCLickFind}
-            >
-              검색
-            </button>
+          <>
+            <div className="w-full h-[10%] text-md flex flex-col justify-center items-center">
+              <div className="w-full h-1/2">
+                회원정보에 등록된 정보로 아이디를 찾을 수 있습니다.
+              </div>
 
-            <button
-              className="bg-gray-500 w-1/4 mr-4 p-4 rounded-xl text-white flex justify-center items-center hover:bg-gray-300 hover:text-black transition duration-500"
-              onClick={() => navigate(-1, { replace: true })}
-            >
-              취소
-            </button>
-          </div>
+              <div className="w-full h-1/2 text-gray-500">
+                ※ 기업계정은 관리자에게 문의바랍니다.
+              </div>
+            </div>
+
+            <div className="w-full h-[35%] px-10 text-md flex flex-col justify-center items-center space-y-4">
+              {/* 이름 */}
+              {makeInput(
+                "text",
+                "name",
+                member.name,
+                "이름",
+                refList.name,
+                onChange,
+                true
+              )}
+              {/* 연락처 */}
+              {makeInput(
+                "text",
+                "phoneNum",
+                member.phoneNum,
+                "연락처",
+                refList.phoneNum,
+                onChange,
+                true
+              )}
+            </div>
+
+            <div className="w-full h-[35%] px-10 flex flex-col justify-center items-center space-y-4">
+              {makeBtn2("아이디 찾기", onCLickFind)}
+              {makeBtn2("뒤로가기", () => navigate(-1, { replace: true }))}
+            </div>
+          </>
         ) : (
           <>
-            {makeAdd(
-              "아이디",
-              <div className="w-full p-4 border border-gray-500 rounded shadow-lg text-left select-text">
-                {member.userId}
+            <div className="w-full h-[45%] flex flex-col justify-center items-center space-y-4">
+              <div className="w-full text-xl">
+                "{member.name}"님의 아이디 검색 결과입니다.
               </div>
-            )}
 
-            <div className="w-full pt-4 text-xl text-center font-bold flex justify-center items-center space-x-4">
-              <button
-                className="w-1/2 p-4 hover:text-gray-300 transition duration-500"
-                onClick={() => navigate("/member/find/pw", { replace: true })}
-              >
-                비밀번호 찾기
-              </button>
-              <div>|</div>
-              <button
-                className="w-1/2 p-4 hover:text-gray-300 transition duration-500"
-                onClick={() => {
-                  setCookie("userId", member.userId);
-                  setCookie("userRole", member.roleName);
-                  navigate("/member/login", { replace: true });
-                }}
-              >
-                로그인
-              </button>
+              <div className="w-full text-3xl py-16">{member.userId}</div>
+            </div>
+
+            <div className="w-full h-[35%] flex flex-col justify-center items-center space-y-2">
+              {makeBtn2("로그인", () => {
+                setCookie("userId", member.userId);
+                setCookie("userRole", member.roleName);
+                navigate("/member/login", { replace: true });
+              })}
+
+              {makeBtn2("비밀번호 찾기", () =>
+                navigate("/member/find/pw", { replace: true })
+              )}
             </div>
           </>
         )}

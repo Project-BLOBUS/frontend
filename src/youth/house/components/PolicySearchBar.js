@@ -1,7 +1,6 @@
 import React from "react";
 
 const PolicySearchBar = ({
-  searchTitle,
   policyStsType,
   searchTerm,
   filterType,
@@ -19,15 +18,18 @@ const PolicySearchBar = ({
     onFilterChange(e.target.value); // 부모 컴포넌트로 필터 타입 전달
   };
 
+  // 초기화 버튼 핸들러
+  const onClear = () => {
+    onSearchTermChange(""); // 검색어 초기화
+  };
+
   return (
     <>
       <div className="border-2 border-gray-200 rounded-md p-4 bg-white mb-5">
         <div className="flex items-center space-x-4">
-          <p className="w-28 text-center text-xl font-semibold text-gray-700">
-            {searchTitle}
-          </p>
+          <label className="font-bold text-gray-800">진행상태</label>
           <select
-            className="h-10 border-2 border-gray-300 rounded-md p-2 text-sm focus:outline-none"
+            className="w-24 h-10 border-2 border-gray-300 rounded-md p-2 text-sm focus:outline-none"
             value={policyStsType}
             onChange={handleFilterChange}
           >
@@ -35,14 +37,15 @@ const PolicySearchBar = ({
             <option value="stsOngoing">진행중</option>
             <option value="stsClosed">마감</option>
           </select>
+          <label className="font-bold text-gray-800">검색범위</label>
           <select
-            className="h-10 border-2 border-gray-300 rounded-md p-2 text-sm focus:outline-none"
+            className="w-24 h-10 border-2 border-gray-300 rounded-md p-2 text-sm focus:outline-none"
             value={filterType}
             onChange={handleFilterChange}
           >
+            <option value="both">전체</option>
             <option value="polyBizSjnm">제목</option>
             <option value="polyItcnCn">내용</option>
-            <option value="both">제목+내용</option>
           </select>
           <input
             type="text"
@@ -59,9 +62,16 @@ const PolicySearchBar = ({
           />
           <button
             onClick={onSearch}
-            className="bg-[#6F00FF] text-white px-8 py-2 rounded-md hover:bg-[#420099] transition-colors duration-500"
+            // className="w-24 bg-[#6F00FF] text-white py-2 rounded-md hover:bg-[#420099] transition-colors duration-500"
+            className="w-24 bg-[#6F00FF] hover:bg-[#420099] text-white font-bold py-2 rounded-md transition-colors duration-500"
           >
             검색
+          </button>
+          <button
+            onClick={onClear}
+            className="w-24 bg-[#6F00FF] hover:bg-[#420099] text-white font-bold py-2 rounded-md transition-colors duration-500"
+          >
+            초기화
           </button>
         </div>
       </div>

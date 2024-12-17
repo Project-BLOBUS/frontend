@@ -2,8 +2,9 @@ import { useEffect, useState } from "react";
 import { Link, Outlet, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { getCookie } from "../../etc/util/cookieUtil";
-import Header from "../../main/Header";
 import Loading from "../../etc/component/Loading";
+import Header from "../../main/Header";
+import Footer from "../../main/Footer";
 
 const MyPage = () => {
   const navigate = useNavigate();
@@ -44,32 +45,36 @@ const MyPage = () => {
   return (
     <>
       {loading && <Loading />}
-      <div className="bg-[rgb(255,215,25)]">
-        <Header
-          navs={navList}
-          isWhite={true}
-          pageTitle="마이페이지"
-          titleBg="rgb(255,125,0)"
-          borderB={false}
-        />
-      </div>
+      <div className="h-screen">
+        <div className="bg-[rgb(255,215,25)]">
+          <Header
+            navs={navList}
+            isWhite={true}
+            pageTitle="마이페이지"
+            titleBg="rgb(255,125,0)"
+            borderB={false}
+          />
+        </div>
 
-      <div className="w-[15%] h-screen pt-20 text-base text-center flex flex-col justify-start items-center fixed z-0">
-        <div className="w-[70%] border-2 border-gray-300 rounded-[8px] font-bold">
-          <div className="py-4 text-2xl">마이페이지</div>
+        <div className="w-[15%] h-screen pt-20 text-base text-center flex flex-col justify-start items-center fixed z-0">
+          <div className="w-[70%] border-2 border-gray-300 rounded-[8px] font-bold">
+            <div className="py-4 text-xl">마이페이지</div>
 
-          <div className="bg-white rounded-b-[8px] flex flex-col justify-center items-center">
-            {makeNav("추천", "custom")}
-            {makeNav("즐겨찾기", "bookmark")}
-            {makeNav("작성글", "doc")}
-            {makeNav("내정보", "info")}
+            <div className="bg-white rounded-b-[8px] flex flex-col justify-center items-center">
+              {makeNav("커스텀", "custom")}
+              {makeNav("즐겨찾기", "bookmark")}
+              {makeNav("작성글", "doc")}
+              {makeNav("내정보", "info")}
+            </div>
           </div>
         </div>
-      </div>
 
-      <div className="mx-[15%] flex justify-center items-center">
-        {/* <div className="ml-[15%] pr-[15%] h-[calc(100vh-90px)] flex justify-center items-start overflow-y-scroll"> */}
-        <Outlet />
+        <div className="mx-[15%] min-h-[calc(100%-82px-102px)] flex justify-center items-start">
+          {/* <div className="ml-[15%] pr-[15%] h-[calc(100vh-90px)] flex justify-center items-start overflow-y-scroll"> */}
+          <Outlet />
+        </div>
+
+        <Footer />
       </div>
     </>
   );
@@ -84,7 +89,7 @@ const makeNav = (name, link) => {
       className={`w-full px-4 py-2 border-t-2 border-gray-300 text-left ${
         act
           ? "text-yellow-500 cursor-default"
-          : "text-gray-500 hover:bg-gray-200 hover:text-yellow-500 transition duration-500"
+          : "text-gray-500 hover:text-yellow-500 transition duration-500"
       }`}
       onClick={(e) =>
         window.location.pathname.includes(link) && e.preventDefault()

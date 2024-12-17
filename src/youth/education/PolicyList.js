@@ -33,7 +33,8 @@ const PolicyList = () => {
             <h2>{policy.title}</h2>
             <p>{policy.overview}</p>
             <p>
-              Application Period: {policy.applicationPeriodStart} to {policy.applicationPeriodEnd}
+              Application Period: {policy.applicationPeriodStart} to{" "}
+              {policy.applicationPeriodEnd}
             </p>
           </li>
         ))}

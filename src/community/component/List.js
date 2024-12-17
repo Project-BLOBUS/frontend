@@ -26,7 +26,7 @@ const List = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const { page, size, moveToList } = useCustomMove("community/list");
-  const { makeBtn } = useCommunityTag();
+  const { makeBtn, makeTab } = useCommunityTag();
 
   const [data, setData] = useState(initState);
 
@@ -84,70 +84,85 @@ const List = () => {
     }
   };
 
-  const tailwind = {
-    btnList: "w-1/3 flex justify-start items-center space-x-2",
-    btn: "w-[60px] p-2 rounded text-white hover:text-black transition duration-500",
-    dtoList:
-      "p-2 border-[.1px] border-gray-300 flex justify-center items-center",
-  };
   return (
     <>
       {loading && <Loading />}
-      <div className="w-full text-xl text-center font-bold flex flex-col justify-center items-center">
-        <div className="w-full py-4 text-sm border-b-4 border-[#DB0153] flex justify-center items-center space-x-10">
-          <div className="w-1/3 flex justify-start items-center space-x-2">
-            {makeTab("전체", "", filter, setFilter, true, moveToList)}
-            {makeTab("자유글", "자유", filter, setFilter, true, moveToList)}
-            {makeTab("건의글", "건의", filter, setFilter, true, moveToList)}
-          </div>
+      <div className="w-full text-base text-center font-bold flex flex-col justify-center items-center">
+        <div className="w-full my-2 py-4 text-3xl text-left border-b-2 border-gray-300 flex justify-between items-center">
+          커뮤니티
+        </div>
 
-          <div className="w-1/3 flex justify-start items-center space-x-2">
-            {makeTab("전체", "", filter, setFilter, false, moveToList)}
-            {makeTab("청년관", "청년", filter, setFilter, false, moveToList)}
-            {/* {makeTab("기업관", "기업", filter, setFilter, false, moveToList)} */}
-            {makeTab("지역관", "지역", filter, setFilter, false, moveToList)}
-          </div>
+        <div className="w-full my-2 border-2 border-gray-300 rounded text-base flex justify-center items-start">
+          <div className="w-[15%] p-4">키워드 검색</div>
 
-          <div className="w-1/3 flex justify-start items-center space-x-2">
-            <input
-              className="w-[calc(100%-50px)] p-2 border-2 border-gray-300 rounded"
-              type="text"
-              placeholder="검색어를 입력하세요"
-              ref={inputRef}
-              onKeyUp={(e) => {
-                setLoading(true);
-                if (e.key === "Enter") {
-                  setFilter({ ...filter, keyward: e.target.value.trim() });
-                } else if (e.key === "Escape") {
-                  e.target.value = "";
-                  setFilter({ ...filter, keyward: e.target.value.trim() });
-                }
-                setLoading(false);
-              }}
-            />
-            {makeBtn(<FaSearch className="text-xl" />, "green", () => {
+          <input
+            className="w-full my-2 p-2 border-b-2 border-gray-300 text-sm"
+            type="text"
+            placeholder="검색어를 입력하세요"
+            ref={inputRef}
+            onKeyUp={(e) => {
               setLoading(true);
+
+              if (e.key === "Enter") {
+                setFilter({ ...filter, keyward: e.target.value.trim() });
+              } else if (e.key === "Escape") {
+                e.target.value = "";
+                setFilter({ ...filter, keyward: e.target.value.trim() });
+              }
+
+              setLoading(false);
+            }}
+          />
+          <div className="p-2 flex justify-center items-center space-x-0">
+            {makeBtn("검색", () => {
+              setLoading(true);
+
               const value = inputRef.current?.value.trim();
               if (value) {
                 setFilter({ ...filter, keyward: value });
               }
+
+              setLoading(false);
+            })}
+            {makeBtn("초기화", () => {
+              setLoading(true);
+
+              const value = inputRef.current?.value.trim();
+              inputRef.current.value = "";
+              setFilter({ ...filter, keyward: value });
+
               setLoading(false);
             })}
           </div>
         </div>
 
-        <div className="w-full mt-4 border-x-[.1px] border-t-[.1px] text-base flex justify-center items-center">
-          <div className={`${tailwind.dtoList} w-[7%]`}>ID</div>
-          <div className={`${tailwind.dtoList} w-[8%]`}>구분</div>
-          <div className={`${tailwind.dtoList} w-[50%]`}>제목</div>
-          <div className={`${tailwind.dtoList} w-[15%]`}>작성자</div>
-          <div className={`${tailwind.dtoList} w-[10%]`}>작성</div>
-          <div className={`${tailwind.dtoList} w-[10%]`}>수정</div>
+        <div className="w-full py-2 text-sm flex justify-center items-center">
+          <div className="w-1/2 flex justify-start items-center space-x-2">
+            {makeTab("전체", "", filter, setFilter, true, moveToList)}
+            {makeTab("자유글", "자유", filter, setFilter, true, moveToList)}
+            {makeTab("건의글", "건의", filter, setFilter, true, moveToList)}
+          </div>
+
+          <div className="w-1/2 flex justify-end items-center space-x-2">
+            {makeTab("전체", "", filter, setFilter, false, moveToList)}
+            {makeTab("청년관", "청년", filter, setFilter, false, moveToList)}
+            {/* {makeTab("기업관", "기업", filter, setFilter, false, moveToList)} */}
+            {makeTab("지역관", "지역", filter, setFilter, false, moveToList)}
+          </div>
         </div>
 
-        <div className="w-full border-x-[.1px] border-b-[.1px] text-sm text-nowrap flex flex-col justify-center items-center">
+        <div className="w-full mt-2 py-2 border-t-2 border-b border-t-red-500 border-b-gray-500 text-sm flex justify-center items-center">
+          <div className="w-[5%]">번호</div>
+          <div className="w-[8%]">구분</div>
+          <div className="w-[55%]">제목</div>
+          <div className="w-[12%]">작성자</div>
+          <div className="w-[10%]">작성</div>
+          <div className="w-[10%]">수정</div>
+        </div>
+
+        <div className="w-full text-sm text-nowrap font-normal flex flex-col justify-start items-center">
           {data.dtoList.length === 0 ? (
-            <div className="w-full border-[.1px] py-20 text-2xl">
+            <div className="w-full py-20 text-2xl flex justify-center items-center">
               {filter.keyward !== "" ? (
                 <>
                   <span className="text-red-500">
@@ -167,7 +182,7 @@ const List = () => {
             data.dtoList.map((dto, index) => (
               <div
                 key={index}
-                className={`w-full font-normal flex justify-center items-center cursor-pointer hover:bg-gray-200 hover:font-bold transition duration-500`}
+                className="w-full py-2 border-b-2 border-gray-300 flex justify-center items-center cursor-pointer hover:font-bold"
                 onClick={() => {
                   if (
                     getCookie("userRole") !== "ADMIN" &&
@@ -178,38 +193,27 @@ const List = () => {
                   } else navigate(`/community/read/${dto.id}`);
                 }}
               >
-                <div className={`${tailwind.dtoList} w-[7%]`}>{dto.id}</div>
-
-                <div className={`${tailwind.dtoList} w-[8%]`}>
-                  {dto.boardType}
-                </div>
-
-                <div className={`${tailwind.dtoList} w-[50%]`}>
-                  <div className="w-full flex justify-start items-center space-x-2">
-                    {dto.category === "청년" ? (
-                      <div className="text-blue-500 font-bold">[청년]</div>
-                    ) : dto.category === "기업" ? (
-                      <div className="text-red-500 font-bold">[기업]</div>
-                    ) : (
-                      <div className="text-green-500 font-bold">[지역]</div>
-                    )}
-                    {dto.visibility ? <FaLock /> : <></>}
-                    <div>{dto.title}</div>
-                    <div className="text-xs text-red-500 font-bold">
-                      {dto.commentList.length > 0 && dto.commentList.length}
-                    </div>
+                <div className="w-[5%]">{dto.id}</div>
+                <div className="w-[8%]">{dto.boardType}</div>
+                <div className="w-[55%] flex justify-start items-center space-x-2">
+                  {dto.category === "청년" ? (
+                    <div className="text-blue-500">[청년]</div>
+                  ) : dto.category === "기업" ? (
+                    <div className="text-red-500">[기업]</div>
+                  ) : (
+                    <div className="text-green-500">[지역]</div>
+                  )}
+                  {dto.visibility ? <FaLock /> : <></>}
+                  <div className="truncate">{dto.title}</div>
+                  <div className="text-xs text-red-500">
+                    {dto.commentList.length > 0 && dto.commentList.length}
                   </div>
                 </div>
-
-                <div className={`${tailwind.dtoList} w-[15%]`}>
-                  {dto.authorName}
-                </div>
-
-                <div className={`${tailwind.dtoList} w-[10%]`}>
+                <div className="w-[12%] truncate">{dto.authorName}</div>
+                <div className="w-[10%] truncate">
                   {printTime(dto.createdAt)}
                 </div>
-
-                <div className={`${tailwind.dtoList} w-[10%]`}>
+                <div className="w-[10%] truncate">
                   {new Date(dto.updatedAt) - new Date(dto.createdAt) < 60 * 1000
                     ? "-"
                     : printTime(dto.updatedAt)}
@@ -221,7 +225,7 @@ const List = () => {
 
         <div className="w-full py-2 flex justify-end items-center">
           {getCookie("jwt") &&
-            makeBtn("글쓰기", "blue", () => navigate("/community/add"))}
+            makeBtn("글쓰기", () => navigate("/community/add"))}
         </div>
 
         <div className="w-full flex justify-center items-center">
@@ -229,30 +233,6 @@ const List = () => {
         </div>
       </div>
     </>
-  );
-};
-
-const makeTab = (name, value, filter, setFilter, isType, moveToList) => {
-  return (
-    <div
-      className={`w-full p-2 rounded cursor-pointer transition duration-500 ${
-        (isType ? value === filter.type : value === filter.category)
-          ? "bg-[#DB0153] text-white hover:bg-gray-500 hover:text-gray-100"
-          : "bg-gray-300 text-gray-100 hover:bg-[#DB0153] hover:text-white"
-      }`}
-      onClick={() => {
-        isType
-          ? value === filter.type
-            ? setFilter({ ...filter, type: "" })
-            : setFilter({ ...filter, type: value })
-          : value === filter.category
-          ? setFilter({ ...filter, category: "" })
-          : setFilter({ ...filter, category: value });
-        moveToList({ page: 1, size: 10 });
-      }}
-    >
-      {name}
-    </div>
   );
 };
 

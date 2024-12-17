@@ -4,11 +4,13 @@ import { FaBackspace } from "react-icons/fa";
 import { toast } from "react-toastify";
 import { getCookie, setCookie } from "../../../etc/util/cookieUtil";
 import { login } from "../../api/memberAPI";
+import useMemberTag from "../../hook/useMemberTag";
 import Loading from "../../../etc/component/Loading";
 import imgLogin from "./login.png";
 
 const Login = () => {
   const navigate = useNavigate();
+  const { makeInput } = useMemberTag();
   const [loading, setLoading] = useState(false);
 
   const [userId, setUserId] = useState(getCookie("userId") ?? "");
@@ -91,79 +93,75 @@ const Login = () => {
   };
 
   return (
-    <div className="w-full p-10 text-center font-bold flex flex-col justify-center items-center">
+    <div className="w-full text-center font-bold flex flex-col justify-center items-center">
       {loading && <Loading />}
-      <div className="w-full text-3xl p-2 text-left">통합 로그인</div>
+      <div className="w-full text-5xl p-4 text-left">통합 로그인</div>
 
-      <div className="w-full border border-gray-500 rounded-xl flex justify-center items-center">
-        <div className="w-1/2 p-6 text-xl text-left border-r border-e-gray-500 flex flex-col justify-center items-center">
-          <img className="w-[70%]" src={imgLogin} alt="로그인" />
-          <div className="w-full px-2">BLOBUS에 방문해주셔서 감사합니다.</div>
-          <div className="w-full px-2">
+      <div className="w-full border-2 border-gray-300 rounded-xl shadow-md text-base flex justify-center items-center">
+        <div className="w-1/2 p-4 border-r-2 border-gray-300 text-xl text-left flex flex-col justify-center items-center">
+          <img className="w-[80%]" src={imgLogin} alt="로그인" />
+          <div className="w-full">BLOBUS에 방문해주셔서 감사합니다.</div>
+          <div className="w-full">
             로그인 하시면 보다 다양한 서비스 이용이 가능합니다.
           </div>
         </div>
 
         <div
-          className="w-1/2 p-6 flex flex-col justify-center items-center space-y-2"
+          className="w-1/2 px-8 p-4 flex flex-col justify-center items-center space-y-2"
           onKeyUp={onKeyUpLogin}
         >
-          <div className="w-full px-20 pb-2 text-xl flex justify-around items-center space-x-4">
+          <div className="w-full px-10 py-2 text-2xl flex justify-around items-center space-x-4">
             {makeTab("일반회원", "GENERAL", userRole, setUserRole)}
             {makeTab("기업회원", "BUSINESS", userRole, setUserRole)}
             {/* {makeTab("관리자", "ADMIN", userRole, setUserRole)} */}
           </div>
 
-          <input
-            className="w-full p-4 border border-gray-500 rounded-full shadow-md"
-            type="text"
-            name="userId"
-            value={userId ?? ""}
-            placeholder="아이디"
-            autoComplete="off"
-            onChange={(e) => setUserId(e.target.value)}
-            ref={idRef}
-          />
+          <div className="w-full py-2 flex flex-col justify-center items-center space-y-2">
+            {makeInput(
+              "text",
+              "userId",
+              userId,
+              "아이디",
+              idRef,
+              (e) => setUserId(e.target.value),
+              true
+            )}
+            {makeInput(
+              "password",
+              "userPw",
+              userPw,
+              "비밀번호",
+              pwRef,
+              (e) => setUserPw(e.target.value),
+              true
+            )}
 
-          <input
-            className="w-full p-4 border border-gray-500 rounded-full shadow-md"
-            type="password"
-            name="userPw"
-            value={userPw ?? ""}
-            placeholder="비밀번호"
-            autoComplete="off"
-            onChange={(e) => setUserPw(e.target.value)}
-            ref={pwRef}
-          />
-
-          {userRole === "ADMIN" || (
-            <div className="group flex justify-center items-center cursor-pointer">
-              <input
-                className="w-4 h-4"
-                type="checkbox"
-                name="idSave"
-                checked={idSave}
-                onChange={() => setIdSave(!idSave)}
-              />
-              <div
-                className="ml-2 group-hover:text-pink-300 transition duration-500"
-                onClick={() => setIdSave(!idSave)}
-              >
-                아이디 저장
+            {userRole === "ADMIN" || (
+              <div className="flex justify-center items-center cursor-pointer">
+                <input
+                  className="w-4 h-4"
+                  type="checkbox"
+                  name="idSave"
+                  checked={idSave}
+                  onChange={() => setIdSave(!idSave)}
+                />
+                <div className="ml-2" onClick={() => setIdSave(!idSave)}>
+                  아이디 저장
+                </div>
               </div>
-            </div>
-          )}
+            )}
+          </div>
 
-          <div className="w-full py-4 text-xl flex flex-row-reverse justify-center items-center">
+          <div className="w-full py-2 flex flex-row-reverse justify-center items-center">
             <button
-              className="bg-pink-500 w-5/6 p-4 rounded-full shadow-lg text-white hover:bg-pink-300 hover:text-black transition duration-500"
+              className="bg-pink-500 w-full p-4 rounded-full shadow-lg text-2xl text-white"
               onClick={onCLickLogin}
             >
-              LOGIN
+              로그인
             </button>
 
-            <button
-              className="bg-gray-500 w-1/6 mr-4 p-4 rounded-xl shadow-lg text-white flex justify-center items-center hover:bg-gray-300 hover:text-black transition duration-500"
+            {/* <button
+              className="bg-gray-500 w-1/6 mr-4 p-4 rounded-xl shadow-md text-white flex justify-center items-center"
               onClick={() =>
                 navigate(window.history.length > 1 ? -1 : "/", {
                   replace: true,
@@ -171,10 +169,10 @@ const Login = () => {
               }
             >
               <FaBackspace className="text-2xl" />
-            </button>
+            </button> */}
           </div>
 
-          <div className="w-full text-xs px-4 flex justify-between items-center">
+          <div className="w-full px-10 py-2 flex justify-between items-center">
             {makeLink("/member/find/id", "아이디 찾기")}
             {makeLink("/member/find/pw", "비밀번호 찾기")}
             {makeLink("/member/signup", "회원가입")}
@@ -188,9 +186,9 @@ const Login = () => {
 const makeTab = (name, role, userRole, setUserRole) => {
   return (
     <div
-      className={`w-full p-2 border-2 rounded-full ${
+      className={`w-40 p-4 border-2 rounded-full ${
         userRole === role
-          ? "border-2 border-pink-500"
+          ? "border-pink-500"
           : "text-gray-300 border-white cursor-pointer hover:border-pink-500 hover:text-black transition duration-500"
       }`}
       onClick={() => setUserRole(role)}

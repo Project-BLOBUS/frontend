@@ -6,16 +6,10 @@ import "../main/index.css";
 import "react-toastify/dist/ReactToastify.css";
 
 function Header({
-  navs = [],
-  navs2 = [],
-  isWhite = false,
   pageTitle,
-  titleBg = "#EC0245",
-  textC = "#FFFFFF",
-  borderB = true,
+  titleBg
 }) {
-  const blobusTextColor = isWhite ? "text-white" : "text-[#3E16E2]";
-  const linkTextColor = isWhite ? "text-white" : "text-[#666666]";
+  
   const [jwt, setJwt] = useState(getCookie("jwt"));
 
   useEffect(() => {
@@ -28,56 +22,40 @@ function Header({
     return () => clearInterval(interval);
   }, [jwt]);
 
+
+   // 메뉴의 표시 여부를 관리하는 상태
+   const [showMenu, setShowMenu] = useState(false);
+   const [showMenu2,setShowMenu2] = useState(false);
+
+   // 메뉴 클릭 시 토글 함수
+   const toggleMenu = () => {
+     setShowMenu(!showMenu);
+     if (showMenu2) setShowMenu2(false);
+   };
+
+   const toggleMenu2 = () => {
+    setShowMenu2(!showMenu2);
+    if (showMenu) setShowMenu(false);
+  };
+
+  // 메뉴를 닫는 함수 (링크 클릭 시)
+const closeMenu = () => {
+  setShowMenu(false);  // 첫 번째 메뉴 닫기
+  setShowMenu2(false); // 두 번째 메뉴 닫기
+};
+   
   return (
-    <div
-      className={`font-bold ${borderB ? "border-b-2 main-border-bottom" : ""}`}
-    >
-      <div className="w-full sm:w-[70.6%] sm:flex-row ml-[15%] flex justify-between items-center ">
-        <Link to="/main">
-          <p
-            className={`text-3xl ${blobusTextColor} ml-[-45px] mt-[-70px] sm:ml-[0px] sm:mt-[0px]`}
-          >
-            BLOBUS
-          </p>
-        </Link>
+    <div className="w-[100%] h-[150px] fixed top-0">
 
-        <div className="mt-[65px] sm:mt-[0px] flex ml-[-130px] sm:ml-[0px] flex-wrap sm:flex-none">
-          {navs.map((nav) => (
-            <Link
-              className={`m-4 ${linkTextColor} transition duration-500 hover:text-gray-300 `}
-              key={nav.name}
-              to={nav.link}
-            >
-              {nav.name}
-            </Link>
-          ))}
+      <div className="w-full h-[40px] bg-[#E9E9E9]">
 
-          {navs2.map((nav) => (
-            <Link
-              className={`m-3 ${linkTextColor} transition duration-500 hover:text-gray-300 opacity-0 pointer-events-none`}
-              key={nav.name}
-              to={nav.link}
-            >
-              {nav.name}
-            </Link>
-          ))}
-        </div>
-
-        <div className="sm:mr-[14px] mr-[30px]">
-          <p
-            className={`mt-[-8px] h-[50px] rounded-b-[5px] flex justify-center items-center`}
-            style={{ backgroundColor: titleBg, color: textC }}
-          >
-            {pageTitle} {/* 메인 글자 동적으로 텍스트 표시 */}
-          </p>
-
-          <div
-            className={`flex justify-center items-center mt-[10px] ${linkTextColor} mt-[20px] sm:mt-[0px] flex flex-wrap sm:flex-none`}
-          >
-            {!getCookie("jwt") ? (
+          <div className="w-[70%] h-[30px] ml-[15%] flex justify-start items-center font-bold text-sm ">
+              <p>청년의 도전, 부산과 함께</p>
+          
+              {!getCookie("jwt") ? (
               <>
                 <Link
-                  className="transition duration-500 hover:text-gray-300"
+                  className="transition duration-500 hover:text-gray-400 ml-[79%]"
                   to="/member/signup"
                   replace={pageTitle === "계정"}
                 >
@@ -85,7 +63,7 @@ function Header({
                 </Link>
                 <p className="p-2 hidden sm:block">|</p>
                 <Link
-                  className="transition duration-500 hover:text-gray-300 mt-[34px] sm:mt-[0px]"
+                  className="transition duration-500 hover:text-gray-400"
                   to="/member/login"
                   replace={pageTitle === "계정"}
                 >
@@ -95,14 +73,14 @@ function Header({
             ) : (
               <>
                 <Link
-                  className="transition duration-500 hover:text-gray-300"
+                  className="transition duration-500 hover:text-gray-400 ml-[67%]"
                   to="/mypage"
                 >
                   마이페이지
                 </Link>
                 <p className="p-2 hidden sm:block">|</p>
                 <Link
-                  className="transition duration-500 hover:text-gray-300 mt-[34px] sm:mt-[0px]"
+                  className="transition duration-500 hover:text-gray-400 mt-[34px]"
                   onClick={() => {
                     // TODO 로그아웃 모달창
                     if (window.confirm("로그아웃하시겠습니까?")) {
@@ -127,9 +105,119 @@ function Header({
               </>
             )}
           </div>
+
+
+          <div className="w-full h-[60px] bg-[#F9F9F9]">
+            <div className="w-[70%] h-[60px] ml-[15%] flex justify-start items-center font-bold">
+
+              <Link to="/main">
+               <div class="text-3xl italic leading-[3px] group relative duration-500">
+                <div class="transition group-hover:-translate-x-8 group-hover:text-[#C0C0C0] w-[70px]">
+                  BLO
+                </div>
+
+                 <div class="transition group-hover:translate-x-8 group-hover:text-[#C0C0C0] w-[70px]">
+                  BUS
+                </div>
+              </div>
+            </Link>
+
+              <div className="bg-[#6E00FF] text-white w-[150px] h-[60px] flex justify-center items-center ml-[-1%] text-xl font-medium"
+              style={{ backgroundColor: titleBg }}>{pageTitle}</div>
+
+              <div className="w-[480px] h-[60px] ml-[13%] flex text-md font-semibold ">
+                    <div className="w-[160px] h-[55px] flex justify-center items-center">
+                          <p className="cursor-pointer" onClick={toggleMenu}>청년관</p>
+                    </div>
+
+                    <div className="w-[160px] h-[55px] flex justify-center items-center">
+                          <p className="cursor-pointer" onClick={toggleMenu2}>지역자원관</p>
+                    </div>
+
+                    
+                    <div className="w-[160px] h-[55px] flex justify-center items-center">
+                          <Link to="/community">
+                            <p className="cursor-pointer">커뮤니티</p>
+                          </Link>
+                    </div>
+                 
+
+              </div>
+            </div>
+
+              {/* 청년관 누르면 나오는 카테고리 */}
+            <div
+        className={`transition-all duration-500 ease-in-out transform ${
+          showMenu ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-[-100%]'
+        }`}
+      >
+      {showMenu && (
+            <div className="w-[full] h-[55px] bg-[#F9F9F9] ">
+              <div className="w-[70%] h-[40px] ml-[15%] flex justify-center items-center space-x-[-70px] text-gray-500 font-bold">
+
+                    <div className="w-[160px] h-[55px] flex justify-center items-center">
+                      <Link to="/youth/job" onClick={closeMenu}>
+                          <p className="cursor-pointer">일자리</p>
+                      </Link>
+                    </div>
+
+                    <div className="w-[160px] h-[55px] flex justify-center items-center">
+                    <Link to="/youth/house" onClick={closeMenu}>
+                          <p className="cursor-pointer">주거</p>
+                    </Link>
+                    </div>
+
+                    <div className="w-[160px] h-[55px] flex justify-center items-center">
+                    <Link to="/youth/welfare" onClick={closeMenu}>
+                          <p className="cursor-pointer">복지</p>
+                    </Link>
+                    </div>
+
+                    <div className="w-[160px] h-[55px] flex justify-center items-center">
+                    <Link to="/youth/education" onClick={closeMenu}>
+                          <p className="cursor-pointer">교육</p>
+                    </Link>
+                    </div>
+              </div>
+          </div>
+)}
+</div>
+
+  {/* 지역자원관 누르면 나오는 카테고리 */}
+  <div
+        className={`transition-all duration-500 ease-in-out transform ${
+          showMenu2 ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-[-100%]'
+        }`}
+      >
+      {showMenu2 && (
+            <div className="w-[full] h-[55px] bg-[#F9F9F9] ">
+              <div className="w-[70%] h-[40px] ml-[14%] flex justify-center items-center space-x-[-70px] text-gray-500 font-bold">
+
+                    <div className="w-[150px] h-[55px] flex justify-center items-center">
+                      <Link to="/resource/digital" onClick={closeMenu}>
+                          <p className="cursor-pointer">디지털마케팅</p>
+                      </Link>
+                    </div>
+
+                    <div className="w-[200px] h-[55px] flex justify-center items-center">
+                    <Link to="/resource/culture" onClick={closeMenu}>
+                          <p className="cursor-pointer ">문화</p>
+                    </Link>
+                    </div>
+
+                    <div className="w-[100px] h-[55px] flex justify-center items-center">
+                    <Link to="/resource/sightsee" onClick={closeMenu}>
+                          <p className="cursor-pointer">관광</p>
+                    </Link>
+                    </div>
+              </div>
+          </div>
+)}
+</div>
+
         </div>
       </div>
-      <ToastContainer
+        <ToastContainer
         style={{ width: "auto" }}
         className="text-base text-center text-nowrap"
         position="bottom-center"

@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router";
+import { FaCircleUser } from "react-icons/fa6";
 import { toast } from "react-toastify";
 import { getCookie, removeCookie } from "../../../etc/util/cookieUtil";
 import { getInfo, deleteId, sendMail } from "../../api/memberAPI";
@@ -22,7 +23,7 @@ const initState = {
 const Info = () => {
   const navigate = useNavigate();
   const { makeBtn, makeAdd, makeInput } = useMemberTag();
-  const { makeRead } = useInfoTag();
+  const { makeBtn2, makeRead } = useInfoTag();
   const [loading, setLoading] = useState(false);
 
   const [member, setMember] = useState(initState);
@@ -96,54 +97,66 @@ const Info = () => {
   return (
     <>
       {loading && <Loading />}
-      <div className="w-full text-xl text-center font-bold flex flex-col justify-center items-center">
-        <div className="w-full py-4 border-b-4 border-gray-500 text-3xl text-left flex justify-between items-center">
+      <div className="w-full h-full text-base text-center font-bold flex flex-col justify-center items-center">
+        <div className="w-full my-2 py-4 text-3xl text-left border-b-2 border-gray-300">
           내 정보
         </div>
 
-        <div className="w-full px-20 py-4 flex flex-col justify-center items-center">
-          <div className="w-full pb-2 border-b-4 border-gray-300 flex justify-end items-center">
-            <button
-              className="bg-green-500 px-4 py-2 rounded text-base text-white hover:bg-green-300 hover:text-black transition duration-500"
-              onClick={() => {
-                setLoading(true);
-                setBtnType("수정");
-                setModal(true);
-                setLoading(false);
-              }}
-            >
-              수정
-            </button>
+        <div className="w-full mt-10 py-4 flex justify-center items-center space-x-4">
+          <div className="bg-white w-1/3 py-[4.125rem] border-2 border-gray-300 rounded shadow-xl flex flex-col justify-center items-center">
+            <div className="text-[12rem]">
+              <FaCircleUser className="text-gray-400" />
+            </div>
+            <div className="pt-10 text-xl">반갑습니다. {member.name}님</div>
           </div>
 
-          <>
-            {makeRead("아이디", member.userId)}
-            {makeRead("이름", member.name)}
-            {makeRead("연락처", member.phoneNum)}
-            {makeRead("주소", member.address.replace("-", " "))}
-            {makeRead(
-              "생년월일",
-              `${member.birthDate.split("-")[0] * 1}년
-            ${member.birthDate.split("-")[1] * 1}월
-            ${member.birthDate.split("-")[2] * 1}일`
-            )}
-            {makeRead("성별", member.gender === "F" ? "여성" : "남성")}
-            {makeRead("내외국인", member.foreigner ? "외국인" : "내국인")}
-          </>
+          <div className="w-1/3 flex flex-col justify-center items-center space-y-4">
+            <div className="bg-white w-full border-2 border-gray-300 rounded shadow-xl flex flex-col justify-center items-center">
+              <div className="w-full p-2 text-xl border-b-2 border-yellow-500 text-left">
+                기본 정보
+              </div>
+              {makeRead("아이디", member.userId)}
+              {makeRead("이름", member.name)}
+              {makeRead(
+                "생년월일",
+                `${member.birthDate.split("-")[0] * 1}년
+              ${member.birthDate.split("-")[1] * 1}월
+              ${member.birthDate.split("-")[2] * 1}일`
+              )}
+              {makeRead("성별", member.gender === "F" ? "여성" : "남성")}
+              {makeRead("내외국인", member.foreigner ? "외국인" : "내국인")}
+            </div>
 
-          <div className="w-full py-2 border-t-2 border-gray-300 flex justify-end items-center">
-            <button
-              className="p-2 rounded text-base hover:bg-black hover:text-red-500 transition duration-500"
-              onClick={() => {
-                setLoading(true);
-                setBtnType("탈퇴");
-                setModal(true);
-                setLoading(false);
-              }}
-            >
-              회원탈퇴
-            </button>
+            <div className="bg-white w-full border-2 border-gray-300 rounded shadow-xl flex flex-col justify-center items-center">
+              <div className="w-full p-2 text-xl border-b-2 border-yellow-500 text-left">
+                연락처 정보
+              </div>
+              {makeRead(
+                "연락처",
+                member.phoneNum.slice(0, 3) +
+                  "-" +
+                  member.phoneNum.slice(3, 7) +
+                  "-" +
+                  member.phoneNum.slice(7, 11)
+              )}
+              {makeRead("주소", member.address.replace("-", " "))}
+            </div>
           </div>
+        </div>
+
+        <div className="w-2/3 py-2 flex justify-end items-center space-x-0">
+          {makeBtn2("수정", () => {
+            setLoading(true);
+            setBtnType("수정");
+            setModal(true);
+            setLoading(false);
+          })}
+          {makeBtn2("탈퇴", () => {
+            setLoading(true);
+            setBtnType("탈퇴");
+            setModal(true);
+            setLoading(false);
+          })}
         </div>
       </div>
 
@@ -159,8 +172,10 @@ const Info = () => {
               <div className="w-full h-full flex justify-center items-center space-x-1">
                 <div
                   className={`${
-                    !validation.isMailSent ? "w-5/6" : "w-7/12"
-                  } p-4 border border-gray-500 rounded shadow-lg text-left tracking-widest`}
+                    !validation.isMailSent
+                      ? "w-[calc(100%-100px)]"
+                      : "w-[calc(100%-105px-8rem)]"
+                  } p-4 border-2 border-gray-300 rounded-full shadow-lg text-left tracking-widest`}
                 >
                   {member.userId}
                 </div>
@@ -193,10 +208,10 @@ const Info = () => {
                       "authCode",
                       member.authCode,
                       "인증번호",
+                      refList.authCode,
                       onChange,
                       true,
-                      refList.authCode,
-                      "w-1/4 text-center"
+                      "w-32 text-center"
                     )}
                     {makeBtn("인증 확인", () => {
                       setLoading(true);
@@ -220,7 +235,7 @@ const Info = () => {
 
             <div className="w-full flex justify-end items-center">
               <button
-                className="bg-red-500 w-[calc(100%/8)] px-4 py-2 text-base font-bold rounded-xl text-white hover:bg-red-300 hover:text-black transition duration-500"
+                className="p-2 font-bold hover:text-gray-300 transition duration-500"
                 onClick={() => {
                   setValidation({
                     isMailSent: false,
