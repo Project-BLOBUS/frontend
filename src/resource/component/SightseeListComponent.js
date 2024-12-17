@@ -8,61 +8,45 @@ const handleButtonClick = () => {
 
 const SightseePage = () => {
   return (
-    <div className="gg-container">
-      <div className="gg-content-left">
-        <a href="https://imgbb.com/">
+    <div
+      style={{
+        backgroundImage: "url('/sightsee_bg.png')",
+      }}
+      className="flex items-center justify-between bg-white shadow-lg p-10 rounded-md w-full bg-cover bg-center"
+    >
+      {/* 왼쪽 네모 컨텐츠 */}
+      <div className="w-1/2 flex justify-center items-center">
+        <div className="rounded-md shadow-md w-3/4 h-full flex flex-col items-center justify-center">
           <img
-            src="https://i.ibb.co/QYDKJ77/visitbusan.jpg"
+            src="/visit_busan_logo.jpg"
             alt="visitbusan"
             border="0"
-            className=""
+            className="w-full h-full rounded-md mx-auto"
           ></img>
-        </a>
-      </div>
-      <div className="gg-content-right">
-        <div>
-          <h1 className="sightsee-title">Visit Busan</h1>
-          <p className="sightsee-description">
-            '비짓부산'은 부산여행가서 보고, 먹고, <br />
-            체험할 때 부산에 방문해야 되는 명소, 축제정보, 테마여행 정보를
-            <br />한 눈에 볼 수 있는 부산여행 커뮤니티로, <br />
-            최근 이를 활용하여 부산 여행을 즐기는 2030세대가 늘어나고 있는
-            것으로 보인다
-          </p>
         </div>
-        <div>
-          <button className="sightsee-button color" onClick={handleButtonClick}>
+      </div>
+
+      {/* 오른쪽 텍스트 */}
+      <div className="w-1/2 text-gray-800 text-center">
+        <h2 className="text-3xl font-semibold mb-4">Visit Busan</h2>
+        <p className="text-lg leading-relaxed">
+          '비짓부산'은 부산여행가서 보고, 먹고, <br />
+          체험할 때 부산에 방문해야 되는 명소, 축제정보, 테마여행 정보를
+          <br />
+          한 눈에 볼 수 있는 부산여행 커뮤니티로, <br />
+          최근 이를 활용하여 부산 여행을 즐기는 2030세대가
+          <br /> 늘어나고 있는것으로 보인다
+        </p>
+        <div className="text-center mt-4">
+          <button
+            className="sightsee-button-custom color"
+            onClick={handleButtonClick}
+          >
             홈페이지 바로가기
           </button>
         </div>
       </div>
     </div>
-
-    // <div className="sightsee-container">
-    //   <div className="sightsee-img-box">
-    //     <a href="https://imgbb.com/">
-    //       <img
-    //         src="https://i.ibb.co/QYDKJ77/visitbusan.jpg"
-    //         alt="visitbusan"
-    //         border="0"
-    //         className="sightsee-img"
-    //       ></img>
-    //     </a>
-    //   </div>
-    //   <div className="sightsee-text">
-    //     <h1 className="sightsee-title">Visit Busan</h1>
-    //     <p className="sightsee-description">
-    //       '비짓부산'은 부산여행가서 보고, 먹고, <br />
-    //       체험할 때 부산에 방문해야 되는 명소, 축제정보, 테마여행 정보를
-    //       <br />한 눈에 볼 수 있는 부산여행 커뮤니티로, <br />
-    //       최근 이를 활용하여 부산 여행을 즐기는 2030세대가 늘어나고 있는 것으로
-    //       보인다
-    //     </p>
-    //   </div>
-    //   <button className="sightsee-button color" onClick={handleButtonClick}>
-    //     홈페이지 바로가기
-    //   </button>
-    // </div>
   );
 };
 

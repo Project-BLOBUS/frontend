@@ -18,7 +18,13 @@ const PolicyListComponent = ({ policy }) => {
       }}
     >
       {/* D-day 영역 */}
-      <div className="absolute top-0 left-3 bg-[#6F00FF] text-white font-bold text-sm px-2 py-1 rounded-b-md inline-block">
+      <div
+        className={`absolute top-0 left-3 text-white font-bold text-sm px-2 py-1 rounded-b-md inline-block ${
+          calculateDDay(policy.rqutPrdCn) === "마감"
+            ? "bg-gray-500"
+            : "bg-[#6F00FF]"
+        }`}
+      >
         {calculateDDay(policy.rqutPrdCn)}
       </div>
 

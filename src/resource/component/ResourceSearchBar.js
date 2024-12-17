@@ -19,7 +19,7 @@ const PolicySearchBar = ({
   };
 
   return (
-    <div className="border-2 border-t-0 border-gray-200 p-4 bg-white mb-5 rounded-md rounded-tl-none rounded-tr-none">
+    <div className="border-2 border-gray-200 p-4 bg-white mb-5 rounded-md">
       <div className="flex items-center space-x-4">
         <p className="w-28 text-center text-xl font-semibold text-gray-700">
           {searchTitle}

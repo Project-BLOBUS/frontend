@@ -22,8 +22,8 @@ const PolicyListPage = ({ title }) => {
   const [serverData, setServerData] = useState(initState); // 전체 정책 리스트
   const [filteredServerData, setFilteredServerData] = useState([]); // 필터된 정책 리스트
   const [searchTerm, setSearchTerm] = useState(""); // 검색 키워드
-  const [filterType, setFilterType] = useState("polyBizSjnm"); // 유형필터 타입
-  const [policyStsType, setPolicyStsType] = useState("stsAll"); // 상태필터 타입
+  const [policyStsType, setPolicyStsType] = useState("stsAll"); // 진행상태 필터 타입
+  const [filterType, setFilterType] = useState("both"); // 검색범위 필터 타입
   const [searchTrigger, setSearchTrigger] = useState(false); // 검색 트리거 상태
 
   const { page, size, refresh, moveToPolicyList } = useCustomMove(); //refresh
@@ -33,6 +33,9 @@ const PolicyListPage = ({ title }) => {
       .then((data) => {
         setServerData(data);
         setFilteredServerData(data.dtoList); // 초기 필터목록은 전체 데이터
+        console.log("policyStsType : " + policyStsType);
+        console.log("searchTerm : " + searchTerm);
+        console.log("filterType : " + filterType);
       })
       .catch((error) => console.error("데이터 가져오기 실패:", error))
       .finally(() => setSearchTrigger(false)); // 데이터 요청 완료 후 트리거 상태 초기화
@@ -75,7 +78,6 @@ const PolicyListPage = ({ title }) => {
     <>
       {/* 정책 검색 영역 */}
       <PolicySearchBar
-        searchTitle={"일자리 정책"}
         policyStsType={policyStsType}
         searchTerm={searchTerm}
         filterType={filterType}
