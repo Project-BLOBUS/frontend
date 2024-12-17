@@ -17,7 +17,7 @@ function Resources() {
           navs={resources}
           isWhite={true}
           pageTitle="지역자원"
-          titleBg="#4400A8"
+          titleBg="#2D26A6"
           borderB={false}
         />
       </div>

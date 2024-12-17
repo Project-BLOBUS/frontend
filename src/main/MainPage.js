@@ -57,6 +57,15 @@ const MainPage = () => {
     return () => clearInterval(interval);
   }, []);
 
+
+    // 링크를 클릭했을 때 이동할 경로
+    const imageLinks = [
+      "/youth/house/policyRead/191",          // house.png에 대한 링크
+      "/youth/job/policyRead/744", // employ.png에 대한 링크
+      "/youth/welfare/2", // mileage.png에 대한 링크
+      "/youth/education/20", // university.png에 대한 링크
+    ];
+
   return (
     <div
       style={{
@@ -95,11 +104,13 @@ const MainPage = () => {
             </div>
           </div>
           <div className="w-[1170px] h-[380px] ml-[-46%] text-4xl mt-[2%] border-2 bg-white">
-            <img
-              src={images[currentImageIndex]} // 현재 이미지를 표시
-              alt="슬라이드 이미지"
-              className="w-full h-[100%]" // 이미지 크기 맞추기
-            />
+          <Link to={imageLinks[currentImageIndex]}>
+              <img
+                src={images[currentImageIndex]} // 현재 이미지를 표시
+                alt="슬라이드 이미지"
+                className="w-full h-[100%]" // 이미지 크기 맞추기
+              />
+            </Link>
           </div>
           <div className="w-[951px] h-[80px] ml-[-28%] text-2xl mt-[2%] flex space-x-[49px]">
 
