@@ -12,12 +12,6 @@ const MyPage = () => {
 
   const [jwt, setJwt] = useState(getCookie("jwt"));
 
-  const navList = [
-    { name: "청년관", link: "../youth" },
-    { name: "지역관", link: "../resource" },
-    { name: "커뮤니티", link: "../community" },
-  ];
-
   useEffect(() => {
     setLoading(true);
 
@@ -46,17 +40,9 @@ const MyPage = () => {
     <>
       {loading && <Loading />}
       <div className="h-screen">
-        <div className="bg-[rgb(255,215,25)]">
-          <Header
-            navs={navList}
-            isWhite={true}
-            pageTitle="마이페이지"
-            titleBg="rgb(255,125,0)"
-            borderB={false}
-          />
-        </div>
+        <Header pageTitle="마이페이지" titleBg="rgb(255,125,0)" />
 
-        <div className="w-[15%] h-screen pt-20 text-base text-center flex flex-col justify-start items-center fixed z-0">
+        <div className="w-[15%] h-screen mt-[-70px] pt-20 text-base text-center flex flex-col justify-start items-center fixed z-0">
           <div className="w-[70%] border-2 border-gray-300 rounded-[8px] font-bold">
             <div className="py-4 text-xl">마이페이지</div>
 
@@ -69,8 +55,7 @@ const MyPage = () => {
           </div>
         </div>
 
-        <div className="mx-[15%] min-h-[calc(100%-82px-102px)] flex justify-center items-start">
-          {/* <div className="ml-[15%] pr-[15%] h-[calc(100vh-90px)] flex justify-center items-start overflow-y-scroll"> */}
+        <div className="min-h-[calc(100%-90px-141px)] mt-[-60px] mx-[15%] flex justify-center items-start">
           <Outlet />
         </div>
 

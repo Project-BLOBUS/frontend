@@ -40,7 +40,7 @@ const AllSearch = () => {
     let start = Math.max(currentPage - 1, 1); // 최소 1
     let end = Math.min(start + 4, totalPages); // 최대 3페이지까지
     if (end - start < 2) {
-      start = Math.max(end - 2, 1);
+      start = Math.max(end - 1, 1);
     }
     return Array.from({ length: end - start + 1 }, (_, index) => start + index);
   };
@@ -254,17 +254,17 @@ const AllSearch = () => {
           <button
             onClick={() => handlePageChange(currentPage - 1)}
             disabled={currentPage === 1}
-            className="px-2 mx-1 rounded-md bg-gray-200 text-gray-600 font-bold"
+            className="px-6"
           >
-            이전
+            &lt;
           </button>
 
           {pageRange().map((page) => (
             <button
               key={page}
               onClick={() => handlePageChange(page)}
-              className={`px-4 py-2 mx-1 rounded-md ${
-                currentPage === page ? "bg-blue-500 text-white" : "bg-gray-200 text-gray-800"
+              className={`px-4 py-2 mx-1 font-bold ${
+                currentPage === page ? "text-[#6F00FF]" : ""
               }`}
             >
               {page}
@@ -274,12 +274,13 @@ const AllSearch = () => {
           <button
             onClick={() => handlePageChange(currentPage + 1)}
             disabled={currentPage === totalPages}
-            className="px-2 mx-1 rounded-md bg-gray-200 text-gray-600 font-bold"
+            className="px-6"
           >
-            다음
+             &gt;
           </button>
         </div>
       ) : null}
+      
         </div>
       </div>
 

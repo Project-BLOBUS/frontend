@@ -60,7 +60,7 @@ const MainPage = () => {
   return (
     <div
       style={{
-        width: "97.8vw", // 전체 화면 너비
+        width: "100vw", // 전체 화면 너비
         height: "100vh", // 전체 화면 높이
         backgroundImage: `url(${MainLogo})`, // import한 이미지 경로 사용
         backgroundSize: "cover", // 배경 이미지가 div를 채우도록
@@ -102,15 +102,25 @@ const MainPage = () => {
             />
           </div>
           <div className="w-[951px] h-[80px] ml-[-28%] text-2xl mt-[2%] flex space-x-[49px]">
-            <div className="w-[284px] h-[77px] border-2 border-[#5E07F5] text-[#5E07F5]  flex justify-center items-center bg-white rounded-[4px]">
-              청년관
-            </div>
-            <div className="w-[284px] h-[77px] border-2 border-[#CF0095] text-[#CF0095] flex justify-center items-center bg-white rounded-[4px]">
-              지역자원관
-            </div>
+
+            <Link to="/youth">
+              <div className="w-[284px] h-[77px] border-2 border-[#5E07F5] text-[#5E07F5]  flex justify-center items-center bg-white rounded-[4px]">
+                청년관
+              </div>
+            </Link>
+
+            <Link to="/resource/digital">
+               <div className="w-[284px] h-[77px] border-2 border-[#CF0095] text-[#CF0095] flex justify-center items-center bg-white rounded-[4px]">
+                 지역자원관
+               </div>
+            </Link>
+
+          <Link to="/community">
             <div className="w-[284px] h-[77px] border-2 border-[#34B440] text-[#34B440] flex justify-center items-center bg-white rounded-[4px]">
               커뮤니티
             </div>
+          </Link>
+
           </div>
         </div>
       </div>

@@ -51,13 +51,13 @@ const Agree = () => {
   return (
     <>
       {loading && <Loading />}
-      <div className="w-[70%] h-[90%] px-10 py-4 border-2 border-gray-300 rounded shadow-xl text-base text-center font-bold flex flex-col justify-center items-center">
-        <div className="w-full h-[20%] text-5xl flex justify-center items-center">
+      <div className="w-[50%] h-[70%] px-10 py-4 border-2 border-gray-300 rounded shadow-xl text-base text-center font-bold flex flex-col justify-center items-center">
+        <div className="w-full h-[20%] text-3xl flex justify-center items-center">
           약관동의
         </div>
 
         <div className="w-full h-[65%] flex flex-col justify-center items-center">
-          <div className="w-full h-1/4 border-b-2 border-gray-300 text-3xl flex justify-center items-center cursor-pointer">
+          <div className="w-full h-1/4 border-b-2 border-gray-300 text-2xl flex justify-center items-center cursor-pointer">
             {makeAgree("전체 동의", agreeAll, () => {
               setAgreeAll(!agreeAll);
               setTermsList((prev) =>
@@ -66,7 +66,7 @@ const Agree = () => {
             })}
           </div>
 
-          <div className="w-full h-3/4 flex flex-col justify-center items-center space-y-4">
+          <div className="w-full h-3/4 flex flex-col justify-center items-center space-y-2">
             {termsList.map((data, index) => (
               <div
                 key={index}

@@ -161,14 +161,14 @@ const FindPw = () => {
   return (
     <>
       {loading && <Loading />}
-      <div className="w-1/2 h-[90%] px-10 py-4 border-2 border-gray-300 rounded shadow-xl text-base text-center font-bold flex flex-col justify-center items-center">
-        <div className="w-full h-[20%] text-5xl flex justify-center items-center">
+      <div className="w-1/2 h-[80%] px-10 py-4 border-2 border-gray-300 rounded shadow-xl text-base text-center font-bold flex flex-col justify-center items-center">
+        <div className="w-full h-[20%] text-3xl flex justify-center items-center">
           비밀번호 {!validation.isAuth ? " 찾기" : " 변경"}
         </div>
 
         {!validation.isAuth ? (
           <>
-            <div className="w-full h-[10%] text-md flex flex-col justify-center items-center">
+            <div className="w-full h-[10%] flex flex-col justify-center items-center">
               <div className="w-full h-1/2">
                 회원정보에 등록된 정보로 비밀번호를 찾을 수 있습니다.
               </div>
@@ -177,7 +177,7 @@ const FindPw = () => {
               </div>
             </div>
 
-            <div className="w-full h-[35%] px-10 text-sm flex flex-col justify-center items-center space-y-4">
+            <div className="w-full h-[35%] px-10 flex flex-col justify-center items-center space-y-4">
               {/* 아이디 */}
               {makeAdd(
                 "아이디",
@@ -211,12 +211,12 @@ const FindPw = () => {
           </>
         ) : (
           <>
-            <div className="w-full h-[10%] text-md flex flex-col justify-center items-center">
+            <div className="w-full h-[10%] flex flex-col justify-center items-center">
               <div className="w-full h-1/2">인증이 완료되었습니다.</div>
               <div className="w-full h-1/2">변경할 비밀번호를 입력하세요.</div>
             </div>
 
-            <div className="w-full h-[35%] px-10 text-md flex flex-col justify-center items-center space-y-4">
+            <div className="w-full h-[35%] px-10 flex flex-col justify-center items-center space-y-4">
               {/* 비밀번호 */}
               {makeAdd(
                 "비밀번호",

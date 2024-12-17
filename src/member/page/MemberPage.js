@@ -44,16 +44,9 @@ const MemberPage = () => {
         <Loading />
       ) : (
         <div className="h-screen">
-          <div className="bg-pink-500">
-            <Header
-              isWhite={true}
-              pageTitle="메인"
-              titleBg="#BE185D"
-              borderB={false}
-            />
-          </div>
+          <Header pageTitle="메인" titleBg="#BE185D" />
 
-          <div className="bg-white mx-[15%] h-[calc(100%-82px-102px)] flex justify-center items-center">
+          <div className="h-[calc(100%-90px-141px)] mt-[-60px] mx-[15%] flex justify-center items-center">
             <Outlet />
           </div>
 

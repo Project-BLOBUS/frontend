@@ -11,7 +11,7 @@ function Resources() {
 
   return (
     <div>
-      <div className="bg-[linear-gradient(45deg,_#FF0033,_#4900D2)]">
+      <div>
         {/* Header에 isWhite prop을 true로 전달하고, pageTitle을 '청년관'으로 설정 */}
         <Header
           navs={resources}

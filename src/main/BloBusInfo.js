@@ -6,7 +6,7 @@ function BlobusInfo() {
   return (
     <div className="blobusinfo">
       {/* 배경과 Header 부분 */}
-      <div className="bg-[linear-gradient(15deg,_#0130BC,_#DB0153)]">
+      <div>
         <Header
           pageTitle="소개"
           titleBg="#C40052"
