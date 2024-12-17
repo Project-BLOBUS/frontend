@@ -5,6 +5,7 @@ import { useSearchParams, Link  } from "react-router-dom";
 import { FaLock} from "react-icons/fa";
 import { toast } from "react-toastify";
 import { getCookie } from "../etc/util/cookieUtil";
+import Footer from "./Footer";
 
 const AllSearch = () => {
   const [searchParams,setSearchParams ] = useSearchParams();
@@ -19,6 +20,8 @@ const AllSearch = () => {
   const [search, setSearch] = useState(searchParams.get('query') || ''); // 검색어 상태
   const [category, setCategory] = useState(searchParams.get('category') || 'policy'); // URL에서 카테고리 값 가져오기
 
+
+  
 
   // 페이지 변경 함수
   const handlePageChange = (pageNumber) => {
@@ -125,59 +128,61 @@ const AllSearch = () => {
     }
   };  
 
-   
 
   return (
     <div>
+      
       <div className="bg-[linear-gradient(45deg,_#DB0153,_#6E00FF)]">
         <Header
-          pageTitle="통합검색"
-          titleBg="#D5006D"
-          isWhite={true}
-          borderB={false}
+          pageTitle="메인"
+          titleBg = "#D9017F"
         />
       </div>
-      <div className="min-h-full w-[70.7%] ml-[15%] mt-[4px] flex flex-col items-center justify-center ">
-        <div className="sm:w-[30%] w-[50%] text-center sm:mb-[15%] mb-[15%] sm:mr-[0%] mr-[38%] ">
-          <div className="flex flex-col sm:w-[100%] w-[160%] sm:h-[100px] h-[70px] ml-[5%] mt-[3%] sm:text-md text-md font-bold text-gray-700 sm:mb-[60%] mb-[60%] ">
-            <div className="w-[330px] flex justify-center items-center mt-[-3%] ml-[2.2%]">
+    
+      
+      <div className="w-[70.7%] h-[650px] ml-[15%] mt-[7%] ">
+      
+        <div className="text-4xl text-[#333333] border-b-2 pb-4">통합검색</div>
+
+
+        <div className="border-2 h-[70px] pl-[25px] mt-[20px] flex justify-start items-center">
+            <p className="font-bold text-2xl">통합검색</p>
+            <div className=" ml-[2.5%] w-[900px]">
               <input
                 type="text"
-                placeholder="검색"
-                className="border-2 text-md sm:mt-2 mt-[3%] sm:w-[100%] w-[100%] h-[40px] p-[5%] sm:p-[4%] focus:outline-none ml-[-9%]"
+                placeholder="메인에서 입력한 검색어 넣기"
+                className="border-b-2 text-xl w-[100%] h-[40px]  focus:outline-none"
                 value={search}  // 검색어 상태 바인딩
                 onChange={(e) => setSearch(e.target.value)}  // 입력 필드에서만 상태 변경
                 onKeyDown={handleKeyDown} // 엔터 키 입력 시 검색 실행
                 maxLength={16}
               />
-
-              <div
-                className="w-[85px] sm:h-[40px] mt-[8px] bg-[#A488F3] text-md sm:text-lg text-white font-bold  flex justify-center items-center cursor-pointer transition duration-500 hover:text-gray-300"
-                onClick={handleSearchClick}  // 검색 버튼 클릭 시
-              >
-                검색
-              </div>
             </div>
-
-            <div className="ml-[-36%] text-xl flex justify-center w-[550px] mt-[-6%]">
-              <div className={`w-[180px] border-2 border-gray-400 mt-[5%] cursor-pointer ${category === 'policy' ? 'text-gray-400' : ''}`} 
-                onClick={() => {
-                  setCategory('policy');
-                }}>
-                청년관({policyTotalItems}) {/* 정책의 총 개수 */}
-              </div>
-
-              <div className={`w-[180px] border-2 border-gray-400 mt-[5%] cursor-pointer ${category === 'community' ? 'text-gray-400' : ''}`} 
-                onClick={() => {
-                  setCategory('community');
-                }}>
-                커뮤니티({communityTotalItems}) {/* 커뮤니티의 총 개수 */}
-              </div>
-            </div>
-          </div>
+              <div className="border-2  w-[110px] h-[43px] font-bold text-lg ml-4 flex justify-center items-center cursor-pointer " onClick={handleSearchClick}>검색</div>
+              <div className="border-2  w-[110px] h-[43px] font-bold text-lg ml-4 flex justify-center items-center cursor-pointer" onClick={() => setSearch('')}>초기화</div>
         </div>
 
-        {/* 데이터가 없을 때 메시지 표시 */}
+        <div className=" h-[100px] flex">
+
+                <div className={`w-[50%] h-full border-b-2 border-gray-400 text-2xl text-[#666666] font-bold flex justify-center items-center cursor-pointer ${category === 'policy' ? 'text-gray-400 border-b-4' : ''}`} 
+                  onClick={() => {
+                    setCategory('policy');
+                  }}>
+                  청년관({policyTotalItems}) 
+                  </div>
+
+                  <div className={`w-[50%] h-full border-b-2 border-gray-400 text-2xl text-[#666666] font-bold flex justify-center items-center cursor-pointer ${category === 'community' ? 'text-gray-400 border-b-4' : ''}`} 
+                  onClick={() => {
+                    setCategory('community');
+                  }}>
+                  커뮤니티({communityTotalItems}) 
+                </div> 
+        </div>
+
+
+        
+        <div className="h-[720px] mt-[1%]">
+
         {category === "policy" && policies.length === 0 ? (
           <div className="text-center text-gray-500 text-3xl mt-[-20%] ml-[2%] ">
             검색어에 해당하는 청년관 데이터가 없습니다.
@@ -187,8 +192,11 @@ const AllSearch = () => {
             검색어에 해당하는 커뮤니티 데이터가 없습니다.
           </div>
         ) : (
-          <ul className="w-[1100px] p-2 sm:mt-[-35%] mt-[-25%] sm:ml-[60px] ml-[12px] pb-[2%] sm:pb-[1%] flex flex-wrap">
 
+
+          <ul className="w-full flex flex-wrap ">
+
+{/* 청년관 */}
           {category === "policy" &&
             policies.map((item, index) => (
               <Link to={
@@ -196,19 +204,22 @@ const AllSearch = () => {
                 ? `/youth/${item.category}/policyRead/${item.id}` 
                 : `/youth/${item.category}/${item.id}`}>
               <li key={item.id} 
-              className="flex justify-center items-center bg-white w-[470px] h-[80px] ml-8 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300 ease-in-out cursor-pointer border-2 border-gray-400 overflow-y-auto m-2">
-                  <p className="text-sm font-bold text-gray-800 p-[15px]">
+                    className="flex justify-center items-center bg-white w-[298px] h-[185px] rounded-md shadow-sm hover:shadow-md transition-shadow duration-300 ease-in-out cursor-pointer border-2 border-gray-400 overflow-y-auto m-4">
+                  <p className="text-lg font-bold text-gray-800 p-[20px]">
                     {index + (currentPage - 1) * 10 + 1}. {item.title}
                   </p>
               </li>
               </Link>
             ))}
 
+
+
+{/* 커뮤니티 */}
         {category === "community" &&
           communityPolicies.map((item, index) => (
             <Link to={`/community/read/${item.id}`}>
             <li key={item.id} 
-              className="flex justify-center items-center bg-white w-[470px] h-[80px] ml-8 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300 ease-in-out cursor-pointer border-2 border-gray-400 overflow-y-auto m-2"
+              className="flex justify-center items-center bg-white w-[298px] h-[185px] rounded-md shadow-sm hover:shadow-md transition-shadow duration-300 ease-in-out cursor-pointer border-2 border-gray-400 overflow-y-auto m-4"
               onClick={(e) => {  
                 if (
                   (getCookie("userRole") !== "ADMIN" &&
@@ -221,7 +232,7 @@ const AllSearch = () => {
                 }
               }}>
                    {item.visibility ? <FaLock /> : <></>}
-                  <p className="text-sm font-bold text-gray-800 p-1">
+                  <p className="text-lg font-bold text-gray-800 p-[20px]">
                     {index + (currentPage - 1) * 10 + 1}. {item.title} {/* item.title로 제목을 출력 */}
                   </p>
               </li>
@@ -230,9 +241,16 @@ const AllSearch = () => {
         </ul>
       )}
 
+
+
+
+
+
+
+
          {/* 페이징 버튼 */}
       {(category === "policy" && policies.length > 0) || (category === "community" && communityPolicies.length > 0) ? (
-        <div className="flex justify-center sm:ml-6 ml-0 mt-[-1px]">
+        <div className="flex justify-center mt-2">
           <button
             onClick={() => handlePageChange(currentPage - 1)}
             disabled={currentPage === 1}
@@ -262,7 +280,16 @@ const AllSearch = () => {
           </button>
         </div>
       ) : null}
+        </div>
       </div>
+
+
+
+
+      <div className="mt-[350px]"> 
+          <Footer/>
+      </div>
+
     </div>
   );
 };

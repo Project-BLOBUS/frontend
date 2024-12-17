@@ -10,3 +10,7 @@
   border-bottom: 3px solid transparent;
   border-image: linear-gradient(to right, #3e16e2, #ec0245) 1;
 }
+
+html, body {
+  overflow-y: scroll; /* 항상 수직 스크롤바가 보이도록 설정 */
+}

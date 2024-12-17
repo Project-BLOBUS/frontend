@@ -1,19 +1,13 @@
-import { useState, useEffect, useCallback } from "react";
-import Header from "./Header";
+import { useState, useEffect } from "react";
+import MainHeader from "./MainHeader";
 import Footer from "./Footer";
 import { useNavigate, Link } from "react-router-dom";
-import { BsChevronLeft, BsChevronRight } from "react-icons/bs";
-import { motion } from "framer-motion";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import MainLogo from "./MainLogo.jpg";
+import { FaSearch } from "react-icons/fa";
 
 const MainPage = () => {
-  const [activeNav, setActiveNav] = useState(null); // 클릭된 항목을 추적
-
-  const handleNavClick = (nav) => {
-    setActiveNav(nav); // 클릭된 항목으로 상태 업데이트
-  };
-
   const [searchs, setSearchs] = useState(""); // 검색어 상태
   const navigate = useNavigate(); // useNavigate 훅을 사용하여 페이지 이동
   const [toastId, setToastId] = useState(null);
@@ -37,272 +31,93 @@ const MainPage = () => {
     }
   };
 
-  const slides = [
-    {
-      url: "https://img.freepik.com/premium-vector/young-businessman-speaking-screen-announcer-teacher_147644-3273.jpg?w=900",
-      link: "/blobusintro",
-      text: "BLoBus 소개",
-      style: "w-full h-full bg-center bg-cover rounded-lg",
-      textStyle:
-        "sm:text-4xl text-2xl p-7 pt-[50px] sm:pl-[40px] pl-[20px] font-bold text-gray-800",
-    },
-    {
-      url: "https://img.freepik.com/premium-vector/man-sits-desk-front-computer-screen-that-says-i-m-software-developer_877730-109.jpg?w=996",
-      link: "/blobusWork",
-      text: "BLoBus 기능",
-      style: "w-full h-full bg-center bg-cover rounded-lg",
-      textStyle:
-        "sm:text-2xl text-xl p-7 pt-[40px] sm:pl-[38%] pl-[32%] font-bold text-gray-800",
-    },
-    {
-      url: "https://img.freepik.com/premium-vector/hand-holding-tablet-with-checklist-online-survey-form_34089-125.jpg?w=740",
-      link: "/blobusNews",
-      text: "BLoBus 목표",
-      style: "w-full h-full bg-center bg-cover rounded-lg",
-      textStyle:
-        "text-white sm:text-xl text-xs p-7 sm:pt-[18px] pt-[35px] sm:pl-[38%] pl-[39.5%] font-bold text-gray-700",
-    },
-  ];
-
-  const [currentIndex, setCurrentIndex] = useState(0);
-
-  const nextSlide = useCallback(() => {
-    setCurrentIndex((prevIndex) =>
-      prevIndex === slides.length - 1 ? 0 : prevIndex + 1
-    );
-  }, [slides.length]);
-
-  useEffect(() => {
-    const interval = setInterval(nextSlide, 4000);
-    return () => clearInterval(interval);
-  }, [nextSlide]);
-
-  const prevSlide = () => {
-    setCurrentIndex((prevIndex) =>
-      prevIndex === 0 ? slides.length - 1 : prevIndex - 1
-    );
-  };
-
-  const Unknown = [
-    { name: "기업메뉴1", link: "/" },
-    { name: "기업메뉴2", link: "/" },
-    { name: "기업메뉴3", link: "/" },
-  ];
-
   const handleKeyDown = (e) => {
     if (e.key === "Enter") {
       handleSearchClick();
     }
   };
 
+  // public 폴더에 있는 이미지 경로
+  const images = [
+    `${process.env.PUBLIC_URL}/house.png`,
+    `${process.env.PUBLIC_URL}/employ.png`,
+    `${process.env.PUBLIC_URL}/mileage.png`,
+    `${process.env.PUBLIC_URL}/university.png`,
+  ];
+
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+
+  // 자동으로 슬라이드를 3초마다 이동
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentImageIndex((prevIndex) => (prevIndex + 1) % images.length);
+    }, 3000);
+
+    // 컴포넌트 언마운트 시 interval 클리어
+    return () => clearInterval(interval);
+  }, []);
+
   return (
-    <div>
-      {/* "메인"으로 설정된 페이지 제목 */}
+    <div
+      style={{
+        width: "97.8vw", // 전체 화면 너비
+        height: "100vh", // 전체 화면 높이
+        backgroundImage: `url(${MainLogo})`, // import한 이미지 경로 사용
+        backgroundSize: "cover", // 배경 이미지가 div를 채우도록
+        backgroundPosition: "center", // 배경 이미지의 위치를 중앙으로
+        backgroundRepeat: "no-repeat", // 배경 이미지가 반복되지 않도록
+      }}
+    >
       <div>
-        <Header
-          navs2={Unknown}
-          pageTitle="메인"
-          titleBg="#EC0245"
-          borderB={true}
-        />
+        <MainHeader />
       </div>
-      <div className="h-full w-[70.7%] ml-[15%] mt-[1.6%] flex flex-col sm:flex-row">
-        {/* 왼쪽 라인 */}
-        <div className="w-full sm:w-[535px]">
-          <div className=" sm:w-[100%] w-[118%] ml-[-10%] sm:ml-[0%] h-[300px] sm:h-[400px]">
-            <Link to={slides[currentIndex].link || "#"}>
-              <div
-                style={{ backgroundImage: `url(${slides[currentIndex].url})` }}
-                className={slides[currentIndex].style}
-              >
-                <div className={slides[currentIndex].textStyle}>
-                  {slides[currentIndex].text}
-                </div>
-              </div>
-            </Link>
 
-            {/* 왼쪽 화살표 */}
-            <div className="w-[9%] mt-[-35%] transform -translate-y-1/2 rounded-full p-2 bg-black/20 text-white transition duration-500 hover:text-black hover:bg-white hover:bg-opacity-20 cursor-pointer hidden sm:block">
-              <BsChevronLeft onClick={prevSlide} size={30} />
-            </div>
-
-            {/* 오른쪽 화살표 */}
-            <div className="w-[9%] mt-[-9%] ml-[91%]  transform -translate-y-1/2 rounded-full p-2 bg-black/20 text-white transition duration-500 hover:text-black hover:bg-white hover:bg-opacity-20 cursor-pointer hidden sm:block">
-              <BsChevronRight onClick={prevSlide} size={30} />
-            </div>
-          </div>
-
-          <div className="text-xl sm:text-2xl mt-4 sm:ml-[0%] ml-[37%] font-bold">
-            통합검색
-          </div>
-
-          <div className="flex justify-start">
+      <div className="w-[70%] h-[70%] ml-[15%] mt-[-2%] flex justify-center items-start font-bold text-sm bg-[#DEDEDE] bg-opacity-50 rounded-[25px] ">
+        <div className="w-[610px] h-[50px] text-4xl mt-[3%]">
+          <span className="text-[#0051E6]">청년 정책</span>의 모든 것,
+          <span className="text-[#D70159]">부산</span>
+          에서 한눈에
+          <div className="relative">
             <input
               type="text"
-              placeholder="검색"
-              className="font-bold text-md sm:text-lg mt-2 rounded-tl-[25px] rounded-bl-[25px] border-2 w-[230px] sm:w-[450px] h-[30px] sm:h-[50px] p-4 focus:outline-none"
+              placeholder="통합검색"
+              className="font-bold text-lg mt-4 rounded-[25px] border-2 w-[500px] h-[50px] ml-[7%] pl-[30px] focus:outline-none"
               value={searchs} // 상태값을 input에 바인딩
               onChange={handleSearchChange} // 검색어 입력 시 상태 업데이트
               onKeyDown={handleKeyDown} // 엔터 키 입력 시 검색 실행
             />
 
             <div
-              className="w-[85px] sm:h-[50px] mt-2 bg-[#A488F3] text-md sm:text-lg text-white font-bold rounded-tr-[25px] rounded-br-[25px] flex  justify-center items-center cursor-pointer transition duration-500 hover:text-gray-300"
+              className="cursor-pointer hover:text-gray-400 transition duration-500"
               onClick={handleSearchClick}
             >
-              검색
+              <FaSearch className="absolute top-[30px] transform-translate-y-1/2 ml-[82%] text-2xl" />
+            </div>
+          </div>
+          <div className="w-[1170px] h-[380px] ml-[-46%] text-4xl mt-[2%] border-2 bg-white">
+            <img
+              src={images[currentImageIndex]} // 현재 이미지를 표시
+              alt="슬라이드 이미지"
+              className="w-full h-[100%]" // 이미지 크기 맞추기
+            />
+          </div>
+          <div className="w-[951px] h-[80px] ml-[-28%] text-2xl mt-[2%] flex space-x-[49px]">
+            <div className="w-[284px] h-[77px] border-2 border-[#5E07F5] text-[#5E07F5]  flex justify-center items-center bg-white rounded-[4px]">
+              청년관
+            </div>
+            <div className="w-[284px] h-[77px] border-2 border-[#CF0095] text-[#CF0095] flex justify-center items-center bg-white rounded-[4px]">
+              지역자원관
+            </div>
+            <div className="w-[284px] h-[77px] border-2 border-[#34B440] text-[#34B440] flex justify-center items-center bg-white rounded-[4px]">
+              커뮤니티
             </div>
           </div>
         </div>
-        {/* 오른쪽 라인 */}
-        <div className="ml-[1.8%] mt-[-1%]">
-          <div className="sm:text-lg text-xl font-bold sm:ml-[0%] ml-[31.5%] mt-4 sm:mt-[-8px]">
-            최신 정보
-          </div>
-          <div className="flex flex-wrap justify-center items-center text-md font-bold text-center mt-2 sm:mt-0 sm:ml-[-1%] ml-[-3%]">
-            <nav
-              onClick={() => handleNavClick("청년관")}
-              className={` p-3 w-[129px] cursor-pointer ${
-                activeNav === "청년관"
-                  ? "border-t-[3px] border-t-[#0130BC] border-b-0"
-                  : "border"
-              }`}
-            >
-              청년관
-            </nav>
-
-            <nav
-              onClick={() => handleNavClick("기업관")}
-              className={`p-3 w-[129px] cursor-pointer ${
-                activeNav === "기업관"
-                  ? "border-t-[3px] border-t-[#DB0153] border-b-0"
-                  : "border"
-              }`}
-            >
-              기업관
-            </nav>
-
-            <nav
-              onClick={() => handleNavClick("지역자원")}
-              className={`p-3 w-[129px] cursor-pointer ${
-                activeNav === "지역자원"
-                  ? "border-t-[3px] border-t-[#6E00FF] border-b-0"
-                  : "border"
-              }`}
-            >
-              지역자원
-            </nav>
-
-            <nav
-              onClick={() => handleNavClick("커뮤니티")}
-              className={`p-3 w-[129px] cursor-pointer ${
-                activeNav === "커뮤니티"
-                  ? "border-t-[3px] border-t-[#FB0138] border-b-0"
-                  : "border"
-              }`}
-            >
-              커뮤니티
-            </nav>
-          </div>
-          {/* 조건부 렌더링 임시로 넣은겁니다. */}
-          {activeNav === "청년관" && (
-            <motion.div
-              className="flex flex-col h-[168px] overflow-y-auto"
-              initial={{ opacity: 0, y: -20 }} // 초기 상태: 투명하고 위쪽에 위치
-              animate={{ opacity: 1, y: 0 }} // 애니메이션 종료 후: 불투명하고 원래 위치로
-              exit={{ opacity: 0, y: -20 }} // 떠날 때: 다시 투명하고 위로 이동
-              transition={{ duration: 0.5 }} // 애니메이션 지속 시간
-            >
-              <span className="border-b-2 p-1">
-                실시간 청년1
-                <div>부제목 내용 등등</div>
-              </span>
-              <span className="border-b-2 p-1">실시간 청년2</span>
-              <span className="border-b-2 p-1">실시간 청년3</span>
-              <span className="border-b-2 p-1">실시간 청년4</span>
-              <span className="border-b-2 p-1">실시간 청년5</span>
-              <span className="border-b-2 p-1">실시간 청년6</span>
-            </motion.div>
-          )}
-
-          {activeNav === "기업관" && (
-            <motion.div
-              className="flex flex-col h-[168px] overflow-y-auto"
-              initial={{ opacity: 0, y: -20 }} // 초기 상태
-              animate={{ opacity: 1, y: 0 }} // 애니메이션 종료 후
-              exit={{ opacity: 0, y: -20 }} // 떠날 때
-              transition={{ duration: 0.5 }} // 애니메이션 지속 시간
-            >
-              <span className="border-b-2 p-1">실시간 기업1</span>
-              <span className="border-b-2 p-1">실시간 기업2</span>
-              <span className="border-b-2 p-1">실시간 기업3</span>
-              <span className="border-b-2 p-1">실시간 기업4</span>
-              <span className="border-b-2 p-1">실시간 기업5</span>
-              <span className="border-b-2 p-1">실시간 기업6</span>
-            </motion.div>
-          )}
-
-          {activeNav === "지역자원" && (
-            <motion.div
-              className="flex flex-col h-[168px] overflow-y-auto"
-              initial={{ opacity: 0, y: -15 }} // 초기 상태
-              animate={{ opacity: 1, y: 0 }} // 애니메이션 종료 후
-              exit={{ opacity: 0, y: -20 }} // 떠날 때
-              transition={{ duration: 0.5 }} // 애니메이션 지속 시간
-            >
-              <span className="border-b-2 p-1">실시간 지역자원1</span>
-              <span className="border-b-2 p-1">실시간 지역자원2</span>
-              <span className="border-b-2 p-1">실시간 지역자원3</span>
-              <span className="border-b-2 p-1">실시간 지역자원4</span>
-              <span className="border-b-2 p-1">실시간 지역자원5</span>
-              <span className="border-b-2 p-1">실시간 지역자원6</span>
-            </motion.div>
-          )}
-
-          {activeNav === "커뮤니티" && (
-            <motion.div
-              className="flex flex-col h-[168px] overflow-y-auto"
-              initial={{ opacity: 0, y: -15 }} // 초기 상태
-              animate={{ opacity: 1, y: 0 }} // 애니메이션 종료 후
-              exit={{ opacity: 0, y: -20 }} // 떠날 때
-              transition={{ duration: 0.5 }} // 애니메이션 지속 시간
-            >
-              <span className="border-b-2 p-1">실시간 커뮤니티1</span>
-              <span className="border-b-2 p-1">실시간 커뮤니티2</span>
-              <span className="border-b-2 p-1">실시간 커뮤니티3</span>
-              <span className="border-b-2 p-1">실시간 커뮤니티4</span>
-              <span className="border-b-2 p-1">실시간 커뮤니티5</span>
-              <span className="border-b-2 p-1">실시간 커뮤니티6</span>
-            </motion.div>
-          )}
-          <div className="mt-2 sm:w-[521px] w-[260.5px] h-[270px] sm:ml-[0px] ml-[10px] flex flex-wrap gap-4 text-white font-bold ">
-            <Link to="/youth">
-              <div className="text-2xl sm:w-[250px] w-[120px] h-[150px] bg-[linear-gradient(45deg,_#0130BC,_#6E00FF)]  flex justify-center items-center hover:text-gray-300 hover:scale-90 transition duration-500">
-                청년관
-              </div>
-            </Link>
-
-            <Link to="/enterprise">
-              <div className="sm:w-[251px] w-[117px] h-[100px] bg-[linear-gradient(45deg,_#DB0153,_#0130BC)] sm:ml-[1px] ml-[7px] flex justify-center items-center hover:text-gray-300 hover:scale-90 transition duration-500">
-                기업관
-              </div>
-            </Link>
-
-            <Link to="/community">
-              <div className="sm:w-[250px] w-[119px] h-[100px] bg-[linear-gradient(45deg,_#6E00FF,_#DB0153)] flex justify-center items-center hover:text-gray-300 hover:scale-90 transition duration-500">
-                커뮤니티
-              </div>
-            </Link>
-
-            <Link to="/resource">
-              <div className="sm:w-[241.5px] w-[111px] h-[150px] bg-[linear-gradient(45deg,_#DB0153,_#FB0138)] mt-[-50px] sm:ml-[9px] ml-[7px] flex justify-center items-center hover:text-gray-300 hover:scale-90 transition duration-500">
-                지역자원
-              </div>
-            </Link>
-          </div>
-        </div>
       </div>
-      <Footer />
+
+      <div className="mt-[30px]">
+        <Footer />
+      </div>
     </div>
   );
 };
