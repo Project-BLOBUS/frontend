@@ -219,15 +219,13 @@ const EducationPage = () => {
   if (error) return <p>{error}</p>;
 
   return (
-    <div className="guide-line">
-      <div className="text-3xl font-bold mb-6 pb-4 border-b-2 border-b-gray-200">
-        <div className="flex items-center space-x-4">
-          <p className="text-3xl font-bold">청년 교육 정책</p>
-        </div>
-      </div>
+    <div className="guide-line grid">
+      <h1 className="text-3xl font-bold mb-6 pb-4 border-b-2 border-b-gray-200">
+        청년 교육 정책
+      </h1>
 
       {/* 검색 입력창 및 버튼 */}
-      <div className="border-2 border-gray-200 rounded-md p-4 bg-white mb-5">
+      <div className="border-2 border-gray-200 bg-white rounded-md p-4 bg-white mb-5">
         <div className="flex items-center space-x-4">
           <label className="font-bold text-gray-800">진행상태</label>
           <select
