@@ -17,7 +17,7 @@ const useMypageTag = () => {
   const makeBtn2 = (name, onClick) => {
     return (
       <button
-        className="bg-white w-fit mx-2 px-4 py-2 border-2 border-gray-300 rounded text-base text-nowrap hover:border-yellow-500 transition duration-500"
+        className="bg-gray-50 w-fit mx-2 px-4 py-2 border-2 border-gray-300 rounded text-base text-nowrap hover:border-yellow-500 transition duration-500"
         onClick={onClick}
       >
         {name}

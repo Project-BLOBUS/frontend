@@ -219,12 +219,10 @@ const WelfarePage = () => {
   if (error) return <p>{error}</p>;
 
   return (
-    <div className="guide-line">
-      <div className="text-3xl font-bold mb-6 pb-4 border-b-2 border-b-gray-200">
-        <div className="flex items-center space-x-4">
-          <p className="text-3xl font-bold">청년 복지 정책</p>
-        </div>
-      </div>
+    <div className="guide-line grid">
+      <h1 className="text-3xl font-bold mb-6 pb-4 border-b-2 border-b-gray-200">
+        청년 복지 정책
+      </h1>
 
       {/* 검색 입력창 및 버튼 */}
       <div className="border-2 border-gray-200 rounded-md p-4 bg-white mb-5">
@@ -284,7 +282,7 @@ const WelfarePage = () => {
         {policies.map((policy) => (
           <div
             key={policy.policyId}
-            className="relative h-44 border border-gray-200 rounded-md px-3 pb-3 shadow-sm hover:shadow-md cursor-pointer transition-shadow duration-500"
+            className="relative h-44 border border-gray-200 bg-white rounded-md px-3 pb-3 shadow-sm hover:shadow-md cursor-pointer transition-shadow duration-500"
             onClick={() => {
               handlePolicyClick(policy.policyId);
             }}
@@ -343,24 +341,22 @@ const WelfarePage = () => {
       </div>
 
       {/* 기존 페이징 버튼 */}
-      <div className="w-[200px] h-[20px] ml-[40%] mt-[5px]">
-        <div className="w-full flex justify-center mt-4">
-          {/* 이전 그룹 버튼 */}
-          {currentPageGroup > 0 &&
-            renderPageButton(null, "< ", handlePreviousGroup)}
-
-          {/* 이전 페이지 버튼
+      <div className="m-6 flex justify-center">
+        {/* 이전 그룹 버튼 */}
+        {currentPageGroup > 0 &&
+          renderPageButton(null, "< ", handlePreviousGroup)}
+        {/* 이전 페이지 버튼
           {renderPageButton(null, "<", handlePreviousPage, currentPage === 0)} */}
 
-          {/* 현재 그룹에 해당하는 페이지 버튼 */}
-          {Array.from(
-            { length: endPage - startPage },
-            (_, index) => startPage + index
-          ).map((page) =>
-            renderPageButton(page, page + 1, () => handlePageChange(page))
-          )}
+        {/* 현재 그룹에 해당하는 페이지 버튼 */}
+        {Array.from(
+          { length: endPage - startPage },
+          (_, index) => startPage + index
+        ).map((page) =>
+          renderPageButton(page, page + 1, () => handlePageChange(page))
+        )}
 
-          {/* 다음 페이지 버튼
+        {/* 다음 페이지 버튼
           {renderPageButton(
             null,
             ">",
@@ -368,10 +364,8 @@ const WelfarePage = () => {
             currentPage === totalPages - 1
           )} */}
 
-          {/* 다음 그룹 버튼 */}
-          {endPage < totalPages &&
-            renderPageButton(null, " >", handleNextGroup)}
-        </div>
+        {/* 다음 그룹 버튼 */}
+        {endPage < totalPages && renderPageButton(null, " >", handleNextGroup)}
       </div>
 
       {/* 사이드바 */}
