@@ -140,26 +140,26 @@ const AllSearch = () => {
       </div>
     
       
-      <div className="w-[70.7%] h-[650px] ml-[15%] mt-[7%] ">
+      <div className="w-[70.7%] h-[650px] ml-[15%] mt-[3.5%] ">
       
-        <div className="text-4xl text-[#333333] border-b-2 pb-4">통합검색</div>
+        <div className="text-3xl text-[#333333] border-b-2 pb-4 font-bold">통합검색</div>
 
 
-        <div className="border-2 h-[70px] pl-[25px] mt-[20px] flex justify-start items-center">
+        <div className="border-2 h-[75px] pl-[25px] mt-[24px] flex justify-start items-center rounded-lg">
             <p className="font-bold text-2xl">통합검색</p>
             <div className=" ml-[2.5%] w-[900px]">
               <input
                 type="text"
                 placeholder="메인에서 입력한 검색어 넣기"
-                className="border-b-2 text-xl w-[100%] h-[40px]  focus:outline-none"
+                className="border-b-2 text-lg w-[103%] h-[40px]  focus:outline-none"
                 value={search}  // 검색어 상태 바인딩
                 onChange={(e) => setSearch(e.target.value)}  // 입력 필드에서만 상태 변경
                 onKeyDown={handleKeyDown} // 엔터 키 입력 시 검색 실행
                 maxLength={16}
               />
             </div>
-              <div className="border-2  w-[110px] h-[43px] font-bold text-lg ml-4 flex justify-center items-center cursor-pointer " onClick={handleSearchClick}>검색</div>
-              <div className="border-2  w-[110px] h-[43px] font-bold text-lg ml-4 flex justify-center items-center cursor-pointer" onClick={() => setSearch('')}>초기화</div>
+              <div className="border-2  w-[110px] h-[43px] font-bold text-lg ml-[40px] flex justify-center items-center cursor-pointer rounded-lg hover:bg-gray-300 transiton duration-500" onClick={handleSearchClick}>검색</div>
+              <div className="border-2  w-[110px] h-[43px] font-bold text-lg ml-[16px] flex justify-center items-center cursor-pointer rounded-lg hover:bg-gray-300 transiton duration-500" onClick={() => setSearch('')}>초기화</div>
         </div>
 
         <div className=" h-[100px] flex">

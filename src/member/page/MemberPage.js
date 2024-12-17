@@ -44,7 +44,7 @@ const MemberPage = () => {
         <Loading />
       ) : (
         <div className="h-screen">
-          <Header pageTitle="메인" titleBg="#BE185D" />
+          <Header pageTitle="메인" titleBg="#D9017F" />
 
           <div className="h-[calc(100%-90px-141px)] mt-[-60px] mx-[15%] flex justify-center items-center">
             <Outlet />

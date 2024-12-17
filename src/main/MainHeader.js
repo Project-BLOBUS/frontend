@@ -30,7 +30,7 @@ function MainHeader({pageTitle}) {
                           {!getCookie("jwt") ? (
                           <>
                             <Link
-                              className="transition duration-500 hover:text-gray-400 ml-[70%] text-lg font-medium"
+                              className="transition duration-500 hover:text-gray-400 ml-[68%] text-lg font-medium"
                               to="/member/signup"
                               replace={pageTitle === "계정"}
                             >
@@ -48,7 +48,7 @@ function MainHeader({pageTitle}) {
                         ) : (
                           <>
                             <Link
-                              className="transition duration-500 hover:text-gray-400 ml-[67%] text-lg font-medium"
+                              className="transition duration-500 hover:text-gray-400 ml-[65%] text-lg font-medium"
                               to="/mypage"
                             >
                               마이페이지

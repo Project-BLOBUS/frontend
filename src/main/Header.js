@@ -38,6 +38,7 @@ function Header({ pageTitle, titleBg }) {
     setShowMenu(false); // 첫 번째 메뉴 닫기
     setShowMenu2(false); // 두 번째 메뉴 닫기
   };
+  
 
   return (
     <div className="w-[100%] h-[150px]">
@@ -99,7 +100,7 @@ function Header({ pageTitle, titleBg }) {
           )}
         </div>
 
-        <div className="w-full h-[60px] bg-[#F9F9F9]">
+        <div className="w-full h-[60px] bg-[#F9F9F9] border-b-2">
           <div className="w-[70%] h-[60px] ml-[15%] flex justify-start items-center font-bold">
             <Link to="/main">
                        {" "}
@@ -127,7 +128,7 @@ function Header({ pageTitle, titleBg }) {
             <div className="w-[480px] h-[60px] ml-[13%] flex text-md font-semibold ">
               <div className="w-[160px] h-[55px] flex justify-center items-center">
                 <Link to="/blobusinfo">
-                  <p className="cursor-pointer">소개</p>
+                  <p>소개</p>
                 </Link>
               </div>
 
@@ -144,8 +145,8 @@ function Header({ pageTitle, titleBg }) {
               </div>
 
               <div className="w-[160px] h-[55px] flex justify-center items-center">
-                <Link to="/community">
-                  <p className="cursor-pointer">커뮤니티</p>
+                <Link to="/community" onClick={closeMenu}>
+                  <p>커뮤니티</p>
                 </Link>
               </div>
             </div>
@@ -160,8 +161,8 @@ function Header({ pageTitle, titleBg }) {
             }`}
           >
             {showMenu && (
-              <div className="w-[full] h-[55px] bg-[#F9F9F9] ">
-                <div className="w-[70%] h-[40px] ml-[15%] flex justify-center items-center space-x-[-70px] text-gray-500 font-bold">
+              <div className="w-[full] h-[55px] bg-[#F9F9F9] border-b-2">
+                <div className="w-[70%] h-[40px] ml-[15%] pt-4 flex justify-center items-center space-x-[-70px] text-gray-500 font-bold">
                   <div className="w-[160px] h-[55px] flex justify-center items-center">
                     <Link to="/youth/job" onClick={closeMenu}>
                       <p className="cursor-pointer">일자리</p>
@@ -200,20 +201,20 @@ function Header({ pageTitle, titleBg }) {
           >
             {showMenu2 && (
               <div className="w-[full] h-[55px] bg-[#F9F9F9] ">
-                <div className="w-[70%] h-[40px] ml-[14%] flex justify-center items-center space-x-[-70px] text-gray-500 font-bold">
-                  <div className="w-[150px] h-[55px] flex justify-center items-center">
+                <div className="w-[70%] h-[40px] ml-[16.5%] flex justify-center items-center text-gray-500 font-bold">
+                  <div className="w-[130px] h-[55px] flex justify-center items-center">
                     <Link to="/resource/digital" onClick={closeMenu}>
                       <p className="cursor-pointer">디지털마케팅</p>
                     </Link>
                   </div>
 
-                  <div className="w-[200px] h-[55px] flex justify-center items-center">
+                  <div className="w-[130px] h-[55px] flex justify-center items-center">
                     <Link to="/resource/culture" onClick={closeMenu}>
-                      <p className="cursor-pointer ">문화</p>
+                      <p className="cursor-pointer">문화</p>
                     </Link>
                   </div>
 
-                  <div className="w-[100px] h-[55px] flex justify-center items-center">
+                  <div className="w-[130px] h-[55px] flex justify-center items-center ">
                     <Link to="/resource/sightsee" onClick={closeMenu}>
                       <p className="cursor-pointer">관광</p>
                     </Link>
