@@ -16,13 +16,12 @@ import Loading from "../../../etc/component/Loading";
 import AddressList from "../../data/AddressList";
 
 const initState = {
-  // ToDEL 삭제
-  userId: "test@test.com",
+  userId: "",
   authCode: "",
-  userPw: "asdfASDF1234!@#$",
-  confirmPw: "asdfASDF1234!@#$",
-  name: "김테스트",
-  phoneNum: "01012345678",
+  userPw: "",
+  confirmPw: "",
+  name: "",
+  phoneNum: "",
   address: "",
   birthDate: null,
   gender: "M",
@@ -290,8 +289,6 @@ const GeneralInput = () => {
                         authCode: code,
                       });
                       toast.success("메일 전송 성공");
-                      // ToDEL 삭제
-                      setMember({ ...member, authCode: code });
                     } catch (error) {
                       toast.error("메일 전송에 실패했습니다.");
                     }

@@ -89,17 +89,6 @@ const Login = () => {
   const onKeyUpLogin = (e) => {
     if (e.key === "Enter") {
       onCLickLogin(e);
-    } else if (e.key === "Escape") {
-      // ToDEL 삭제
-      if (userRole === "GENERAL") {
-        setUserId("test@test.com");
-        setUserPw("qwerQWER1234!@#$");
-        onCLickLogin(e);
-      } else if (userRole === "BUSINESS") {
-        setUserId("ADMIN");
-        setUserPw("ADMIN");
-        onCLickLogin(e);
-      }
     }
   };
 
