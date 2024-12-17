@@ -2,7 +2,7 @@ import DigitalListPageComponent from "../component/DigitalListPageComponent";
 
 const DigitalPage = () => {
   return (
-    <div>
+    <div className="mt-[-60px]">
       <div>
         <DigitalListPageComponent />
       </div>

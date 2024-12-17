@@ -12,7 +12,7 @@ const PolicyListComponent = ({ policy }) => {
 
   return (
     <div
-      className="relative h-44 border border-gray-200 rounded-md px-3 pb-3 shadow-sm hover:shadow-md cursor-pointer transition-shadow duration-500"
+      className="relative h-44 border border-gray-200 bg-white rounded-md px-3 pb-3 shadow-sm hover:shadow-md cursor-pointer transition-shadow duration-500"
       onClick={() => {
         moveToPolicyRead(policy.policyId);
       }}
