@@ -117,74 +117,85 @@ const Add = () => {
   return (
     <>
       {loading && <Loading />}
-      <div className="bg-gray-100 w-full my-4 p-4 text-base text-center font-bold flex flex-col justify-center items-center">
+      <div className="w-full text-base text-center text-nowrap font-bold flex flex-col justify-center items-center">
+        <div className="w-full my-2 py-4 text-3xl text-left border-b-2 border-gray-300 flex justify-between items-center">
+          커뮤니티
+        </div>
+
         <div className="w-full flex flex-col justify-center items-center space-y-2">
-          <div className="w-full pr-4 text-sm flex justify-between items-center">
-            <div className="w-full text-xl flex justify-start items-center space-x-2">
-              <div className="w-1/2 flex justify-start items-center space-x-2">
+          <div className="w-full flex justify-between items-center">
+            <div className="w-full flex justify-start items-center space-x-2">
+              <div className="w-full flex justify-start items-center space-x-4">
                 {makeTab("자유게시판", "자유", post, setPost)}
                 {makeTab("건의게시판", "건의", post, setPost)}
-              </div>
 
-              <select
-                className="bg-white p-2 border border-black rounded text-center"
-                name="category"
-                value={post.category}
-                onChange={(e) => setPost({ ...post, category: e.target.value })}
-                ref={refList.category}
-              >
-                <option
-                  className="bg-sky-500 text-white font-bold"
-                  value=""
-                  disabled
-                  selected
+                <select
+                  className="p-2 border-2 border-gray-300 rounded text-center"
+                  name="category"
+                  value={post.category}
+                  onChange={(e) =>
+                    setPost({ ...post, category: e.target.value })
+                  }
+                  ref={refList.category}
                 >
-                  카테고리
-                </option>
-                <option value="청년">청년관</option>
-                {/* <option value="기업">기업관</option> */}
-                <option value="지역">지역관</option>
-              </select>
+                  <option value="" disabled selected>
+                    카테고리
+                  </option>
+                  <option value="청년">청년관</option>
+                  {/* <option value="기업">기업관</option> */}
+                  <option value="지역">지역관</option>
+                </select>
 
-              <div
-                className="group w-1/6 flex justify-center items-center cursor-pointer"
-                hidden={post.boardType !== "건의"}
-              >
-                <input
-                  className="w-4 h-4"
-                  type="checkbox"
-                  name="idSave"
-                  checked={post.toEmail}
-                  onChange={() => setPost({ ...post, toEmail: !post.toEmail })}
-                  hidden={post.boardType !== "건의"}
-                />
                 <div
-                  className={`ml-2 transition duration-500 ${
-                    post.toEmail
-                      ? "group-hover:text-gray-300"
-                      : "group-hover:text-[#DB0153]"
-                  }`}
-                  onClick={() => setPost({ ...post, toEmail: !post.toEmail })}
+                  className="w-fit flex justify-center items-center cursor-pointer"
                   hidden={post.boardType !== "건의"}
                 >
-                  메일 전송
+                  <input
+                    className="w-4 h-4"
+                    type="checkbox"
+                    name="idSave"
+                    checked={post.toEmail}
+                    onChange={() =>
+                      setPost({ ...post, toEmail: !post.toEmail })
+                    }
+                    hidden={post.boardType !== "건의"}
+                  />
+                  <div
+                    className="ml-2"
+                    onClick={() => setPost({ ...post, toEmail: !post.toEmail })}
+                    hidden={post.boardType !== "건의"}
+                  >
+                    메일 전송
+                  </div>
                 </div>
               </div>
             </div>
 
-            <div className="flex justify-center items-center space-x-2">
-              {makeBtn("뒤로", "orange", () => navigate(-1, { replace: true }))}
-              {makeBtn("완료", "blue", () => onClickAddPost(post))}
+            <div className="flex justify-center items-center space-x-0">
+              {makeBtn("뒤로", () => navigate(-1, { replace: true }))}
+              {makeBtn("완료", () => onClickAddPost(post))}
             </div>
           </div>
 
-          <div className="bg-white w-full p-4 border rounded text-2xl text-left flex justify-between items-center">
-            <div className="w-full flex justify-center items-center">
+          <div className="w-full text-xl text-left flex justify-between items-center">
+            <div className="w-full flex justify-center items-center space-x-2">
+              <input
+                className="w-full p-2 border-2 border-gray-300 rounded"
+                type="text"
+                name="title"
+                value={post.title}
+                placeholder="제목을 입력하세요."
+                autoComplete="off"
+                onChange={(e) =>
+                  setPost({ ...post, [e.target.name]: e.target.value })
+                }
+                ref={refList.title}
+              />
               <div
-                className={`p-3 rounded cursor-pointer transition duration-500 ${
+                className={`p-3 border-2 border-gray-300 rounded cursor-pointer transition duration-500 ${
                   post.visibility
-                    ? "text-red-500 hover:bg-gray-500 hover:text-gray-300"
-                    : "text-gray-300 hover:bg-gray-500 hover:text-red-500"
+                    ? "text-red-500  hover:text-gray-500"
+                    : "text-gray-500 hover:text-red-500"
                 }`}
                 onMouseEnter={() => setHover(true)}
                 onMouseLeave={() => setHover(false)}
@@ -195,37 +206,21 @@ const Add = () => {
               >
                 {post.visibility === hover ? <FaLockOpen /> : <FaLock />}
               </div>
-
-              <input
-                className="w-full p-2 border border-black rounded"
-                type="text"
-                name="title"
-                value={post.title}
-                maxLength={30}
-                placeholder="제목을 입력하세요. (최대 30글자)"
-                autoComplete="off"
-                onChange={(e) =>
-                  setPost({ ...post, [e.target.name]: e.target.value })
-                }
-                ref={refList.title}
-              />
             </div>
           </div>
 
-          <div className="bg-white w-full p-4 border rounded text-left font-normal">
-            <textarea
-              className="w-full h-[400px] p-2 border border-black rounded resize-none"
-              type="text"
-              name="content"
-              value={post.content}
-              placeholder="내용을 입력하세요."
-              autoComplete="off"
-              onChange={(e) =>
-                setPost({ ...post, [e.target.name]: e.target.value })
-              }
-              ref={refList.content}
-            />
-          </div>
+          <textarea
+            className="w-full h-[23.5rem] p-2 border-2 border-gray-300 rounded text-sm text-left font-normal select-text overflow-y-auto resize-none"
+            type="text"
+            name="content"
+            value={post.content}
+            placeholder="내용을 입력하세요."
+            autoComplete="off"
+            onChange={(e) =>
+              setPost({ ...post, [e.target.name]: e.target.value })
+            }
+            ref={refList.content}
+          />
         </div>
       </div>
     </>
@@ -235,10 +230,10 @@ const Add = () => {
 const makeTab = (name, value, post, setPost) => {
   return (
     <div
-      className={`w-full p-2 rounded  ${
+      className={`w-fit px-4 py-2 rounded text-white ${
         value === post.boardType
-          ? "bg-[#DB0153] text-white"
-          : "bg-gray-300 text-gray-100 cursor-pointer hover:bg-[#DB0153] hover:text-white transition duration-500"
+          ? "bg-[#DB0153]"
+          : "bg-gray-300 cursor-pointer hover:bg-[#DB0153] transition duration-500"
       }`}
       onClick={() => {
         value !== post.boardType &&

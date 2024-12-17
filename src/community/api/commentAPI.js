@@ -13,7 +13,7 @@ export const getCommentList = async (pageParam, no) => {
     },
     params: {
       page: page,
-      size: 5,
+      size: 100,
       postId: no,
     },
   });
