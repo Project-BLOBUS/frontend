@@ -88,7 +88,7 @@ const List = () => {
     <>
       {loading && <Loading />}
       <div className="w-full text-base text-center font-bold flex flex-col justify-center items-center">
-        <div className="w-full my-2 py-4 text-3xl text-left border-b-2 border-gray-300 flex justify-between items-center">
+        <div className="w-full my-2 p-4 text-3xl text-left border-b-2 border-gray-300 flex justify-between items-center">
           커뮤니티
         </div>
 
@@ -96,7 +96,7 @@ const List = () => {
           <div className="w-[15%] p-4">키워드 검색</div>
 
           <input
-            className="w-full my-2 p-2 border-b-2 border-gray-300 text-sm"
+            className="w-full my-2 p-2 border-b-2 border-gray-300"
             type="text"
             placeholder="검색어를 입력하세요"
             ref={inputRef}
@@ -127,8 +127,8 @@ const List = () => {
             {makeBtn("초기화", () => {
               setLoading(true);
 
-              const value = inputRef.current?.value.trim();
               inputRef.current.value = "";
+              const value = inputRef.current?.value.trim();
               setFilter({ ...filter, keyward: value });
 
               setLoading(false);
@@ -136,7 +136,7 @@ const List = () => {
           </div>
         </div>
 
-        <div className="w-full py-2 text-sm flex justify-center items-center">
+        <div className="w-full py-2 flex justify-center items-center">
           <div className="w-1/2 flex justify-start items-center space-x-2">
             {makeTab("전체", "", filter, setFilter, true, moveToList)}
             {makeTab("자유글", "자유", filter, setFilter, true, moveToList)}
@@ -151,7 +151,7 @@ const List = () => {
           </div>
         </div>
 
-        <div className="w-full mt-2 py-2 border-t-2 border-b border-t-red-500 border-b-gray-500 text-sm flex justify-center items-center">
+        <div className="w-full mt-2 py-4 border-t-2 border-b border-t-[#DB0153] border-b-gray-500 flex justify-center items-center">
           <div className="w-[5%]">번호</div>
           <div className="w-[8%]">구분</div>
           <div className="w-[55%]">제목</div>
@@ -160,7 +160,7 @@ const List = () => {
           <div className="w-[10%]">수정</div>
         </div>
 
-        <div className="w-full text-sm text-nowrap font-normal flex flex-col justify-start items-center">
+        <div className="w-full text-nowrap font-normal flex flex-col justify-start items-center">
           {data.dtoList.length === 0 ? (
             <div className="w-full py-20 text-2xl flex justify-center items-center">
               {filter.keyward !== "" ? (
@@ -182,7 +182,7 @@ const List = () => {
             data.dtoList.map((dto, index) => (
               <div
                 key={index}
-                className="w-full py-2 border-b-2 border-gray-300 flex justify-center items-center cursor-pointer hover:font-bold"
+                className="w-full py-4 border-b-2 border-gray-300 flex justify-center items-center cursor-pointer hover:font-bold"
                 onClick={() => {
                   if (
                     getCookie("userRole") !== "ADMIN" &&
