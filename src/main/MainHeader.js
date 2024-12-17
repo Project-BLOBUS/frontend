@@ -20,7 +20,7 @@ function MainHeader({pageTitle}) {
                                          </div>
                                        </div>
                                      </Link>    
-                         <div className="text-lg w-[150px] ml-[-1%] flex ">
+                         <div className="text-lg w-[150px] ml-[1%] flex ">
                             <p className="text-[#D70159]">부산</p>
                             <p className="text-[#0051E6]">청년</p>
                             <p>플랫폼</p>
@@ -30,7 +30,7 @@ function MainHeader({pageTitle}) {
                           {!getCookie("jwt") ? (
                           <>
                             <Link
-                              className="transition duration-500 hover:text-gray-400 ml-[69%] text-lg font-medium"
+                              className="transition duration-500 hover:text-gray-400 ml-[70%] text-lg font-medium"
                               to="/member/signup"
                               replace={pageTitle === "계정"}
                             >
@@ -38,7 +38,7 @@ function MainHeader({pageTitle}) {
                             </Link>
                             <p className="p-2 text-lg hidden sm:block">|</p>
                             <Link
-                              className="transition duration-500 hover:text-gray-400 mt-[34px] sm:mt-[0px] text-lg font-medium"
+                              className="transition duration-500 hover:text-gray-400 text-lg font-medium"
                               to="/member/login"
                               replace={pageTitle === "계정"}
                             >
@@ -48,14 +48,14 @@ function MainHeader({pageTitle}) {
                         ) : (
                           <>
                             <Link
-                              className="transition duration-500 hover:text-gray-400 ml-[67%]"
+                              className="transition duration-500 hover:text-gray-400 ml-[67%] text-lg font-medium"
                               to="/mypage"
                             >
                               마이페이지
                             </Link>
                             <p className="p-2 hidden sm:block">|</p>
                             <Link
-                              className="transition duration-500 hover:text-gray-400 mt-[34px] sm:mt-[0px]"
+                              className="transition duration-500 hover:text-gray-400 text-lg font-medium"
                               onClick={() => {
                                 // TODO 로그아웃 모달창
                                 if (window.confirm("로그아웃하시겠습니까?")) {

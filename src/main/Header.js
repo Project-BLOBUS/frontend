@@ -45,7 +45,7 @@ const closeMenu = () => {
 };
    
   return (
-    <div className="w-[100%] h-[150px] fixed top-0">
+    <div className="w-[100%] h-[150px]">
 
       <div className="w-full h-[40px] bg-[#E9E9E9]">
 
@@ -55,7 +55,7 @@ const closeMenu = () => {
               {!getCookie("jwt") ? (
               <>
                 <Link
-                  className="transition duration-500 hover:text-gray-400 ml-[79%]"
+                  className="transition duration-500 hover:text-gray-400 ml-[77%] text-lg font-medium"
                   to="/member/signup"
                   replace={pageTitle === "계정"}
                 >
@@ -63,7 +63,7 @@ const closeMenu = () => {
                 </Link>
                 <p className="p-2 hidden sm:block">|</p>
                 <Link
-                  className="transition duration-500 hover:text-gray-400"
+                  className="transition duration-500 hover:text-gray-400 text-lg font-medium"
                   to="/member/login"
                   replace={pageTitle === "계정"}
                 >
@@ -73,14 +73,14 @@ const closeMenu = () => {
             ) : (
               <>
                 <Link
-                  className="transition duration-500 hover:text-gray-400 ml-[67%]"
+                  className="transition duration-500 hover:text-gray-400 ml-[74%] text-lg font-medium"
                   to="/mypage"
                 >
                   마이페이지
                 </Link>
                 <p className="p-2 hidden sm:block">|</p>
                 <Link
-                  className="transition duration-500 hover:text-gray-400 mt-[34px]"
+                  className="transition duration-500 hover:text-gray-400 text-lg font-medium"
                   onClick={() => {
                     // TODO 로그아웃 모달창
                     if (window.confirm("로그아웃하시겠습니까?")) {
@@ -122,10 +122,18 @@ const closeMenu = () => {
               </div>
             </Link>
 
-              <div className="bg-[#6E00FF] text-white w-[150px] h-[60px] flex justify-center items-center ml-[-1%] text-xl font-medium"
+              <div className="text-white w-[150px] h-[60px] flex justify-center items-center ml-[1%] text-xl font-medium"
               style={{ backgroundColor: titleBg }}>{pageTitle}</div>
 
               <div className="w-[480px] h-[60px] ml-[13%] flex text-md font-semibold ">
+
+
+                    <div className="w-[160px] h-[55px] flex justify-center items-center">
+                          <Link to="/blobusinfo">
+                            <p className="cursor-pointer">소개</p>
+                          </Link>
+                    </div>
+          
                     <div className="w-[160px] h-[55px] flex justify-center items-center">
                           <p className="cursor-pointer" onClick={toggleMenu}>청년관</p>
                     </div>

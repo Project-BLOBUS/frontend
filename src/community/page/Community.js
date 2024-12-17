@@ -13,13 +13,10 @@ const Community = () => {
 
   return (
     <div className="h-screen">
-      <div className="bg-[#DB0153]">
+      <div>
         <Header
-          navs={navList}
-          isWhite={true}
           pageTitle="커뮤니티"
-          titleBg="#A1003C"
-          borderB={false}
+          titleBg="#DB0153"
         />
       </div>
 

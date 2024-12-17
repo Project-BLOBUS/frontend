@@ -36,7 +36,7 @@ const AppRoutes = () => (
     {/* /allsearch 통합검색 */}
     <Route path="/allsearch" element={<AllSearch />} />
     {/* /blobusIntro 블로버스 소개 */}
-    <Route path="/blobusintro" element={<BLoBusIntro />} />
+    <Route path="/blobusinfo" element={<BLoBusIntro />} />
     {/* /blobusIntro 블로버스 추구하는 일 */}
     <Route path="/blobuswork" element={<BLoBusWork />} />
     {/* /blobusIntro 블로버스 소식 */}

@@ -13,13 +13,13 @@ function YouthPage() {
 
   return (
     <div>
-      <div className="bg-[#6F00FF]">
+      <div>
         {/* Header에 isWhite prop을 true로 전달하고, pageTitle을 '청년관'으로 설정 */}
         <Header
           navs={youths}
           isWhite={true}
           pageTitle="청년관"
-          titleBg="#420099"
+          titleBg="#6E00FF"
           borderB={false}
         />
       </div>
