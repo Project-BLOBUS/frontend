@@ -118,7 +118,7 @@ const Add = () => {
     <>
       {loading && <Loading />}
       <div className="w-full text-base text-center text-nowrap font-bold flex flex-col justify-center items-center">
-        <div className="w-full my-2 p-4 text-3xl text-left border-b-2 border-gray-300 flex justify-between items-center">
+        <div className="w-full my-2 py-4 text-3xl text-left border-b-2 border-gray-200">
           커뮤니티
         </div>
 
@@ -171,7 +171,7 @@ const Add = () => {
               </div>
             </div>
 
-            <div className="flex justify-center items-center space-x-0">
+            <div className="flex justify-center items-center space-x-4">
               {makeBtn("뒤로", () => navigate(-1, { replace: true }))}
               {makeBtn("완료", () => onClickAddPost(post))}
             </div>

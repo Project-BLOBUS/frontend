@@ -9,6 +9,7 @@ import { getInfo, modify } from "../../api/memberAPI";
 import useInfoTag from "../../hook/useInfoTag";
 import Loading from "../../../etc/component/Loading";
 import AddressList from "../../data/AddressList";
+import { FaCircleUser } from "react-icons/fa6";
 
 const initState = {
   userId: "",
@@ -224,181 +225,179 @@ const InfoMofiy = () => {
     <>
       {loading && <Loading />}
       <div className="w-full text-base text-center font-bold flex flex-col justify-center items-center">
-        <div className="w-full my-2 py-4 text-3xl text-left border-b-2 border-gray-300">
+        <div className="w-full my-2 py-4 text-3xl text-left border-b-2 border-gray-200">
           내 정보 - 수정
         </div>
 
-        <div className="bg-white w-2/3 mt-10 p-4 border-2 border-gray-300 rounded shadow-xl flex flex-col justify-center items-center space-y-2">
-          {/* 아이디 */}
-          {makeModify(
-            "아이디",
-            makeInput(
-              "text",
-              "userId",
-              member.userId,
-              "",
-              refList.userId,
-              onChange
-            )
-          )}
+        <div className="w-full mt-4 py-2 flex justify-center items-center space-x-4">
+          <div className="bg-white w-2/5 py-32 border-2 border-gray-300 rounded shadow-xl flex flex-col justify-center items-center">
+            <div className="text-[12rem]">
+              <FaCircleUser className="text-gray-400" />
+            </div>
+            <div className="pt-10 text-3xl">반갑습니다. {member.name}님</div>
+          </div>
 
-          {/* 비밀번호 */}
-          {makeModify(
-            "비밀번호",
-            makeInput(
-              "password",
-              "userPw",
-              member.userPw,
-              "변경을 원할 경우에 입력",
-              refList.userPw,
-              onChange
-            )
-          )}
+          <div className="bg-white w-3/5 px-4 py-[1.688rem] border-2 border-gray-300 rounded shadow-xl flex flex-col justify-center items-center space-y-2">
+            {/* 비밀번호 */}
+            {makeModify(
+              "비밀번호",
+              makeInput(
+                "password",
+                "userPw",
+                member.userPw,
+                "변경을 원할 경우에 입력",
+                refList.userPw,
+                onChange
+              )
+            )}
 
-          {/* 비밀번호 확인 */}
-          {makeModify(
-            "비밀번호 확인",
-            makeInput(
-              "password",
-              "confirmPw",
-              member.confirmPw,
-              "미입력 시 변경되지 않음",
-              refList.confirmPw,
-              onChange
-            )
-          )}
+            {/* 비밀번호 확인 */}
+            {makeModify(
+              "비밀번호 확인",
+              makeInput(
+                "password",
+                "confirmPw",
+                member.confirmPw,
+                "미입력 시 변경되지 않음",
+                refList.confirmPw,
+                onChange
+              )
+            )}
 
-          {/* 이름 */}
-          {makeModify(
-            "이름",
-            makeInput(
-              "text",
-              "name",
-              member.name,
+            {/* 이름 */}
+            {makeModify(
               "이름",
-              refList.name,
-              onChange
-            )
-          )}
-          {/* 연락처 */}
-          {makeModify(
-            "연락처",
-            makeInput(
-              "text",
-              "phoneNum",
-              member.phoneNum,
-              '"─" 없이 입력',
-              refList.phoneNum,
-              onChange
-            )
-          )}
+              makeInput(
+                "text",
+                "name",
+                member.name,
+                "이름",
+                refList.name,
+                onChange
+              )
+            )}
+            {/* 연락처 */}
+            {makeModify(
+              "연락처",
+              makeInput(
+                "text",
+                "phoneNum",
+                member.phoneNum,
+                '"─" 없이 입력',
+                refList.phoneNum,
+                onChange
+              )
+            )}
 
-          {/* 주소 */}
-          {makeModify(
-            "주소",
-            <div className="w-full flex justify-center items-center space-x-1">
-              {makeSelect(
-                "region",
-                address.region,
-                address.regionList,
-                "시/도 선택",
-                refList.region,
-                onChangeAddress
-              )}
-              {makeSelect(
-                "city",
-                address.city,
-                address.cityList,
-                "시/구/군 선택",
-                refList.city,
-                onChangeAddress
-              )}
-            </div>
-          )}
+            {/* 주소 */}
+            {makeModify(
+              "주소",
+              <div className="w-full flex justify-center items-center space-x-1">
+                {makeSelect(
+                  "region",
+                  address.region,
+                  address.regionList,
+                  "시/도 선택",
+                  refList.region,
+                  onChangeAddress
+                )}
+                {makeSelect(
+                  "city",
+                  address.city,
+                  address.cityList,
+                  "시/구/군 선택",
+                  refList.city,
+                  onChangeAddress
+                )}
+              </div>
+            )}
 
-          {/* 생년월일 */}
-          {makeModify(
-            "생년월일",
-            <div className="w-full flex justify-center items-center space-x-1">
-              {makeSelect(
-                "year",
-                birthDate.year,
-                Array.from(
-                  { length: new Date().getFullYear() - 1900 + 1 },
-                  (_, i) => 1900 + i
-                ).reverse(),
-                "연도 선택",
-                refList.year,
-                onChangeBirth
-              )}
-              {makeSelect(
-                "month",
-                birthDate.month,
-                [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
-                "월 선택",
-                refList.month,
-                onChangeBirth
-              )}
-              {makeSelect(
-                "date",
-                birthDate.date,
-                Array.from(
-                  {
-                    length: new Date(
-                      birthDate.year,
-                      birthDate.month,
-                      0
-                    ).getDate(),
-                  },
-                  (_, i) => i + 1
-                ),
-                "일 선택",
-                refList.date,
-                onChangeBirth
-              )}
-            </div>
-          )}
+            {/* 생년월일 */}
+            {makeModify(
+              "생년월일",
+              <div className="w-full flex justify-center items-center space-x-1">
+                {makeSelect(
+                  "year",
+                  birthDate.year,
+                  Array.from(
+                    { length: new Date().getFullYear() - 1900 + 1 },
+                    (_, i) => 1900 + i
+                  ).reverse(),
+                  "연도 선택",
+                  refList.year,
+                  onChangeBirth
+                )}
+                {makeSelect(
+                  "month",
+                  birthDate.month,
+                  [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+                  "월 선택",
+                  refList.month,
+                  onChangeBirth
+                )}
+                {makeSelect(
+                  "date",
+                  birthDate.date,
+                  Array.from(
+                    {
+                      length: new Date(
+                        birthDate.year,
+                        birthDate.month,
+                        0
+                      ).getDate(),
+                    },
+                    (_, i) => i + 1
+                  ),
+                  "일 선택",
+                  refList.date,
+                  onChangeBirth
+                )}
+              </div>
+            )}
 
-          {/* 성별 */}
-          {makeModify(
-            "성별",
-            <div className="w-full flex justify-center items-center space-x-1">
-              {makeRatio(
-                member.gender === "M",
-                IoMdMale,
-                "남성",
-                () =>
-                  member.gender === "M" || setMember({ ...member, gender: "M" })
-              )}
-              {makeRatio(
-                member.gender === "F",
-                IoMdFemale,
-                "여성",
-                () =>
-                  member.gender === "F" || setMember({ ...member, gender: "F" })
-              )}
-            </div>
-          )}
+            {/* 성별 */}
+            {makeModify(
+              "성별",
+              <div className="w-full flex justify-center items-center space-x-1">
+                {makeRatio(
+                  member.gender === "M",
+                  IoMdMale,
+                  "남성",
+                  () =>
+                    member.gender === "M" ||
+                    setMember({ ...member, gender: "M" })
+                )}
+                {makeRatio(
+                  member.gender === "F",
+                  IoMdFemale,
+                  "여성",
+                  () =>
+                    member.gender === "F" ||
+                    setMember({ ...member, gender: "F" })
+                )}
+              </div>
+            )}
 
-          {/* 내외국인 */}
-          {makeModify(
-            "내와국인",
-            <div className="w-full flex justify-center items-center space-x-1">
-              {makeRatio(!member.foreigner, GiSouthKorea, "내국인", () =>
-                setMember({ ...member, foreigner: false })
-              )}
-              {makeRatio(member.foreigner, AiOutlineGlobal, "외국인", () =>
-                setMember({ ...member, foreigner: true })
-              )}
-            </div>
-          )}
+            {/* 내외국인 */}
+            {makeModify(
+              "내와국인",
+              <div className="w-full flex justify-center items-center space-x-1">
+                {makeRatio(!member.foreigner, GiSouthKorea, "내국인", () =>
+                  setMember({ ...member, foreigner: false })
+                )}
+                {makeRatio(member.foreigner, AiOutlineGlobal, "외국인", () =>
+                  setMember({ ...member, foreigner: true })
+                )}
+              </div>
+            )}
+          </div>
         </div>
 
-        <div className="w-2/3 py-2 flex justify-end items-center space-x-0">
+        <div className="w-full py-2 flex justify-end items-center space-x-4">
+          {makeBtn2("완료", onClickModify)}
           {makeBtn2("취소", () => {
             navigate(-1, { replace: true });
           })}
-          {makeBtn2("완료", onClickModify)}
         </div>
       </div>
     </>

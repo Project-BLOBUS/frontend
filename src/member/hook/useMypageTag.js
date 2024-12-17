@@ -6,7 +6,7 @@ const useMypageTag = () => {
   const makeBtn = (name, onClick) => {
     return (
       <button
-        className="w-fit mx-2 px-4 py-2 border-2 border-gray-300 rounded text-base text-nowrap hover:bg-[#DDDDDD] transition duration-500"
+        className="bg-white w-24 py-2 border-2 border-gray-300 rounded text-sm text-nowrap hover:bg-[#DDDDDD] transition duration-500"
         onClick={onClick}
       >
         {name}
@@ -17,7 +17,7 @@ const useMypageTag = () => {
   const makeBtn2 = (name, onClick) => {
     return (
       <button
-        className="bg-gray-50 w-fit mx-2 px-4 py-2 border-2 border-gray-300 rounded text-base text-nowrap hover:border-yellow-500 transition duration-500"
+        className="bg-white w-24 py-2 border-2 border-gray-300 rounded text-sm text-nowrap hover:border-yellow-500 transition duration-500"
         onClick={onClick}
       >
         {name}
@@ -151,7 +151,13 @@ const useMypageTag = () => {
             data.dtoList.map((dto, index) => (
               <div
                 key={index}
-                className={`bg-white w-[calc(100%/4-1rem)] h-[calc(100%/3-1rem)] m-2 px-4 pb-4 border-2 border-gray-300 rounded shadow-md text-xs flex flex-col justify-center items-center space-y-2 ${
+                className={`bg-white w-[calc(100%/4-0.75rem)] h-[calc(100%/3-1rem)] ${
+                  index % 4 === 0
+                    ? "mr-2 my-2"
+                    : index % 4 === 3
+                    ? "ml-2 my-2"
+                    : "m-2"
+                } px-4 pb-4 border-2 border-gray-300 rounded shadow-md text-xs flex flex-col justify-center items-center space-y-2 ${
                   dto.link &&
                   "cursor-pointer hover:bg-gray-200 transition duration-500"
                 }`}
@@ -161,6 +167,7 @@ const useMypageTag = () => {
                     : dto.link && navigate(dto.link)
                 }
               >
+                {console.log(index % 4)}
                 <div className="w-full text-md flex justify-between items-center">
                   <div
                     className={`px-4 py-2 border-t-2 rounded-b-xl text-white ${

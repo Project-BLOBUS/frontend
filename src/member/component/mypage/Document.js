@@ -84,18 +84,18 @@ const Document = () => {
     <>
       {loading && <Loading />}
       <div className="w-full text-xl text-center font-bold flex flex-col justify-center items-center">
-        <div className="w-full my-2 py-4 text-3xl text-left border-b-2 border-gray-300">
+        <div className="w-full my-2 py-4 text-3xl text-left border-b-2 border-gray-200">
           작성글
         </div>
 
         <div className="w-full my-2 text-base flex justify-center items-center">
-          <div className="w-1/2 text-base flex justify-start items-center space-x-2">
+          <div className="w-1/2 text-base flex justify-start items-center space-x-4">
             {makeDocTab("전체", "", board, setBoard, true, moveToList)}
             {makeDocTab("자유", "자유", board, setBoard, true, moveToList)}
             {makeDocTab("건의", "건의", board, setBoard, true, moveToList)}
             {makeDocTab("댓글", "댓글", board, setBoard, true, moveToList)}
           </div>
-          <div className="w-1/2 text-base flex justify-end items-center space-x-2">
+          <div className="w-1/2 text-base flex justify-end items-center space-x-4">
             {makeDocTab("지역", "지역", board, setBoard, false, moveToList)}
             {/* {makeDocTab("기업", "기업", board, setBoard, false, moveToList)} */}
             {makeDocTab("청년", "청년", board, setBoard, false, moveToList)}

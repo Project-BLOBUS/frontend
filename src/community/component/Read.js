@@ -81,7 +81,7 @@ const Read = () => {
     <>
       {loading && <Loading />}
       <div className="w-full pb-4 text-base text-center font-bold flex flex-col justify-center items-center">
-        <div className="w-full my-2 p-4 text-3xl text-left border-b-2 border-gray-300 flex justify-between items-center">
+        <div className="w-full my-2 py-4 text-3xl text-left border-b-2 border-gray-200">
           커뮤니티
         </div>
 
@@ -97,7 +97,7 @@ const Read = () => {
                 </div>
               </div>
 
-              <div className="flex justify-center items-center space-x-0">
+              <div className="flex justify-center items-center space-x-4">
                 {dto.authorId === getCookie("userId") &&
                   makeBtn("수정", () => navigate(`/community/modify/${id}`))}
                 {(dto.authorId === getCookie("userId") ||

@@ -136,16 +136,16 @@ const Custom = () => {
     <>
       {loading && <Loading />}
       <div className="w-full text-xl text-center font-bold flex flex-col justify-center items-center">
-        <div className="w-full my-2 py-4 text-3xl text-left border-b-2 border-gray-300">
+        <div className="w-full my-2 py-4 text-3xl text-left border-b-2 border-gray-200">
           커스텀
         </div>
 
-        <div className="w-full my-2 px-2 border-2 border-gray-300 rounded text-base flex justify-center items-start">
-          <div className="w-[15%] p-4">키워드 검색</div>
+        <div className="w-full my-2 p-4 border-2 border-gray-200 rounded-md text-sm flex justify-center items-start space-x-4">
+          <div className="w-[10%] py-2">키워드 검색</div>
 
           <div className="w-full flex flex-col justify-center items-center">
             <input
-              className="w-full my-2 p-2 border-b-2 border-gray-300 text-sm"
+              className="bg-inherit w-full h-10 p-2 border-b-2 border-gray-300 text-sm focus:outline-none"
               type="text"
               placeholder="키워드를 입력하세요"
               ref={inputRef}
@@ -173,19 +173,17 @@ const Custom = () => {
               ))}
             </div>
           </div>
-          <div className="py-2">
-            {makeBtn("검색", () => {
-              const value = inputRef.current?.value.trim();
-              if (value !== "") {
-                setKList({ ...kList, [value]: true });
-                inputRef.current.value = "";
-                inputRef.current.focus();
-              }
-            })}
-          </div>
+          {makeBtn("검색", () => {
+            const value = inputRef.current?.value.trim();
+            if (value !== "") {
+              setKList({ ...kList, [value]: true });
+              inputRef.current.value = "";
+              inputRef.current.focus();
+            }
+          })}
         </div>
 
-        <div className="w-full my-2 px-2 text-base flex justify-between items-center">
+        <div className="w-full my-2 text-base flex justify-between items-center">
           <div className="flex justify-center items-center space-x-4">
             {makeSelect("청년 ▼", open, setOpen, yList, setYList, moveToList)}
             {makeSelect("지역 ▼", open, setOpen, rList, setRList, moveToList)}
