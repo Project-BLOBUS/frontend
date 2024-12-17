@@ -93,9 +93,9 @@ const Login = () => {
   };
 
   return (
-    <div className="w-full text-center font-bold flex flex-col justify-center items-center">
+    <div className="w-full mb-20 text-center font-bold flex flex-col justify-center items-center">
       {loading && <Loading />}
-      <div className="w-full text-5xl p-4 text-left">통합 로그인</div>
+      <div className="w-full text-3xl p-4 text-left">통합 로그인</div>
 
       <div className="w-full border-2 border-gray-300 rounded-xl shadow-md text-base flex justify-center items-center">
         <div className="w-1/2 p-4 border-r-2 border-gray-300 text-xl text-left flex flex-col justify-center items-center">
@@ -110,13 +110,13 @@ const Login = () => {
           className="w-1/2 px-8 p-4 flex flex-col justify-center items-center space-y-2"
           onKeyUp={onKeyUpLogin}
         >
-          <div className="w-full px-10 py-2 text-2xl flex justify-around items-center space-x-4">
+          <div className="w-full px-10 py-2 flex justify-around items-center space-x-4">
             {makeTab("일반회원", "GENERAL", userRole, setUserRole)}
             {makeTab("기업회원", "BUSINESS", userRole, setUserRole)}
             {/* {makeTab("관리자", "ADMIN", userRole, setUserRole)} */}
           </div>
 
-          <div className="w-full py-2 flex flex-col justify-center items-center space-y-2">
+          <div className="w-full py-2 flex flex-col justify-center items-center space-y-4">
             {makeInput(
               "text",
               "userId",
@@ -154,7 +154,7 @@ const Login = () => {
 
           <div className="w-full py-2 flex flex-row-reverse justify-center items-center">
             <button
-              className="bg-pink-500 w-full p-4 rounded-full shadow-lg text-2xl text-white"
+              className="bg-pink-500 w-full p-4 rounded-full shadow-lg text-xl text-white"
               onClick={onCLickLogin}
             >
               로그인

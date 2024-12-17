@@ -93,14 +93,14 @@ const FindId = () => {
   return (
     <>
       {loading && <Loading />}
-      <div className="w-1/2 h-[90%] px-10 py-4 border-2 border-gray-300 rounded shadow-xl text-base text-center font-bold flex flex-col justify-center items-center">
-        <div className="w-full h-[20%] text-5xl flex justify-center items-center">
+      <div className="w-1/2 h-[80%] px-10 py-4 border-2 border-gray-300 rounded shadow-xl text-base text-center font-bold flex flex-col justify-center items-center">
+        <div className="w-full h-[20%] text-3xl flex justify-center items-center">
           아이디 찾기
         </div>
 
         {member.userId === "" ? (
           <>
-            <div className="w-full h-[10%] text-md flex flex-col justify-center items-center">
+            <div className="w-full h-[10%] flex flex-col justify-center items-center">
               <div className="w-full h-1/2">
                 회원정보에 등록된 정보로 아이디를 찾을 수 있습니다.
               </div>
@@ -110,7 +110,7 @@ const FindId = () => {
               </div>
             </div>
 
-            <div className="w-full h-[35%] px-10 text-md flex flex-col justify-center items-center space-y-4">
+            <div className="w-full h-[35%] px-10 flex flex-col justify-center items-center space-y-4">
               {/* 이름 */}
               {makeInput(
                 "text",
@@ -145,7 +145,7 @@ const FindId = () => {
                 "{member.name}"님의 아이디 검색 결과입니다.
               </div>
 
-              <div className="w-full text-3xl py-16">{member.userId}</div>
+              <div className="w-full text-2xl py-16">{member.userId}</div>
             </div>
 
             <div className="w-full h-[35%] flex flex-col justify-center items-center space-y-2">

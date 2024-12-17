@@ -4,23 +4,11 @@ import { FaArrowUp, FaArrowDown } from "react-icons/fa";
 import Footer from "../../main/Footer";
 
 const Community = () => {
-  const navList = [
-    { name: "청년관", link: "../youth" },
-    // { name: "기업관", link: "../enterprise" },
-    { name: "지역관", link: "../resource" },
-    { name: "커뮤니티", link: "../community" },
-  ];
-
   return (
     <div className="h-screen">
-      <div>
-        <Header
-          pageTitle="커뮤니티"
-          titleBg="#DB0153"
-        />
-      </div>
+      <Header pageTitle="커뮤니티" titleBg="#A1003C" />
 
-      <div className="mx-[15%] min-h-[calc(100%-82px-102px)] flex justify-center items-start">
+      <div className="min-h-[calc(100%-90px-141px)] mt-[-60px] mx-[15%] flex justify-center items-start">
         <Outlet />
       </div>
 
