@@ -227,8 +227,8 @@ const GeneralInput = () => {
   return (
     <>
       {loading && <Loading />}
-      <div className="w-[70%] h-[90%] px-10 py-4 border-2 border-gray-300 rounded shadow-xl text-base text-center font-bold flex flex-col justify-center items-center">
-        <div className="w-full h-[20%] text-5xl flex justify-center items-center">
+      <div className="w-[50%] h-[90%] px-10 py-4 border-2 border-gray-300 rounded shadow-xl text-base text-center font-bold flex flex-col justify-center items-center">
+        <div className="w-full h-[20%] text-3xl flex justify-center items-center">
           일반계정 회원가입
         </div>
 
