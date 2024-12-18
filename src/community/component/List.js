@@ -88,15 +88,15 @@ const List = () => {
     <>
       {loading && <Loading />}
       <div className="w-full text-base text-center font-bold flex flex-col justify-center items-center">
-        <div className="w-full my-2 p-4 text-3xl text-left border-b-2 border-gray-300 flex justify-between items-center">
+        <div className="w-full mb-2 pb-4 text-3xl text-left border-b-2 border-gray-200">
           커뮤니티
         </div>
 
-        <div className="w-full my-2 border-2 border-gray-300 rounded text-base flex justify-center items-start">
-          <div className="w-[15%] p-4">키워드 검색</div>
+        <div className="w-full my-2 p-4 border-2 border-gray-200 rounded-md text-sm flex justify-center items-start space-x-4">
+          <div className="w-[10%] py-2">키워드 검색</div>
 
           <input
-            className="w-full my-2 p-2 border-b-2 border-gray-300"
+            className="bg-inherit w-full h-10 p-2 border-b-2 border-gray-300 text-sm focus:outline-none"
             type="text"
             placeholder="검색어를 입력하세요"
             ref={inputRef}
@@ -113,7 +113,7 @@ const List = () => {
               setLoading(false);
             }}
           />
-          <div className="p-2 flex justify-center items-center space-x-0">
+          <div className="flex justify-center items-center space-x-4">
             {makeBtn("검색", () => {
               setLoading(true);
 
@@ -137,13 +137,13 @@ const List = () => {
         </div>
 
         <div className="w-full py-2 flex justify-center items-center">
-          <div className="w-1/2 flex justify-start items-center space-x-2">
+          <div className="w-1/2 flex justify-start items-center space-x-4">
             {makeTab("전체", "", filter, setFilter, true, moveToList)}
             {makeTab("자유글", "자유", filter, setFilter, true, moveToList)}
             {makeTab("건의글", "건의", filter, setFilter, true, moveToList)}
           </div>
 
-          <div className="w-1/2 flex justify-end items-center space-x-2">
+          <div className="w-1/2 flex justify-end items-center space-x-4">
             {makeTab("전체", "", filter, setFilter, false, moveToList)}
             {makeTab("청년관", "청년", filter, setFilter, false, moveToList)}
             {/* {makeTab("기업관", "기업", filter, setFilter, false, moveToList)} */}
