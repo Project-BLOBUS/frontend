@@ -33,7 +33,6 @@ const Modify = () => {
 
   const [jwt, setJwt] = useState(getCookie("jwt"));
   const [post, setPost] = useState(initPost);
-  const [hover, setHover] = useState(false);
 
   const refList = {
     category: useRef(null),
@@ -181,18 +180,14 @@ const Modify = () => {
               />
               <div
                 className={`p-3 border-2 border-gray-300 rounded cursor-pointer transition duration-500 ${
-                  post.visibility
-                    ? "text-red-500  hover:text-gray-500"
-                    : "text-gray-500 hover:text-red-500"
+                  post.visibility ? "text-red-500" : "text-gray-500"
                 }`}
-                onMouseEnter={() => setHover(true)}
-                onMouseLeave={() => setHover(false)}
                 onClick={() =>
                   setPost({ ...post, visibility: !post.visibility })
                 }
                 hidden={post.boardType !== "건의"}
               >
-                {post.visibility === hover ? <FaLockOpen /> : <FaLock />}
+                {!post.visibility ? <FaLockOpen /> : <FaLock />}
               </div>
             </div>
           </div>
