@@ -30,7 +30,7 @@
   transition: color 0.3s ease;
 }
 
-.btn:before,
+/* .btn:before,
 .btn:after {
   position: absolute;
   content: "";
@@ -93,4 +93,4 @@
 
 .btn span:hover:after {
   width: 100%;
-}
+} */

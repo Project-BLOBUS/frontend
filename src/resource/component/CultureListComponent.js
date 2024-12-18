@@ -12,12 +12,21 @@ const CultureListComponent = ({ culture }) => {
   return (
     <div className="relative border border-gray-200 rounded-md pb-3 shadow-sm hover:shadow-md transition-shadow duration-300 overflow-hidden">
       <div onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
-        <div>
+        <div className="relative group overflow-hidden">
           <img
             src={culture.image?._url || "https://via.placeholder.com/300x400"}
             alt={culture.title?._text || "이미지 없음"}
-            className="w-full h-64 object-cover"
+            className="w-full h-64 object-cover transform transition-transform duration-300 group-hover:scale-110"
           />
+          {/* 오버레이 */}
+          <div className="absolute inset-0 bg-black bg-opacity-70 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+            <button
+              className={styles.btn}
+              onClick={() => window.open(culture.card._url, "_blank")}
+            >
+              <span>바로가기</span>
+            </button>
+          </div>
         </div>
         <div className="p-4">
           <div className="flex justify-between">
@@ -46,14 +55,14 @@ const CultureListComponent = ({ culture }) => {
           </p>
         </div>
         {/* 이동 버튼 */}
-        {isHovered && (
+        {/* {isHovered && (
           <button
             className={styles.btn}
             onClick={() => window.open(culture.card._url, "_blank")}
           >
             <span>바로가기</span>
           </button>
-        )}
+        )} */}
       </div>
     </div>
   );
