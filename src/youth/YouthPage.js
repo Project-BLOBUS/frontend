@@ -29,7 +29,7 @@ function YouthPage() {
         <Outlet />
       </div>
 
-      <div className="bg-gray-800 text-white text-center">
+      <div className="text-white text-center">
         <Footer />
       </div>
     </div>
