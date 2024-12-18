@@ -4,7 +4,7 @@ const Paging = ({ data, movePage }) => {
   const nextComent = ">";
 
   return (
-    <div className="text-base text-center font-bold flex justify-center items-center">
+    <div className="mt-2 text-base text-center font-bold flex justify-center items-center">
       {data.prev ? (
         <div
           className={`${pageCSS} w-16 text-gray-300 cursor-pointer hover:text-black transition duration-500`}

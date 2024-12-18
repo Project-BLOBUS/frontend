@@ -49,8 +49,6 @@ const Comment = () => {
   const [dtoM, setDtoM] = useState(initComment);
 
   const [reload, setReload] = useState(false);
-  const [hoverA, setHoverA] = useState(false);
-  const [hoverM, setHoverM] = useState(false);
   const refAdd = useRef(null);
   const refModify = useRef(null);
 
@@ -183,7 +181,7 @@ const Comment = () => {
         <div className="w-full py-2 border-b-2 border-gray-300 flex flex-col justify-center items-center space-y-2 relative">
           {makeText(dtoA, setDtoA, setLoading, refAdd)}
           <div className="w-full px-2 flex justify-end items-center space-x-4 absolute bottom-4 right-2 z-10">
-            {makeBtnLock(dtoA, setDtoA, hoverA, setHoverA, refAdd)}
+            {makeBtnLock(dtoA, setDtoA, refAdd)}
             {makeBtn("등록", () => onClickAdd(dtoA))}
           </div>
         </div>
@@ -275,7 +273,7 @@ const Comment = () => {
                 <div className="w-full py-2 border-b-2 border-gray-300 flex flex-col justify-center items-center space-y-2 relative">
                   {makeText(dtoM, setDtoM, setLoading, refModify)}
                   <div className="w-full px-2 flex justify-end items-center space-x-4 absolute bottom-4 right-2">
-                    {makeBtnLock(dtoM, setDtoM, hoverM, setHoverM, refModify)}
+                    {makeBtnLock(dtoM, setDtoM, refModify)}
 
                     {makeBtn("완료", () => {
                       onClickModify(dtoM);
@@ -338,22 +336,18 @@ const makeText = (dto, setDto, setLoading, ref) => {
   );
 };
 
-const makeBtnLock = (dto, setDto, hover, setHover, ref) => {
+const makeBtnLock = (dto, setDto, ref) => {
   return (
     <button
       className={`bg-white p-3 border-2 border-white rounded cursor-pointer transition duration-500 ${
-        dto.visibility
-          ? "text-red-500  hover:text-gray-500"
-          : "text-gray-500 hover:text-red-500"
+        dto.visibility ? "text-red-500" : "text-gray-500"
       }`}
-      onMouseEnter={() => setHover(true)}
-      onMouseLeave={() => setHover(false)}
       onClick={() => {
         setDto({ ...dto, visibility: !dto.visibility });
         ref.current.focus();
       }}
     >
-      {dto.visibility === hover ? <FaLockOpen /> : <FaLock />}
+      {!dto.visibility ? <FaLockOpen /> : <FaLock />}
     </button>
   );
 };

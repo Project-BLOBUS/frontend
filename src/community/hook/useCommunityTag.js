@@ -1,7 +1,14 @@
-import useMypageTag from "../../member/hook/useMypageTag";
-
 const useCommunityTag = () => {
-  const { makeBtn } = useMypageTag();
+  const makeBtn = (name, onClick) => {
+    return (
+      <button
+        className="bg-[#DB0153] w-24 py-2 rounded text-base text-nowrap text-white hover:bg-[#B50044] transition duration-500"
+        onClick={onClick}
+      >
+        {name}
+      </button>
+    );
+  };
 
   const makeTab = (name, value, filter, setFilter, isType, moveToList) => {
     return (

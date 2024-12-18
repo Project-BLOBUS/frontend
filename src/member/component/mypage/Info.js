@@ -98,19 +98,19 @@ const Info = () => {
     <>
       {loading && <Loading />}
       <div className="w-full text-base text-center font-bold flex flex-col justify-center items-center">
-        <div className="w-full mb-2 pb-4 text-3xl text-left border-b-2 border-gray-200">
+        <div className="w-full mb-4 pb-4 text-3xl text-left border-b-2 border-gray-200">
           내 정보
         </div>
 
-        <div className="w-full py-2 flex justify-center items-center space-x-[.25rem]">
-          <div className="bg-white w-2/5 py-28 border-2 border-gray-300 rounded shadow-xl flex flex-col justify-center items-center">
+        <div className="w-full py-2 flex justify-center items-center space-x-2">
+          <div className="bg-white w-2/5 py-[5.375rem] border-2 border-gray-300 rounded shadow-xl flex flex-col justify-center items-center">
             <div className="text-[12rem]">
               <FaCircleUser className="text-gray-400" />
             </div>
             <div className="pt-10 text-3xl">반갑습니다. {member.name}님</div>
           </div>
 
-          <div className="w-3/5 flex flex-col justify-center items-center space-y-[0.25rem]">
+          <div className="w-3/5 flex flex-col justify-center items-center space-y-2">
             <div className="bg-white w-full border-2 border-gray-300 rounded shadow-xl flex flex-col justify-center items-center">
               <div className="w-full px-4 py-2 text-xl border-b-2 border-yellow-500 text-left">
                 기본 정보
@@ -144,7 +144,7 @@ const Info = () => {
           </div>
         </div>
 
-        <div className="w-full py-2 flex justify-end items-center space-x-4">
+        <div className="w-full py-10 flex justify-end items-center space-x-4">
           {makeBtn2("수정", () => {
             setLoading(true);
             setBtnType("수정");

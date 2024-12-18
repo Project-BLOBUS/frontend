@@ -88,11 +88,11 @@ const List = () => {
     <>
       {loading && <Loading />}
       <div className="w-full text-base text-center font-bold flex flex-col justify-center items-center">
-        <div className="w-full mb-2 pb-4 text-3xl text-left border-b-2 border-gray-200">
+        <div className="w-full mb-4 pb-4 text-3xl text-left border-b-2 border-gray-200">
           커뮤니티
         </div>
 
-        <div className="w-full my-2 p-4 border-2 border-gray-200 rounded-md text-sm flex justify-center items-start space-x-4">
+        <div className="w-full my-2 p-4 border-2 border-gray-200 rounded-md text-base flex justify-center items-start space-x-4">
           <div className="w-[10%] py-2">키워드 검색</div>
 
           <input
@@ -196,13 +196,19 @@ const List = () => {
                 <div className="w-[5%]">{dto.id}</div>
                 <div className="w-[8%]">{dto.boardType}</div>
                 <div className="w-[55%] flex justify-start items-center space-x-2">
-                  {dto.category === "청년" ? (
-                    <div className="text-blue-500">[청년]</div>
-                  ) : dto.category === "기업" ? (
-                    <div className="text-red-500">[기업]</div>
-                  ) : (
-                    <div className="text-green-500">[지역]</div>
-                  )}
+                  <div
+                    className={
+                      dto.category === "청년"
+                        ? "text-blue-500"
+                        : dto.category === "기업"
+                        ? "text-red-500"
+                        : dto.category === "지역"
+                        ? "text-green-500"
+                        : "text-gray-500"
+                    }
+                  >
+                    [{dto.category}]
+                  </div>
                   {dto.visibility ? <FaLock /> : <></>}
                   <div className="truncate">{dto.title}</div>
                   <div className="text-xs text-red-500">
@@ -228,7 +234,7 @@ const List = () => {
             makeBtn("글쓰기", () => navigate("/community/add"))}
         </div>
 
-        <div className="w-full flex justify-center items-center">
+        <div>
           <Paging data={data} movePage={moveToList} />
         </div>
       </div>
