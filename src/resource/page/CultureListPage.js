@@ -101,7 +101,6 @@ const CulturePage = () => {
       </div>
       {/* 검색 영역 */}
       <CultureSearchBar
-        searchTitle="문화 검색"
         searchTerm={searchTerm}
         filterType={filterType}
         onSearch={handleSearch}
