@@ -29,11 +29,11 @@ const AllSearch = () => {
   const handlePageChange = (pageNumber) => {
     if (pageNumber > 0 && pageNumber <= totalPages) {
       setCurrentPage(pageNumber);
-      // setSearchParams(prevParams => {
-      //   const newParams = new URLSearchParams(prevParams);
-      //   newParams.set('page', pageNumber); // 페이지 번호를 URL에 업데이트
-      //   return newParams;
-      // });
+      setSearchParams(prevParams => {
+        const newParams = new URLSearchParams(prevParams);
+        newParams.set('page', pageNumber); // 페이지 번호를 URL에 업데이트
+        return newParams;
+      });
     }
   };
 
@@ -94,16 +94,6 @@ const AllSearch = () => {
     }
   }, [search, currentPage, category]);
 
-
-  // useEffect(() => {
-  //   setSearchParams((prevParams) => {
-  //     const newParams = new URLSearchParams(prevParams);
-  //     newParams.set('category', category); // 카테고리 값 업데이트
-  //     newParams.set('query', search);
-  //     return newParams;
-  //   });
-  // }, [category, setSearchParams,currentPage]);
-
   useEffect(() => {
     handleSearchClick();
 
@@ -126,9 +116,13 @@ const AllSearch = () => {
     setCurrentPage(1);
   }, [search]);
 
-  // useEffect(() => {
-  //   setCurrentPage(parseInt(searchParams.get('page')) || 1); // URL에서 페이지 번호를 가져옴
-  // }, [searchParams]);
+useEffect(() => {
+  const categoryFromUrl = searchParams.get('category') || 'policy'; // 기본값은 'policy'
+  const pageFromUrl = parseInt(searchParams.get('page')) || 1; // URL에서 page 값 가져오기, 없으면 1
+
+  setCategory(categoryFromUrl);  // URL에서 카테고리 값 읽기
+  setCurrentPage(pageFromUrl);
+}, [searchParams]);
 
   const handleKeyDown = (e) => {
     if(e.key ==="Enter") {
@@ -175,6 +169,8 @@ const AllSearch = () => {
                 <div className={`w-[50%] h-full border-b-2 border-gray-400 text-2xl text-[#666666] font-bold flex justify-center items-center cursor-pointer ${category === 'policy' ? 'text-gray-400 border-b-4' : ''}`} 
                   onClick={() => {
                     setCategory('policy');
+                    setCurrentPage(1);
+                    setSearchParams({ category: 'policy', page: 1 }); // URL에 category와 page 값 추가
                   }}>
                   청년관({policyTotalItems}) 
                   </div>
@@ -183,6 +179,7 @@ const AllSearch = () => {
                   onClick={() => {
                     setCategory('community');
                     setCurrentPage(1);
+                    setSearchParams({ category: 'community', page: 1 }); // URL에 category와 page 값 추가
                   }}>
                   커뮤니티({communityTotalItems}) 
                 </div> 
@@ -213,8 +210,11 @@ const AllSearch = () => {
                 ? `/youth/${item.category}/policyRead/${item.id}` 
                 : `/youth/${item.category}/${item.id}`}>
               <li key={item.id} 
-                    className="flex justify-center items-center bg-white w-[321px] h-[176px] rounded-md shadow-sm hover:shadow-md transition-shadow duration-300 ease-in-out cursor-pointer border-2 border-gray-200 overflow-y-auto ">
-                  <p className="text-lg font-bold text-gray-800 p-[20px]">
+                    className="relative flex justify-center items-center bg-white w-[321px] h-[176px] rounded-md shadow-sm hover:shadow-md transition-shadow duration-300 ease-in-out cursor-pointer border-2 border-gray-200 overflow-y-auto ">
+                  <div className="absolute flex justify-center items-start mt-[-46%] ml-[-80%]">
+                      <div className="w-[45px] h-[30px] text-white bg-[#6E00FF] rounded-b-md text-sm font-bold flex justify-center items-center">상시</div>
+                  </div>
+                  <p className="text-lg font-bold text-gray-800 p-[20px] ">
                     {index + (currentPage - 1) * 12 + 1}. {item.title}
                   </p>
               </li>
@@ -226,9 +226,9 @@ const AllSearch = () => {
 {/* 커뮤니티 */}
         {category === "community" &&
           communityPolicies.map((item, index) => (
-            <Link to={`/community/read/${item.id}`}>
+            <Link to={`/community/read/${item.id}?category=${category}&page=${currentPage}`}>
             <li key={item.id} 
-              className="flex justify-center items-center bg-white w-[321px] h-[176px] rounded-md shadow-sm hover:shadow-md transition-shadow duration-300 ease-in-out cursor-pointer border-2 border-gray-200 overflow-y-auto"
+              className="relative flex justify-center items-center bg-white w-[321px] h-[176px] rounded-md shadow-sm hover:shadow-md transition-shadow duration-300 ease-in-out cursor-pointer border-2 border-gray-200 overflow-y-auto"
               onClick={(e) => {  
                 if (
                   (getCookie("userRole") !== "ADMIN" &&
@@ -241,6 +241,11 @@ const AllSearch = () => {
                 }
               }}>
                    {item.visibility ? <FaLock /> : <></>}
+                   
+                   <div className="absolute flex justify-center items-start mt-[-46%] ml-[-75%]">
+                      <div className="w-[70px] h-[35px] ml-[10px] text-white bg-[#DB0153] border-2 border-[#DB0153] rounded-b-md text-sm font-bold flex justify-center items-center">커뮤니티</div>
+                   </div>
+
                   <p className="text-lg font-bold text-gray-800 p-[20px]">
                     {index + (currentPage - 1) * 12 + 1}. {item.title} {/* item.title로 제목을 출력 */}
                   </p>

@@ -52,7 +52,7 @@ const MyPage = () => {
             </div>
 
             <div className="bg-white rounded-b-[8px] flex flex-col justify-center items-center">
-              {makeNav("커스텀", "custom")}
+              {makeNav("내 지역 정책", "custom")}
               {makeNav("즐겨찾기", "bookmark")}
               {makeNav("작성글", "doc")}
               {makeNav("내정보", "info")}

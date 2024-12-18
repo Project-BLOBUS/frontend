@@ -81,7 +81,7 @@ const Read = () => {
     <>
       {loading && <Loading />}
       <div className="w-full text-base text-center font-bold flex flex-col justify-center items-center">
-        <div className="w-full mb-2 pb-4 text-3xl text-left border-b-2 border-gray-200">
+        <div className="w-full mb-4 pb-4 text-3xl text-left border-b-2 border-gray-200">
           커뮤니티
         </div>
 
@@ -153,7 +153,7 @@ const Read = () => {
             </div>
 
             <div
-              className="w-full min-h-52 p-2 border-y-2 border-gray-300 text-left font-normal select-text"
+              className="w-full min-h-72 p-2 border-y-2 border-gray-300 text-left font-normal select-text"
               dangerouslySetInnerHTML={{
                 __html: dto.content.replace(/\n/g, "<br/>"),
               }}
@@ -169,7 +169,7 @@ const Read = () => {
                 })
               )} */}
             <button
-              className="px-10 py-4 border-2 border-gray-300 rounded text-nowrap hover:bg-[#DDDDDD] transition duration-500"
+              className="my-10 px-10 py-4 border-2 border-gray-300 rounded text-nowrap hover:bg-[#DDDDDD] transition duration-500"
               onClick={() => navigate("/community/list")}
             >
               목록으로

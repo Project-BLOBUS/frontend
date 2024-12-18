@@ -15,7 +15,7 @@ function BlobusInfo() {
       </div>
 
       {/* 사이드바 */}
-      <div className="sidebar">
+      {/* <div className="sidebar">
         <h1>BLOBUS</h1>
         <ul>
           <li>
@@ -28,7 +28,7 @@ function BlobusInfo() {
             <a href="#goals">목표</a>
           </li>
         </ul>
-      </div>
+      </div> */}
 
       {/* 메인 콘텐츠 */}
       <div className="w-[100%] h-[600px] ">
@@ -42,8 +42,7 @@ function BlobusInfo() {
           <img src="blobus_goals.png" alt="blobus 목표" />
         </section>
 
-          <Footer />     
-
+        <Footer />
       </div>
     </div>
   );

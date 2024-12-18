@@ -136,11 +136,11 @@ const Custom = () => {
     <>
       {loading && <Loading />}
       <div className="w-full text-base text-center font-bold flex flex-col justify-center items-center">
-        <div className="w-full mb-2 pb-4 text-3xl text-left border-b-2 border-gray-200">
-          커스텀
+        <div className="w-full mb-4 pb-4 text-3xl text-left border-b-2 border-gray-200">
+          내 지역 정책
         </div>
 
-        <div className="w-full my-2 p-4 border-2 border-gray-200 rounded-md text-sm flex justify-center items-start space-x-4">
+        <div className="w-full my-2 p-4 border-2 border-gray-200 rounded-md text-base flex justify-center items-start space-x-4">
           <div className="w-[10%] py-2">키워드 검색</div>
 
           <div className="w-full flex flex-col justify-center items-center">
@@ -160,7 +160,7 @@ const Custom = () => {
               {Object.keys(kList).map((key) => (
                 <div
                   key={key}
-                  className="bg-gray-300 m-1 px-4 py-1 rounded-full text-xs text-nowrap flex justify-center items-center cursor-pointer transition duration-500"
+                  className="bg-gray-200 m-1 px-4 py-1 rounded-full text-xs text-nowrap flex justify-center items-center cursor-pointer"
                   onClick={() => {
                     const updatedList = { ...kList };
                     delete updatedList[key];

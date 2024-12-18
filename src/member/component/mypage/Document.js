@@ -84,7 +84,7 @@ const Document = () => {
     <>
       {loading && <Loading />}
       <div className="w-full text-base text-center font-bold flex flex-col justify-center items-center">
-        <div className="w-full mb-2 pb-4 text-3xl text-left border-b-2 border-gray-200">
+        <div className="w-full mb-4 pb-4 text-3xl text-left border-b-2 border-gray-200">
           작성글
         </div>
 
@@ -103,7 +103,7 @@ const Document = () => {
           </div>
         </div>
 
-        <div className="w-full mt-2 py-2 border-t-2 border-b border-t-yellow-500 border-b-gray-500 text-sm flex justify-center items-center">
+        <div className="w-full mt-2 py-4 border-t-2 border-b border-t-yellow-500 border-b-gray-500 text-sm flex justify-center items-center">
           <div className="w-[5%]">번호</div>
           <div className="w-[8%]">구분</div>
           <div className="w-[67%]">제목</div>
@@ -111,7 +111,7 @@ const Document = () => {
           <div className="w-[10%]">수정</div>
         </div>
 
-        <div className="w-full text-sm text-nowrap font-normal flex flex-col justify-start items-center">
+        <div className="w-full text-nowrap font-normal flex flex-col justify-start items-center">
           {data.dtoList.length === 0 ? (
             <>
               <div className="w-full py-20 text-2xl font-bold">
@@ -126,7 +126,7 @@ const Document = () => {
             data.dtoList.map((dto, index) => (
               <div
                 key={index}
-                className="w-full py-2 border-b-2 border-gray-300 flex justify-center items-center cursor-pointer"
+                className="w-full py-4 border-b-2 border-gray-300 flex justify-center items-center cursor-pointer hover:font-bold"
                 onClick={() => navigate(`/community/read/${dto.id}`)}
               >
                 <div className="w-[5%]">{dto.id}</div>

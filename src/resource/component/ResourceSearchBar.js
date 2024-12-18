@@ -1,7 +1,6 @@
 import React from "react";
 
 const PolicySearchBar = ({
-  searchTitle,
   searchTerm,
   filterType,
   onSearch,
@@ -21,9 +20,7 @@ const PolicySearchBar = ({
   return (
     <div className="border-2 border-gray-200 p-4 bg-white mb-5 rounded-md">
       <div className="flex items-center space-x-4">
-        <p className="w-28 text-center text-xl font-semibold text-gray-700">
-          {searchTitle}
-        </p>
+        <label className="font-bold text-gray-800">검색범위</label>
         <select
           className="h-10 border-2 border-gray-300 rounded-md p-2 text-sm focus:outline-none"
           value={filterType}
