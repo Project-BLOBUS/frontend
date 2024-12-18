@@ -80,8 +80,8 @@ const Read = () => {
   return (
     <>
       {loading && <Loading />}
-      <div className="w-full pb-4 text-base text-center font-bold flex flex-col justify-center items-center">
-        <div className="w-full my-2 py-4 text-3xl text-left border-b-2 border-gray-200">
+      <div className="w-full text-base text-center font-bold flex flex-col justify-center items-center">
+        <div className="w-full mb-2 pb-4 text-3xl text-left border-b-2 border-gray-200">
           커뮤니티
         </div>
 
@@ -153,7 +153,7 @@ const Read = () => {
             </div>
 
             <div
-              className="w-full h-72 p-2 border-y-2 border-gray-300 text-left font-normal select-text overflow-y-auto"
+              className="w-full min-h-52 p-2 border-y-2 border-gray-300 text-left font-normal select-text"
               dangerouslySetInnerHTML={{
                 __html: dto.content.replace(/\n/g, "<br/>"),
               }}

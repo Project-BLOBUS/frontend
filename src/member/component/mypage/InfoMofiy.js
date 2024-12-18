@@ -225,19 +225,19 @@ const InfoMofiy = () => {
     <>
       {loading && <Loading />}
       <div className="w-full text-base text-center font-bold flex flex-col justify-center items-center">
-        <div className="w-full my-2 py-4 text-3xl text-left border-b-2 border-gray-200">
+        <div className="w-full mb-2 pb-4 text-3xl text-left border-b-2 border-gray-200">
           내 정보 - 수정
         </div>
 
-        <div className="w-full mt-4 py-2 flex justify-center items-center space-x-4">
-          <div className="bg-white w-2/5 py-32 border-2 border-gray-300 rounded shadow-xl flex flex-col justify-center items-center">
+        <div className="w-full mt-2 py-2 flex justify-center items-center space-x-4">
+          <div className="bg-white w-2/5 py-28 border-2 border-gray-300 rounded shadow-xl flex flex-col justify-center items-center">
             <div className="text-[12rem]">
               <FaCircleUser className="text-gray-400" />
             </div>
             <div className="pt-10 text-3xl">반갑습니다. {member.name}님</div>
           </div>
 
-          <div className="bg-white w-3/5 px-4 py-[1.688rem] border-2 border-gray-300 rounded shadow-xl flex flex-col justify-center items-center space-y-2">
+          <div className="bg-white w-3/5 px-4 py-[0.688rem] border-2 border-gray-300 rounded shadow-xl flex flex-col justify-center items-center space-y-2">
             {/* 비밀번호 */}
             {makeModify(
               "비밀번호",

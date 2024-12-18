@@ -151,15 +151,15 @@ const useMypageTag = () => {
             data.dtoList.map((dto, index) => (
               <div
                 key={index}
-                className={`bg-white w-[calc(100%/4-0.75rem)] h-[calc(100%/3-1rem)] ${
+                className={`bg-white w-[calc(100%/4-0.75rem)] h-44 ${
                   index % 4 === 0
                     ? "mr-2 my-2"
                     : index % 4 === 3
                     ? "ml-2 my-2"
                     : "m-2"
-                } px-4 pb-4 border-2 border-gray-300 rounded shadow-md text-xs flex flex-col justify-center items-center space-y-2 ${
+                } px-3 pb-3 border-2 border-gray-200 rounded-md text-xs flex flex-col justify-center items-center space-y-2 ${
                   dto.link &&
-                  "cursor-pointer hover:bg-gray-200 transition duration-500"
+                  "cursor-pointer hover:shadow-md transition duration-500"
                 }`}
                 onClick={() =>
                   dto.mainCategory === "지역" && dto.link
@@ -167,17 +167,20 @@ const useMypageTag = () => {
                     : dto.link && navigate(dto.link)
                 }
               >
-                {console.log(index % 4)}
-                <div className="w-full text-md flex justify-between items-center">
+                <div className="w-full text-sm flex justify-between items-center">
                   <div
-                    className={`px-4 py-2 border-t-2 rounded-b-xl text-white ${
-                      dto.mainCategory === "청년"
-                        ? "bg-blue-500 border-blue-500"
+                    className={`-mt-1 px-2 py-1 rounded-b-md text-white ${
+                      new Date() - new Date(dto.endDate) > 0 &&
+                      dto.startDate &&
+                      dto.endDate
+                        ? "bg-gray-500"
+                        : dto.mainCategory === "청년"
+                        ? "bg-blue-500"
                         : dto.mainCategory === "기업"
-                        ? "bg-red-500 border-red-500"
+                        ? "bg-red-500"
                         : dto.mainCategory === "지역"
-                        ? "bg-green-500 border-green-500"
-                        : "bg-gray-500 border-gray-500"
+                        ? "bg-green-500"
+                        : "bg-gray-200"
                     }`}
                   >
                     {new Date() - new Date(dto.endDate) < 0
@@ -196,7 +199,7 @@ const useMypageTag = () => {
                   </div>
 
                   <div
-                    className={`px-4 py-2 border-x-2 border-b-2 rounded-b-xl ${
+                    className={`px-2 py-1 border-x-2 border-b-2 rounded-b-xl ${
                       dto.mainCategory === "청년"
                         ? "border-blue-500 text-blue-500"
                         : dto.mainCategory === "기업"
@@ -210,14 +213,14 @@ const useMypageTag = () => {
                   </div>
                 </div>
 
-                <div className="w-full text-xl text-left truncate">
+                <div className="w-full text-xl text-left  font-semibold truncate">
                   {dto.title}
                 </div>
-                <div className="w-full h-8 text-md text-left text-wrap text-ellipsis font-normal overflow-hidden ">
+                <div className="w-full h-10 text-sm text-left text-gray-600 text-wrap text-ellipsis font-normal overflow-hidden ">
                   {dto.content || "　"}
                 </div>
 
-                <div className="w-full pt-4 font-light flex justify-start items-center space-x-1">
+                <div className="w-full text-xs text-gray-500 font-light flex justify-start items-center space-x-1">
                   {!dto.startDate && !dto.endDate ? (
                     "상시"
                   ) : (
@@ -228,7 +231,7 @@ const useMypageTag = () => {
                     </>
                   )}
                 </div>
-                <div className="w-full text-left font-normal truncate">
+                <div className="w-full text-xs text-left text-gray-500 font-normal truncate">
                   {dto.place}
                 </div>
               </div>

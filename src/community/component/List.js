@@ -88,7 +88,7 @@ const List = () => {
     <>
       {loading && <Loading />}
       <div className="w-full text-base text-center font-bold flex flex-col justify-center items-center">
-        <div className="w-full my-2 py-4 text-3xl text-left border-b-2 border-gray-200">
+        <div className="w-full mb-2 pb-4 text-3xl text-left border-b-2 border-gray-200">
           커뮤니티
         </div>
 
