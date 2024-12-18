@@ -6,8 +6,8 @@ const useInfoTag = () => {
   const makeRead = (name, info) => {
     return (
       <div className="w-full flex justify-center items-center">
-        <div className="w-1/3 px-4 py-2 text-left text-nowrap">{name}</div>
-        <div className="w-2/3 px-4 py-2 text-right text-nowrap font-normal select-text">
+        <div className="w-1/3 px-10 py-4 text-left text-nowrap">{name}</div>
+        <div className="w-2/3 px-10 py-4 text-right text-nowrap font-normal select-text">
           {info}
         </div>
       </div>
@@ -30,7 +30,7 @@ const useInfoTag = () => {
       <input
         className={`${
           style ?? "w-full"
-        } px-4 py-2 border-2 border-gray-300 rounded-full shadow-lg text-left tracking-wides ${
+        } px-6 py-3 border-2 border-gray-300 rounded-full shadow-lg text-left tracking-wides ${
           name !== "userId" || "bg-gray-300 text-white placeholder-white"
         }`}
         type={type}
@@ -56,7 +56,7 @@ const useInfoTag = () => {
   const makeSelect = (name, value, list, hint, ref, onChange) => {
     return (
       <select
-        className="w-full py-2 border-2 border-gray-300 rounded-full shadow-lg text-center tracking-widest cursor-pointer"
+        className="w-full px-6 py-3 border-2 border-gray-300 rounded-full shadow-lg text-center tracking-widest cursor-pointer"
         name={name}
         value={value}
         ref={ref}
@@ -77,7 +77,7 @@ const useInfoTag = () => {
   const makeRatio = (value, Icon, text, onClick) => {
     return (
       <div
-        className={`w-full py-2 border-2 border-gray-300 rounded-full shadow-lg text-center tracking-widest flex justify-center items-center ${
+        className={`w-full px-6 py-3 border-2 border-gray-300 rounded-full shadow-lg text-center tracking-widest flex justify-center items-center ${
           value
             ? "text-black"
             : "text-gray-300 cursor-pointer transition duration-500"

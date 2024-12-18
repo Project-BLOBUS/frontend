@@ -120,14 +120,14 @@ function Header({ pageTitle, titleBg }) {
 
             <div
               className="text-white w-[150px] h-[60px] flex justify-center items-center ml-[1%] text-xl font-medium"
-              style={{ backgroundColor: titleBg }}
+              style={{ background: titleBg }}
             >
               {pageTitle}
             </div>
 
             <div className="w-[480px] h-[60px] ml-[13%] flex text-md font-semibold ">
               <div className="w-[160px] h-[55px] flex justify-center items-center">
-                <Link to="/blobusinfo">
+                <Link to="/blobusinfo" onClick={closeMenu}>
                   <p>소개</p>
                 </Link>
               </div>
@@ -201,7 +201,7 @@ function Header({ pageTitle, titleBg }) {
           >
             {showMenu2 && (
               <div className="w-[full] h-[55px] bg-[#F9F9F9] ">
-                <div className="w-[70%] h-[40px] ml-[16.5%] flex justify-center items-center text-gray-500 font-bold">
+                <div className="w-[70%] h-[40px] ml-[14%] flex justify-center items-center text-gray-500 font-bold">
                   <div className="w-[130px] h-[55px] flex justify-center items-center">
                     <Link to="/resource/digital" onClick={closeMenu}>
                       <p className="cursor-pointer">디지털마케팅</p>
@@ -214,7 +214,7 @@ function Header({ pageTitle, titleBg }) {
                     </Link>
                   </div>
 
-                  <div className="w-[130px] h-[55px] flex justify-center items-center ">
+                  <div className="w-[100px] h-[55px] flex justify-center items-center ">
                     <Link to="/resource/sightsee" onClick={closeMenu}>
                       <p className="cursor-pointer">관광</p>
                     </Link>

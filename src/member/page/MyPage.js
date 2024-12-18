@@ -42,9 +42,14 @@ const MyPage = () => {
       <div className="h-screen">
         <Header pageTitle="마이페이지" titleBg="rgb(255,125,0)" />
 
-        <div className="w-[15%] h-screen mt-[-70px] pt-20 text-base text-center flex flex-col justify-start items-center fixed z-0">
-          <div className="w-[70%] border-2 border-gray-300 rounded-[8px] font-bold">
-            <div className="py-4 text-xl">마이페이지</div>
+        <div className="w-[15%] h-screen mt-[-70px] pt-32 text-base text-center flex flex-col justify-start items-center fixed z-0 cursor-pointer">
+          <div className="w-[60%] border-2 border-gray-300 rounded-[8px] shadow-lg font-bold">
+            <div
+              className="py-4 text-xl"
+              onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+            >
+              마이페이지
+            </div>
 
             <div className="bg-white rounded-b-[8px] flex flex-col justify-center items-center">
               {makeNav("커스텀", "custom")}
@@ -55,7 +60,7 @@ const MyPage = () => {
           </div>
         </div>
 
-        <div className="min-h-[calc(100%-90px-141px)] mt-[-60px] mx-[15%] flex justify-center items-start">
+        <div className="min-h-[calc(100%-150px-141px)] mx-[15%] flex justify-center items-start">
           <Outlet />
         </div>
 

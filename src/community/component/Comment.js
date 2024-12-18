@@ -182,7 +182,7 @@ const Comment = () => {
 
         <div className="w-full py-2 border-b-2 border-gray-300 flex flex-col justify-center items-center space-y-2 relative">
           {makeText(dtoA, setDtoA, setLoading, refAdd)}
-          <div className="w-full px-2 flex justify-end items-center absolute bottom-4 z-10">
+          <div className="w-full px-2 flex justify-end items-center space-x-4 absolute bottom-4 right-2 z-10">
             {makeBtnLock(dtoA, setDtoA, hoverA, setHoverA, refAdd)}
             {makeBtn("등록", () => onClickAdd(dtoA))}
           </div>
@@ -193,7 +193,7 @@ const Comment = () => {
             !comment.edit ? (
               <div
                 key={comment.id}
-                className="w-full px-4 py-2 border-b-2 border-gray-300 flex justify-center items-end space-x-2"
+                className="w-full px-4 py-2 border-b-2 border-gray-300 flex justify-center items-end space-x-4"
               >
                 {getCookie("userRole") !== "ADMIN" &&
                 comment.visibility &&
@@ -274,7 +274,7 @@ const Comment = () => {
               <div key={comment.id} className="w-full">
                 <div className="w-full py-2 border-b-2 border-gray-300 flex flex-col justify-center items-center space-y-2 relative">
                   {makeText(dtoM, setDtoM, setLoading, refModify)}
-                  <div className="w-full px-2 flex justify-end items-center space-x-2 absolute bottom-4 right-2">
+                  <div className="w-full px-2 flex justify-end items-center space-x-4 absolute bottom-4 right-2">
                     {makeBtnLock(dtoM, setDtoM, hoverM, setHoverM, refModify)}
 
                     {makeBtn("완료", () => {
