@@ -200,8 +200,8 @@ function Header({ pageTitle, titleBg }) {
             }`}
           >
             {showMenu2 && (
-              <div className="w-[full] h-[55px] bg-[#F9F9F9] ">
-                <div className="w-[70%] h-[40px] ml-[14%] flex justify-center items-center text-gray-500 font-bold">
+              <div className="w-[full] h-[55px] bg-[#F9F9F9] border-b-2">
+                <div className="w-[70%] h-[40px] ml-[14%] pt-4 flex justify-center items-center text-gray-500 font-bold">
                   <div className="w-[130px] h-[55px] flex justify-center items-center">
                     <Link to="/resource/digital" onClick={closeMenu}>
                       <p className="cursor-pointer">디지털마케팅</p>
