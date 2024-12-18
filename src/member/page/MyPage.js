@@ -42,7 +42,7 @@ const MyPage = () => {
       <div className="h-screen">
         <Header pageTitle="마이페이지" titleBg="rgb(255,125,0)" />
 
-        <div className="w-[15%] h-screen mt-[-70px] pt-32 text-base text-center flex flex-col justify-start items-center fixed z-0 cursor-pointer">
+        <div className="w-[15%] h-screen mt-[-70px] pt-32 text-base text-center flex flex-col justify-start items-center fixed z-0">
           <div className="w-[60%] border-2 border-gray-300 rounded-[8px] shadow-lg font-bold">
             <div
               className="py-4 text-xl"
@@ -52,10 +52,10 @@ const MyPage = () => {
             </div>
 
             <div className="bg-white rounded-b-[8px] flex flex-col justify-center items-center">
+              {makeNav("내정보", "info")}
               {makeNav("내 지역 정책", "custom")}
               {makeNav("즐겨찾기", "bookmark")}
               {makeNav("작성글", "doc")}
-              {makeNav("내정보", "info")}
             </div>
           </div>
         </div>

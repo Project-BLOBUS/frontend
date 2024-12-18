@@ -10,7 +10,23 @@ const InfoModify = lazy(() => import("../component/mypage/InfoMofiy"));
 
 const mypageRouter = () => {
   return [
-    { path: "", element: <Navigate replace to="custom" /> },
+    { path: "", element: <Navigate replace to="info" /> },
+    {
+      path: "info",
+      element: (
+        <Suspense fallback={<Loading />}>
+          <Info />
+        </Suspense>
+      ),
+    },
+    {
+      path: "info/modify",
+      element: (
+        <Suspense fallback={<Loading />}>
+          <InfoModify />
+        </Suspense>
+      ),
+    },
     { path: "custom", element: <Navigate replace to="list" /> },
     {
       path: "custom/list",
@@ -35,22 +51,6 @@ const mypageRouter = () => {
       element: (
         <Suspense fallback={<Loading />}>
           <Document />
-        </Suspense>
-      ),
-    },
-    {
-      path: "info",
-      element: (
-        <Suspense fallback={<Loading />}>
-          <Info />
-        </Suspense>
-      ),
-    },
-    {
-      path: "info/modify",
-      element: (
-        <Suspense fallback={<Loading />}>
-          <InfoModify />
         </Suspense>
       ),
     },
