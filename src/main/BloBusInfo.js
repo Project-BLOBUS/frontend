@@ -1,6 +1,7 @@
 import React from "react";
 import "./blobusinfo.css";
 import Header from "./Header";
+import Footer from "./Footer";
 
 function BlobusInfo() {
   return (
@@ -9,9 +10,7 @@ function BlobusInfo() {
       <div>
         <Header
           pageTitle="소개"
-          titleBg="#C40052"
-          isWhite={true}
-          borderB={false}
+          titleBg="linear-gradient(90deg, #631885,#DC017F)"
         />
       </div>
 
@@ -32,7 +31,7 @@ function BlobusInfo() {
       </div>
 
       {/* 메인 콘텐츠 */}
-      <div className="w-[70%] h-[600px] ml-[15%]">
+      <div className="w-[100%] h-[600px] ">
         <section id="intro" className="section">
           <img src="blobus_intro.png" alt="blobus 소개" />
         </section>
@@ -42,6 +41,9 @@ function BlobusInfo() {
         <section id="goals" className="section">
           <img src="blobus_goals.png" alt="blobus 목표" />
         </section>
+
+          <Footer />     
+
       </div>
     </div>
   );
