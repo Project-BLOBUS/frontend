@@ -6,7 +6,7 @@ const useMypageTag = () => {
   const makeBtn = (name, onClick) => {
     return (
       <button
-        className="bg-white w-24 py-2 border-2 border-gray-300 rounded text-sm text-nowrap hover:bg-[#DDDDDD] transition duration-500"
+        className="bg-white w-24 py-[calc(0.5rem-2px)] border-2 border-gray-300 rounded text-base text-nowrap hover:bg-[#DDDDDD] transition duration-500"
         onClick={onClick}
       >
         {name}
@@ -17,7 +17,7 @@ const useMypageTag = () => {
   const makeBtn2 = (name, onClick) => {
     return (
       <button
-        className="bg-white w-24 py-2 border-2 border-gray-300 rounded text-sm text-nowrap hover:border-yellow-500 transition duration-500"
+        className="bg-white w-24 py-2 border-2 border-gray-300 rounded text-base text-nowrap hover:border-yellow-500 transition duration-500"
         onClick={onClick}
       >
         {name}
@@ -157,7 +157,7 @@ const useMypageTag = () => {
                     : index % 4 === 3
                     ? "ml-2 my-2"
                     : "m-2"
-                } px-3 pb-3 border-2 border-gray-200 rounded-md text-xs flex flex-col justify-center items-center space-y-2 ${
+                } px-3 pb-3 border border-gray-200 rounded-md text-xs flex flex-col justify-center items-center space-y-2 ${
                   dto.link &&
                   "cursor-pointer hover:shadow-md transition duration-500"
                 }`}
