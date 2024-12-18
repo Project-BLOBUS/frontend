@@ -16,8 +16,6 @@ import communityRouter from "./community/router/communityRouter";
 const MainPage = lazy(() => import("./main/MainPage"));
 const AllSearch = lazy(() => import("./main/AllSearch"));
 const BLoBusIntro = lazy(() => import("./main/BloBusInfo"));
-const BLoBusWork = lazy(() => import("./main/BLoBusWork"));
-const BLoBusNews = lazy(() => import("./main/BLoBusNews"));
 
 const Member = lazy(() => import("./member/page/MemberPage"));
 const MyPage = lazy(() => import("./member/page/MyPage"));
@@ -37,10 +35,7 @@ const AppRoutes = () => (
     <Route path="/allsearch" element={<AllSearch />} />
     {/* /blobusIntro 블로버스 소개 */}
     <Route path="/blobusinfo" element={<BLoBusIntro />} />
-    {/* /blobusIntro 블로버스 추구하는 일 */}
-    <Route path="/blobuswork" element={<BLoBusWork />} />
-    {/* /blobusIntro 블로버스 소식 */}
-    <Route path="/blobusnews" element={<BLoBusNews />} />
+
 
     {/* /member 경로로 매핑 */}
     <Route path="/member" element={<Member />}>

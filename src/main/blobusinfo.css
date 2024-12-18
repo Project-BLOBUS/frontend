@@ -5,13 +5,17 @@ body {
   padding: 0;
 }
 
+
+.blobuss {
+  background: linear-gradient(135deg, #6a0dad, #e91e63);
+}
 /* 사이드바 스타일 */
 
 .sidebar {
   position: fixed; /* 화면에 고정 */
-  top: 20vh; /* 화면 상단에서 20% 비율 (viewport height)만큼 고정 */
+  top: 15vh; /* 화면 상단에서 20% 비율 (viewport height)만큼 고정 */
   left: 2vw; /* 화면 왼쪽에서 2% 비율 (viewport width)만큼 고정 */
-  width: 150px; /* 너비 설정 */
+  width: 220px; /* 너비 설정 */
   background: white; /* 사이드바 배경 */
   border-radius: 10px; /* 둥근 모서리 */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* 그림자 효과 */
@@ -44,11 +48,13 @@ body {
   text-decoration: none;
   display: block;
   color: #333;
-  font-size: 14px;
+  font-size: 20px;
   font-weight: bold;
   text-align: center;
   padding: 10px 0;
   transition: color 0.3s ease;
+  height:50px;
+  line-height: 30px;
 }
 
 .sidebar ul li a.active {
@@ -56,7 +62,8 @@ body {
 }
 
 .sidebar ul li a:hover {
-  color: #e91e63;
+  transition-duration: 0.5s;
+  color: #b6b3b4;
   cursor: pointer;
 }
 

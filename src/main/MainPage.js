@@ -103,7 +103,7 @@ const MainPage = () => {
               <FaSearch className="absolute top-[30px] transform-translate-y-1/2 ml-[82%] text-2xl" />
             </div>
           </div>
-          <div className="w-[1170px] h-[380px] ml-[-46%] text-4xl mt-[2%] border-2 bg-white">
+          <div className="w-[950px] h-[380px] ml-[-27.8%] text-4xl mt-[2%] border-2 bg-white">
           <Link to={imageLinks[currentImageIndex]}>
               <img
                 src={images[currentImageIndex]} // 현재 이미지를 표시

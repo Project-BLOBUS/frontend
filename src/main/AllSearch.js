@@ -16,9 +16,11 @@ const AllSearch = () => {
   const [, setError] = useState(null);
   const [policies, setPolicies] = useState([]); //청년
   const [communityPolicies, setCommunityPolicies] = useState([]); // 커뮤니티 데이터 상태
-  const [currentPage, setCurrentPage] = useState(parseInt(searchParams.get('page')) || 1); // 페이지 상태
+  // const [currentPage, setCurrentPage] = useState(parseInt(searchParams.get('page')) || 1); // 페이지 상태
+  const [currentPage, setCurrentPage] = useState(1); // 페이지 상태
   const [search, setSearch] = useState(searchParams.get('query') || ''); // 검색어 상태
-  const [category, setCategory] = useState(searchParams.get('category') || 'policy'); // URL에서 카테고리 값 가져오기
+  // const [category, setCategory] = useState(searchParams.get('category') || 'policy'); // URL에서 카테고리 값 가져오기
+  const [category, setCategory] = useState('policy'); // URL에서 카테고리 값 가져오기
 
 
   
@@ -27,11 +29,11 @@ const AllSearch = () => {
   const handlePageChange = (pageNumber) => {
     if (pageNumber > 0 && pageNumber <= totalPages) {
       setCurrentPage(pageNumber);
-      setSearchParams(prevParams => {
-        const newParams = new URLSearchParams(prevParams);
-        newParams.set('page', pageNumber); // 페이지 번호를 URL에 업데이트
-        return newParams;
-      });
+      // setSearchParams(prevParams => {
+      //   const newParams = new URLSearchParams(prevParams);
+      //   newParams.set('page', pageNumber); // 페이지 번호를 URL에 업데이트
+      //   return newParams;
+      // });
     }
   };
 
@@ -51,7 +53,6 @@ const AllSearch = () => {
     setError(null);
     try {
       if (search.trim() !== '') { // 검색어가 비어 있지 않으면
-         // 청년관 데이터 fetch
         if (category === "policy") {
           const response = await fetchPolicyTitles(search, currentPage, category);
           if (response.list && response.list.length > 0) {
@@ -94,22 +95,29 @@ const AllSearch = () => {
   }, [search, currentPage, category]);
 
 
-  useEffect(() => {
-    setSearchParams((prevParams) => {
-      const newParams = new URLSearchParams(prevParams);
-      newParams.set('category', category); // 카테고리 값 업데이트
-      return newParams;
-    });
-  }, [category, setSearchParams]);
+  // useEffect(() => {
+  //   setSearchParams((prevParams) => {
+  //     const newParams = new URLSearchParams(prevParams);
+  //     newParams.set('category', category); // 카테고리 값 업데이트
+  //     newParams.set('query', search);
+  //     return newParams;
+  //   });
+  // }, [category, setSearchParams,currentPage]);
 
   useEffect(() => {
     handleSearchClick();
+
   }, [currentPage,category]);
 
   // 검색 버튼 클릭 시 데이터 fetch
   const handleSearchClick = () => {
     if (search.trim() !== "") {
       fetchData();
+      setSearchParams((prevParams) => {
+        const newParams = new URLSearchParams(prevParams);
+        newParams.set('query', search);
+        return newParams;
+      });
     }
   };
 
@@ -118,9 +126,9 @@ const AllSearch = () => {
     setCurrentPage(1);
   }, [search]);
 
-  useEffect(() => {
-    setCurrentPage(parseInt(searchParams.get('page')) || 1); // URL에서 페이지 번호를 가져옴
-  }, [searchParams]);
+  // useEffect(() => {
+  //   setCurrentPage(parseInt(searchParams.get('page')) || 1); // URL에서 페이지 번호를 가져옴
+  // }, [searchParams]);
 
   const handleKeyDown = (e) => {
     if(e.key ==="Enter") {
@@ -132,7 +140,7 @@ const AllSearch = () => {
   return (
     <div>
       
-      <div className="bg-[linear-gradient(45deg,_#DB0153,_#6E00FF)]">
+      <div>
         <Header
           pageTitle="메인"
           titleBg = "#D9017F"
@@ -140,13 +148,13 @@ const AllSearch = () => {
       </div>
     
       
-      <div className="w-[70.7%] h-[650px] ml-[15%] mt-[3.5%] ">
+      <div className="w-[70%] h-[650px] ml-[15%]">
       
         <div className="text-3xl text-[#333333] border-b-2 pb-4 font-bold">통합검색</div>
 
 
         <div className="border-2 h-[75px] pl-[25px] mt-[24px] flex justify-start items-center rounded-lg">
-            <p className="font-bold text-2xl">통합검색</p>
+            <p className="font-bold text-xl">통합검색</p>
             <div className=" ml-[2.5%] w-[900px]">
               <input
                 type="text"
@@ -174,6 +182,7 @@ const AllSearch = () => {
                   <div className={`w-[50%] h-full border-b-2 border-gray-400 text-2xl text-[#666666] font-bold flex justify-center items-center cursor-pointer ${category === 'community' ? 'text-gray-400 border-b-4' : ''}`} 
                   onClick={() => {
                     setCategory('community');
+                    setCurrentPage(1);
                   }}>
                   커뮤니티({communityTotalItems}) 
                 </div> 
@@ -184,17 +193,17 @@ const AllSearch = () => {
         <div className="h-[720px] mt-[1%]">
 
         {category === "policy" && policies.length === 0 ? (
-          <div className="text-center text-gray-500 text-3xl mt-[-20%] ml-[2%] ">
+          <div className="text-center text-gray-500 text-3xl pt-[20%] ml-[2%] ">
             검색어에 해당하는 청년관 데이터가 없습니다.
           </div>
          ) : category === "community" && communityPolicies.length === 0 ? (
-          <div className="text-center text-gray-500 text-3xl mt-[-20%] ml-[2%] ">
+          <div className="text-center text-gray-500 text-3xl pt-[20%] ml-[2%] ">
             검색어에 해당하는 커뮤니티 데이터가 없습니다.
           </div>
         ) : (
 
 
-          <ul className="w-full flex flex-wrap ">
+          <ul className="w-[1332px] h-[560px] grid grid-cols-4 gap-4">
 
 {/* 청년관 */}
           {category === "policy" &&
@@ -204,9 +213,9 @@ const AllSearch = () => {
                 ? `/youth/${item.category}/policyRead/${item.id}` 
                 : `/youth/${item.category}/${item.id}`}>
               <li key={item.id} 
-                    className="flex justify-center items-center bg-white w-[298px] h-[185px] rounded-md shadow-sm hover:shadow-md transition-shadow duration-300 ease-in-out cursor-pointer border-2 border-gray-400 overflow-y-auto m-4">
+                    className="flex justify-center items-center bg-white w-[321px] h-[176px] rounded-md shadow-sm hover:shadow-md transition-shadow duration-300 ease-in-out cursor-pointer border-2 border-gray-200 overflow-y-auto ">
                   <p className="text-lg font-bold text-gray-800 p-[20px]">
-                    {index + (currentPage - 1) * 10 + 1}. {item.title}
+                    {index + (currentPage - 1) * 12 + 1}. {item.title}
                   </p>
               </li>
               </Link>
@@ -219,7 +228,7 @@ const AllSearch = () => {
           communityPolicies.map((item, index) => (
             <Link to={`/community/read/${item.id}`}>
             <li key={item.id} 
-              className="flex justify-center items-center bg-white w-[298px] h-[185px] rounded-md shadow-sm hover:shadow-md transition-shadow duration-300 ease-in-out cursor-pointer border-2 border-gray-400 overflow-y-auto m-4"
+              className="flex justify-center items-center bg-white w-[321px] h-[176px] rounded-md shadow-sm hover:shadow-md transition-shadow duration-300 ease-in-out cursor-pointer border-2 border-gray-200 overflow-y-auto"
               onClick={(e) => {  
                 if (
                   (getCookie("userRole") !== "ADMIN" &&
@@ -233,7 +242,7 @@ const AllSearch = () => {
               }}>
                    {item.visibility ? <FaLock /> : <></>}
                   <p className="text-lg font-bold text-gray-800 p-[20px]">
-                    {index + (currentPage - 1) * 10 + 1}. {item.title} {/* item.title로 제목을 출력 */}
+                    {index + (currentPage - 1) * 12 + 1}. {item.title} {/* item.title로 제목을 출력 */}
                   </p>
               </li>
               </Link>
@@ -250,7 +259,7 @@ const AllSearch = () => {
 
          {/* 페이징 버튼 */}
       {(category === "policy" && policies.length > 0) || (category === "community" && communityPolicies.length > 0) ? (
-        <div className="flex justify-center mt-2">
+        <div className="flex justify-center mt-[2%]">
           <button
             onClick={() => handlePageChange(currentPage - 1)}
             disabled={currentPage === 1}
@@ -287,7 +296,7 @@ const AllSearch = () => {
 
 
 
-      <div className="mt-[350px]"> 
+      <div className="mt-[300px]"> 
           <Footer/>
       </div>
 
